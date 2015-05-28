@@ -1,0 +1,17 @@
+site_name: RleVectors.jl
+
+site_description: A vector type representing runs of values
+
+site_dir: html
+
+repo_url: http://resscm.gene.com/bioinfo/projects/julia/trunk/RleVectors/
+
+pages:
+- [index.md, Introduction]
+- [rlevectors_vignette.md, Vignettes, Introduction]
+- [api.md, User guide, Function Descriptions]
+- [NEWS.md, About, Release notes]
+- [TODO.md, About, Project task list]
+- [LICENSE.md, About, License]
+
+markdown_extensions: [codehilite]

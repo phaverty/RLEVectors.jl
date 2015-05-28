@@ -1,0 +1,191 @@
+### Vector/Collections API
+
+function vcat(x::RleVector, y::RleVector)
+  RleVector( vcat(x.runvalues, y.runvalues), vcat(x.runends, y.runends + length(x)))
+end
+
+function pop!(x::RleVector)
+  runcount = nrun(x)
+  isempty(x) && throw(ArgumentError("array must be non-empty"))
+  item = x.runvalues[end]
+  x.runends[end] -= 1
+  if x.runends[end] == 0
+    deleteat!(x.runvalues,runcount)
+    deleteat!(x.runends,runcount)
+  end
+  return(item)
+end
+
+function push!{T,T2 <: Integer}(x::RleVector{T,T2},item)
+  item = convert(T,item) # Copying how base does it for arrays
+  if item == x.runvalues[end]
+    x.runends[end] += 1
+  else
+    push!(x.runvalues,item)
+    push!(x.runends,x.runends[end]+1)
+  end
+  return(x)
+end
+
+function shift!(x::RleVector)
+  isempty(x) && throw(ArgumentError("array must be non-empty"))
+  item = x.runvalues[1]
+  x.runends -= 1
+  if x.runends[1] == 0
+    deleteat!(x.runvalues,1)
+    deleteat!(x.runends,1)
+  end
+  return(item)
+end
+
+function shove!{T,T2 <: Integer}(x::RleVector{T,T2},item)
+  item = convert(T,item) # Copying how base does it for arrays
+  x.runends += 1
+  if item != x.runvalues[1]
+    unshift!(x.runvalues,item)
+    unshift!(x.runends,1)
+  end
+  return(x)
+end
+unshift!{T,T2 <: Integer}(x::RleVector{T,T2},item) = shove(x,item) # Does unshift come from perl? Isn't Larry Wall a linguist? C'mon!
+
+function insert!{T,T2 <: Integer}(x::RleVector{T,T2},i::Integer,item)
+  if i == length(x) + 1
+    push!(x,item)
+    return(x)
+  end
+  if i < 1 || i > length(x)
+    throw(BoundsError())
+  end
+  (run, index_in_run, run_remainder) = ind2runcontext(x,i)
+  if item == x.runvalues[run]
+    x.runends[run:end] += 1
+  else
+    if index_in_run == 1
+      ins_vals = [item; x.runvalues[run]]
+      ins_ends = [i; x.runends[run]+1]
+    else
+      ins_vals = [x.runvalues[run]; item; x.runvalues[run]]
+      ins_ends = [i-1; i; x.runends[run]+1]
+    end
+    x.runvalues = vcat( x.runvalues[1:run-1], ins_vals, x.runvalues[run+1:end] )
+    x.runends = vcat( x.runends[1:run-1], ins_ends, x.runends[run+1:end] + 1 )
+  end
+  x.runvalues,x.runends = ree(x.runvalues,x.runends)
+  return(x)
+end
+
+function deleterun!(x::RleVector,i::Integer)
+  x.runends[i:end] -= rwidth(x,i)
+  if (i > 1 && i < nrun(x) && x.runvalues[i-1] == x.runvalues[i+1])
+    splice!(x.runvalues,(i-1):i)
+    splice!(x.runends,(i-1):i)
+  else
+    deleteat!(x.runvalues,i)
+    deleteat!(x.runends,i)
+  end
+  return(x)
+end
+
+function decrement_run!(x::RleVector,run::Integer)
+  if rwidth(x,run) == 1
+    deleterun!(x,run)
+  else
+    x.runends[run:end] -= 1
+  end
+  return(x)
+end
+
+function deleteat!(x::RleVector,i::Integer)
+  run = ind2run(x,i)
+  decrement_run!(x,run)
+end
+
+_default_splice = RleVector(None[],Int64[])
+function splice!(x::RleVector, i::Integer, ins::RleVector=_default_splice)
+  if i < 1 || i > length(x)
+    throw(BoundsError())
+  end
+  if length(ins) == 0
+    run = ind2run(x,i)
+    current = x.runvalues[run]
+    decrement_run!(x,run)
+  else
+    (run, index_in_run, run_remainder) = ind2runcontext(x,i)
+    current = x.runvalues[run]
+    right_shift = length(ins) - length(i)
+    x.runends[run:end] += right_shift
+    ins.runends += (i-1)
+    if index_in_run == 1
+      ins_vals = [ins.runvalues; x.runvalues[run]]
+      ins_ends = [ins.runends; x.runends[run]]
+    else
+      ins_vals = [x.runvalues[run]; ins.runvalues; x.runvalues[run]]
+      ins_ends = [i-1; ins.runends; x.runends[run]]
+    end
+    x.runvalues = vcat( x.runvalues[1:run-1], ins_vals, x.runvalues[run+1:end] )
+    x.runends = vcat( x.runends[1:run-1], ins_ends, x.runends[run+1:end])
+    x.runvalues,x.runends = ree(x.runvalues,x.runends)
+  end
+  return(current)
+end
+
+function splice!(x::RleVector, index::Range, ins::RleVector=_default_splice) # Can I do index::Union(Integer,UnitRange) here to have just one method?
+  i_left = start(index)
+  i_right = last(index)
+  if i_left < 1 || i_right > length(x)
+    throw(BoundsError())
+  end
+  if length(index) == 0
+  current = similar(x,0)
+  (run_right, index_in_run_right, run_remainder_right) = (run_left, index_in_run_left, run_remainder_left) = ind2runcontext(x,i_left)
+  else
+    current = x[index]
+    (run_left, index_in_run_left, run_remainder_left) = ind2runcontext(x,i_left)
+    (run_right, index_in_run_right, run_remainder_right) = ind2runcontext(x,i_right)
+  end
+  ins.runends += (i_left - 1)
+  right_shift = nrun(ins) - length(index)
+  x.runends[run_right:end] += right_shift
+  if index_in_run_left == 1
+    ins_vals = [ins.runvalues; x.runvalues[run_right]]
+    ins_ends = [ins.runends; x.runends[run_right]]
+  else
+    ins_vals = [x.runvalues[run_left]; ins.runvalues; x.runvalues[run_right]]
+    ins_ends = [i_left-1; ins.runends; x.runends[run_right]]
+  end
+  x.runvalues = vcat( x.runvalues[1:run_left-1], ins_vals, x.runvalues[run_right+1:end] )
+  x.runends = vcat( x.runends[1:run_left-1], ins_ends, x.runends[run_right+1:end] )
+  x.runvalues, x.runends = ree(x.runvalues,x.runends)
+  return(current)
+end
+
+function splice!(x::RleVector, i::Integer, ins::AbstractArray)
+  splice!(x,i,RleVector(ins))
+end
+
+function splice!(x::RleVector, i::Range, ins::AbstractArray)
+  splice!(x,i,RleVector(ins))
+end
+
+# Appended space initialized with zero unlike base array
+function resize!(x::RleVector, nl::Integer) # Based on base version for array
+  l = length(x)
+  if nl > l
+    push!(x.runends,nl)
+    push!(x.runvalues,0)
+  else
+    nl < 0 && throw(ArgumentError("new length must be ≥ 0"))
+    (run, index_in_run, run_remainder) = ind2runcontext(x,nl)
+    x.runends = x.runends[1:run]
+    x.runends[end] = x.runends[end] - run_remainder
+    x.runvalues = x.runvalues[1:run]
+  end
+  return(x)
+end
+
+function empty!(x::RleVector)
+  empty!(x.runvalues)
+  empty!(x.runends)
+  return(x)
+end

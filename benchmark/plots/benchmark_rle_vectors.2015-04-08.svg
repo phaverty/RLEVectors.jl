@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:gadfly="http://www.gadflyjl.org/ns"
+     version="1.2"
+     width="203.2mm" height="127mm" viewBox="0 0 203.2 127"
+     stroke="none"
+     fill="#000000"
+     stroke-width="0.3"
+     font-size="3.88"
+>
+<g class="plotroot yscalable" id="fig-cbea5c639b7544818e70b69255f296ed-element-1">
+  <g font-size="3.88" font-family="'PT Sans','Helvetica Neue','Helvetica',sans-serif" fill="#564A55" stroke="none" id="fig-cbea5c639b7544818e70b69255f296ed-element-2">
+    <text x="103.38" y="119" text-anchor="middle">x</text>
+  </g>
+  <g class="guide xlabels" font-size="2.82" font-family="'PT Sans Caption','Helvetica Neue','Helvetica',sans-serif" fill="#6C606B" id="fig-cbea5c639b7544818e70b69255f296ed-element-3">
+    <text x="24.53" y="89.84" text-anchor="end" dy="0.35em" transform="rotate(-90, 24.53, 89.84)">indexing</text>
+    <text x="37.67" y="89.84" text-anchor="end" dy="0.35em" transform="rotate(-90, 37.67, 89.84)">range_indexing</text>
+    <text x="50.81" y="89.84" text-anchor="end" dy="0.35em" transform="rotate(-90, 50.81, 89.84)">scalar_add</text>
+    <text x="63.95" y="89.84" text-anchor="end" dy="0.35em" transform="rotate(-90, 63.95, 89.84)">length</text>
+    <text x="77.09" y="89.84" text-anchor="end" dy="0.35em" transform="rotate(-90, 77.09, 89.84)">nrun</text>
+    <text x="90.23" y="89.84" text-anchor="end" dy="0.35em" transform="rotate(-90, 90.23, 89.84)">mean</text>
+    <text x="103.38" y="89.84" text-anchor="end" dy="0.35em" transform="rotate(-90, 103.38, 89.84)">max</text>
+    <text x="116.52" y="89.84" text-anchor="end" dy="0.35em" transform="rotate(-90, 116.52, 89.84)">width</text>
+    <text x="129.66" y="89.84" text-anchor="end" dy="0.35em" transform="rotate(-90, 129.66, 89.84)">last</text>
+    <text x="142.8" y="89.84" text-anchor="end" dy="0.35em" transform="rotate(-90, 142.8, 89.84)">first</text>
+    <text x="155.94" y="89.84" text-anchor="end" dy="0.35em" transform="rotate(-90, 155.94, 89.84)">add_two_rles</text>
+    <text x="169.08" y="89.84" text-anchor="end" dy="0.35em" transform="rotate(-90, 169.08, 89.84)">disjoin</text>
+    <text x="182.22" y="89.84" text-anchor="end" dy="0.35em" transform="rotate(-90, 182.22, 89.84)">which</text>
+  </g>
+  <g class="guide colorkey" id="fig-cbea5c639b7544818e70b69255f296ed-element-4">
+    <g font-size="2.82" font-family="'PT Sans','Helvetica Neue','Helvetica',sans-serif" fill="#4C404B" id="fig-cbea5c639b7544818e70b69255f296ed-element-5">
+      <text x="193.11" y="46.61" dy="0.35em">10</text>
+      <text x="193.11" y="52.47" dy="0.35em">5</text>
+      <text x="193.11" y="64.2" dy="0.35em">-5</text>
+      <text x="193.11" y="40.74" dy="0.35em">15</text>
+      <text x="193.11" y="58.34" dy="0.35em">0</text>
+      <text x="193.11" y="75.93" dy="0.35em">-15</text>
+      <text x="193.11" y="70.07" dy="0.35em">-10</text>
+    </g>
+    <g shape-rendering="crispEdges" stroke="none" id="fig-cbea5c639b7544818e70b69255f296ed-element-6">
+      <rect x="190.79" y="75.05" width="1.31" height="0.88" fill="#004D84"/>
+      <rect x="190.79" y="74.17" width="1.31" height="0.88" fill="#005B8D"/>
+      <rect x="190.79" y="73.29" width="1.31" height="0.88" fill="#006995"/>
+      <rect x="190.79" y="72.41" width="1.31" height="0.88" fill="#00769D"/>
+      <rect x="190.79" y="71.54" width="1.31" height="0.88" fill="#0083A3"/>
+      <rect x="190.79" y="70.66" width="1.31" height="0.88" fill="#278FA9"/>
+      <rect x="190.79" y="69.78" width="1.31" height="0.88" fill="#409BAF"/>
+      <rect x="190.79" y="68.9" width="1.31" height="0.88" fill="#55A7B5"/>
+      <rect x="190.79" y="68.02" width="1.31" height="0.88" fill="#69B2BA"/>
+      <rect x="190.79" y="67.14" width="1.31" height="0.88" fill="#7BBCC0"/>
+      <rect x="190.79" y="66.26" width="1.31" height="0.88" fill="#8DC6C5"/>
+      <rect x="190.79" y="65.38" width="1.31" height="0.88" fill="#9ED0CB"/>
+      <rect x="190.79" y="64.5" width="1.31" height="0.88" fill="#A5CFC7"/>
+      <rect x="190.79" y="63.62" width="1.31" height="0.88" fill="#ABCEC4"/>
+      <rect x="190.79" y="62.74" width="1.31" height="0.88" fill="#B1CCC2"/>
+      <rect x="190.79" y="61.86" width="1.31" height="0.88" fill="#B5CCC1"/>
+      <rect x="190.79" y="60.98" width="1.31" height="0.88" fill="#B7CBBF"/>
+      <rect x="190.79" y="60.1" width="1.31" height="0.88" fill="#B9CBBD"/>
+      <rect x="190.79" y="59.22" width="1.31" height="0.88" fill="#BBCBBB"/>
+      <rect x="190.79" y="58.34" width="1.31" height="0.88" fill="#BDCABA"/>
+      <rect x="190.79" y="57.46" width="1.31" height="0.88" fill="#BFCAB8"/>
+      <rect x="190.79" y="56.58" width="1.31" height="0.88" fill="#C2C9B7"/>
+      <rect x="190.79" y="55.7" width="1.31" height="0.88" fill="#C4C9B6"/>
+      <rect x="190.79" y="54.82" width="1.31" height="0.88" fill="#C6C8B5"/>
+      <rect x="190.79" y="53.94" width="1.31" height="0.88" fill="#C9C7B4"/>
+      <rect x="190.79" y="53.06" width="1.31" height="0.88" fill="#CCC7B2"/>
+      <rect x="190.79" y="52.18" width="1.31" height="0.88" fill="#CFC6AE"/>
+      <rect x="190.79" y="51.3" width="1.31" height="0.88" fill="#D4C5AA"/>
+      <rect x="190.79" y="50.42" width="1.31" height="0.88" fill="#D8C3A6"/>
+      <rect x="190.79" y="49.54" width="1.31" height="0.88" fill="#D3B79A"/>
+      <rect x="190.79" y="48.66" width="1.31" height="0.88" fill="#CDAB8E"/>
+      <rect x="190.79" y="47.78" width="1.31" height="0.88" fill="#C89E82"/>
+      <rect x="190.79" y="46.9" width="1.31" height="0.88" fill="#C19177"/>
+      <rect x="190.79" y="46.02" width="1.31" height="0.88" fill="#BA836C"/>
+      <rect x="190.79" y="45.14" width="1.31" height="0.88" fill="#B27563"/>
+      <rect x="190.79" y="44.26" width="1.31" height="0.88" fill="#AA665A"/>
+      <rect x="190.79" y="43.38" width="1.31" height="0.88" fill="#A05752"/>
+      <rect x="190.79" y="42.5" width="1.31" height="0.88" fill="#96484A"/>
+      <rect x="190.79" y="41.62" width="1.31" height="0.88" fill="#8B3844"/>
+      <rect x="190.79" y="40.74" width="1.31" height="0.88" fill="#7E273E"/>
+      <g stroke="#FFFFFF" stroke-width="0.2" id="fig-cbea5c639b7544818e70b69255f296ed-element-7">
+        <path fill="none" d="M190.79,46.61 L 192.11 46.61"/>
+        <path fill="none" d="M190.79,52.47 L 192.11 52.47"/>
+        <path fill="none" d="M190.79,64.2 L 192.11 64.2"/>
+        <path fill="none" d="M190.79,40.74 L 192.11 40.74"/>
+        <path fill="none" d="M190.79,58.34 L 192.11 58.34"/>
+        <path fill="none" d="M190.79,75.93 L 192.11 75.93"/>
+        <path fill="none" d="M190.79,70.07 L 192.11 70.07"/>
+      </g>
+    </g>
+    <g fill="#362A35" font-size="3.88" font-family="'PT Sans','Helvetica Neue','Helvetica',sans-serif" stroke="none" id="fig-cbea5c639b7544818e70b69255f296ed-element-8">
+      <text x="190.79" y="36.74">Color</text>
+    </g>
+  </g>
+  <g clip-path="url(#fig-cbea5c639b7544818e70b69255f296ed-element-10)" id="fig-cbea5c639b7544818e70b69255f296ed-element-9">
+    <g pointer-events="visible" opacity="1" fill="none" stroke="none" class="guide background" id="fig-cbea5c639b7544818e70b69255f296ed-element-11">
+      <rect x="17.96" y="12.61" width="170.83" height="76.23"/>
+    </g>
+    <g class="guide ygridlines xfixed" stroke-dasharray="0.5,0.5" stroke-width="0.2" stroke="#D0D0E0" id="fig-cbea5c639b7544818e70b69255f296ed-element-12">
+      <path fill="none" d="M17.96,86.84 L 188.79 86.84"/>
+      <path fill="none" d="M17.96,72.4 L 188.79 72.4"/>
+      <path fill="none" d="M17.96,57.95 L 188.79 57.95"/>
+      <path fill="none" d="M17.96,43.5 L 188.79 43.5"/>
+      <path fill="none" d="M17.96,29.06 L 188.79 29.06"/>
+      <path fill="none" d="M17.96,14.61 L 188.79 14.61"/>
+    </g>
+    <g class="guide xgridlines yfixed" stroke-dasharray="0.5,0.5" stroke-width="0.2" stroke="#D0D0E0" id="fig-cbea5c639b7544818e70b69255f296ed-element-13">
+      <path fill="none" d="M31.1,12.61 L 31.1 88.84"/>
+      <path fill="none" d="M44.24,12.61 L 44.24 88.84"/>
+      <path fill="none" d="M57.38,12.61 L 57.38 88.84"/>
+      <path fill="none" d="M70.52,12.61 L 70.52 88.84"/>
+      <path fill="none" d="M83.66,12.61 L 83.66 88.84"/>
+      <path fill="none" d="M96.81,12.61 L 96.81 88.84"/>
+      <path fill="none" d="M109.95,12.61 L 109.95 88.84"/>
+      <path fill="none" d="M123.09,12.61 L 123.09 88.84"/>
+      <path fill="none" d="M136.23,12.61 L 136.23 88.84"/>
+      <path fill="none" d="M149.37,12.61 L 149.37 88.84"/>
+      <path fill="none" d="M162.51,12.61 L 162.51 88.84"/>
+      <path fill="none" d="M175.65,12.61 L 175.65 88.84"/>
+    </g>
+    <g class="plotpanel" id="fig-cbea5c639b7544818e70b69255f296ed-element-14">
+      <g class="xfixed" stroke-width="0.3" stroke="#000000" id="fig-cbea5c639b7544818e70b69255f296ed-element-15">
+        <path fill="none" d="M17.96,72.4 L 188.79 72.4"/>
+      </g>
+      <g stroke="none" fill="#00BFFF" shape-rendering="crispEdges" id="fig-cbea5c639b7544818e70b69255f296ed-element-16">
+        <g class="geometry" id="fig-cbea5c639b7544818e70b69255f296ed-element-17">
+          <rect x="17.96" y="23.36" width="13.14" height="49.03" fill="#5A0030"/>
+          <rect x="31.1" y="42.4" width="13.14" height="29.99" fill="#BA836C"/>
+          <rect x="44.24" y="53.31" width="13.14" height="19.09" fill="#D8C2A5"/>
+          <rect x="57.38" y="43.61" width="13.14" height="28.78" fill="#BE8B72"/>
+          <rect x="70.52" y="43.81" width="13.14" height="28.59" fill="#BF8C73"/>
+          <rect x="83.66" y="62.71" width="13.14" height="9.69" fill="#C8C7B5"/>
+          <rect x="96.81" y="53.73" width="13.14" height="18.66" fill="#D8C4A7"/>
+          <rect x="109.95" y="64.9" width="13.14" height="7.49" fill="#C6C8B5"/>
+          <rect x="123.09" y="41.01" width="13.14" height="31.38" fill="#B57A66"/>
+          <rect x="136.23" y="60.19" width="13.14" height="12.2" fill="#CBC7B2"/>
+          <rect x="149.37" y="65.68" width="13.14" height="6.72" fill="#C5C8B6"/>
+          <rect x="162.51" y="43.69" width="13.14" height="28.7" fill="#BE8B72"/>
+          <rect x="175.65" y="72.4" width="13.14" height="2" fill="#BCCABA"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g class="guide ylabels" font-size="2.82" font-family="'PT Sans Caption','Helvetica Neue','Helvetica',sans-serif" fill="#6C606B" id="fig-cbea5c639b7544818e70b69255f296ed-element-18">
+    <text x="16.96" y="86.84" text-anchor="end" dy="0.35em">-5</text>
+    <text x="16.96" y="72.4" text-anchor="end" dy="0.35em">0</text>
+    <text x="16.96" y="57.95" text-anchor="end" dy="0.35em">5</text>
+    <text x="16.96" y="43.5" text-anchor="end" dy="0.35em">10</text>
+    <text x="16.96" y="29.06" text-anchor="end" dy="0.35em">15</text>
+    <text x="16.96" y="14.61" text-anchor="end" dy="0.35em">20</text>
+  </g>
+  <g font-size="3.88" font-family="'PT Sans','Helvetica Neue','Helvetica',sans-serif" fill="#564A55" stroke="none" id="fig-cbea5c639b7544818e70b69255f296ed-element-19">
+    <text x="8.81" y="48.73" text-anchor="middle" dy="0.35em" transform="rotate(-90, 8.81, 50.73)">Elapsed Time: log2(R/julia)</text>
+  </g>
+  <g font-size="3.88" font-family="'PT Sans','Helvetica Neue','Helvetica',sans-serif" fill="#564A55" stroke="none" id="fig-cbea5c639b7544818e70b69255f296ed-element-20">
+    <text x="103.38" y="10.61" text-anchor="middle">Relative Performance of R and Julia Rle Vectors</text>
+  </g>
+</g>
+<defs>
+<clipPath id="fig-cbea5c639b7544818e70b69255f296ed-element-10">
+  <path d="M17.96,12.61 L 188.79 12.61 188.79 88.84 17.96 88.84" />
+</clipPath
+></defs>
+</svg>
