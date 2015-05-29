@@ -71,10 +71,10 @@ Naming for some of these functions is difficult given that many useful names are
 `RleVectors` has been extensively profiled and somewhat optimized. Please see the benchmarking section for the evolution over time and comparisons to like operations in R.
 
 ### Benchmarks
-![Benchmarking results](benchmark/plots/benchmark_rle_vectors.2015-04-26.svg)
+![Benchmarking results](/benchmark/plots/benchmark_rle_vectors.2015-04-26.svg)
 
 ### Optimization progress
-![Optimization progress](benchmark/plots/benchmark_rle_vectors.2015-04-26.timeline.svg)
+![Optimization progress](/benchmark/plots/benchmark_rle_vectors.2015-04-26.timeline.svg)
 
 ## Memory considerations
 Data compression is a secondary benefit of `RleVector`s, but it can be convenient. Generally run ends are stored as Int64. However, if further memory savings are desired, consider smaller and unsigned types. Uint32 is sufficient to hold the length of the human genome and Uint16 can hold the length of the longest human chromosome.
@@ -82,7 +82,4 @@ Data compression is a secondary benefit of `RleVector`s, but it can be convenien
 `RleVector([5.1,2.9,100.7], Uint16[4,8,22])`
 
 
-## Installation
-No git at this point, so no `Pkg.add("RleVectors")`, sorry.
 
-`svn co http://resscm.gene.com/bioinfo/projects/julia/trunk/RleVectors ~/.julia/v3/RleVectors`
