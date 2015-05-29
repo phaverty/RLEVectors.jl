@@ -82,7 +82,4 @@ Data compression is a secondary benefit of `RleVector`s, but it can be convenien
 `RleVector([5.1,2.9,100.7], Uint16[4,8,22])`
 
 
-## Installation
-No git at this point, so no `Pkg.add("RleVectors")`, sorry.
 
-`svn co http://resscm.gene.com/bioinfo/projects/julia/trunk/RleVectors ~/.julia/v3/RleVectors`
