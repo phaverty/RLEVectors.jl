@@ -46,7 +46,7 @@ function getindex(rle::RleVector, i::Integer)
   return( rle.runvalues[run] )
 end
 
-function setindex!(rle::RleVector, value, i::Integer)
+function setindex!{T1, T2}(rle::RleVector{T1, T2}, value::T1, i::Integer)
   run = ind2run(rle,i)
   runvalue = rle.runvalues[run]
   runend = rle.runends[run]
@@ -108,7 +108,7 @@ function getindex(rle::RleVector, i::AbstractArray)
   return(rval)
 end
 
-function setindex!(rle::RleVector, values::AbstractArray, indices::AbstractArray)
+function setindex!{T1,T2}(rle::RleVector{T1,T2}, values::Vector{T1}, indices::AbstractArray)
   length(values) != length(indices) && throw(BoundsError("setindex! requires one value for each indexed element."))
   for (i,v) in zip(indices,values)
     @inbounds rle[i] = v
@@ -116,7 +116,7 @@ function setindex!(rle::RleVector, values::AbstractArray, indices::AbstractArray
   return(rle)
 end
 
-function setindex!(rle::RleVector, value, indices::AbstractArray)
+function setindex!{T1,T2}(rle::RleVector{T1,T2}, value::T1, indices::AbstractArray)
   value = convert(eltype(rle),value) # Raise error, if necessary, before we go modifying anything
   for v in indices
     @inbounds rle[v] = value
@@ -139,7 +139,7 @@ function getindex(rle::RleVector, indices::UnitRange)
   return(rval)
 end
 
-function setindex!(rle::RleVector, value, indices::UnitRange)
+function setindex!{T1, T2}(rle::RleVector{T1, T2}, value::T1, indices::UnitRange)
   runs = ind2run(rle,indices)
   left_run = first(runs)
   right_run = last(runs)

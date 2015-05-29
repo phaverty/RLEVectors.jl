@@ -15,7 +15,7 @@ x = RleVector(["a","b","c","d","d","d","e","f"],[3,6,9,12,15,18,21,24])
 y = RleVector(["a","b","c","d","e","f"],[3,6,9,18,21,24])
 @test x.runvalues == y.runvalues
 @test x.runends == y.runends
-x = RleVector(BitVector(5),[1:5])
+x = RleVector(BitVector(5),collect(1:5))
 y = RleVector([false],[5])
 @test x.runvalues == y.runvalues
 @test x.runends == y.runends

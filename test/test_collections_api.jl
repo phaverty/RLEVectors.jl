@@ -81,9 +81,9 @@ x = RleVector([1,1,2,2,3,3,4,4,5,5])
 x = RleVector([1,1,2,2,3,3,4,4,5,5])
 @test splice!(x,5,RleVector([10,11,12])) == 3
 @test x == RleVector([1,1,2,2,10,11,12,3,4,4,5,5])
-x = RleVector([1:10])
+x = RleVector(collect(1:10))
 @test splice!(x,10,[100]) == 10
-@test x == RleVector([1:9,100])
+@test x == RleVector([collect(1:9);100])
 
 # splice! adding
 x = RleVector([1,1,2,2,3,3,4,4,5,5])

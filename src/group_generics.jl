@@ -117,19 +117,19 @@ end
 function findin(x::RleVector,y::RleVector)
   runs = findin(x.runvalues,y.runvalues)
   re = x.runends
-  vcat( [ Int[rfirst(x,i):re[i]] for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
+  vcat( [ collect( rfirst(x,i):re[i] ) for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
 function findin(x::RleVector,y::UnitRange)
   runs = findin(x.runvalues,y)
   re = x.runends
-  vcat( [ Int[rfirst(x,i):re[i]] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
+  vcat( [ collect( rfirst(x,i):re[i] ) for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
 function findin(x::RleVector,y)
   runs = findin(x.runvalues,y)
   re = x.runends
-  vcat( [ Int[rfirst(x,i):re[i]] for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
+  vcat( [ collectx( rfirst(x,i):re[i] ) for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
 function findin(x,y::RleVector)

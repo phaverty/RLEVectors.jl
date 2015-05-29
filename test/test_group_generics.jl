@@ -22,15 +22,15 @@ x = RleVector(vec)
 @test findmax(RleVector([1,2,3,4,1,1])) == findmax([1,2,3,4,1,1])
 
 # indexin
-foo = IntegerRle(Int32[ 1:1000 ], Int32[5:5:5000])
+foo = IntegerRle( collect(1:1000), collect(5:5:5000))
 x = RleVector([2,2,4,4,3,3])
 y = RleVector([0,0,0,3,3,3,4,4])
 @test indexin(x,y) == RleVector([0,8,6],[2,4,6])
-@test indexin(x,[3:11]) == RleVector([0,2,1],[2,4,6])
+@test indexin(x,collect(3:11)) == RleVector([0,2,1],[2,4,6])
 @test indexin([200,200,1,1,5,5],foo) == [1000,1000,5,5,25,25]
 
 # findin
-@test findin(RleVector([1,1,2,2,3,3]), RleVector([3:10])) == [5:6]
+@test findin(RleVector([1,1,2,2,3,3]), RleVector(collect(3:10))) == collect(5:6)
 @test findin(RleVector([1,1,2,2,3,3]), 3:10) == [5:6]
 @test findin(RleVector([1,1,2,2,3,3]), [3:10]) == [5:6]
 @test findin([3,4,5],RleVector([1:4])) == [1,2]
