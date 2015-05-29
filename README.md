@@ -71,7 +71,7 @@ Naming for some of these functions is difficult given that many useful names are
 `RleVectors` has been extensively profiled and somewhat optimized. Please see the benchmarking section for the evolution over time and comparisons to like operations in R.
 
 ### Benchmarks
-![Benchmarking results](/benchmark/plots/benchmark_rle_vectors.2015-04-26.svg)
+![Benchmarking results](phaverty/RleVectors.jl/benchmark/plots/benchmark_rle_vectors.2015-04-26.svg)
 
 ### Optimization progress
 ![Optimization progress](/benchmark/plots/benchmark_rle_vectors.2015-04-26.timeline.svg)
