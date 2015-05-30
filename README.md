@@ -41,8 +41,7 @@ this plays out.
 `collect(x)`
 
 ### Describing
-RLEVectors implement the standard Vector API and also other methods for describing the ranges and values:
-
+`RLEVectors` implement the standard Vector API and also other methods for describing the ranges and values:
 
 - `length(x)` # The full length of the vector, uncompressed
 - `nrun(x)` # The number of runs in the vector
