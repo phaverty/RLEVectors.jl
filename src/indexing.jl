@@ -2,7 +2,7 @@
 
 ## locate runs
 # get index of run corresponding to the i'th value in the expanded runs
-function ind2run(rle::RleVector, i::Integer)
+function ind2run(rle::RLEVector, i::Integer)
   re = rle.runends
   n = length(re)
   run = searchsortedfirst(re,i,1,n, Base.Forward)
@@ -10,7 +10,7 @@ function ind2run(rle::RleVector, i::Integer)
   return(run)
 end
 
-function ind2run(rle::RleVector,i::UnitRange)
+function ind2run(rle::RLEVector,i::UnitRange)
   re = rle.runends
   n = length(re)
   left_run = searchsortedfirst(re,first(i),1,n, Base.Forward)
@@ -21,14 +21,14 @@ end
 
 # get index of the run corresponding to the i'th value in the expanded runs, index in run and remainder of run
 #  (runindex, index_in_run, values_in_run_after_i)
-function ind2runcontext(rle::RleVector, i::Integer)
-  run = ind2run(rle::RleVector, i::Integer)
+function ind2runcontext(rle::RLEVector, i::Integer)
+  run = ind2run(rle::RLEVector, i::Integer)
   runend = rle.runends[run]
   ind_in_run = run == 1 ? i : i - rle.runends[run-1]
   (run, ind_in_run, runend - i)
 end
 
-function ind2runcontext(rle::RleVector, i::UnitRange)
+function ind2runcontext(rle::RLEVector, i::UnitRange)
   s = start(i)
   e = last(i)
   n = length(rle)
@@ -41,12 +41,12 @@ function ind2runcontext(rle::RleVector, i::UnitRange)
 end
 
 # scalar indexing case
-function getindex(rle::RleVector, i::Integer)
+function getindex(rle::RLEVector, i::Integer)
   run = ind2run(rle,i)
   return( rle.runvalues[run] )
 end
 
-function setindex!{T1, T2}(rle::RleVector{T1, T2}, value::T1, i::Integer)
+function setindex!{T1, T2}(rle::RLEVector{T1, T2}, value::T1, i::Integer)
   run = ind2run(rle,i)
   runvalue = rle.runvalues[run]
   runend = rle.runends[run]
@@ -93,14 +93,14 @@ function setindex!{T1, T2}(rle::RleVector{T1, T2}, value::T1, i::Integer)
   return(rle)
 end
 
-function setrun!(rle::RleVector, value, i::Integer)
+function setrun!(rle::RLEVector, value, i::Integer)
   run = ind2run(rle,i)
   rle.runvalues[run] = value
   return(rle)
 end
 
 # vector case
-function getindex(rle::RleVector, i::AbstractArray)
+function getindex(rle::RLEVector, i::AbstractArray)
   rval = similar(rle.runvalues, length(i))
   for v in 1:length(i)
     rval[v] = rle[i[v]]
@@ -108,7 +108,7 @@ function getindex(rle::RleVector, i::AbstractArray)
   return(rval)
 end
 
-function setindex!{T1,T2}(rle::RleVector{T1,T2}, values::Vector{T1}, indices::AbstractArray)
+function setindex!{T1,T2}(rle::RLEVector{T1,T2}, values::Vector{T1}, indices::AbstractArray)
   length(values) != length(indices) && throw(BoundsError("setindex! requires one value for each indexed element."))
   for (i,v) in zip(indices,values)
     @inbounds rle[i] = v
@@ -116,7 +116,7 @@ function setindex!{T1,T2}(rle::RleVector{T1,T2}, values::Vector{T1}, indices::Ab
   return(rle)
 end
 
-function setindex!{T1,T2}(rle::RleVector{T1,T2}, value::T1, indices::AbstractArray)
+function setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::T1, indices::AbstractArray)
   value = convert(eltype(rle),value) # Raise error, if necessary, before we go modifying anything
   for v in indices
     @inbounds rle[v] = value
@@ -125,7 +125,7 @@ function setindex!{T1,T2}(rle::RleVector{T1,T2}, value::T1, indices::AbstractArr
 end
 
 # Range case optimization
-function getindex(rle::RleVector, indices::UnitRange)
+function getindex(rle::RLEVector, indices::UnitRange)
   runs = ind2run(rle,indices)
   nrun = length(runs)
   rv = rle.runvalues[runs]
@@ -135,11 +135,11 @@ function getindex(rle::RleVector, indices::UnitRange)
     @inbounds re[i] = rle.runends[r] - offset
   end
   re[nrun] = last(indices) - offset # length(indices)
-  rval = RleVector{eltype(rv),eltype(re)}(rv,re)
+  rval = RLEVector{eltype(rv),eltype(re)}(rv,re)
   return(rval)
 end
 
-function setindex!{T1, T2}(rle::RleVector{T1, T2}, value::T1, indices::UnitRange)
+function setindex!{T1, T2}(rle::RLEVector{T1, T2}, value::T1, indices::UnitRange)
   runs = ind2run(rle,indices)
   left_run = first(runs)
   right_run = last(runs)
@@ -196,21 +196,21 @@ function setindex!{T1, T2}(rle::RleVector{T1, T2}, value::T1, indices::UnitRange
   return(rle)
 end
 
-function head(x::RleVector,l::Integer=6)
+function head(x::RLEVector,l::Integer=6)
     collect(x[ 1:l ])
 end
 
-function tail(x::RleVector,l::Integer=6)
+function tail(x::RLEVector,l::Integer=6)
     collect( x[ length(x)-(l-1):end ] )
 end
 
 ### Iterator(s)
 
-function start(rle::RleVector)
+function start(rle::RLEVector)
   (1,1)
 end
 
-function next(rle::RleVector, state)
+function next(rle::RLEVector, state)
   if state[2] == rle.runends[ state[1] ]
     newstate = (state[1] + 1, state[2] + 1)
   else
@@ -219,10 +219,10 @@ function next(rle::RleVector, state)
   return( (rle.runvalues[state[1]], newstate) )
 end
 
-function done(rle::RleVector, state)
+function done(rle::RLEVector, state)
   state[1] > nrun(rle)
 end
 
-function endof(rle::RleVector)
+function endof(rle::RLEVector)
   length(rle)
 end

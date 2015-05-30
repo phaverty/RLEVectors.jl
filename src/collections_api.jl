@@ -1,10 +1,10 @@
 ### Vector/Collections API
 
-function vcat(x::RleVector, y::RleVector)
-  RleVector( vcat(x.runvalues, y.runvalues), vcat(x.runends, y.runends + length(x)))
+function vcat(x::RLEVector, y::RLEVector)
+  RLEVector( vcat(x.runvalues, y.runvalues), vcat(x.runends, y.runends + length(x)))
 end
 
-function pop!(x::RleVector)
+function pop!(x::RLEVector)
   runcount = nrun(x)
   isempty(x) && throw(ArgumentError("array must be non-empty"))
   item = x.runvalues[end]
@@ -16,7 +16,7 @@ function pop!(x::RleVector)
   return(item)
 end
 
-function push!{T,T2 <: Integer}(x::RleVector{T,T2},item)
+function push!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
   item = convert(T,item) # Copying how base does it for arrays
   if item == x.runvalues[end]
     x.runends[end] += 1
@@ -27,7 +27,7 @@ function push!{T,T2 <: Integer}(x::RleVector{T,T2},item)
   return(x)
 end
 
-function shift!(x::RleVector)
+function shift!(x::RLEVector)
   isempty(x) && throw(ArgumentError("array must be non-empty"))
   item = x.runvalues[1]
   x.runends -= 1
@@ -38,7 +38,7 @@ function shift!(x::RleVector)
   return(item)
 end
 
-function shove!{T,T2 <: Integer}(x::RleVector{T,T2},item)
+function shove!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
   item = convert(T,item) # Copying how base does it for arrays
   x.runends += 1
   if item != x.runvalues[1]
@@ -47,9 +47,9 @@ function shove!{T,T2 <: Integer}(x::RleVector{T,T2},item)
   end
   return(x)
 end
-unshift!{T,T2 <: Integer}(x::RleVector{T,T2},item) = shove(x,item) # Does unshift come from perl? Isn't Larry Wall a linguist? C'mon!
+unshift!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = shove(x,item) # Does unshift come from perl? Isn't Larry Wall a linguist? C'mon!
 
-function insert!{T,T2 <: Integer}(x::RleVector{T,T2},i::Integer,item)
+function insert!{T,T2 <: Integer}(x::RLEVector{T,T2},i::Integer,item)
   if i == length(x) + 1
     push!(x,item)
     return(x)
@@ -75,7 +75,7 @@ function insert!{T,T2 <: Integer}(x::RleVector{T,T2},i::Integer,item)
   return(x)
 end
 
-function deleterun!(x::RleVector,i::Integer)
+function deleterun!(x::RLEVector,i::Integer)
   x.runends[i:end] -= rwidth(x,i)
   if (i > 1 && i < nrun(x) && x.runvalues[i-1] == x.runvalues[i+1])
     splice!(x.runvalues,(i-1):i)
@@ -87,7 +87,7 @@ function deleterun!(x::RleVector,i::Integer)
   return(x)
 end
 
-function decrement_run!(x::RleVector,run::Integer)
+function decrement_run!(x::RLEVector,run::Integer)
   if rwidth(x,run) == 1
     deleterun!(x,run)
   else
@@ -96,13 +96,13 @@ function decrement_run!(x::RleVector,run::Integer)
   return(x)
 end
 
-function deleteat!(x::RleVector,i::Integer)
+function deleteat!(x::RLEVector,i::Integer)
   run = ind2run(x,i)
   decrement_run!(x,run)
 end
 
-_default_splice = RleVector(None[],Int64[])
-function splice!(x::RleVector, i::Integer, ins::RleVector=_default_splice)
+_default_splice = RLEVector(None[],Int64[])
+function splice!(x::RLEVector, i::Integer, ins::RLEVector=_default_splice)
   if i < 1 || i > length(x)
     throw(BoundsError())
   end
@@ -130,7 +130,7 @@ function splice!(x::RleVector, i::Integer, ins::RleVector=_default_splice)
   return(current)
 end
 
-function splice!(x::RleVector, index::Range, ins::RleVector=_default_splice) # Can I do index::Union(Integer,UnitRange) here to have just one method?
+function splice!(x::RLEVector, index::Range, ins::RLEVector=_default_splice) # Can I do index::Union(Integer,UnitRange) here to have just one method?
   i_left = start(index)
   i_right = last(index)
   if i_left < 1 || i_right > length(x)
@@ -160,16 +160,16 @@ function splice!(x::RleVector, index::Range, ins::RleVector=_default_splice) # C
   return(current)
 end
 
-function splice!(x::RleVector, i::Integer, ins::AbstractArray)
-  splice!(x,i,RleVector(ins))
+function splice!(x::RLEVector, i::Integer, ins::AbstractArray)
+  splice!(x,i,RLEVector(ins))
 end
 
-function splice!(x::RleVector, i::Range, ins::AbstractArray)
-  splice!(x,i,RleVector(ins))
+function splice!(x::RLEVector, i::Range, ins::AbstractArray)
+  splice!(x,i,RLEVector(ins))
 end
 
 # Appended space initialized with zero unlike base array
-function resize!(x::RleVector, nl::Integer) # Based on base version for array
+function resize!(x::RLEVector, nl::Integer) # Based on base version for array
   l = length(x)
   if nl > l
     push!(x.runends,nl)
@@ -184,7 +184,7 @@ function resize!(x::RleVector, nl::Integer) # Based on base version for array
   return(x)
 end
 
-function empty!(x::RleVector)
+function empty!(x::RLEVector)
   empty!(x.runvalues)
   empty!(x.runends)
   return(x)

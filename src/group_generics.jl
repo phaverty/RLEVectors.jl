@@ -37,106 +37,106 @@ const set_group = [:setdiff, :symdiff, :issubset, :in, :union]
 
 const set_group_w_splat = [:union]
 
-### Operators, methods that take two arguments and return a modified RleVector
-function ^(x::RleVector,y::Integer) # Necessary to prevent an ambiguity warning
+### Operators, methods that take two arguments and return a modified RLEVector
+function ^(x::RLEVector,y::Integer) # Necessary to prevent an ambiguity warning
   rv = ^(x.runvalues,y)
-  RleVector(rv,x.runends)
+  RLEVector(rv,x.runends)
 end
 
 for op in ops_group
   @eval begin
     # Rle, Rle
-    function ($op)(x::RleVector, y::RleVector)
-      length(x) != length(y) && error("RleVectors must be of the same length for this operation.")
+    function ($op)(x::RLEVector, y::RLEVector)
+      length(x) != length(y) && error("RLEVectors must be of the same length for this operation.")
       runends = disjoin(x,y)
       @inbounds runvals = [ ($op)(x[i], y[i]) for i in runends]
-      RleVector( runvals, runends )
+      RLEVector( runvals, runends )
     end
     # Rle, scalar
-    function ($op)(x::RleVector,y::Number)
+    function ($op)(x::RLEVector,y::Number)
       rv = ($op)(x.runvalues,y)
-      RleVector(rv,x.runends)
+      RLEVector(rv,x.runends)
     end
     # Number, Rle
-    function ($op)(y::Number, x::RleVector)
+    function ($op)(y::Number, x::RLEVector)
       rv = ($op)(y,x.runvalues)
-      RleVector(rv,x.runends)
+      RLEVector(rv,x.runends)
     end
   end
 end
 
-## Methods that delegate to the runvalues and return an RleVector
-## Methods that take one argument, an RleVector, and delegate to rle.runvalues and return an RleVector
+## Methods that delegate to the runvalues and return an RLEVector
+## Methods that take one argument, an RLEVector, and delegate to rle.runvalues and return an RLEVector
 for op in math_group
   @eval begin
-    function ($op)(x::RleVector)
+    function ($op)(x::RLEVector)
       rv = ($op)(x.runvalues)
-      RleVector(rv, x.runends)
+      RLEVector(rv, x.runends)
     end
   end
 end
 
-## Methods that take one argument, an RleVector, and delegate to rle.runvalues and return something other than an RleVector
+## Methods that take one argument, an RLEVector, and delegate to rle.runvalues and return something other than an RLEVector
 for op in setdiff(summary_group,[:sum,:prod])
   @eval begin
-    ($op)(x::RleVector) = ($op)(x.runvalues)
+    ($op)(x::RLEVector) = ($op)(x.runvalues)
   end
 end
 
-## Methods that take two arguments, delegate to rle.runvalues and return something other than an RleVector
+## Methods that take two arguments, delegate to rle.runvalues and return something other than an RLEVector
 # for op in set_group
 #   @eval begin
-#     ($op){T1,T2<:Integer,T3,T4<:Integer}(x::RleVector{T1,T2}, y::RleVector{T3,T4}) = ($op)(x.runvalues,y.runvalues)
-#     ($op)(x::RleVector, y::Any) = ($op)(x.runvalues,y)
-#     ($op)(y::Any, x::RleVector) = ($op)(y, x.runvalues)
+#     ($op){T1,T2<:Integer,T3,T4<:Integer}(x::RLEVector{T1,T2}, y::RLEVector{T3,T4}) = ($op)(x.runvalues,y.runvalues)
+#     ($op)(x::RLEVector, y::Any) = ($op)(x.runvalues,y)
+#     ($op)(y::Any, x::RLEVector) = ($op)(y, x.runvalues)
 #   end
 # end
 
 # Defaulting to fun(itr) for prod, sumabs, sumabs2, count
 for op in [:findmin, :findmax]
   @eval begin
-    function ($op)(x::RleVector)
+    function ($op)(x::RLEVector)
       m = ($op)(x.runvalues)
       (m[1], rfirst(x,m[2]))
     end
   end
 end
 
-function indexin(x::RleVector,y::RleVector)
-   RleVector( indexin(x.runvalues,y), x.runends)
+function indexin(x::RLEVector,y::RLEVector)
+   RLEVector( indexin(x.runvalues,y), x.runends)
 end
 
-function indexin(x::RleVector,y)
-  RleVector( indexin(x.runvalues,y), x.runends )
+function indexin(x::RLEVector,y)
+  RLEVector( indexin(x.runvalues,y), x.runends )
 end
 
-function indexin(x,y::RleVector)
+function indexin(x,y::RLEVector)
   rval = Int[ i == 0 ? 0 : y.runends[i] for i in indexin(x,y.runvalues) ]
 end
 
-function findin(x::RleVector,y::RleVector)
+function findin(x::RLEVector,y::RLEVector)
   runs = findin(x.runvalues,y.runvalues)
   re = x.runends
   vcat( [ collect( rfirst(x,i):re[i] ) for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
-function findin(x::RleVector,y::UnitRange)
+function findin(x::RLEVector,y::UnitRange)
   runs = findin(x.runvalues,y)
   re = x.runends
   vcat( [ collect( rfirst(x,i):re[i] ) for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
-function findin(x::RleVector,y)
+function findin(x::RLEVector,y)
   runs = findin(x.runvalues,y)
   re = x.runends
   vcat( [ collectx( rfirst(x,i):re[i] ) for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
-function findin(x,y::RleVector)
+function findin(x,y::RLEVector)
   findin(x,y.runvalues)
 end
 
-function median(x::RleVector; checknan::Bool=true)
+function median(x::RLEVector; checknan::Bool=true)
   len = length(x)
   len < 2 && return(x.runvalues)
   sorted = sort(x)
@@ -153,7 +153,7 @@ function median(x::RleVector; checknan::Bool=true)
   return(median)
 end
 
-function sum{T1,T2}(x::RleVector{T1,T2})
+function sum{T1,T2}(x::RLEVector{T1,T2})
   rval = zero(T1)
    @simd for i in 1:nrun(x)
     @inbounds rval = rval + (x.runvalues[i] * x.runends[i])
@@ -161,6 +161,6 @@ function sum{T1,T2}(x::RleVector{T1,T2})
   return(rval)
 end
 
-function mean{T1,T2}(x::RleVector{T1,T2})
+function mean{T1,T2}(x::RLEVector{T1,T2})
   rval = sum(x) / length(x)
 end

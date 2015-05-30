@@ -1,10 +1,10 @@
-site_name: RleVectors.jl
+site_name: RLEVectors.jl
 
 site_description: A vector type representing runs of values
 
 site_dir: html
 
-repo_url: http://resscm.gene.com/bioinfo/projects/julia/trunk/RleVectors/
+repo_url: http://resscm.gene.com/bioinfo/projects/julia/trunk/RLEVectors/
 
 pages:
 - [index.md, Introduction]

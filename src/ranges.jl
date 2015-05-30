@@ -33,7 +33,7 @@ function ree{T}(x::AbstractVector{T})
   return( (runvalues,runends) )
 end
 
-# Recompress runvalues and runends for an RleVector
+# Recompress runvalues and runends for an RLEVector
 function numruns(runvalues, runends)
   len = length(runends)
   length(runends) != len && throw(ArgumentError("runvalues and runends must be the same length."))
@@ -121,20 +121,20 @@ end
 
 # @doc """
 # # dijoin
-# Takes runends from two RleVectors, make one new runends breaking the pair into non-overlapping runs.
-# Basically, this is an optimized `sort!(unique([x,y])))`. This is useful when comparing two RleVector
+# Takes runends from two RLEVectors, make one new runends breaking the pair into non-overlapping runs.
+# Basically, this is an optimized `sort!(unique([x,y])))`. This is useful when comparing two RLEVector
 # objects. The values corresponding to each disjoint run in `x` and `y` can then be compared directly.
 
 # ## Arguments
-# * x, an RleVector
-# * y, an RleVector
+# * x, an RLEVector
+# * y, an RLEVector
 
 # ## Returns
 # An integer vector, of a type that is the promotion of the eltypes of the runends of x and y.
 
 # ## Examples
-# x = RleVector([1,1,2,2,3,3])
-# y = RleVector([1,1,1,2,3,4])
+# x = RLEVector([1,1,2,2,3,3])
+# y = RLEVector([1,1,1,2,3,4])
 # for (i,j) in disjoin(x,y)
 #   println(x[i] + y[j])
 # end

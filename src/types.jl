@@ -1,9 +1,9 @@
-### RleVectors Type
+### RLEVectors Type
 
 @doc """
-# RleVectors
-`RleVectors` is an alternate implementation of the Rle type from Bioconductor's
-IRanges package by H. Pages, P. Aboyoun and M. Lawrence. RleVectors represent a
+# RLEVectors
+`RLEVectors` is an alternate implementation of the Rle type from Bioconductor's
+IRanges package by H. Pages, P. Aboyoun and M. Lawrence. RLEVectors represent a
 vector with repeated values as the ordered set of values and repeat extents. In
 the field of genomics, data of various types measured across the ~3 billion
 letters in the human genome can often be represented in a few thousand runs.
@@ -11,67 +11,67 @@ It is useful to know the bounds of genome regions covered by these runs, the
 values associated with these runs, and to be able to perform various
 mathematical operations on these values.
 
-`RleVectors` can be created from a single vector or a vector of values and a
+`RLEVectors` can be created from a single vector or a vector of values and a
 vector of run ends. In either case runs of values or zero length runs will
-be compressed out. RleVectors can be expanded to a full vector like a
+be compressed out. RLEVectors can be expanded to a full vector like a
 `Range` with `collect`.
 
 ### Examples
- * `x = RleVector([1,1,2,2,3,3,4,4,4])`
- * `x = RleVector([4,5,6],[3,6,9])`
+ * `x = RLEVector([1,1,2,2,3,3,4,4,4])`
+ * `x = RLEVector([4,5,6],[3,6,9])`
  * `collect(x)`
 """ ->
 
 ## Types and constructors
 
-type RleVector{T1,T2 <: Integer} # <: Vector{T1} # Subtyping Vector is nothing but trouble at this point
+type RLEVector{T1,T2 <: Integer} # <: Vector{T1} # Subtyping Vector is nothing but trouble at this point
     runvalues::Vector{T1}
   runends::Vector{T2}
-  function RleVector(runvalues, runends)
+  function RLEVector(runvalues, runends)
     rle = new(runvalues,runends)
     return(rle)
   end
 end
 
-function RleVector{T1,T2 <: Integer}(runvalues::Vector{T1}, runends::Vector{T2})
+function RLEVector{T1,T2 <: Integer}(runvalues::Vector{T1}, runends::Vector{T2})
   nrun = numruns(runvalues,runends)
   if nrun != length(runends)
     runvalues, runends = ree(runvalues,runends,nrun)
   end
-  RleVector{T1,T2}(runvalues, runends)
+  RLEVector{T1,T2}(runvalues, runends)
 end
 
-function RleVector{T2 <: Integer}(runvalues::BitVector, runends::Vector{T2})
+function RLEVector{T2 <: Integer}(runvalues::BitVector, runends::Vector{T2})
   nrun = numruns(runvalues,runends)
   if nrun != length(runends)
     runvalues, runends = ree(runvalues,runends,nrun)
   end
-  RleVector{Bool,T2}(runvalues, runends)
+  RLEVector{Bool,T2}(runvalues, runends)
 end
 
-function RleVector(vec::Vector)
+function RLEVector(vec::Vector)
   runvalues, runends = ree(vec)
-  RleVector(runvalues, runends)
+  RLEVector(runvalues, runends)
 end
 
 #  Having specific types of Rle would be useful for lists of the same type, but Julia does a good job noticing that
 #  Could also be useful for method definitions
-typealias FloatRle RleVector{Float64,Uint32}
-typealias IntegerRle RleVector{Int64,Uint32}
-typealias BoolRle RleVector{Bool,Uint32}
-typealias StringRle RleVector{String,Uint32}
+typealias FloatRle RLEVector{Float64,Uint32}
+typealias IntegerRle RLEVector{Int64,Uint32}
+typealias BoolRle RLEVector{Bool,Uint32}
+typealias StringRle RLEVector{String,Uint32}
 
 # similar
-function similar(x::RleVector,length=0)
+function similar(x::RLEVector,length=0)
   if length == 0
-    return( RleVector(eltype(x.runvalues)[], eltype(x.runends)[]) )
+    return( RLEVector(eltype(x.runvalues)[], eltype(x.runends)[]) )
   else
-    return( RleVector(zeros(eltype(x.runvalues), 1), eltype(x.runends)[length]) )
+    return( RLEVector(zeros(eltype(x.runvalues), 1), eltype(x.runends)[length]) )
   end
 end
 
 # show
-function show(io::IO, x::RleVector)
+function show(io::IO, x::RLEVector)
     t = typeof(x)::DataType
     show(io, t)
     print("\n")
@@ -88,27 +88,27 @@ function show(io::IO, x::RleVector)
 end
 
 # conversions
-convert(::Type{Vector}, x::RleVector) = collect(x)
-convert(::Type{Set}, x::RleVector) = Set(x.runvalues)
+convert(::Type{Vector}, x::RLEVector) = collect(x)
+convert(::Type{Set}, x::RLEVector) = Set(x.runvalues)
 
 # collect
 # way faster than inverse_rle(x.runvalues, rwidth(x)) (50X)
-function collect(x::RleVector)
+function collect(x::RLEVector)
   inverse_ree(x.runvalues,x.runends)
 end
 
-function ==(x::RleVector, y::RleVector)
+function ==(x::RLEVector, y::RLEVector)
   x.runends == y.runends && x.runvalues == y.runvalues
 end
 
-function isequal(x::RleVector, y::RleVector)
+function isequal(x::RLEVector, y::RLEVector)
   isequal(x.runends,y.runends) && isequal(x.runvalues, y.runvalues)
 end
 
 
 ## Stuff that really should be in ranges.jl except that I need them here because of load order drama
 
-function disjoin(x::RleVector, y::RleVector)
+function disjoin(x::RLEVector, y::RLEVector)
   disjoin(x.runends,y.runends)
 end
 

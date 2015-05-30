@@ -1,5 +1,5 @@
 workspace()
-using RleVectors
+using RLEVectors
 using DataFrames
 
 macro timeit(ex)
@@ -40,7 +40,7 @@ timings[:scalar_less] = @timeit foo .< 3
 timings[:median] = @timeit median(foo)
 timings[:which_max] = @timeit findmax(foo)
 
-bdf = DataFrames.readtable("/Users/phaverty/julia/RleVectors/benchmark/rle.timings.csv",header=true);
+bdf = DataFrames.readtable("/Users/phaverty/julia/RLEVectors/benchmark/rle.timings.csv",header=true);
 
 for n in names(timings)
   if !(n in names(bdf))
@@ -50,7 +50,7 @@ end
 
 bdf = vcat(bdf,timings)
 
-writetable( "/Users/phaverty/julia/RleVectors/benchmark/rle.timings.csv",
+writetable( "/Users/phaverty/julia/RLEVectors/benchmark/rle.timings.csv",
              bdf, separator=',',header=true)
 
 jdf = timings
@@ -73,13 +73,13 @@ bench_plot = plot(x=names(bdf)[4:end],y=r_over_julia, Geom.bar, Guide.ylabel("El
      Guide.title("Relative Performance of R and Julia Rle Vectors"),Geom.hline(color="black"),yintercept=[0],Guide.xlabel(""))
 
 date = jdf[1,:date]
-draw(SVG("/Users/phaverty/julia/RleVectors/benchmark/plots/benchmark_rle_vectors.$(date).svg",8inch,5inch),bench_plot )
+draw(SVG("/Users/phaverty/julia/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).svg",8inch,5inch),bench_plot )
 
 jdf = bdf[ bdf[:,:language] .== "julia", 3:end ]
 melted_bdf = melt(jdf, :date)
 timeline_plot = plot(melted_bdf, x="date", y="value", color="variable", Guide.xlabel("Date"),# Geom.line,
                              Scale.y_log10, Guide.ylabel("log2 elapsed seconds (1e4 runs)"), Geom.point)
-draw(SVG("/Users/phaverty/julia/RleVectors/benchmark/plots/benchmark_rle_vectors.$(date).timeline.svg",10inch,6inch),timeline_plot )
+draw(SVG("/Users/phaverty/julia/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).timeline.svg",10inch,6inch),timeline_plot )
 
 using ProfileView
 foo + foo; Profile.clear(); @profile for i in 1:1e4 foo + foo end; ProfileView.view()

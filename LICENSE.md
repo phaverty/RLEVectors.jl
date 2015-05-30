@@ -1,4 +1,4 @@
-The RleVectors.jl package is licensed under the MIT License:
+The RLEVectors.jl package is licensed under the MIT License:
 
 > This software is copyright (c) by Genentech.
 >

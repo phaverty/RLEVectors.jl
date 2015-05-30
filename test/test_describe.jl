@@ -1,9 +1,9 @@
 module TestDescribe
-importall RleVectors
+importall RLEVectors
 
 using Base.Test
 
-x = RleVector([4,5,6],[3,6,9])
+x = RLEVector([4,5,6],[3,6,9])
 
 # nrun
 @test nrun(x) == 3
@@ -17,7 +17,7 @@ x = RleVector([4,5,6],[3,6,9])
 
 # isempty
 @test isempty(x) == false
-@test isempty(RleVector([],[])) == true
+@test isempty(RLEVector([],[])) == true
 
 # ==
 @test x == x

@@ -1,8 +1,8 @@
 ## Dimensions and descriptions
 
 desc = doc"
-# Describing `RleVector` Objects
-For an RleVector `x = RleVector([4,5,6],[3,6,9])`
+# Describing `RLEVector` Objects
+For an RLEVector `x = RLEVector([4,5,6],[3,6,9])`
  * `length(x)` The full length of the vector, uncompressed
  * `size(x)` Same as `length`, as for any other vector
  * `size(x,dim)` Returns `(length(x),1) for dim == 1`
@@ -17,12 +17,12 @@ length, size, rstart, rwidth, rstop, rvalue, isempty
 "
 
 #@doc desc ->
-function nrun(x::RleVector)
+function nrun(x::RLEVector)
   length(x.runends)
 end
 
 #@doc desc ->
-function length{T1,T2<:Integer}(x::RleVector{T1,T2})
+function length{T1,T2<:Integer}(x::RLEVector{T1,T2})
   re = x.runends
   ind = endof(re)
   if (ind > 0)
@@ -34,12 +34,12 @@ function length{T1,T2<:Integer}(x::RleVector{T1,T2})
 end
 
 #@doc desc->
-function size(x::RleVector)
+function size(x::RLEVector)
   (length(x),)
 end
 
 #@doc desc->
-function size(x::RleVector, dim::Integer)
+function size(x::RLEVector, dim::Integer)
   len = length(x)
   if dim == 1
     return(len)
@@ -49,13 +49,13 @@ function size(x::RleVector, dim::Integer)
 end
 
 #@doc desc->
-function isempty(x::RleVector)
+function isempty(x::RLEVector)
   isempty(x.runends)
 end
 
 ### Getters
 #@doc desc->
-function rfirst(x::RleVector)
+function rfirst(x::RLEVector)
   re = x.runends
   rval = similar(re)
   prev = zero(eltype(re))
@@ -67,12 +67,12 @@ function rfirst(x::RleVector)
 end
 
 #@doc desc->
-function rfirst(x::RleVector, run::Integer)
+function rfirst(x::RLEVector, run::Integer)
   run == 1 ? one(eltype(x.runends)) : x.runends[run-1] + 1
 end
 
 #@doc desc->
-function rwidth(x::RleVector)
+function rwidth(x::RLEVector)
   re = x.runends
   rval = Array(eltype(re),length(re))
   prev = zero(eltype(re))
@@ -84,16 +84,16 @@ function rwidth(x::RleVector)
   return(rval)
 end
 
-function rwidth(x::RleVector, run::Integer)
+function rwidth(x::RLEVector, run::Integer)
   run == 1 ? x.runends[1] : x.runends[run] - x.runends[run-1]
 end
 
 #@doc desc->
-function rlast(x::RleVector)
+function rlast(x::RLEVector)
   x.runends
 end
 
 #@doc desc->
-function rvalue(x::RleVector)
+function rvalue(x::RLEVector)
   x.runvalues
 end

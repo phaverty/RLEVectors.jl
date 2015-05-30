@@ -1,9 +1,9 @@
-module RleVectors
+module RLEVectors
 
 ### Re-implementation of the Rle type from Bioconductor's IRanges package by H. Pages, P. Aboyoun and M.Lawrence
 
 # types
-export RleVector, FloatRle, IntegerRle, BoolRle, StringRle, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar
+export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar
 import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect
 
 # collections
@@ -62,4 +62,4 @@ include("collections_api.jl")
 include("math.jl")
 include("sorting.jl")
 
-end # Module RleVectors
+end # Module RLEVectors

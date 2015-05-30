@@ -1,6 +1,6 @@
 workspace()
 module TestRanges
-importall RleVectors
+importall RLEVectors
 using Base.Test
 
 # numruns single
@@ -28,7 +28,7 @@ using Base.Test
 @test ree( [1,1,2,2,3,3,4,4,7] ) == ([1,2,3,4,7],[2,4,6,8,9])
 @test ree( [0,1,2,2,3,3,4,4,7] ) ==([0,1,2,3,4,7],[1,2,4,6,8,9])
 
-# Clean up an RleVector
+# Clean up an RLEVector
 @test ree(["a","b","c","d","d","e","f","g"],[3,6,9,12,15,18,21,24]) == (["a","b","c","d","e","f","g"],[3,6,9,15,18,21,24]) # Run of 2 runvalues
 @test ree(["a","b","c","d","d","d","e","f"],[3,6,9,12,15,18,21,24]) == (["a","b","c","d","e","f"],[3,6,9,18,21,24]) # Run of 3 runvalues
 @test ree(["a","b","c","d","e","f","g"],[3,6,9,12,12,15,17]) == (["a","b","c","d","f","g"],[3,6,9,12,15,17]) # run of 2 runends
@@ -45,6 +45,6 @@ using Base.Test
 @test_throws ArgumentError inverse_ree([],[1])
 
 # disjoin
-# @test_throws ArgumentError disjoin(RleVector([1,1,2],[1,2,3]), RleVector([1,2,3,4,5],[1,2,3,4,5])) # Unequal lengths now OK
-@test disjoin( RleVector([1,2,3,4], [1,3,8,10]), RleVector([4,5,6,7],[3,4,9,10])) == [1,3,4,8,9,10]
+# @test_throws ArgumentError disjoin(RLEVector([1,1,2],[1,2,3]), RLEVector([1,2,3,4,5],[1,2,3,4,5])) # Unequal lengths now OK
+@test disjoin( RLEVector([1,2,3,4], [1,3,8,10]), RLEVector([4,5,6,7],[3,4,9,10])) == [1,3,4,8,9,10]
 end # module

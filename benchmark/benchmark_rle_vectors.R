@@ -33,6 +33,6 @@ for (x in setdiff(colnames(timings), colnames(foo))) {
 foo = foo[, colnames(timings)]
 
 timings = rbind(foo, timings)
-write.csv(timings, "/Users/phaverty/julia/RleVectors/benchmark/rle.timings.csv",
+write.csv(timings, "/Users/phaverty/julia/RLEVectors/benchmark/rle.timings.csv",
           row.names=FALSE,append=TRUE, na="NaN")
 print(timings)
