@@ -1,6 +1,6 @@
-# RleVectors
+# RLEVectors
 
-`RleVectors` is an alternate implementation of the Rle type from
+`RLEVectors` is an alternate implementation of the Rle type from
 Bioconductor's IRanges package by H. Pages, P. Aboyoun and
 M. Lawrence. RleVectors represent a vector with repeated values as the
 ordered set of values and repeat extents. In the field of genomics,
@@ -23,7 +23,7 @@ represents the range [1:n] broken into arbitrary chunks or segments.
 
 
 ## Implementation Details
-`RleVectors` differs from R's `Rle` in that we store the run values
+`RLEVectors` differs from R's `Rle` in that we store the run values
 and run ends rather than the run values and run lengths. The run ends
 are convenient in that they allow for indexing into the vector by
 binary search (scalar indexing is O(log(n)) rather than O(n) ).
@@ -34,14 +34,14 @@ calculated. See the benchmark directory and reports to see how
 this plays out.
 
 ### Creation
-`RleVectors` can be created from a single vector or a vector of values and a vector of run ends. In either case runs of values or zero length runs will be compressed out. RleVectors can be expanded to a full vector like a `Range` with `collect`.
+`RleVector`s can be created from a single vector or a vector of values and a vector of run ends. In either case runs of values or zero length runs will be compressed out. RleVectors can be expanded to a full vector like a `Range` with `collect`.
 
 `x = RleVector([1,1,2,2,3,3,4,4,4])`
 `x = RleVector([4,5,6],[3,6,9])`
 `collect(x)`
 
 ### Describing
-RleVectors implement the standard Vector API and also other methods for describing the ranges and values:
+`RleVector`s implements the standard Vector API and also other methods for describing the ranges and values:
 
 
 - `length(x)` # The full length of the vector, uncompressed
@@ -68,7 +68,7 @@ Naming for some of these functions is difficult given that many useful names are
 - `median(x)`
 
 ## Relative speed
-`RleVectors` has been extensively profiled and somewhat optimized. Please see the benchmarking section for the evolution over time and comparisons to like operations in R.
+`RLEVectors` has been extensively profiled and somewhat optimized. Please see the benchmarking section for the evolution over time and comparisons to like operations in R.
 
 ### Benchmarks
 ![Benchmarking results](benchmark/plots/benchmark_rle_vectors.2015-04-26.svg)
