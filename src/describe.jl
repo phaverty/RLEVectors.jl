@@ -11,11 +11,17 @@ For an RLEVector `x = RLEVector([4,5,6],[3,6,9])`
  * `rstop(x)` The index of the end of each run
  * `rlast(x)` The data value for each run
  * `isempty(x)` Returns boolean, as for any other vector
+ * `nrun(x)` Returns the number of runs represented in the array
 
 ## See also
-length, size, rstart, rwidth, rstop, rvalue, isempty
+length, size, rstart, rwidth, rstop, rvalue, isempty, nrun
 "
 
+#@doc desc ->
+#function ndims(x::RLEVector)
+#    return(1)
+#end
+#
 #@doc desc ->
 function nrun(x::RLEVector)
   length(x.runends)
