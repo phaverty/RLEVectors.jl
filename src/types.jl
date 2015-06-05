@@ -24,7 +24,7 @@ be compressed out. RLEVectors can be expanded to a full vector like a
 
 ## Types and constructors
 
-type RLEVector{T1,T2 <: Integer} # <: Vector{T1} # Subtyping Vector is nothing but trouble at this point
+type RLEVector{T1,T2 <: Integer} <: AbstractVector{T1}
     runvalues::Vector{T1}
   runends::Vector{T2}
   function RLEVector(runvalues, runends)
@@ -60,6 +60,10 @@ typealias FloatRle RLEVector{Float64,Uint32}
 typealias IntegerRle RLEVector{Int64,Uint32}
 typealias BoolRle RLEVector{Bool,Uint32}
 typealias StringRle RLEVector{String,Uint32}
+
+### Some kind of magic
+Base.linearindexing{T<:RLEVector}(::Type{T}) = Base.LinearFast() # AbstractArray free indexing
+Base.writemime(io::IO, ::MIME"text/plain", a::RLEVector) = show(io, a) # REPL pretty printing, inspired by how NamedArrays does this
 
 # similar
 function similar(x::RLEVector,length=0)
