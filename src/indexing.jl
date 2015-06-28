@@ -2,7 +2,7 @@
 
 ## locate runs
 # get index of run corresponding to the i'th value in the expanded runs
-function ind2run(rle::RLEVector, i::Integer)
+function ind2run(rle::RLEVector, i::Int)
   re = rle.runends
   n = length(re)
   run = searchsortedfirst(re,i,1,n, Base.Forward)
@@ -21,8 +21,8 @@ end
 
 # get index of the run corresponding to the i'th value in the expanded runs, index in run and remainder of run
 #  (runindex, index_in_run, values_in_run_after_i)
-function ind2runcontext(rle::RLEVector, i::Integer)
-  run = ind2run(rle::RLEVector, i::Integer)
+function ind2runcontext(rle::RLEVector, i::Int)
+  run = ind2run(rle::RLEVector, i::Int)
   runend = rle.runends[run]
   ind_in_run = run == 1 ? i : i - rle.runends[run-1]
   (run, ind_in_run, runend - i)
@@ -41,12 +41,12 @@ function ind2runcontext(rle::RLEVector, i::UnitRange)
 end
 
 # scalar indexing case
-function getindex(rle::RLEVector, i::Integer)
+function getindex(rle::RLEVector, i::Int)
   run = ind2run(rle,i)
   return( rle.runvalues[run] )
 end
 
-function setindex!{T1, T2}(rle::RLEVector{T1, T2}, value::T1, i::Integer)
+function setindex!{T1, T2}(rle::RLEVector{T1, T2}, value::T1, i::Int)
   run = ind2run(rle,i)
   runvalue = rle.runvalues[run]
   runend = rle.runends[run]
@@ -93,7 +93,7 @@ function setindex!{T1, T2}(rle::RLEVector{T1, T2}, value::T1, i::Integer)
   return(rle)
 end
 
-function setrun!(rle::RLEVector, value, i::Integer)
+function setrun!(rle::RLEVector, value, i::Int)
   run = ind2run(rle,i)
   rle.runvalues[run] = value
   return(rle)
@@ -123,7 +123,7 @@ end
 #  end
 #  return(rle)
 #end
-#
+
 # Range case optimization
 function getindex(rle::RLEVector, indices::UnitRange)
   runs = ind2run(rle,indices)
@@ -196,11 +196,11 @@ function setindex!{T1, T2}(rle::RLEVector{T1, T2}, value::T1, indices::UnitRange
   return(rle)
 end
 
-function head(x::RLEVector,l::Integer=6)
+function head(x::RLEVector,l::Int=6)
     collect(x[ 1:l ])
 end
 
-function tail(x::RLEVector,l::Integer=6)
+function tail(x::RLEVector,l::Int=6)
     collect( x[ length(x)-(l-1):end ] )
 end
 

@@ -1,0 +1,24 @@
+include("src/RLEVectors.jl")
+x = RLEVector([1, 1, 2, 2, 3, 3, 4])
+x = RLEVector([1, 1, 2, 2, 3, 3, 4])
+RLEVector
+x = RLEVectors.RLEVector([1, 1, 2, 2, 3, 3, 4])
+x
+x[1:2] = 3
+x
+x[1:2]
+x[[1, 2, 3]]
+x[1, 2, 3] =4 
+x[[1, 2, 3]]
+foo = [1, 2, 3]
+foo
+x[foo]
+ind2run(x, 2)
+RLEVectors.ind2run(x, 2)
+x[RLEVectors.ind2run(x, 2)]
+x[true]
+x
+length(x0
+using RLEVectors
+help("nrun")
+exit()
