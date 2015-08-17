@@ -112,7 +112,9 @@
  * [ ] can I do setindex(x::Rlevector, i, indices::Array) and such with an iterator that feeds "ree"?  Sort incoming indices and values of course.
  * [x] add a few special cases to the "punt else" to work towards not punting
  * [ ] setindex!(rle::RLEVector, value, i::UnitRange), can I merge this with the scalar i case using i:i?
-
+ * [x] Inherit from AbstractVector so I can get all the new free AbstractVector indexing
+ * [ ] Should logical indexing become indexing with an array of Ranges?
+ 
 ## Bugs
  * [x] fix mode, needs to do table not just which.max
  * [x] fix vcat, what about merging adjacent runs?
@@ -122,3 +124,6 @@
  * [x] something is wrong with the iterator, which breaks sum and mean
  * [x] something in splice and insert
  * [x] ree(runvalues,runends) needs to avoid modifying input
+ * [x] do I need a print_matrix method to make auto-printing work?
+   print and show work fine.
+ * [x] Do I need Base.linearindexing{T<:MyArray}(::Type{T}) = LinearFast() 

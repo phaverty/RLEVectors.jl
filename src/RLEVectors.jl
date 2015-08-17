@@ -18,7 +18,8 @@ export getindex, setindex!, ind2run, setrun!, ind2runcontext, head, tail
 export getindex2
 
 # describe
-import Base: isempty
+import Base: isempty, ndims
+export ndims
 
 # group_generics
 import Base: .+, .-, .*, ./, .^, div, mod, fld, rem, ==, >, <, !=, <=, >=, .==, .>, .<, .!=, .<=, .>=, &, |
