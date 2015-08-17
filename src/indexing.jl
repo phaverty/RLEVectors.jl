@@ -41,12 +41,12 @@ function ind2runcontext(rle::RLEVector, i::UnitRange)
 end
 
 # scalar indexing case
-function getindex(rle::RLEVector, i::Int)
+function Base.getindex(rle::RLEVector, i::Int)
   run = ind2run(rle,i)
   return( rle.runvalues[run] )
 end
 
-function setindex!{T1, T2}(rle::RLEVector{T1, T2}, value::T1, i::Int)
+function Base.setindex!{T1, T2}(rle::RLEVector{T1, T2}, value::T1, i::Int)
   run = ind2run(rle,i)
   runvalue = rle.runvalues[run]
   runend = rle.runends[run]
@@ -125,7 +125,7 @@ end
 #end
 
 # Range case optimization
-function getindex(rle::RLEVector, indices::UnitRange)
+function Base.getindex(rle::RLEVector, indices::UnitRange)
   runs = ind2run(rle,indices)
   nrun = length(runs)
   rv = rle.runvalues[runs]
@@ -139,7 +139,7 @@ function getindex(rle::RLEVector, indices::UnitRange)
   return(rval)
 end
 
-function setindex!{T1, T2}(rle::RLEVector{T1, T2}, value::T1, indices::UnitRange)
+function Base.setindex!{T1, T2}(rle::RLEVector{T1, T2}, value::T1, indices::UnitRange)
   runs = ind2run(rle,indices)
   left_run = first(runs)
   right_run = last(runs)
