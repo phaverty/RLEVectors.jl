@@ -1,6 +1,6 @@
 ### RLEVectors Type
 
-@doc """
+"""
 # RLEVectors
 `RLEVectors` is an alternate implementation of the Rle type from Bioconductor's
 IRanges package by H. Pages, P. Aboyoun and M. Lawrence. RLEVectors represent a
@@ -20,12 +20,15 @@ be compressed out. RLEVectors can be expanded to a full vector like a
  * `x = RLEVector([1,1,2,2,3,3,4,4,4])`
  * `x = RLEVector([4,5,6],[3,6,9])`
  * `collect(x)`
-""" ->
-
+"""
 ## Types and constructors
 
 type RLEVector{T1,T2 <: Integer} <: AbstractVector{T1}
+<<<<<<< HEAD
     runvalues::Vector{T1}
+=======
+  runvalues::Vector{T1}
+>>>>>>> dc2371e850ec1788efa3d1dc7667c0ac8904bbef
   runends::Vector{T2}
   function RLEVector(runvalues, runends)
     rle = new(runvalues,runends)

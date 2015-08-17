@@ -17,17 +17,32 @@ For an RLEVector `x = RLEVector([4,5,6],[3,6,9])`
 length, size, rstart, rwidth, rstop, rvalue, isempty, nrun
 "
 
+<<<<<<< HEAD
 #@doc desc ->
 #function ndims(x::RLEVector)
 #    return(1)
 #end
 #
 #@doc desc ->
+=======
+"""
+$desc
+"""
+function ndims(x::RLEVector)
+    return(1)
+end
+
+"""
+# FOO
+$(desc)
+## GOO
+"""
+>>>>>>> dc2371e850ec1788efa3d1dc7667c0ac8904bbef
 function nrun(x::RLEVector)
   length(x.runends)
 end
 
-#@doc desc ->
+@doc desc ->
 function length{T1,T2<:Integer}(x::RLEVector{T1,T2})
   re = x.runends
   ind = endof(re)
@@ -39,12 +54,12 @@ function length{T1,T2<:Integer}(x::RLEVector{T1,T2})
   return(len)
 end
 
-#@doc desc->
+@doc desc->
 function size(x::RLEVector)
   (length(x),)
 end
 
-#@doc desc->
+@doc desc->
 function size(x::RLEVector, dim::Integer)
   len = length(x)
   if dim == 1
@@ -54,13 +69,13 @@ function size(x::RLEVector, dim::Integer)
   end
 end
 
-#@doc desc->
+@doc desc->
 function isempty(x::RLEVector)
   isempty(x.runends)
 end
 
 ### Getters
-#@doc desc->
+@doc desc->
 function rfirst(x::RLEVector)
   re = x.runends
   rval = similar(re)
@@ -72,12 +87,12 @@ function rfirst(x::RLEVector)
   return(rval)
 end
 
-#@doc desc->
+@doc desc->
 function rfirst(x::RLEVector, run::Integer)
   run == 1 ? one(eltype(x.runends)) : x.runends[run-1] + 1
 end
 
-#@doc desc->
+@doc desc->
 function rwidth(x::RLEVector)
   re = x.runends
   rval = Array(eltype(re),length(re))
@@ -94,12 +109,12 @@ function rwidth(x::RLEVector, run::Integer)
   run == 1 ? x.runends[1] : x.runends[run] - x.runends[run-1]
 end
 
-#@doc desc->
+@doc desc->
 function rlast(x::RLEVector)
   x.runends
 end
 
-#@doc desc->
+@doc desc->
 function rvalue(x::RLEVector)
   x.runvalues
 end
