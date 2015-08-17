@@ -123,11 +123,7 @@ end
 #  end
 #  return(rle)
 #end
-<<<<<<< HEAD
-#
-=======
 
->>>>>>> dc2371e850ec1788efa3d1dc7667c0ac8904bbef
 # Range case optimization
 function getindex(rle::RLEVector, indices::UnitRange)
   runs = ind2run(rle,indices)

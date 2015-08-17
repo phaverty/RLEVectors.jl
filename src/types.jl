@@ -24,11 +24,7 @@ be compressed out. RLEVectors can be expanded to a full vector like a
 ## Types and constructors
 
 type RLEVector{T1,T2 <: Integer} <: AbstractVector{T1}
-<<<<<<< HEAD
-    runvalues::Vector{T1}
-=======
   runvalues::Vector{T1}
->>>>>>> dc2371e850ec1788efa3d1dc7667c0ac8904bbef
   runends::Vector{T2}
   function RLEVector(runvalues, runends)
     rle = new(runvalues,runends)

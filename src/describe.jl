@@ -17,14 +17,6 @@ For an RLEVector `x = RLEVector([4,5,6],[3,6,9])`
 length, size, rstart, rwidth, rstop, rvalue, isempty, nrun
 "
 
-<<<<<<< HEAD
-#@doc desc ->
-#function ndims(x::RLEVector)
-#    return(1)
-#end
-#
-#@doc desc ->
-=======
 """
 $desc
 """
@@ -37,7 +29,7 @@ end
 $(desc)
 ## GOO
 """
->>>>>>> dc2371e850ec1788efa3d1dc7667c0ac8904bbef
+
 function nrun(x::RLEVector)
   length(x.runends)
 end
