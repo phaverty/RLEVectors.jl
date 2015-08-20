@@ -1,3 +1,4 @@
+VERSION >= v"0.4.0-dev+6521" && __precompile__(true)
 module RLEVectors
 
 ### Re-implementation of the Rle type from Bioconductor's IRanges package by H. Pages, P. Aboyoun and M.Lawrence
