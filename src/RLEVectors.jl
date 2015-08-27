@@ -13,7 +13,7 @@ export       eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshif
 export shove!, deleterun!, decrement_run!
 
 # indexing
-#import Base: getindex, setindex!
+import Base: getindex, setindex!
 #import DataArrays: head, tail
 export getindex, setindex!, ind2run, setrun!, ind2runcontext, head, tail
 export getindex2

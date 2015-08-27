@@ -23,7 +23,7 @@ be compressed out. RLEVectors can be expanded to a full vector like a
 """
 ## Types and constructors
 
-type RLEVector{T1,T2 <: Integer} <: AbstractVector{T1}
+type RLEVector{T1,T2 <: Integer} # <: AbstractVector{T1}
   runvalues::Vector{T1}
   runends::Vector{T2}
   function RLEVector(runvalues, runends)

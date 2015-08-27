@@ -44,25 +44,25 @@ function ^(x::RLEVector,y::Integer) # Necessary to prevent an ambiguity warning
 end
 
 for op in ops_group
-  @eval begin
-    # Rle, Rle
-    function ($op)(x::RLEVector, y::RLEVector)
-      length(x) != length(y) && error("RLEVectors must be of the same length for this operation.")
-      runends = disjoin(x,y)
-      @inbounds runvals = [ ($op)(x[i], y[i]) for i in runends]
-      RLEVector( runvals, runends )
+    @eval begin
+        # Rle, Rle
+        function ($op)(x::RLEVector, y::RLEVector)
+            length(x) != length(y) && error("RLEVectors must be of the same length for this operation.")
+            runends = disjoin(x,y)
+            @inbounds runvals = [ ($op)(x[i], y[i]) for i in runends]
+            RLEVector( runvals, runends )
+        end
+        # Rle, scalar
+        function ($op)(x::RLEVector,y::Number)
+            rv = ($op)(x.runvalues,y)
+            RLEVector(rv,x.runends)
+        end
+        # Number, Rle
+        function ($op)(y::Number, x::RLEVector)
+            rv = ($op)(y,x.runvalues)
+            RLEVector(rv,x.runends)
+        end
     end
-    # Rle, scalar
-    function ($op)(x::RLEVector,y::Number)
-      rv = ($op)(x.runvalues,y)
-      RLEVector(rv,x.runends)
-    end
-    # Number, Rle
-    function ($op)(y::Number, x::RLEVector)
-      rv = ($op)(y,x.runvalues)
-      RLEVector(rv,x.runends)
-    end
-  end
 end
 
 ## Methods that delegate to the runvalues and return an RLEVector

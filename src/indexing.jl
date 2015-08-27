@@ -100,29 +100,29 @@ function setrun!(rle::RLEVector, value, i::Int)
 end
 
 # vector case ... can we get this for free from AbstractArray?
-#function getindex(rle::RLEVector, i::AbstractArray)
-#  rval = similar(rle.runvalues, length(i))
-#  for v in 1:length(i)
-#    rval[v] = rle[i[v]]
-#  end
-#  return(rval)
-#end
-#
-#function setindex!{T1,T2}(rle::RLEVector{T1,T2}, values::Vector{T1}, indices::AbstractArray)
-#  length(values) != length(indices) && throw(BoundsError("setindex! requires one value for each indexed element."))
-#  for (i,v) in zip(indices,values)
-#    @inbounds rle[i] = v
-#  end
-#  return(rle)
-#end
-#
-#function setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::T1, indices::AbstractArray)
-#  value = convert(eltype(rle),value) # Raise error, if necessary, before we go modifying anything
-#  for v in indices
-#    @inbounds rle[v] = value
-#  end
-#  return(rle)
-#end
+function getindex(rle::RLEVector, i::AbstractArray)
+  rval = similar(rle.runvalues, length(i))
+  for v in 1:length(i)
+    rval[v] = rle[i[v]]
+  end
+  return(rval)
+end
+
+function setindex!{T1,T2}(rle::RLEVector{T1,T2}, values::Vector{T1}, indices::AbstractArray)
+  length(values) != length(indices) && throw(BoundsError("setindex! requires one value for each indexed element."))
+  for (i,v) in zip(indices,values)
+    @inbounds rle[i] = v
+  end
+  return(rle)
+end
+
+function setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::T1, indices::AbstractArray)
+  value = convert(eltype(rle),value) # Raise error, if necessary, before we go modifying anything
+  for v in indices
+    @inbounds rle[v] = value
+  end
+  return(rle)
+end
 
 # Range case optimization
 function Base.getindex(rle::RLEVector, indices::UnitRange)
