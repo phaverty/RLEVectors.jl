@@ -99,7 +99,17 @@ function setrun!(rle::RLEVector, value, i::Int)
   return(rle)
 end
 
-# vector case ... can we get this for free from AbstractArray?
+### Things we should be getting from AbstractArray
+# Colon
+getindex(rle::RLEVector, i::Colon) = rle[1:end]
+setindex!(rle::RLEVector, value, i::Colon) = setindex!(rle, value, 1:length(rle))
+
+# Logical
+getindex(rle::RLEVector, i::Array{Bool}) = rle[ find(i) ]
+setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::Vector{T1}, i::Array{Bool}) = setindex!(rle, value, find(i) )
+setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::T1, i::Array{Bool}) = setindex!(rle, value, find(i) )
+
+# Index vector
 function getindex(rle::RLEVector, i::AbstractArray)
   rval = similar(rle.runvalues, length(i))
   for v in 1:length(i)
