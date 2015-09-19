@@ -24,8 +24,7 @@ timings[:date] = chomp(readall(`date "+%Y-%m-%d"`))
 timings[:indexing] = @timeit foo[100]
 timings[:range_indexing] = @timeit foo[801:900]
 timings[:setting] = @timeit foo[800] = 5
-#timings[:range_setting] = @timeit foo[801:900] = 1:100
-timings[:range_setting] = NaN
+timings[:range_setting] = @timeit foo[801:900] = 1:100
 timings[:scalar_add] = @timeit foo + 4
 timings[:length] = @timeit length(foo)
 timings[:nrun] = @timeit nrun(foo)
@@ -34,13 +33,11 @@ timings[:max] = @timeit maximum(foo)
 timings[:width] = @timeit rwidth(foo)
 timings[:last] = @timeit rlast(foo)
 timings[:first] = @timeit rfirst(foo)
-#timings[:add_two_rles] = @timeit foo + foo
-timings[:add_two_rles] = NaN
+timings[:add_two_rles] = @timeit foo + foo
 timings[:disjoin] = @timeit disjoin(foo,foo)
 timings[:which] = @timeit findin(foo,[800,200,357])
 timings[:scalar_less] = @timeit foo .< 3
-#timings[:median] = @timeit median(foo)
-timings[:median] = NaN
+timings[:median] = @timeit median(foo)
 timings[:which_max] = @timeit findmax(foo)
 
 bdf = DataFrames.readtable("/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/rle.timings.csv",header=true);
@@ -76,13 +73,13 @@ bench_plot = plot(x=names(bdf)[4:end],y=r_over_julia, Geom.bar, Guide.ylabel("El
      Guide.title("Relative Performance of R and Julia Rle Vectors"),Geom.hline(color="black"),yintercept=[0],Guide.xlabel(""))
 
 date = jdf[1,:date]
-draw(SVG("/Users/phaverty/julia/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).svg",8inch,5inch),bench_plot )
+draw(SVG("/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).svg",8inch,5inch),bench_plot )
 
 jdf = bdf[ bdf[:,:language] .== "julia", 3:end ]
 melted_bdf = melt(jdf, :date)
 timeline_plot = plot(melted_bdf, x="date", y="value", color="variable", Guide.xlabel("Date"),# Geom.line,
                              Scale.y_log10, Guide.ylabel("log2 elapsed seconds (1e4 runs)"), Geom.point)
-draw(SVG("/Users/phaverty/julia/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).timeline.svg",10inch,6inch),timeline_plot )
+draw(SVG("/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).timeline.svg",10inch,6inch),timeline_plot )
 
 using ProfileView
 foo + foo; Profile.clear(); @profile for i in 1:1e4 foo + foo end; ProfileView.view()
