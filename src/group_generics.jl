@@ -33,7 +33,7 @@ const summary_group =[:maximum, :minimum, :range, :prod, :sum, :any, :all, :elty
 # "Arg", "Conj", "Im", "Mod", "Re"
 # leaving out for now
 
-const set_group = [:setdiff, :symdiff, :issubset, :in, :union]
+const set_group = [:setdiff, :symdiff, :issubset, :union] # :in
 
 const set_group_w_splat = [:union]
 
@@ -49,48 +49,36 @@ for op in ops_group
         function ($op)(x::RLEVector, y::RLEVector)
             length(x) != length(y) && error("RLEVectors must be of the same length for this operation.")
             runends = disjoin(x,y)
-            @inbounds runvals = [ ($op)(x[i], y[i]) for i in runends]
+            @inbounds runvals = T1[ ($op)(x[i], y[i]) for i in runends ]
             RLEVector( runvals, runends )
         end
         # Rle, scalar
-        function ($op)(x::RLEVector,y::Number)
-            rv = ($op)(x.runvalues,y)
-            RLEVector(rv,x.runends)
-        end
+        ($op)(x::RLEVector,y::Number) = RLEVector( ($op)(x.runvalues,y), x.runends )
         # Number, Rle
-        function ($op)(y::Number, x::RLEVector)
-            rv = ($op)(y,x.runvalues)
-            RLEVector(rv,x.runends)
-        end
+        ($op)(y::Number, x::RLEVector) = RLEVector( ($op)(y,x.runvalues), x.runends )
     end
 end
 
 ## Methods that delegate to the runvalues and return an RLEVector
 ## Methods that take one argument, an RLEVector, and delegate to rle.runvalues and return an RLEVector
 for op in math_group
-  @eval begin
-    function ($op)(x::RLEVector)
-      rv = ($op)(x.runvalues)
-      RLEVector(rv, x.runends)
-    end
-  end
+  @eval ($op)(x::RLEVector) = RLEVector( ($op)(x.runvalues), x.runends )
 end
 
 ## Methods that take one argument, an RLEVector, and delegate to rle.runvalues and return something other than an RLEVector
 for op in setdiff(summary_group,[:sum,:prod])
-  @eval begin
-    ($op)(x::RLEVector) = ($op)(x.runvalues)
-  end
+  @eval ($op)(x::RLEVector) = ($op)(x.runvalues)
 end
 
 ## Methods that take two arguments, delegate to rle.runvalues and return something other than an RLEVector
-# for op in set_group
-#   @eval begin
-#     ($op){T1,T2<:Integer,T3,T4<:Integer}(x::RLEVector{T1,T2}, y::RLEVector{T3,T4}) = ($op)(x.runvalues,y.runvalues)
-#     ($op)(x::RLEVector, y::Any) = ($op)(x.runvalues,y)
-#     ($op)(y::Any, x::RLEVector) = ($op)(y, x.runvalues)
-#   end
-# end
+in{T1,T2<:Integer}(y::T1, x::RLEVector{T1,T2}) = in(y, x.runvalues)
+ for op in set_group
+   @eval begin
+     ($op){T1,T2<:Integer,T3,T4<:Integer}(x::RLEVector{T1,T2}, y::RLEVector{T3,T4}) = ($op)(x.runvalues,y.runvalues)
+     ($op){T1,T2<:Integer}(x::RLEVector{T1,T2}, y::T1) = ($op)(x.runvalues,y)
+     ($op){T1,T2<:Integer}(y::T1, x::RLEVector{T1,T2}) = ($op)(y, x.runvalues)
+   end
+ end
 
 # Defaulting to fun(itr) for prod, sumabs, sumabs2, count
 for op in [:findmin, :findmax]
@@ -136,19 +124,17 @@ function findin(x,y::RLEVector)
   findin(x,y.runvalues)
 end
 
-function median(x::RLEVector; checknan::Bool=true)
+function median(x::RLEVector)
+    # Superfluous x / 1.0 is to always return a Float64
   len = length(x)
-  len < 2 && return(x.runvalues)
+  len < 2 && return(x.runvalues[1] / 1.0)
   sorted = sort(x)
-  if checknan && isnan(sorted[end])
-    return(NaN)
-  end
   mid = fld(len,2)
   mid_run = ind2run(sorted,mid)
   if mod(len,2) == 0 && mid == sorted.runends[mid_run] # even numbered and at end of run, avg with next value
-    median = (x.runvalues[mid_run] + x.runvalues[mid_run+1]) / 2
+    median = (sorted.runvalues[mid_run] + sorted.runvalues[mid_run+1]) / 2
   else
-    median = x.runvalues[mid_run + 1]
+    median = sorted.runvalues[mid_run] / 1.0
   end
   return(median)
 end
