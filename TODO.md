@@ -30,7 +30,8 @@
  * [x] sorting including sort, issorted, reverse and sortperm
 
 ## Decisions
- *[ ] How do I set up the type hierarchy?
+ * [ ] Decide when getindex gives an Vector or an RLEVector, be consistent
+ * [ ] How do I set up the type hierarchy?
    a.  How do I share common code as high in the tree as possible? (wait for new features of abstract types in 0.4?)
    b.  Can I make it a subtype of Vector and get lots of the Vector
    API for free?  Can I then use it in other places that take a
@@ -114,7 +115,8 @@
  * [ ] setindex!(rle::RLEVector, value, i::UnitRange), can I merge this with the scalar i case using i:i?
  * [x] Inherit from AbstractVector so I can get all the new free AbstractVector indexing
  * [ ] Should logical indexing become indexing with an array of Ranges?
- 
+ * [ ] implement Selection algorithm for median: https://en.wikipedia.org/wiki/Selection_algorithm
+
 ## Bugs
  * [x] fix mode, needs to do table not just which.max
  * [x] fix vcat, what about merging adjacent runs?
@@ -127,3 +129,5 @@
  * [x] do I need a print_matrix method to make auto-printing work?
    print and show work fine.
  * [x] Do I need Base.linearindexing{T<:MyArray}(::Type{T}) = LinearFast() 
+ * [x] median with an Int RLE is type unstable, div by 2 gives float
+   otherwise Int
