@@ -17,7 +17,7 @@ function ree{T}(x::AbstractVector{T})
   xlen < 2 && return( (x,[xlen]) )
   nrun = numruns(x)
   runvalues = similar(x,nrun)
-  runends = Array(Int,nrun)
+  runends = Vector{Int}(nrun)
   run = 1
   current = x[1]
   for i in 2:xlen
@@ -25,7 +25,7 @@ function ree{T}(x::AbstractVector{T})
       runvalues[run] = current
       runends[run] = i-1
       current = x[i]
-      run += 1
+      run = run + 1
     end
   end
   runvalues[nrun] = current

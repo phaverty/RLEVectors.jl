@@ -5,7 +5,7 @@ module RLEVectors
 
 # types
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar
-import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect
+import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect, isequal
 
 # collections
 import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, insert!, deleteat!, splice!, resize!, empty!, setdiff, symdiff, union, endof, maxabs, minabs, any, all, in

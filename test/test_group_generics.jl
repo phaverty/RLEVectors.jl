@@ -31,8 +31,8 @@ y = RLEVector([0,0,0,3,3,3,4,4])
 
 # findin
 @test findin(RLEVector([1,1,2,2,3,3]), RLEVector(collect(3:10))) == collect(5:6)
-@test findin(RLEVector([1,1,2,2,3,3]), 3:10) == [5:6]
-@test findin(RLEVector([1,1,2,2,3,3]), [3:10]) == [5:6]
+@test findin(RLEVector([1,1,2,2,3,3]), 3:10) == collect(5:6)
+@test findin(RLEVector([1,1,2,2,3,3]), collect(3:10)) == collect(5:6)
 @test findin([3,4,5],RLEVector([1:4])) == [1,2]
 
 end

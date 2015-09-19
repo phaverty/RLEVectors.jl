@@ -129,7 +129,7 @@ end
 function findin(x::RLEVector,y)
   runs = findin(x.runvalues,y)
   re = x.runends
-  vcat( [ collectx( rfirst(x,i):re[i] ) for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
+  vcat( [ collect( rfirst(x,i):re[i] ) for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
 function findin(x,y::RLEVector)

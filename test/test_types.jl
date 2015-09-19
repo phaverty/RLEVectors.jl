@@ -60,5 +60,9 @@ x = RLEVector([1,2,3],[2,9,22])
 @test rlast(x) == [2,9,22]
 @test rvalue(x) == [1,2,3]
 
+# Hashing
+x = RLEVector([1,1,2,2,3,3,3])
+d = Dict("bob" => x)
+typeof(d["bob"]) == typeof(x)
 
 end # module

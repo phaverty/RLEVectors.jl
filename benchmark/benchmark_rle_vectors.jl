@@ -19,12 +19,13 @@ foo = IntegerRle(Int32[ 1:1000 ], Int32[5:5:5000]);
 int(length(foo))
 timings = DataFrame()
 timings[:language] = "julia"
-timings[:language_version] = "0.3.7"
+timings[:language_version] = "0.4.pre1"
 timings[:date] = chomp(readall(`date "+%Y-%m-%d"`))
 timings[:indexing] = @timeit foo[100]
 timings[:range_indexing] = @timeit foo[801:900]
 timings[:setting] = @timeit foo[800] = 5
-timings[:range_setting] = @timeit foo[801:900] = 1:100
+#timings[:range_setting] = @timeit foo[801:900] = 1:100
+timings[:range_setting] = NaN
 timings[:scalar_add] = @timeit foo + 4
 timings[:length] = @timeit length(foo)
 timings[:nrun] = @timeit nrun(foo)
@@ -33,14 +34,16 @@ timings[:max] = @timeit maximum(foo)
 timings[:width] = @timeit rwidth(foo)
 timings[:last] = @timeit rlast(foo)
 timings[:first] = @timeit rfirst(foo)
-timings[:add_two_rles] = @timeit foo + foo
+#timings[:add_two_rles] = @timeit foo + foo
+timings[:add_two_rles] = NaN
 timings[:disjoin] = @timeit disjoin(foo,foo)
 timings[:which] = @timeit findin(foo,[800,200,357])
 timings[:scalar_less] = @timeit foo .< 3
-timings[:median] = @timeit median(foo)
+#timings[:median] = @timeit median(foo)
+timings[:median] = NaN
 timings[:which_max] = @timeit findmax(foo)
 
-bdf = DataFrames.readtable("/Users/phaverty/julia/RLEVectors/benchmark/rle.timings.csv",header=true);
+bdf = DataFrames.readtable("/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/rle.timings.csv",header=true);
 
 for n in names(timings)
   if !(n in names(bdf))
@@ -50,7 +53,7 @@ end
 
 bdf = vcat(bdf,timings)
 
-writetable( "/Users/phaverty/julia/RLEVectors/benchmark/rle.timings.csv",
+writetable( "/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/rle.timings.csv",
              bdf, separator=',',header=true)
 
 jdf = timings

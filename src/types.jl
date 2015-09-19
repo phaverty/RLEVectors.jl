@@ -109,7 +109,7 @@ function isequal(x::RLEVector, y::RLEVector)
 end
 
 Base.hash(a::RLEVector) = hash(a.runvalues, hash(a.runlengths, hash(:RLEVector)))
-==(a::RLEVector, b::RLEVector) = isequal(a.runvalues, b.runvalues) && isequal(a.runlengths, b.runlengths) && true
+==(a::RLEVector, b::RLEVector) = isequal(a.runvalues, b.runvalues) && isequal(a.runends, b.runends) && true
 
 ## Stuff that really should be in ranges.jl except that I need them here because of load order drama
 
