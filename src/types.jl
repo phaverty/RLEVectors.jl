@@ -55,10 +55,10 @@ end
 
 #  Having specific types of Rle would be useful for lists of the same type, but Julia does a good job noticing that
 #  Could also be useful for method definitions
-typealias FloatRle RLEVector{Float64,Uint32}
-typealias IntegerRle RLEVector{Int64,Uint32}
-typealias BoolRle RLEVector{Bool,Uint32}
-typealias StringRle RLEVector{String,Uint32}
+typealias FloatRle RLEVector{Float64,UInt32}
+typealias IntegerRle RLEVector{Int64,UInt32}
+typealias BoolRle RLEVector{Bool,UInt32}
+typealias StringRle RLEVector{ASCIIString,UInt32}
 
 ### Some kind of magic
 Base.linearindexing{T<:RLEVector}(::Type{T}) = Base.LinearFast() # AbstractArray free indexing

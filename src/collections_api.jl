@@ -101,7 +101,7 @@ function deleteat!(x::RLEVector,i::Integer)
   decrement_run!(x,run)
 end
 
-_default_splice = RLEVector(None[],Int64[])
+_default_splice = RLEVector(Union{}[],Int64[])
 function splice!(x::RLEVector, i::Integer, ins::RLEVector=_default_splice)
   if i < 1 || i > length(x)
     throw(BoundsError())

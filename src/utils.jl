@@ -1,7 +1,7 @@
 
 # Like R's rep, repeat
 #  No length_out arg at this time
-function rep(x::Union(Any,Vector); each::Union(Int,Vector{Int}) = ones(Int,length(x)), times::Int = 1)
+function rep(x::Union{Any,Vector}; each::Union{Int,Vector{Int}} = ones(Int,length(x)), times::Int = 1)
   if !isa(x,Vector)
     x = [ x ]
   end
