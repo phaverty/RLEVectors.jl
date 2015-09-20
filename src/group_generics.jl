@@ -33,10 +33,6 @@ const summary_group =[:maximum, :minimum, :range, :prod, :sum, :any, :all, :elty
 # "Arg", "Conj", "Im", "Mod", "Re"
 # leaving out for now
 
-#const set_group = [:setdiff, :symdiff, :issubset, :union] # :in
-
-#const set_group_w_splat = [:union]
-
 ### Operators, methods that take two arguments and return a modified RLEVector
 function ^(x::RLEVector,y::Integer) # Necessary to prevent an ambiguity warning
   rv = ^(x.runvalues,y)
@@ -72,16 +68,6 @@ end
 
 ## Methods that take two arguments, delegate to rle.runvalues and return something other than an RLEVector
 in{T1,T2<:Integer}(y::T1, x::RLEVector{T1,T2}) = in(y, x.runvalues)
-convert{T1,T2}(::Type{Set{T1}}, x::RLEVector{T1,T2}) = Set(runvalues(x))
-promote_rule(::Type{Set}, ::Type{RLEVector}) = Set
-
-#for op in set_group
-#  @eval begin
-#      ($op){T1,T2<:Integer,T3,T4<:Integer}(x::RLEVector{T1,T2}, y::RLEVector{T3,T4}) = ($op)(x.runvalues,y.runvalues)
-#      ($op){T1,T2<:Integer}(x::RLEVector{T1,T2}, y::T1) = ($op)(x.runvalues,y)
-#      ($op){T1,T2<:Integer}(y::T1, x::RLEVector{T1,T2}) = ($op)(y, x.runvalues)
-#  end
-#end
 
 # Defaulting to fun(itr) for prod, sumabs, sumabs2, count
 for op in [:findmin, :findmax]

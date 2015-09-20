@@ -8,8 +8,8 @@ export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, rfirst, rwidth, rlas
 import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect, isequal
 
 # collections
-import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, insert!, deleteat!, splice!, resize!, empty!, setdiff, symdiff, union, endof, maxabs, minabs, any, all, in
-export       eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, insert!, deleteat!, splice!, resize!, empty!, setdiff, symdiff, union, endof, maxabs, minabs, any, all, in
+import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in
+export       eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in
 export shove!, deleterun!, decrement_run!
 
 # indexing
@@ -28,19 +28,19 @@ import Base: ==, >, <, !=, <=, >=, .==, .>, .<, .!=, .<=, .>=, &, |
 import Base: abs, sign, sqrt, ceil, floor, trunc, cummax, cummin, cumprod, cumsum, log, log10, log2, log1p, acos, acosh, asin, asinh, atan, atanh
 import Base: exp, expm1, cos, cosh, sin, sinh, tan, tanh, gamma, lgamma, digamma, trigamma
 import Base: max, min, range, prod, sum, any, all, mean
-import Base: setdiff, symdiff, issubset, in, union
+import Base: in
 import Base: indexin, findin, median, findmin, findmax
 export .+, .-, .*, ./, .^, div, mod, fld, rem, ==, >, <, !=, <=, >=, .==, .>, .<, .!=, .<=, .>=, &, |
 export abs, sign, sqrt, ceil, floor, trunc, cummax, cummin, cumprod, cumsum, log, log10, log2, log1p, acos, acosh, asin, asinh, atan, atanh
 export exp, expm1, cos, cosh, sin, sinh, tan, tanh, gamma, lgamma, digamma, trigamma
 export max, min, range, prod, sum, any, all, mean
-export setdiff, symdiff, issubset, in, union
+export in
 export indexin, findin, median, findmin, findmax
 export findin2
 
 # math
 #import StatsBase: mode, countmap
-export            mode, countmap
+export mode, countmap
 
 # ranges
 export disjoin, disjoin_length, ree, inverse_ree, numruns
