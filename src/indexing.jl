@@ -1,4 +1,14 @@
 ### Indexing
+typealias NiceIndices Union{UnitRange, Vector} # Trying to avoid AbstractArray and method ambiguities
+typealias LogicalVector Union{BitVector, Vector{Bool}}
+
+function setindex!{T1,T2<:Integer}(rle::RLEVector{T1,T2}, values::Vector, indices::UnitRange) 
+  length(values) != length(indices) && throw(BoundsError("setindex! requires one value for each indexed element."))
+    @inbounds for (i,v) in zip(indices,values)
+        rle[i] = v
+  end
+  return(rle)
+end
 
 ## locate runs
 # get index of run corresponding to the i'th value in the expanded runs
@@ -40,13 +50,13 @@ function ind2runcontext(rle::RLEVector, i::UnitRange)
   (left_run, right_run, ind_in_run, runend - e)
 end
 
-# scalar indexing case
+## scalar indexing case
 function Base.getindex(rle::RLEVector, i::Integer)
   run = ind2run(rle,i)
   return( rle.runvalues[run] )
 end
 
-function Base.setindex!{T1, T2}(rle::RLEVector{T1, T2}, value::T1, i::Integer)
+function Base.setindex!{T1, T2<:Integer}(rle::RLEVector{T1, T2}, value, i::Integer)
   run = ind2run(rle,i)
   runvalue = rle.runvalues[run]
   runend = rle.runends[run]
@@ -99,7 +109,37 @@ function setrun!(rle::RLEVector, value, i::Integer)
   return(rle)
 end
 
-### Things we should be getting from AbstractVector
+## Things we should be getting from AbstractVector
+# Logical
+
+getindex(rle::RLEVector, i::LogicalVector) = rle[ find(i) ]
+setindex!(rle::RLEVector, value::Vector, i::Vector{Bool}) = setindex!(rle, value, find(i) )
+setindex!(rle::RLEVector, value, i::LogicalVector) = setindex!(rle, value, find(i) )
+
+# Index vector
+function getindex(rle::RLEVector, i::AbstractVector)
+  rval = similar(rle.runvalues, length(i))
+    @inbounds for v in eachindex(i)
+    rval[v] = rle[i[v]]
+  end
+  return(rval)
+end
+
+function setindex!{T1,T2<:Integer}(rle::RLEVector{T1,T2}, values::Vector, indices::Vector)    
+  length(values) != length(indices) && throw(BoundsError("setindex! requires one value for each indexed element."))
+    @inbounds for (i,v) in zip(indices,values)
+        rle[i] = v
+  end
+  return(rle)
+end
+
+function setindex!{T1,T2<:Integer}(rle::RLEVector{T1,T2}, value, indices::NiceIndices)
+    @inbounds for v in indices
+        rle[v] = value
+    end
+  return(rle)
+end
+
 # Colon
 getindex(rle::RLEVector, i::Colon) = rle
 function setindex!(rle::RLEVector, value, i::Colon)
@@ -108,11 +148,7 @@ function setindex!(rle::RLEVector, value, i::Colon)
     return(rle)
 end
 
-# Logical
-#getindex(rle::RLEVector, i::Array{Bool}) = rle[ find(i) ]
-#setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::AbstractVector, i::Union{BitArray,Vector{Bool}}) = setindex!(rle, value, find(i) )
-#setindex!{T1,T2}(rle::RLEVector{T1,T2}, value, i::Union{BitArray,Vector{Bool}}) = setindex!(rle, value, find(i) )
-
+### Indexing optimizations
 # Range case optimization
 function Base.getindex(rle::RLEVector, indices::UnitRange)
   runs = ind2run(rle,indices)
@@ -128,7 +164,7 @@ function Base.getindex(rle::RLEVector, indices::UnitRange)
   return(rval)
 end
 
-function Base.setindex!{T1, T2}(rle::RLEVector{T1, T2}, value, indices::UnitRange)
+function Base.setindex!(rle::RLEVector, value, indices::UnitRange)
   runs = ind2run(rle,indices)
   left_run = first(runs)
   right_run = last(runs)
@@ -185,31 +221,7 @@ function Base.setindex!{T1, T2}(rle::RLEVector{T1, T2}, value, indices::UnitRang
   return(rle)
 end
 
-## Index vector
-#function getindex(rle::RLEVector, i::AbstractVector)
-#  rval = similar(rle.runvalues, length(i))
-#    @inbounds for v in eachindex(i)
-#    rval[v] = rle[i[v]]
-#  end
-#  return(rval)
-#end
-#
-#function setindex!{T1,T2}(rle::RLEVector{T1,T2}, values::AbstractVector, indices::AbstractVector)
-#  length(values) != length(indices) && throw(BoundsError("setindex! requires one value for each indexed element."))
-#    @inbounds for (i,v) in zip(indices,values)
-#        rle[i] = v
-#  end
-#  return(rle)
-#end
-#
-#function setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::T1, indices::AbstractVector)
-#    @inbounds for v in indices
-#        nrle[v] = value
-#    end
-#  return(rle)
-#end
-
-# Getter shortcuts
+### Getter shortcuts
 function head(x::RLEVector,l::Integer=6)
     collect(x[ 1:l ])
 end
@@ -218,7 +230,7 @@ function tail(x::RLEVector,l::Integer=6)
     collect( x[ length(x)-(l-1):end ] )
 end
 
-### Iterator(s)
+### Iterator
 function start(rle::RLEVector)
   (1,1)
 end
