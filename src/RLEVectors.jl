@@ -1,4 +1,5 @@
 VERSION >= v"0.4.0-dev+6521" && __precompile__(true)
+
 module RLEVectors
 
 ### Re-implementation of the Rle type from Bioconductor's IRanges package by H. Pages, P. Aboyoun and M.Lawrence
@@ -64,5 +65,10 @@ include("group_generics.jl")
 include("collections_api.jl")
 include("math.jl")
 include("sorting.jl")
+
+if VERSION >= v"0.4.0-dev+5512"
+    include("precompile.jl")
+    _precompile_()
+end
 
 end # Module RLEVectors

@@ -41,12 +41,14 @@ function numruns(runvalues, runends)
   n = 1
   current_val = runvalues[1]
   current_end = runends[1]
-  for i in 2:len
-    @inbounds if runvalues[i] != current_val && runends[i] != current_end
+    @inbounds for i in 2:len
+        rv = runvalues[i]
+        re = runends[i]
+    if rv != current_val && re != current_end
       n = n + 1
-      runends[i] < current_end && throw(ArgumentError("The provided runends were not sorted, please use cumsum(runlengths) to get the right values."))
-      current_val = runvalues[i]
-      current_end = runends[i]
+      re < current_end && throw(ArgumentError("The provided runends were not sorted, please use cumsum(runlengths) to get the right values."))
+      current_val = rv
+      current_end = re
     end
   end
   return(n)
@@ -58,25 +60,27 @@ function ree(runvalues, runends)
 end
 
 function ree(runvalues, runends, nrun)
-  rv = similar(runvalues,nrun)
-  re = similar(runends,nrun)
+  newv = similar(runvalues,nrun)
+  newe = similar(runends,nrun)
   current_val = runvalues[1]
   current_end = runends[1]
   n = 1
-  for i in 2:length(runvalues)
-    @inbounds if runends[i] != current_end
-      @inbounds if runvalues[i] != current_val
-        @inbounds rv[n] = current_val
-        @inbounds re[n] = current_end
+    @inbounds for i in 2:length(runvalues)
+        rv = runvalues[i]
+        re = runends[i]
+    if runends[i] != current_end
+      if rv != current_val
+        newv[n] = current_val
+        newe[n] = current_end
         n = n + 1
-        @inbounds current_val = runvalues[i]
+        current_val = rv
       end
-      @inbounds current_end = runends[i]
+      current_end = re
     end
   end
-  @inbounds rv[n] = current_val
-  @inbounds re[n] = current_end
-  return( (rv,re))
+  @inbounds newv[n] = current_val
+  @inbounds newe[n] = current_end
+  return( (newv,newe))
 end
 
 function ree(x)

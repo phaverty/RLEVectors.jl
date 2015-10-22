@@ -19,12 +19,12 @@ foo = IntegerRle(Int32[ 1:1000 ], Int32[5:5:5000]);
 int(length(foo))
 timings = DataFrame()
 timings[:language] = "julia"
-timings[:language_version] = "0.4.pre1"
+timings[:language_version] = "0.4"
 timings[:date] = chomp(readall(`date "+%Y-%m-%d"`))
 timings[:indexing] = @timeit foo[100]
 timings[:range_indexing] = @timeit foo[801:900]
 timings[:setting] = @timeit foo[800] = 5
-timings[:range_setting] = @timeit foo[801:900] = 1:100
+#timings[:range_setting] = @timeit foo[801:900] = 1:100
 timings[:scalar_add] = @timeit foo + 4
 timings[:length] = @timeit length(foo)
 timings[:nrun] = @timeit nrun(foo)

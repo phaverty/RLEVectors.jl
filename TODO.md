@@ -116,7 +116,8 @@
  * [x] Inherit from AbstractVector so I can get all the new free AbstractVector indexing
  * [ ] Should logical indexing become indexing with an array of Ranges?
  * [ ] implement Selection algorithm for median: https://en.wikipedia.org/wiki/Selection_algorithm
-
+ * [ ] while true break for ree and numruns?
+ * [ ] rle + rle spends all its time doing ind2run 
 ## Bugs
  * [x] fix mode, needs to do table not just which.max
  * [x] fix vcat, what about merging adjacent runs?
@@ -131,3 +132,5 @@
  * [x] Do I need Base.linearindexing{T<:MyArray}(::Type{T}) = LinearFast() 
  * [x] median with an Int RLE is type unstable, div by 2 gives float
    otherwise Int
+ * [ ] setindex!(rle, 801:900, 1:100) does setindex!(rle::RLEVector,
+   value, indices::UnitRange) rather than looking for a two vector method

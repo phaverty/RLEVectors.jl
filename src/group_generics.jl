@@ -45,7 +45,7 @@ for op in ops_group
         function ($op)(x::RLEVector, y::RLEVector)
             length(x) != length(y) && error("RLEVectors must be of the same length for this operation.")
             runends = disjoin(x,y)
-            @inbounds runvals = T1[ ($op)(x[i], y[i]) for i in runends ]
+            @inbounds runvals = [ ($op)(x[i], y[i]) for i in runends ]
             RLEVector( runvals, runends )
         end
         # Rle, scalar
