@@ -39,6 +39,7 @@ function ^(x::RLEVector,y::Integer) # Necessary to prevent an ambiguity warning
   RLEVector(rv,x.runends)
 end
 
+.^(x::Base.Irrational{:e}, y::RLEVectors.RLEVector) = .^(x,y) # Ambig fix
 for op in ops_group
     @eval begin
         # Rle, Rle
@@ -49,8 +50,10 @@ for op in ops_group
             RLEVector( runvals, runends )
         end
         # Rle, scalar
+        ($op){T<:Integer}(x::RLEVector{Bool,T},y::Bool) = RLEVector( ($op)(x.runvalues,y), x.runends ) # Ambig fix
         ($op)(x::RLEVector,y::Number) = RLEVector( ($op)(x.runvalues,y), x.runends )
         # Number, Rle
+        ($op){T<:Integer}(y::Bool, x::RLEVector{Bool,T}) = RLEVector( ($op)(y,x.runvalues), x.runends ) # Ambig fix
         ($op)(y::Number, x::RLEVector) = RLEVector( ($op)(y,x.runvalues), x.runends )
     end
 end
