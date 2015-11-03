@@ -1,17 +1,7 @@
 ### Indexing
-typealias NiceIndices Union{UnitRange, Vector} # Trying to avoid AbstractArray and method ambiguities
-typealias LogicalVector Union{BitVector, Vector{Bool}}
 
-function setindex!{T1,T2<:Integer}(rle::RLEVector{T1,T2}, values::Vector, indices::UnitRange) 
-  length(values) != length(indices) && throw(BoundsError("setindex! requires one value for each indexed element."))
-    @inbounds for (i,v) in zip(indices,values)
-        rle[i] = v
-  end
-  return(rle)
-end
-
-## locate runs
-# get index of run corresponding to the i'th value in the expanded runs
+## Helper functions
+## locate runs, get index of run corresponding to the i'th value in the expanded runs
 function ind2run(rle::RLEVector, i::Integer)
   re = rle.runends
   n = length(re)
@@ -50,7 +40,15 @@ function ind2runcontext(rle::RLEVector, i::UnitRange)
   (left_run, right_run, ind_in_run, runend - e)
 end
 
-## scalar indexing case
+function setrun!(rle::RLEVector, value, i::Integer)
+  run = ind2run(rle,i)
+  rle.runvalues[run] = value
+  return(rle)
+end
+
+## Just enough for AbstractArray
+Base.linearindexing(::Type{RLEVector}) = Base.LinearFast()
+
 function Base.getindex(rle::RLEVector, i::Integer)
   run = ind2run(rle,i)
   return( rle.runvalues[run] )
@@ -101,51 +99,6 @@ function Base.setindex!{T1, T2<:Integer}(rle::RLEVector{T1, T2}, value, i::Integ
     splice!(rle.runends, run, [i-1,i,runend])
   end
   return(rle)
-end
-
-function setrun!(rle::RLEVector, value, i::Integer)
-  run = ind2run(rle,i)
-  rle.runvalues[run] = value
-  return(rle)
-end
-
-## Things we should be getting from AbstractVector
-# Logical
-
-getindex(rle::RLEVector, i::LogicalVector) = rle[ find(i) ]
-setindex!(rle::RLEVector, value::Vector, i::Vector{Bool}) = setindex!(rle, value, find(i) )
-setindex!(rle::RLEVector, value, i::LogicalVector) = setindex!(rle, value, find(i) )
-
-# Index vector
-function getindex(rle::RLEVector, i::AbstractVector)
-  rval = similar(rle.runvalues, length(i))
-    @inbounds for v in eachindex(i)
-    rval[v] = rle[i[v]]
-  end
-  return(rval)
-end
-
-function setindex!{T1,T2<:Integer}(rle::RLEVector{T1,T2}, values::Vector, indices::Vector)    
-  length(values) != length(indices) && throw(BoundsError("setindex! requires one value for each indexed element."))
-    @inbounds for (i,v) in zip(indices,values)
-        rle[i] = v
-  end
-  return(rle)
-end
-
-function setindex!{T1,T2<:Integer}(rle::RLEVector{T1,T2}, value, indices::NiceIndices)
-    @inbounds for v in indices
-        rle[v] = value
-    end
-  return(rle)
-end
-
-# Colon
-getindex(rle::RLEVector, i::Colon) = rle
-function setindex!(rle::RLEVector, value, i::Colon)
-    rle.runends = [length(rle)]
-    rle.runvalues = [value]
-    return(rle)
 end
 
 ### Indexing optimizations
@@ -248,6 +201,4 @@ function done(rle::RLEVector, state)
   state[1] > nrun(rle)
 end
 
-function endof(rle::RLEVector)
-  length(rle)
-end
+endof(rle::RLEVector) = length(rle)

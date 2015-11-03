@@ -23,7 +23,7 @@ be compressed out. RLEVectors can be expanded to a full vector like a
 """
 ## Types and constructors
 
-type RLEVector{T1,T2 <: Integer} # <: AbstractVector{T1}
+type RLEVector{T1,T2 <: Integer} <: AbstractVector{T1}
   runvalues::Vector{T1}
   runends::Vector{T2}
   function RLEVector(runvalues, runends)
@@ -61,7 +61,6 @@ typealias BoolRle RLEVector{Bool,UInt32}
 typealias StringRle RLEVector{ASCIIString,UInt32}
 
 ### Some kind of magic
-Base.linearindexing{T<:RLEVector}(::Type{T}) = Base.LinearFast() # AbstractArray free indexing
 Base.writemime(io::IO, ::MIME"text/plain", a::RLEVector) = show(io, a) # REPL pretty printing, inspired by how NamedArrays does this
 
 # similar

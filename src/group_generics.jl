@@ -79,17 +79,9 @@ for op in [:findmin, :findmax]
   end
 end
 
-function indexin(x::RLEVector,y::RLEVector)
-   RLEVector( indexin(x.runvalues,y), x.runends)
-end
-
-function indexin(x::RLEVector,y)
-  RLEVector( indexin(x.runvalues,y), x.runends )
-end
-
-function indexin(x,y::RLEVector)
-  rval = Int[ i == 0 ? 0 : y.runends[i] for i in indexin(x,y.runvalues) ]
-end
+indexin(x::RLEVector,y::RLEVector) = RLEVector( indexin(x.runvalues,y), x.runends)
+indexin(x::RLEVector,y::AbstractVector) = RLEVector( indexin(x.runvalues,y), x.runends )
+indexin(x::AbstractVector,y::RLEVector) = Int[ i == 0 ? 0 : y.runends[i] for i in indexin(x,y.runvalues) ]
 
 function findin(x::RLEVector,y::RLEVector)
   runs = findin(x.runvalues,y.runvalues)
