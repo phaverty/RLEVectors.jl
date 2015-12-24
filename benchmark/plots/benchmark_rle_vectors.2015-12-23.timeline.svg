@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:gadfly="http://www.gadflyjl.org/ns"
+     version="1.2"
+     width="254mm" height="152.4mm" viewBox="0 0 254 152.4"
+     stroke="none"
+     fill="#000000"
+     stroke-width="0.3"
+     font-size="3.88"
+>
+<g class="plotroot yscalable" id="img-e6125093-1">
+  <g font-size="3.88" font-family="'PT Sans','Helvetica Neue','Helvetica',sans-serif" fill="#564A55" stroke="#000000" stroke-opacity="0.000" id="img-e6125093-2">
+    <text x="123.71" y="140.79" text-anchor="middle" dy="0.6em">Date</text>
+  </g>
+  <g class="guide xlabels" font-size="2.82" font-family="'PT Sans Caption','Helvetica Neue','Helvetica',sans-serif" fill="#6C606B" id="img-e6125093-3">
+    <text x="25.22" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 25.22, 121.17)">4/3/15</text>
+    <text x="34.18" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 34.18, 121.17)">4/4/15</text>
+    <text x="43.13" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 43.13, 121.17)">4/6/15</text>
+    <text x="52.08" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 52.08, 121.17)">4/7/15</text>
+    <text x="61.04" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 61.04, 121.17)">4/8/15</text>
+    <text x="69.99" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 69.99, 121.17)">4/9/15</text>
+    <text x="78.94" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 78.94, 121.17)">4/10/15</text>
+    <text x="87.9" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 87.9, 121.17)">4/12/15</text>
+    <text x="96.85" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 96.85, 121.17)">4/13/15</text>
+    <text x="105.81" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 105.81, 121.17)">4/16/15</text>
+    <text x="114.76" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 114.76, 121.17)">4/19/15</text>
+    <text x="123.71" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 123.71, 121.17)">4/20/15</text>
+    <text x="132.67" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 132.67, 121.17)">4/21/15</text>
+    <text x="141.62" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 141.62, 121.17)">4/26/15</text>
+    <text x="150.57" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 150.57, 121.17)">5/9/15</text>
+    <text x="159.53" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 159.53, 121.17)">5/10/15</text>
+    <text x="168.48" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 168.48, 121.17)">5/17/15</text>
+    <text x="177.43" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 177.43, 121.17)">9/18/15</text>
+    <text x="186.39" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 186.39, 121.17)">2015-09-18</text>
+    <text x="195.34" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 195.34, 121.17)">2015-09-19</text>
+    <text x="204.3" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 204.3, 121.17)">2015-10-22</text>
+    <text x="213.25" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 213.25, 121.17)">2015-12-07</text>
+    <text x="222.2" y="121.17" text-anchor="end" dy="0.35em" transform="rotate(-90, 222.2, 121.17)">2015-12-23</text>
+  </g>
+  <g class="guide colorkey" id="img-e6125093-4">
+    <g fill="#4C404B" font-size="2.82" font-family="'PT Sans','Helvetica Neue','Helvetica',sans-serif" id="img-e6125093-5">
+      <text x="230.49" y="33.57" dy="0.35em" id="img-e6125093-6" class="color_indexing">indexing</text>
+      <text x="230.49" y="37.2" dy="0.35em" id="img-e6125093-7" class="color_range_indexing">range_indexing</text>
+      <text x="230.49" y="40.83" dy="0.35em" id="img-e6125093-8" class="color_setting">setting</text>
+      <text x="230.49" y="44.45" dy="0.35em" id="img-e6125093-9" class="color_range_setting">range_setting</text>
+      <text x="230.49" y="48.08" dy="0.35em" id="img-e6125093-10" class="color_scalar_add">scalar_add</text>
+      <text x="230.49" y="51.71" dy="0.35em" id="img-e6125093-11" class="color_length">length</text>
+      <text x="230.49" y="55.33" dy="0.35em" id="img-e6125093-12" class="color_nrun">nrun</text>
+      <text x="230.49" y="58.96" dy="0.35em" id="img-e6125093-13" class="color_mean">mean</text>
+      <text x="230.49" y="62.59" dy="0.35em" id="img-e6125093-14" class="color_max">max</text>
+      <text x="230.49" y="66.21" dy="0.35em" id="img-e6125093-15" class="color_width">width</text>
+      <text x="230.49" y="69.84" dy="0.35em" id="img-e6125093-16" class="color_last">last</text>
+      <text x="230.49" y="73.47" dy="0.35em" id="img-e6125093-17" class="color_first">first</text>
+      <text x="230.49" y="77.09" dy="0.35em" id="img-e6125093-18" class="color_add_two_rles">add_two_rles</text>
+      <text x="230.49" y="80.72" dy="0.35em" id="img-e6125093-19" class="color_disjoin">disjoin</text>
+      <text x="230.49" y="84.35" dy="0.35em" id="img-e6125093-20" class="color_which">which</text>
+      <text x="230.49" y="87.97" dy="0.35em" id="img-e6125093-21" class="color_scalar_less">scalar_less</text>
+      <text x="230.49" y="91.6" dy="0.35em" id="img-e6125093-22" class="color_median">median</text>
+      <text x="230.49" y="95.23" dy="0.35em" id="img-e6125093-23" class="color_which_max">which_max</text>
+    </g>
+    <g stroke="#000000" stroke-opacity="0.000" id="img-e6125093-24">
+      <rect x="227.68" y="32.67" width="1.81" height="1.81" id="img-e6125093-25" fill="#00BFFF" class="color_indexing"/>
+      <rect x="227.68" y="36.29" width="1.81" height="1.81" id="img-e6125093-26" fill="#D4CA3A" class="color_range_indexing"/>
+      <rect x="227.68" y="39.92" width="1.81" height="1.81" id="img-e6125093-27" fill="#FF5EA0" class="color_setting"/>
+      <rect x="227.68" y="43.55" width="1.81" height="1.81" id="img-e6125093-28" fill="#00E5B2" class="color_range_setting"/>
+      <rect x="227.68" y="47.17" width="1.81" height="1.81" id="img-e6125093-29" fill="#F6A6FF" class="color_scalar_add"/>
+      <rect x="227.68" y="50.8" width="1.81" height="1.81" id="img-e6125093-30" fill="#9E9E9E" class="color_length"/>
+      <rect x="227.68" y="54.43" width="1.81" height="1.81" id="img-e6125093-31" fill="#FF928B" class="color_nrun"/>
+      <rect x="227.68" y="58.05" width="1.81" height="1.81" id="img-e6125093-32" fill="#32B44E" class="color_mean"/>
+      <rect x="227.68" y="61.68" width="1.81" height="1.81" id="img-e6125093-33" fill="#F08031" class="color_max"/>
+      <rect x="227.68" y="65.31" width="1.81" height="1.81" id="img-e6125093-34" fill="#00BBAA" class="color_width"/>
+      <rect x="227.68" y="68.93" width="1.81" height="1.81" id="img-e6125093-35" fill="#93C1FF" class="color_last"/>
+      <rect x="227.68" y="72.56" width="1.81" height="1.81" id="img-e6125093-36" fill="#D581CB" class="color_first"/>
+      <rect x="227.68" y="76.19" width="1.81" height="1.81" id="img-e6125093-37" fill="#00DEE6" class="color_add_two_rles"/>
+      <rect x="227.68" y="79.81" width="1.81" height="1.81" id="img-e6125093-38" fill="#A28FFA" class="color_disjoin"/>
+      <rect x="227.68" y="83.44" width="1.81" height="1.81" id="img-e6125093-39" fill="#8AAA16" class="color_which"/>
+      <rect x="227.68" y="87.07" width="1.81" height="1.81" id="img-e6125093-40" fill="#A3D57C" class="color_scalar_less"/>
+      <rect x="227.68" y="90.69" width="1.81" height="1.81" id="img-e6125093-41" fill="#EF7C75" class="color_median"/>
+      <rect x="227.68" y="94.32" width="1.81" height="1.81" id="img-e6125093-42" fill="#00BA8B" class="color_which_max"/>
+    </g>
+    <g fill="#362A35" font-size="3.88" font-family="'PT Sans','Helvetica Neue','Helvetica',sans-serif" stroke="#000000" stroke-opacity="0.000" id="img-e6125093-43">
+      <text x="227.68" y="29.75" id="img-e6125093-44">variable</text>
+    </g>
+  </g>
+<g clip-path="url(#img-e6125093-45)">
+  <g id="img-e6125093-46">
+    <g pointer-events="visible" opacity="1" fill="#000000" fill-opacity="0.000" stroke="#000000" stroke-opacity="0.000" class="guide background" id="img-e6125093-47">
+      <rect x="20.75" y="5" width="205.94" height="115.17" id="img-e6125093-48"/>
+    </g>
+    <g class="guide ygridlines xfixed" stroke-dasharray="0.5,0.5" stroke-width="0.2" stroke="#D0D0E0" id="img-e6125093-49">
+      <path fill="none" d="M20.75,118.18 L 226.68 118.18" id="img-e6125093-50"/>
+      <path fill="none" d="M20.75,95.94 L 226.68 95.94" id="img-e6125093-51"/>
+      <path fill="none" d="M20.75,73.7 L 226.68 73.7" id="img-e6125093-52"/>
+      <path fill="none" d="M20.75,51.47 L 226.68 51.47" id="img-e6125093-53"/>
+      <path fill="none" d="M20.75,29.24 L 226.68 29.24" id="img-e6125093-54"/>
+      <path fill="none" d="M20.75,7 L 226.68 7" id="img-e6125093-55"/>
+    </g>
+    <g class="guide xgridlines yfixed" stroke-dasharray="0.5,0.5" stroke-width="0.2" stroke="#D0D0E0" id="img-e6125093-56">
+      <path fill="none" d="M29.7,5 L 29.7 120.17" id="img-e6125093-57"/>
+      <path fill="none" d="M38.65,5 L 38.65 120.17" id="img-e6125093-58"/>
+      <path fill="none" d="M47.61,5 L 47.61 120.17" id="img-e6125093-59"/>
+      <path fill="none" d="M56.56,5 L 56.56 120.17" id="img-e6125093-60"/>
+      <path fill="none" d="M65.51,5 L 65.51 120.17" id="img-e6125093-61"/>
+      <path fill="none" d="M74.47,5 L 74.47 120.17" id="img-e6125093-62"/>
+      <path fill="none" d="M83.42,5 L 83.42 120.17" id="img-e6125093-63"/>
+      <path fill="none" d="M92.37,5 L 92.37 120.17" id="img-e6125093-64"/>
+      <path fill="none" d="M101.33,5 L 101.33 120.17" id="img-e6125093-65"/>
+      <path fill="none" d="M110.28,5 L 110.28 120.17" id="img-e6125093-66"/>
+      <path fill="none" d="M119.24,5 L 119.24 120.17" id="img-e6125093-67"/>
+      <path fill="none" d="M128.19,5 L 128.19 120.17" id="img-e6125093-68"/>
+      <path fill="none" d="M137.14,5 L 137.14 120.17" id="img-e6125093-69"/>
+      <path fill="none" d="M146.1,5 L 146.1 120.17" id="img-e6125093-70"/>
+      <path fill="none" d="M155.05,5 L 155.05 120.17" id="img-e6125093-71"/>
+      <path fill="none" d="M164,5 L 164 120.17" id="img-e6125093-72"/>
+      <path fill="none" d="M172.96,5 L 172.96 120.17" id="img-e6125093-73"/>
+      <path fill="none" d="M181.91,5 L 181.91 120.17" id="img-e6125093-74"/>
+      <path fill="none" d="M190.87,5 L 190.87 120.17" id="img-e6125093-75"/>
+      <path fill="none" d="M199.82,5 L 199.82 120.17" id="img-e6125093-76"/>
+      <path fill="none" d="M208.77,5 L 208.77 120.17" id="img-e6125093-77"/>
+      <path fill="none" d="M217.73,5 L 217.73 120.17" id="img-e6125093-78"/>
+    </g>
+    <g class="plotpanel" id="img-e6125093-79">
+      <g class="geometry" id="img-e6125093-80">
+        <g stroke-width="0.3" id="img-e6125093-81">

@@ -19,7 +19,7 @@ foo = IntegerRle(Int32[ 1:1000 ], Int32[5:5:5000]);
 int(length(foo))
 timings = DataFrame()
 timings[:language] = "julia"
-timings[:language_version] = "0.4"
+timings[:language_version] = "0.4.2"
 timings[:date] = chomp(readall(`date "+%Y-%m-%d"`))
 timings[:indexing] = @timeit foo[100]
 timings[:range_indexing] = @timeit foo[801:900]
@@ -77,8 +77,8 @@ draw(SVG("/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_v
 
 jdf = bdf[ bdf[:,:language] .== "julia", 3:end ]
 melted_bdf = melt(jdf, :date)
-timeline_plot = plot(melted_bdf, x="date", y="value", color="variable", Guide.xlabel("Date"),# Geom.line,
-                             Scale.y_log10, Guide.ylabel("log2 elapsed seconds (1e4 runs)"), Geom.point)
+timeline_plot = plot(melted_bdf, x="date", y="value", color="variable", Guide.xlabel("Date"), Geom.line,
+                             Scale.y_log10, Guide.ylabel("log2 elapsed seconds (1e4 runs)"))
 draw(SVG("/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).timeline.svg",10inch,6inch),timeline_plot )
 
 using ProfileView

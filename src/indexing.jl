@@ -5,7 +5,7 @@
 function ind2run(rle::RLEVector, i::Integer)
   re = rle.runends
   n = length(re)
-  run = searchsortedfirst(re,i,1,n, Base.Forward)
+  run = searchsortedfirst(re,i,1,n)
   run <= n || throw(BoundsError())  # Can't be < 1
   return(run)
 end
@@ -13,8 +13,8 @@ end
 function ind2run(rle::RLEVector,i::UnitRange)
   re = rle.runends
   n = length(re)
-  left_run = searchsortedfirst(re,first(i),1,n, Base.Forward)
-  right_run = searchsortedfirst(re,last(i),left_run,n, Base.Forward)
+  left_run = searchsortedfirst(re,first(i),1,n)
+  right_run = searchsortedfirst(re,last(i),left_run,n)
   right_run <= n || throw(BoundsError())  # Can't be < 1
   return( left_run:right_run )
 end

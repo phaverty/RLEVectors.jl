@@ -23,3 +23,19 @@ function rep(x::Union{Any,Vector}; each::Union{Int,Vector{Int}} = ones(Int,lengt
   return(rval)
 end
 
+"""
+The four argument version substitutes customized ordering for a hard-coded '<'.
+"""
+function Base.searchsortedfirst(v::AbstractVector, x, lo::Int, hi::Int)
+    lo = lo-1
+    hi = hi+1
+    @inbounds while lo < hi-1
+        m = (lo+hi)>>>1
+        if v[m] < x
+            lo = m
+        else
+            hi = m
+        end
+    end
+    return hi
+end
