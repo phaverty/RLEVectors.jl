@@ -214,7 +214,7 @@ this plays out.</p>
 <h3 id="benchmarks">Benchmarks</h3>
 <p><img alt="Benchmarking results" src="./benchmark/plots/benchmark_rle_vectors.png" /></p>
 <h3 id="optimization-progress">Optimization progress</h3>
-<p><img alt="Optimization progress" src="./benchmark/plots/benchmark_rle_vectors.png" /></p>
+<p><img alt="Optimization progress" src="./benchmark/plots/benchmark_rle_vectors.timeline.png" /></p>
 <h2 id="memory-considerations">Memory considerations</h2>
 <p>Data compression is a secondary benefit of <code>RLEVector</code>s, but it can be convenient. Generally run ends are stored as Int64. However, if further memory savings are desired, consider smaller and unsigned types. Uint32 is sufficient to hold the length of the human genome and Uint16 can hold the length of the longest human chromosome.</p>
 <p><code>RLEVector([5.1,2.9,100.7], Uint16[4,8,22])</code></p>
