@@ -186,12 +186,15 @@
 <li>[x] sorting including sort, issorted, reverse and sortperm</li>
 </ul>
 <h2 id="decisions">Decisions</h2>
-<p>*[ ] How do I set up the type hierarchy?
+<ul>
+<li>[ ] Decide when getindex gives an Vector or an RLEVector, be consistent</li>
+<li>
+<p>[ ] How do I set up the type hierarchy?
    a.  How do I share common code as high in the tree as possible? (wait for new features of abstract types in 0.4?)
    b.  Can I make it a subtype of Vector and get lots of the Vector
    API for free?  Can I then use it in other places that take a
    vector? Like a DataFrame column?</p>
-<ul>
+</li>
 <li>
 <p>[x] How do I represent the runs? length, end, start/end?</p>
 <p>end allows for direct binarysearch for indexing and makes size a simple lookup
@@ -233,24 +236,28 @@ Gives 5X speedup for size, 40X for indexing on RLEVector(int([1:1:1e3]),int([1:1
 <h2 id="enhancements">Enhancements</h2>
 <ul>
 <li>[ ] Make Runs type, split from and use in RLEVector</li>
-<li>[ ] pretty <code>show</code> with elipsis if length &gt; 6, show runs and also expanded vector, use utils.rep</li>
+<li>[x] pretty <code>show</code> with elipsis if length &gt; 6, show runs and also expanded vector, use utils.rep</li>
 <li>[x] Add benchmark/ with R and .jl scripts comparing timings on some common things. Have one read a CSV from the other and plot.</li>
 <li>[ ] outer constructor for RLEVectors that takes runends or vector and then optional named args runends and runwidths</li>
 <li>[ ] Can I make a special zip-like loop that runs over the disjoint runs of 2+ RLEVectors and the associated values?</li>
 <li>[ ] vcat with splat for multiple args (vararg vcat)</li>
-<li>[ ] deleterun! should give a ree'd RLEVector, check for newly adjacent runs, use deleteat![x,itr] if necessary</li>
+<li>[x] deleterun! should give a ree'd RLEVector, check for newly adjacent runs, use deleteat![x,itr] if necessary</li>
 <li>[x] Any other function groups from DataArrays that I need?</li>
 <li>[x] factor out run counting stuff in ree(Vector) and disjoin, call it <code>nrun</code></li>
 <li>[x] implement comparison operators &lt;=, etc.</li>
 <li>[x] Rle to set conversion</li>
 <li>[ ] iterator versions of rwidth and rstart. Allocation is the root of all evil. Allocation in rwidth seems to be the bulk of 'median' at this point, for example.</li>
 <li>[x] ind2runcontext for UnitRange, use for setindex(x::RLEVector, value, indices::UnitRange)</li>
-<li>[ ] Make sure this works with Julia V0.4. Likely we have some tuple trouble and the tests will be riddled with the Range expansion change ([1:4] is a 1-vector of Ranges rather than [1,2,3,4]).</li>
+<li>[x] Make sure this works with Julia V0.4. Likely we have some tuple trouble and the tests will be riddled with the Range expansion change ([1:4] is a 1-vector of Ranges rather than [1,2,3,4]).</li>
+<li>[x] function documentation section: describing</li>
+<li>[x] function documentation section: creating</li>
+<li>[x] function documentation section: range functions</li>
+<li>[ ] get ree and vcat out of splice</li>
 </ul>
 <h2 id="optimizations">Optimizations</h2>
 <ul>
 <li>[ ] Re-read julia/base/range.jl, some day understand the meaning of "# to make StepRange constructor inlineable, so optimizer can see <code>step</code> value"</li>
-<li>[ ] getindex and setindex! optimizations for sorted i, especially for i::UnitRange</li>
+<li>[x] getindex and setindex! optimizations for sorted i, especially for i::UnitRange</li>
 <li>[ ] Lint clean and test for that</li>
 <li>[ ] TypeCheck clean (and test for that?)</li>
 <li>[ ] some trick with start(Range) to make splice! work with scalar int or range</li>
@@ -270,6 +277,11 @@ Gives 5X speedup for size, 40X for indexing on RLEVector(int([1:1:1e3]),int([1:1
 <li>[ ] can I do setindex(x::Rlevector, i, indices::Array) and such with an iterator that feeds "ree"?  Sort incoming indices and values of course.</li>
 <li>[x] add a few special cases to the "punt else" to work towards not punting</li>
 <li>[ ] setindex!(rle::RLEVector, value, i::UnitRange), can I merge this with the scalar i case using i:i?</li>
+<li>[x] Inherit from AbstractVector so I can get all the new free AbstractVector indexing</li>
+<li>[ ] Should logical indexing become indexing with an array of Ranges?</li>
+<li>[ ] implement Selection algorithm for median: https://en.wikipedia.org/wiki/Selection_algorithm</li>
+<li>[ ] while true break for ree and numruns?</li>
+<li>[ ] rle + rle spends all its time doing ind2run </li>
 </ul>
 <h2 id="bugs">Bugs</h2>
 <ul>
@@ -277,18 +289,17 @@ Gives 5X speedup for size, 40X for indexing on RLEVector(int([1:1:1e3]),int([1:1
 <li>[x] fix vcat, what about merging adjacent runs?</li>
 <li>[x] binary_functions list not all commutative, split up, mabye set operations separately</li>
 <li>[x] changes to ree cause reversions in insert and splice</li>
-<li>[x] Fix group generics definitions to get rid of warnings like
- Warning: New definition
-    ^(RLEVector{T1,T2&lt;:Integer},Number) at /Users/phaverty/.julia/v0.3/RLEVectors/src/group_generics.jl:45
-is ambiguous with:
-    ^(Any,Integer) at intfuncs.jl:86.
-To fix, define
-    ^(RLEVector{T1,T2&lt;:Integer},Integer)
-before the new definition.</li>
+<li>[x] Fix group generics definitions to get rid of ambiguous method warnings</li>
 <li>[x] something is wrong with the iterator, which breaks sum and mean</li>
 <li>[x] something in splice and insert</li>
 <li>[x] ree(runvalues,runends) needs to avoid modifying input</li>
-<li>[ ] print/show on (BitArray,[1,2,]) prints the type Bool rather than BitArray. This is appears to be a bug in Julia, but it affects us.</li>
+<li>[x] do I need a print_matrix method to make auto-printing work?
+   print and show work fine.</li>
+<li>[x] Do I need Base.linearindexing{T&lt;:MyArray}(::Type{T}) = LinearFast() </li>
+<li>[x] median with an Int RLE is type unstable, div by 2 gives float
+   otherwise Int</li>
+<li>[ ] setindex!(rle, 801:900, 1:100) does setindex!(rle::RLEVector,
+   value, indices::UnitRange) rather than looking for a two vector method</li>
 </ul>
 </div>
             

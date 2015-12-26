@@ -147,19 +147,39 @@
         
             <li><a href="#memory-considerations">Memory considerations</a></li>
         
-            <li><a href="#installation">Installation</a></li>
-        
     
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
 <h1 id="rlevectors">RLEVectors</h1>
-<p><code>RLEVectors</code> is an alternate implementation of the Rle type from Bioconductor's IRanges package by H. Pages, P. Aboyoun and M. Lawrence. RLEVectors represent a vector with repeated values as the ordered set of values and repeat extents. In the field of genomics, data of various types measured across the ~3 billion letters in the human genome can often be represented in a few thousand runs. It is useful to know the bounds of genome regions covered by these runs, the values associated with these runs, and to be able to perform various mathematical operations on these values.</p>
+<p><code>RLEVectors</code> is an alternate implementation of the Rle type from
+Bioconductor's IRanges package by H. Pages, P. Aboyoun and
+M. Lawrence. RLEVectors represent a vector with repeated values as the
+ordered set of values and repeat extents. In the field of genomics,
+data of various types are  measured across the ~3 billion letters in
+the human genome can often be represented in a few thousand runs. It
+is useful to know the bounds of genome regions covered by these runs,
+the values associated with these runs, and to be able to perform
+various mathematical operations on these values.</p>
 <h2 id="background">Background</h2>
-<p>Bioconductor has some widely used and extremely convenient types for working with collections of ranges, which sometimes are with associated data.<code>IRanges</code> represents a collection of arbitrary start, end pairs in [1,Inf). <code>GRanges</code> uses <code>IRanges</code> to represent locations on a genome and adds annotation of the chromosome and strand for each range. Children of <code>GRanges</code> add other annotations the the ranges. <code>Rle</code> represents the range [1:n] broken into arbitrary chunks or segments.</p>
+<p>Bioconductor has some widely used and extremely convenient types for
+working with collections of ranges, which sometimes are with
+associated data.<code>IRanges</code> represents a collection of arbitrary start,
+end pairs in [1,Inf). <code>GRanges</code> uses <code>IRanges</code> to represent locations
+on a genome and adds annotation of the chromosome and strand for each
+range. Children of <code>GRanges</code> add other annotations the the ranges. <code>Rle</code>
+represents the range [1:n] broken into arbitrary chunks or segments.</p>
 <h2 id="implementation-details">Implementation Details</h2>
-<p><code>RLEVectors</code> differs from R's <code>Rle</code> in that we store the run values and run ends rather than the run values and run lengths. The run ends are convenient in that they allow for indexing into the vector by binary search (scalar indexing is O(log(n)) rather than O(n) ). Additionally, <code>length</code> is O(1) rather than O(n) (it's the last run end rather than the sum of the run lengths). On the other hand, various operations do require the run lengths, which have to be calculated. See the benchmark directory and reports to see how this plays out.</p>
+<p><code>RLEVectors</code> differs from R's <code>Rle</code> in that we store the run values
+and run ends rather than the run values and run lengths. The run ends
+are convenient in that they allow for indexing into the vector by
+binary search (scalar indexing is O(log(n)) rather than O(n) ).
+Additionally, <code>length</code> is O(1) rather than O(n) (it's the last run
+end rather than the sum of the run lengths). On the other hand,
+various operations do require the run lengths, which have to be
+calculated. See the benchmark directory and reports to see how
+this plays out.</p>
 <h3 id="creation">Creation</h3>
 <p><code>RLEVectors</code> can be created from a single vector or a vector of values and a vector of run ends. In either case runs of values or zero length runs will be compressed out. RLEVectors can be expanded to a full vector like a <code>Range</code> with <code>collect</code>.</p>
 <p><code>x = RLEVector([1,1,2,2,3,3,4,4,4])</code>
@@ -192,15 +212,12 @@
 <h2 id="relative-speed">Relative speed</h2>
 <p><code>RLEVectors</code> has been extensively profiled and somewhat optimized. Please see the benchmarking section for the evolution over time and comparisons to like operations in R.</p>
 <h3 id="benchmarks">Benchmarks</h3>
-<p><img alt="Benchmarking results" src="./benchmark_rle_vectors.svg" /></p>
+<p><img alt="Benchmarking results" src="./benchmark/plots/benchmark_rle_vectors.2015-12-24.svg" /></p>
 <h3 id="optimization-progress">Optimization progress</h3>
-<p><img alt="Optimization progress" src="./benchmark_rle_vectors.timeline.svg" /></p>
+<p><img alt="Optimization progress" src="./benchmark/plots/benchmark_rle_vectors.2015-12-24.timeline.svg" /></p>
 <h2 id="memory-considerations">Memory considerations</h2>
 <p>Data compression is a secondary benefit of <code>RLEVector</code>s, but it can be convenient. Generally run ends are stored as Int64. However, if further memory savings are desired, consider smaller and unsigned types. Uint32 is sufficient to hold the length of the human genome and Uint16 can hold the length of the longest human chromosome.</p>
 <p><code>RLEVector([5.1,2.9,100.7], Uint16[4,8,22])</code></p>
-<h2 id="installation">Installation</h2>
-<p>No git at this point, so no <code>Pkg.add("RLEVectors")</code>, sorry.</p>
-<p><code>svn co http://resscm.gene.com/bioinfo/projects/julia/trunk/RLEVectors ~/.julia/v3/RLEVectors</code></p>
 </div>
             
         </div>

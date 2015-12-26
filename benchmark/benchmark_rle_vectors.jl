@@ -68,19 +68,30 @@ for (i in 1:length(r_over_julia))
 end
 
 using Gadfly
+## Performance Relative to R
 bench_plot = plot(x=names(bdf)[4:end],y=r_over_julia, Geom.bar, Guide.ylabel("Elapsed Time: log2(R/julia)"),
      Guide.xticks(orientation=:vertical),Scale.color_continuous(minvalue=-15,maxvalue=15),color=r_over_julia,
      Guide.title("Relative Performance of R and Julia Rle Vectors"),Geom.hline(color="black"),yintercept=[0],Guide.xlabel(""))
 
 date = jdf[1,:date]
-draw(SVG("/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).svg",8inch,5inch),bench_plot )
+relative_perf_file = "/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).png"
+draw(PNG(relative_perf_file,8inch,5inch),bench_plot )
+current_relative_perf_file = "/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.png"
+rm(current_relative_perf_file)
+symlink(relative_perf_file, current_relative_perf_file)
 
+## Performance over time
 jdf = bdf[ bdf[:,:language] .== "julia", 3:end ]
 melted_bdf = melt(jdf, :date)
 timeline_plot = plot(melted_bdf, x="date", y="value", color="variable", Guide.xlabel("Date"), Geom.line,
-                             Scale.y_log10, Guide.ylabel("log2 elapsed seconds (1e4 runs)"))
-draw(SVG("/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).timeline.svg",10inch,6inch),timeline_plot )
+                     Scale.y_log10, Guide.ylabel("log2 elapsed seconds (1e4 runs)"))
+timeline_file = "/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).timeline.png"
+draw(PNG(timeline_file,10inch,6inch),timeline_plot )
+current_timeline_file = "/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.timeline.png"
+rm(current_timeline_file)
+symlink(timeline_file, current_timeline_file)
 
+## Profiling
 using ProfileView
 foo + foo; Profile.clear(); @profile for i in 1:1e4 foo + foo end; ProfileView.view()
 foo .< 3; Profile.clear(); @profile for i in 1:1e4 foo .< 3 end; ProfileView.view()

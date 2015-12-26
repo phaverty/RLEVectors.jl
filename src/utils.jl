@@ -39,3 +39,17 @@ function Base.searchsortedfirst(v::AbstractVector, x, lo::Int, hi::Int)
     end
     return hi
 end
+
+function Base.searchsortedfirst(v::AbstractVector, x::AbstractVector, lo::Int, hi::Int)
+    lo = lo-1
+    hi = hi+1
+    @inbounds while lo < hi-1
+        m = (lo+hi)>>>1
+        if v[m] < x
+            lo = m
+        else
+            hi = m
+        end
+    end
+    return hi
+end
