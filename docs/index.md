@@ -71,10 +71,10 @@ Naming for some of these functions is difficult given that many useful names are
 `RLEVectors` has been extensively profiled and somewhat optimized. Please see the benchmarking section for the evolution over time and comparisons to like operations in R.
 
 ### Benchmarks
-![Benchmarking results](benchmark/plots/benchmark_rle_vectors.2015-12-24.svg)
+![Benchmarking results](benchmark/plots/benchmark_rle_vectors.png)
 
 ### Optimization progress
-![Optimization progress](benchmark/plots/benchmark_rle_vectors.2015-12-24.timeline.svg)
+![Optimization progress](benchmark/plots/benchmark_rle_vectors.png)
 
 ## Memory considerations
 Data compression is a secondary benefit of `RLEVector`s, but it can be convenient. Generally run ends are stored as Int64. However, if further memory savings are desired, consider smaller and unsigned types. Uint32 is sufficient to hold the length of the human genome and Uint16 can hold the length of the longest human chromosome.
