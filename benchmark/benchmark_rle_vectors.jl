@@ -77,8 +77,7 @@ date = jdf[1,:date]
 relative_perf_file = "/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).png"
 draw(PNG(relative_perf_file,8inch,5inch),bench_plot )
 current_relative_perf_file = "/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.png"
-rm(current_relative_perf_file)
-symlink(relative_perf_file, current_relative_perf_file)
+cp(relative_perf_file, current_relative_perf_file, remove_destination=true)
 
 ## Performance over time
 jdf = bdf[ bdf[:,:language] .== "julia", 3:end ]
@@ -88,8 +87,7 @@ timeline_plot = plot(melted_bdf, x="date", y="value", color="variable", Guide.xl
 timeline_file = "/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).timeline.png"
 draw(PNG(timeline_file,10inch,6inch),timeline_plot )
 current_timeline_file = "/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.timeline.png"
-rm(current_timeline_file)
-symlink(timeline_file, current_timeline_file)
+cp(timeline_file, current_timeline_file, remove_destination=true)
 
 ## Profiling
 using ProfileView
