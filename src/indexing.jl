@@ -202,3 +202,10 @@ function done(rle::RLEVector, state)
 end
 
 endof(rle::RLEVector) = length(rle)
+
+## Stuff I should get for free from AbstractVector
+# Also optimized here, though
+function Base.getindex(rle::RLEVector, i::AbstractVector)
+    run_indices = searchsortedfirst(rle.runends, i)
+    return( rle.runvalues[ run_indices ] )
+end

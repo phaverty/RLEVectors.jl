@@ -3,7 +3,8 @@
 # Translated to julia, adding scalar versions of operators
 # Arith
 # "+", "-", "*", "^", "%%", "%/%", "/"
-const arith_group = [:(+), :(-), :(*), :(/), :(^), :(.+), :(.-), :(.*), :(./), :(.^), :(div), :(mod), :(fld), :(rem)]
+#const arith_group = [:(+), :(-), :(*), :(/), :(^), :(.+), :(.-), :(.*), :(./), :(.^), :(div), :(mod), :(fld), :(rem)]
+const arith_group = [:(+), :(-), :(.+), :(.-), :(.*), :(./), :(.^), :(div), :(mod), :(fld), :(rem)] # Just scalar arith for vectors
 
 # Compare
 # "=="), ">"), "<"), "!="), "<="), ">="
@@ -46,7 +47,9 @@ for op in ops_group
         function ($op)(x::RLEVector, y::RLEVector)
             length(x) != length(y) && error("RLEVectors must be of the same length for this operation.")
             runends = disjoin(x,y)
-            @inbounds runvals = [ ($op)(x[i], y[i]) for i in runends ]
+            x_inds = searchsortedfirst(x.runends, runends)
+            y_inds = searchsortedfirst(y.runends, runends)
+            runvals = ($op)( x.runvalues[x_inds], y.runvalues[y_inds] )
             RLEVector( runvals, runends )
         end
         # Rle, scalar

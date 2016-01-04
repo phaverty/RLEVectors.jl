@@ -15,7 +15,7 @@ macro timeit(ex)
   end
 end
 
-foo = IntegerRle(Int32[ 1:1000 ], Int32[5:5:5000]);
+foo = IntegerRle(Int32[ collect(1:1000) ], Int32[collect(5:5:5000]));
 int(length(foo))
 timings = DataFrame()
 timings[:language] = "julia"
@@ -91,7 +91,7 @@ cp(timeline_file, current_timeline_file, remove_destination=true)
 
 ## Profiling
 using ProfileView
-foo + foo; Profile.clear(); @profile for i in 1:1e4 foo + foo end; ProfileView.view()
+foo + foo; Profile.clear(); @profile for i in 1:1e6 foo + foo end; ProfileView.view()
 foo .< 3; Profile.clear(); @profile for i in 1:1e4 foo .< 3 end; ProfileView.view()
 foo .+ 3; Profile.clear(); @profile for i in 1:1e4 foo .+ 3 end; ProfileView.view()
 sum(foo); Profile.clear(); @profile for i in 1:1e4 sum(foo) end; ProfileView.view()
