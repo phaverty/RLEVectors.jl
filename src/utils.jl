@@ -40,16 +40,45 @@ function Base.searchsortedfirst(v::AbstractVector, x, lo::Int, hi::Int)
     return hi
 end
 
+"""
+The method for two vectors is like R's findinterval.
+"""
+Base.searchsortedfirst(v::AbstractVector, x::AbstractVector) = searchsortedfirst(v, x, 1, length(x))
 function Base.searchsortedfirst(v::AbstractVector, x::AbstractVector, lo::Int, hi::Int)
+    indices = Vector{typeof(hi)}(length(x))
     lo = lo-1
     hi = hi+1
-    @inbounds while lo < hi-1
-        m = (lo+hi)>>>1
-        if v[m] < x
-            lo = m
-        else
-            hi = m
+    n = length(v)
+    @inbounds for (i,query) in enumerate(x)
+        # unsorted x, restart left side
+        @inbounds if lo > 0 && query <= v[lo]
+            lo = 0
         end
+        # cast out exponentially to get hi to the right of query
+        jump = 1
+        @inbounds while true
+            if hi >= n
+                hi = n + 1
+                break
+            end
+            if query < v[hi]
+                break
+            end
+            lo = hi
+            hi = hi + jump
+            jump = jump * 2
+        end
+        # binary search for the exact bin
+        @inbounds while lo < hi-1
+            m = (lo+hi)>>>1
+            @inbounds if query > v[m]
+                lo = m
+            else
+                hi = m
+            end
+        end
+        @inbounds indices[i] = hi
+        lo = hi - 1
     end
-    return hi
+    return(indices)
 end
