@@ -49,6 +49,8 @@ end
 ## Just enough for AbstractArray
 Base.linearindexing(::Type{RLEVector}) = Base.LinearFast()
 
+endof(rle::RLEVector) = length(rle)
+
 function Base.getindex(rle::RLEVector, i::Integer)
   run = ind2run(rle,i)
   return( rle.runvalues[run] )
@@ -101,7 +103,7 @@ function Base.setindex!{T1, T2<:Integer}(rle::RLEVector{T1, T2}, value, i::Integ
   return(rle)
 end
 
-### Indexing optimizations
+## Indexing optimizations
 # Range case optimization
 function Base.getindex(rle::RLEVector, indices::UnitRange)
   runs = ind2run(rle,indices)
@@ -174,7 +176,7 @@ function Base.setindex!(rle::RLEVector, value, indices::UnitRange)
   return(rle)
 end
 
-### Getter shortcuts
+## Getter shortcuts
 function head(x::RLEVector,l::Integer=6)
     collect(x[ 1:l ])
 end
@@ -183,7 +185,7 @@ function tail(x::RLEVector,l::Integer=6)
     collect( x[ length(x)-(l-1):end ] )
 end
 
-### Iterator
+## Iterators
 function start(rle::RLEVector)
   (1,1)
 end
@@ -201,7 +203,26 @@ function done(rle::RLEVector, state)
   state[1] > nrun(rle)
 end
 
-endof(rle::RLEVector) = length(rle)
+# Iterator for ranges based on RLE e.g. (value, start, end)
+immutable RLEEachIterator{T1,T2}
+    rle::RLEVector{T1,T2}
+end
+each(x::RLEVector) = RLEEachIterator(x)
+
+function start(x::RLEEachIterator)
+    1
+end
+
+function next(x::RLEEachIterator, state)
+    newstate = state + 1
+    first = rfirst(x.rle,state)
+    last = rlast(x.rle)[state]
+    ( (rvalue(x.rle)[state], first:last ), newstate )
+end
+
+function done(x::RLEEachIterator, state)
+    state > nrun(x.rle)
+end
 
 ## Stuff I should get for free from AbstractVector
 # Also optimized here, though

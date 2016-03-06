@@ -94,8 +94,7 @@ convert(::Type{Vector}, x::RLEVector) = collect(x)
 convert{T1,T2}(::Type{Set{T1}}, x::RLEVector{T1,T2}) = Set(runvalues(x))
 promote_rule(::Type{Set}, ::Type{RLEVector}) = Set
 
-# collect
-# way faster than inverse_rle(x.runvalues, rwidth(x)) (50X)
+# the basics
 function collect(x::RLEVector)
   inverse_ree(x.runvalues,x.runends)
 end
@@ -116,4 +115,3 @@ Base.hash(a::RLEVector) = hash(a.runvalues, hash(a.runlengths, hash(:RLEVector))
 function disjoin(x::RLEVector, y::RLEVector)
   disjoin(x.runends,y.runends)
 end
-

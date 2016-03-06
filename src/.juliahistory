@@ -7,3 +7,11 @@ using RLEVectors
 exit()
 using RLEVectors
 exit()
+using RLEVectors
+x = RLEVector([1,1,1,1,2,2,2,3,3,4,4,])
+head(x)
+foo = head(x)
+typeof(foo)
+foo = head(x)
+foo
+exit()

@@ -90,7 +90,9 @@
  * [x] function documentation section: creating
  * [x] function documentation section: range functions
  * [ ] get ree and vcat out of splice
-
+ * [ ] iterator called 'ranges' that gives (first,last) indices for
+ runs. Will require a new type with the 3 iterator methods, say RLERangesIterator.
+ * [ ] Make sure my hash and == are what AutoHashEquals would say 
 ## Optimizations
  * [ ] Re-read julia/base/range.jl, some day understand the meaning of "# to make StepRange constructor inlineable, so optimizer can see `step` value"
  * [x] getindex and setindex! optimizations for sorted i, especially for i::UnitRange
@@ -117,7 +119,8 @@
  * [ ] Should logical indexing become indexing with an array of Ranges?
  * [ ] implement Selection algorithm for median: https://en.wikipedia.org/wiki/Selection_algorithm
  * [ ] while true break for ree and numruns?
- * [ ] rle + rle spends all its time doing ind2run 
+ * [x] rle + rle spends all its time doing ind2run 
+
 ## Bugs
  * [x] fix mode, needs to do table not just which.max
  * [x] fix vcat, what about merging adjacent runs?

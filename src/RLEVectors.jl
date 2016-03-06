@@ -16,8 +16,7 @@ export shove!, deleterun!, decrement_run!
 # indexing
 import Base: getindex, setindex!
 #import DataArrays: head, tail
-export getindex, setindex!, ind2run, setrun!, ind2runcontext, head, tail
-export getindex2
+export getindex, setindex!, ind2run, setrun!, ind2runcontext, head, tail, RLERangesIterator, each
 
 # describe
 import Base: isempty, ndims
