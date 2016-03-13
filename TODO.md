@@ -54,10 +54,10 @@
        For disjoin operations, it will be useful to know the unique runends in two+ sets of runs
        Would be nice to have disjoin for RLEVector and RunEnds and IRanges and GRanges types
 
-* [x] What do I call the getters and setters? I want to use same getters for RLEs and GRanges and such.
+* [ ] What do I call the getters and setters? I want to use same getters for RLEs and GRanges and such.
     begin, end and start are taken. first, step, and last make sense because of what they mean for ranges, but they would mean something else for a Vector
     Maybe confusion between Ranges and Vector API means that I should just make my own and use rangestart, rangewidth, rangeend or rfirst, rwidth and rlast. With the latter, the 'r' could be range or run.
-    -> Going with rfirst, rwidth, rlast
+	Maybe starts, widths, ends?
 
  * [x] Is it a good idea to require two arg vectors to be the same length like this: function bob{T1,T1,N}(x::Vector{T1,N},y::Vector{T2,N})  ?  Or just test the lengths and throw an ArgumentError?
 
@@ -92,7 +92,11 @@
  * [ ] get ree and vcat out of splice
  * [ ] iterator called 'ranges' that gives (first,last) indices for
  runs. Will require a new type with the 3 iterator methods, say RLERangesIterator.
- * [ ] Make sure my hash and == are what AutoHashEquals would say 
+ * [ ] Make sure my hash and == are what AutoHashEquals would say
+ * [ ] linalg operations
+ * [ ] make 'each' a Task?
+ * [ ] make disjoin Task for two RLEs?
+ 
 ## Optimizations
  * [ ] Re-read julia/base/range.jl, some day understand the meaning of "# to make StepRange constructor inlineable, so optimizer can see `step` value"
  * [x] getindex and setindex! optimizations for sorted i, especially for i::UnitRange
@@ -137,3 +141,4 @@
    otherwise Int
  * [ ] setindex!(rle, 801:900, 1:100) does setindex!(rle::RLEVector,
    value, indices::UnitRange) rather than looking for a two vector method
+ * [ ] It seems that one cannot make a vector of RLEVectors

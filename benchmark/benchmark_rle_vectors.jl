@@ -1,4 +1,3 @@
-workspace()
 using RLEVectors
 using DataFrames
 
@@ -15,11 +14,11 @@ macro timeit(ex)
   end
 end
 
-foo = IntegerRle(Int32[ collect(1:1000) ], Int32[collect(5:5:5000]));
-int(length(foo))
+foo = IntegerRle(int32(collect(1:1000)), int32(collect(5:5:5000)))
+length(foo)
 timings = DataFrame()
 timings[:language] = "julia"
-timings[:language_version] = "0.4.2"
+timings[:language_version] = VERSION
 timings[:date] = chomp(readall(`date "+%Y-%m-%d"`))
 timings[:indexing] = @timeit foo[100]
 timings[:range_indexing] = @timeit foo[801:900]

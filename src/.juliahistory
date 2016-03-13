@@ -15,3 +15,38 @@ typeof(foo)
 foo = head(x)
 foo
 exit()
+using RLEVectors
+using RLEVectors
+using RLEVectors
+using DataFrames
+@doc RLEDataFrame
+?RLEDataFrame
+?RLEVector
+exit()
+?RLEDataFrame
+?RLEVecror
+using RLEVectors
+?RLEDataFrame
+RLEDataFrame(a=RLEVector([1, 1, 2, 2, 2]), b=RLEVector([2, 3, 3, 3, 3]))
+using RLEVectors
+RLEDataFrame( [ Rle([1, 1, 2]), Rle([2, 2, 2]) ], [:a, :b] )
+RLEDataFrame( [ RleVector([1, 1, 2]), RleVector([2, 2, 2]) ], [:a, :b] )
+RLEDataFrame( [ RLEVector([1, 1, 2]), RLEVector([2, 2, 2]) ], [:a, :b] )
+RLEDataFrame( [ RLEVector([1, 1, 2]), RLEVector([2, 2, 2]) ], [:a :b] )
+[:a, :b]
+[RLEVector([1, 1, 2]), RLEVector([2, 2, 2])]
+RLEDataFrame( [RLEVector([1, 1, 2]), RLEVector([2, 2, 2])], [:a, :b] )
+exit()
+using RLEVectors
+Index([:a, :b])
+DataFrames.Index([:a, :b])
+Index
+Index([:a, :b])
+using DataFrames
+Index([:a, :b])
+exit()
+using DataFrames
+using RLEVectors
+exit()
+using RLEVectors
+exit()

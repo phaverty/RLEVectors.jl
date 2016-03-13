@@ -2,9 +2,11 @@ VERSION >= v"0.4.0-dev+6521" && __precompile__(true)
 
 module RLEVectors
 
-### Re-implementation of the Rle type from Bioconductor's IRanges package by H. Pages, P. Aboyoun and M.Lawrence
+using Reexport
+@reexport using DataFrames
 
-# types
+
+# RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar
 import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect, isequal
 
@@ -54,10 +56,15 @@ import Base.Sort: QuickSortAlg
 import Base: sort, sort!, issorted, reverse, reverse!, sortperm, Algorithm
 export       sort, sort!, issorted, reverse, reverse!, sortperm
 
+# data frames
+import DataFrames: AbstractDataFrame, DataFrame, Index, head, tail
+export RLEDataFrame
+
 ### Includes
 include("utils.jl")
 include("ranges.jl")
-include("types.jl")
+include("RLEVector-type.jl")
+include("RLEDataFrame-type.jl")
 include("describe.jl")
 include("indexing.jl")
 include("group_generics.jl")
@@ -65,7 +72,7 @@ include("collections_api.jl")
 include("math.jl")
 include("sorting.jl")
 
-if VERSION >= v"0.4.0-dev+5512"
+if VERSION >= v"0.4.0"
     include("precompile.jl")
     _precompile_()
 end
