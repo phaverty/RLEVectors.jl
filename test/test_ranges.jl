@@ -15,6 +15,10 @@ using Base.Test
 @test disjoin_length([1,2,3],[3,5,6]) == 5
 @test disjoin_length([1,3],[2,5,6]) == 5
 
+# disjoin
+@test disjoin( RLEVector([1,2,3,4], [1,3,8,10]), RLEVector([4,5,6,7],[3,4,9,10])) == [1,3,4,8,9,10]
+@test disjoin( RLEVector([4,5,6,7],[3,4,9,10]), RLEVector([1,2,3,4], [1,3,8,10])) == [1,3,4,8,9,10]
+
 # numruns pair
 @test numruns(["a","b","c","d","d","e","f","g"],[3,6,9,12,15,18,21,24]) == 7 # Run of 2 runvalues
 @test numruns(["a","b","c","d","d","d","e","f"],[3,6,9,12,15,18,21,24]) == 6 # Run of 3 runvalues
@@ -44,7 +48,4 @@ using Base.Test
 @test inverse_ree(Real[],Int64[]) == Real[]
 @test_throws ArgumentError inverse_ree([],[1])
 
-# disjoin
-# @test_throws ArgumentError disjoin(RLEVector([1,1,2],[1,2,3]), RLEVector([1,2,3,4,5],[1,2,3,4,5])) # Unequal lengths now OK
-@test disjoin( RLEVector([1,2,3,4], [1,3,8,10]), RLEVector([4,5,6,7],[3,4,9,10])) == [1,3,4,8,9,10]
 end # module

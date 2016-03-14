@@ -167,6 +167,6 @@ function disjoin(x::Vector, y::Vector)
   end
   # Finished one vector, add in what's left of the other (which will be a no-op due to 1:0 indexing)
   @inbounds for r in 1:i runends[r] = x[r] end
-  @inbounds for r in 1:i runends[r] = x[r] end
+  @inbounds for r in 1:j runends[r] = y[r] end
   return(runends)
 end
