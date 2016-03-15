@@ -47,7 +47,7 @@ function setrun!(rle::RLEVector, value, i::Integer)
 end
 
 ## Just enough for AbstractArray
-Base.linearindexing(::Type{RLEVector}) = Base.LinearFast()
+Base.linearindexing{T<:RLEVector}(::Type{T}) = Base.LinearFast()
 
 endof(rle::RLEVector) = length(rle)
 
@@ -226,7 +226,7 @@ end
 
 ## Stuff I should get for free from AbstractVector
 # Also optimized here, though
-function Base.getindex(rle::RLEVector, i::AbstractVector)
-    run_indices = searchsortedfirst(rle.runends, i)
-    return( rle.runvalues[ run_indices ] )
-end
+#function Base.getindex(rle::RLEVector, i::AbstractVector)
+#    run_indices = searchsortedfirst(rle.runends, i)
+#    return( rle.runvalues[ run_indices ] )
+#end

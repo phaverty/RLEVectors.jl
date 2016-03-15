@@ -127,6 +127,7 @@
  * [x] Do disjoin from 1 towards n so that we can use resize! to
  shrink and account for shorter length due to ties rather than using
  disjoin_length.
+ * [ ] More tests for similar using 2 or 3 args
  
 ## Bugs
  * [x] fix mode, needs to do table not just which.max

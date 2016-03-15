@@ -32,7 +32,7 @@ y = RLEVector([4,4,5,5,6,6])
 
 # Creating
 y = RLEVector([1.0,1,2,2,3,3,3])
-@test similar(y) == RLEVector(Array(Real,0),Array(Int,0))
+@test similar(y) == RLEVector([0.0],[length(y)])
 @test similar(y,4) == RLEVector(zeros(Real,1),Int[4])
 
 # Conversion

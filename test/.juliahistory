@@ -1,0 +1,140 @@
+x[ [1,2,3] ]
+collect(x)
+collect(x)[ [1, 2, 3] ]
+x[ [ true,true,true,false ] ]
+collect(x)
+x[1, 2, 3]
+x[[1, 2, 3]]
+@which x[ [1,2,3] ]
+exit()
+x[ [1,2,3] ]
+[1,2,3]
+similar(x)
+similar(x, 4)
+eltype(x.runends)
+eltype(x.runends)[0]
+eltype(x.runends)[(1, 1)]
+length(x)
+@which x[ [1,2,3] ]
+exit(0
+exit()
+Pkg.test("RLEVectors")
+exit()
+exit()
+@code_typed x[ [1,2,3] ]
+Base.arraylen(x)
+x[ [1,2,3] ]
+@which x[ [1,2,3] ]
+exit()
+using RLEVectors
+similar(x)
+similar(x, length=4)
+similar(x, Int32, 4)
+similar(x, Int32, 0)
+similar(x, Int32, (0, ))
+import Base.similar
+?Dims
+similar(x, Uint32, 4)
+similar(x, UInt32, 4)
+similar(x, UInt32, (4, ))
+similar(x, UInt32, (4, 12))
+DimsInteger
+?DimsInteger
+?Dims
+Dims
+DimsInteger
+x[ [1, 2, 3] ]
+@code_lowered x[ [1, 2, 3] ]
+exit()
+using RLEVectors
+exit()
+using RLEVectors
+dim(x)
+dims(x)
+size(x)
+exit()
+using RLEVectors
+checksize
+exit()
+using RLEVectors
+using Base.Test
+x[ [1,2,3] ]
+exit()
+using Base.Test
+using RLEVectors
+@which x[ [1,2,3] ]
+exit()
+using RLEVectors
+using Base.Test
+@which x[ [1,2,3] ]
+to_indexes(5)
+Base.to_indexes(5)
+x[ [1.0,2.0,3.0] ]
+Base.checkbounds(x, to_indexes( [ 1, 2, 3] ) )
+Base.checkbounds(x, Base.to_indexes( [ 1, 2, 3] ) )
+Base.checkbounds(x, Base.to_indexes( 1, 2, 3 ) )
+Base.to_indexes( 1, 2, 3 )
+Base.to_indexes( [1, 2, 3] )
+exit()
+using Base.Test
+using RLEVectors
+similar(x)
+length(x)
+import Base.similar
+similar(x)
+similar(x, Int32, 3)
+similar(x, Int32, (3, ))
+similar(x, Int32, (3, ))
+@which x[ [1,2,3] ]
+@which similar(x, Int32, (3, ))
+Tuple
+typeof(Tuple)
+exit()
+using RLEVectors
+using Base.Test
+@which similar(x, Int32, (3, ))
+exit()
+using Base.Test
+using RLEVectors
+@which similar(x, Int32, (3, ))
+exit()
+using RLEVectors
+using Base.Test
+similar(x, Int32, (3, ))
+@which similar(x, Int32, (3, ))
+exit()
+using Base.Test
+using RLEVectors
+similar(x)
+similar(x, 2)
+exit()
+using RLEVectors
+using RLEVectors
+using Base.Test
+exit()
+using Base.Test; using RLEVectors
+similar(x, 2)
+eltype(x.runends)[length])
+eltype(x.runends)[length]
+length = 8
+exit()
+using Base.Test; using RLEVectors
+similar(x)
+similar(x, 4)
+similar(x, 0)
+similar(x, Int32, 0)
+similar(y)
+RLEVector(Array(Real,0),Array(Int,0))
+RLEVector([0.0],[8])
+similar(y)
+length(y)
+exit()
+Pkg.test("RLEVectors")
+Pkg.test("RLEVectors", "test_types.jl")
+collect(x)
+x
+exit(0
+)
+using Base.Test; using RLEVectors
+Pkg.test("RLEVectors")
+exit()

@@ -23,7 +23,7 @@ be compressed out. RLEVectors can be expanded to a full vector like a
 """
 ## Types and constructors
 
-type RLEVector{T1,T2 <: Integer} <: AbstractVector{T1}
+type RLEVector{T1,T2 <: Integer} <: AbstractArray{T1, 1}
   runvalues::Vector{T1}
   runends::Vector{T2}
   function RLEVector(runvalues, runends)
@@ -60,16 +60,17 @@ typealias IntegerRle RLEVector{Int64,UInt32}
 typealias BoolRle RLEVector{Bool,UInt32}
 typealias StringRle RLEVector{ASCIIString,UInt32}
 
-### Some kind of magic
+### Some kind of magic that makes REPL printing work
 Base.writemime(io::IO, ::MIME"text/plain", a::RLEVector) = show(io, a) # REPL pretty printing, inspired by how NamedArrays does this
 
 # similar
-function similar(x::RLEVector,length=0)
-  if length == 0
-    return( RLEVector(eltype(x.runvalues)[], eltype(x.runends)[]) )
-  else
-    return( RLEVector(zeros(eltype(x.runvalues), 1), eltype(x.runends)[length]) )
-  end
+function similar(x::RLEVector, element_type::Type, dims::Dims)
+    len = dims[1]
+    if len == 0
+        return( RLEVector(element_type[], eltype(x.runends)[]) )
+    else
+        return( RLEVector(zeros(element_type, 1), eltype(x.runends)[len]) )
+    end
 end
 
 # show
