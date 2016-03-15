@@ -50,3 +50,54 @@ using RLEVectors
 exit()
 using RLEVectors
 exit()
+using RLEVectors
+length(intersect(x, y))
+length(x)
+using RLEVectors
+tail(x)
+x
+y
+foo
+goo
+foo
+goo
+length(x)
+length(y)
+length(foo)
+length(goo)
+y[1249]
+y[1250]
+y
+x
+x[834]
+goo = goo[1:1667]
+x[834]
+goo = goo[1:1667]
+for i in 1:1 println("YOI") end
+goo = goo[1:1667]
+x[834]
+bob = 7
+for i in 1:100 bob = 22; end
+bob
+joe = [1, 2, 3, 4]
+for i in 1:1 joe[4] = 22; end
+joe
+goo = goo[1:1668]
+for i in 1:2 println("YOI") end
+exit()
+goo = goo[1:1670]
+foo
+goo = goo[1:1670]
+bob = [1, 2, 3, 4]
+bob
+bob[3:2] = 4
+bob
+10.1 / 9.26
+Profile.clear(); @profile for i in 1:1e6 disjoin2(x, y) end; ProfileView.view()
+using ProfileView
+ProfileView.view()
+ProfileView.view()
+10.04 / 9.84 
+9.95 / 8.46
+Profile.clear(); @profile for i in 1:1e6 disjoin2(x, y) end; ProfileView.view()
+exit()

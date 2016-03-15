@@ -94,7 +94,7 @@ function inverse_ree(runvalues,runends)
   n = runends[end]
   rval = Array(eltype(runvalues),n)
   j=1
-  for i in 1:n
+  @inbounds for i in 1:n
     rval[i] = runvalues[j]
     if runends[j] == i
       j = j + 1
@@ -107,24 +107,23 @@ end
 function disjoin_length(x::Vector, y::Vector)
   i = length(x)
   j = length(y)
-  nrun = 0
-  while i > 0 && j > 0
-    @inbounds if x[i] > y[j]
+  nrun = i + j
+  @inbounds while i > 0 && j > 0
+    if x[i] > y[j]
       i = i - 1
     elseif x[i] < y[j]
       j = j - 1
     else
       i = i - 1
       j = j - 1
+      nrun = nrun - 1
     end
-    nrun = nrun + 1
   end
-  nrun = nrun + i + j # Finished one vector, add in what's left of the other
   return(nrun)
 end
 
 # @doc """
-# # dijoin
+# # disjoin
 # Takes runends from two RLEVectors, make one new runends breaking the pair into non-overlapping runs.
 # Basically, this is an optimized `sort!(unique([x,y])))`. This is useful when comparing two RLEVector
 # objects. The values corresponding to each disjoint run in `x` and `y` can then be compared directly.
@@ -144,29 +143,30 @@ end
 # end
 # """ ->
 function disjoin(x::Vector, y::Vector)
-  length(x) == 0 && return(y) # At least one value to work on
-  nrun = disjoin_length(x,y)
-  i = length(x)
-  j = length(y)
-  runends = Array(promote_type(eltype(x),eltype(y)),nrun)
-  while i > 0 && j > 0
-    @inbounds xi = x[i]
-    @inbounds yj = y[j]
-    if xi > yj
-      @inbounds runends[nrun] = xi
-      i = i - 1
-    elseif xi < yj
-      @inbounds runends[nrun] = yj
-      j = j - 1
-    else
-      @inbounds runends[nrun] = xi
-      i = i - 1
-      j = j - 1
+    length(x) == 0 && return(y) # At least one value to work on
+    ni = length(x)
+    nj = length(y)
+    nrun = ni + nj
+    i = j = runind = 1
+    runends = Array(promote_type(eltype(x),eltype(y)),nrun)
+    @inbounds while i <= ni && j <= nj
+        if x[i] < y[j]
+            runends[runind] = x[i]
+            i = i + 1
+        elseif x[i] > y[j]
+            runends[runind] = y[j]
+            j = j + 1
+        else
+            runends[runind] = x[i]
+            i = i + 1
+            j = j + 1
+            nrun = nrun - 1
+        end
+        runind = runind + 1
     end
-    nrun = nrun - 1
-  end
-  # Finished one vector, add in what's left of the other (which will be a no-op due to 1:0 indexing)
-  @inbounds for r in 1:i runends[r] = x[r] end
-  @inbounds for r in 1:j runends[r] = y[r] end
-  return(runends)
+    # Finished one vector, add in what's left of the other (which will be a no-op due to 1:0 indexing)
+    runends[runind:nrun] = x[i:ni]
+#    runends[runind:nrun] = y[j:nj]
+    resize!(runends,  nrun)
+    return(runends)
 end

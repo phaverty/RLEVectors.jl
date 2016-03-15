@@ -112,5 +112,4 @@ foo == goo
 
 @time for i in 1:1e6 disjoin(x, y) end
 @time for i in 1:1e6 disjoin2(x, y) end
-
-
+Profile.clear(); @profile for i in 1:1e6 disjoin2(x, y) end; ProfileView.view()

@@ -124,7 +124,10 @@
  * [ ] implement Selection algorithm for median: https://en.wikipedia.org/wiki/Selection_algorithm
  * [ ] while true break for ree and numruns?
  * [x] rle + rle spends all its time doing ind2run 
-
+ * [ ] Do disjoin from 1 towards n so that we can use resize! to
+ shrink and account for shorter length due to ties rather than using
+ disjoin_length.
+ 
 ## Bugs
  * [x] fix mode, needs to do table not just which.max
  * [x] fix vcat, what about merging adjacent runs?
