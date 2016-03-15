@@ -40,7 +40,7 @@ function ind2runcontext(rle::RLEVector, i::UnitRange)
   (left_run, right_run, ind_in_run, runend - e)
 end
 
-function setrun!(rle::RLEVector, value, i::Integer)
+function setrun!(rle::RLEVector, value, i::Int)
   run = ind2run(rle,i)
   rle.runvalues[run] = value
   return(rle)
@@ -51,12 +51,12 @@ Base.linearindexing{T<:RLEVector}(::Type{T}) = Base.LinearFast()
 
 endof(rle::RLEVector) = length(rle)
 
-function Base.getindex(rle::RLEVector, i::Integer)
+function Base.getindex(rle::RLEVector, i::Int)
   run = ind2run(rle,i)
   return( rle.runvalues[run] )
 end
 
-function Base.setindex!{T1, T2<:Integer}(rle::RLEVector{T1, T2}, value, i::Integer)
+function Base.setindex!(rle::RLEVector, value, i::Int)
   run = ind2run(rle,i)
   runvalue = rle.runvalues[run]
   runend = rle.runends[run]
@@ -118,6 +118,11 @@ function Base.getindex(rle::RLEVector, indices::UnitRange)
   rval = RLEVector{eltype(rv),eltype(re)}(rv,re)
   return(rval)
 end
+
+#function Base.getindex(rle::RLEVector, i::AbstractVector)
+#    run_indices = searchsortedfirst(rle.runends, i)
+#    return( rle.runvalues[ run_indices ] )
+#end
 
 function Base.setindex!(rle::RLEVector, value, indices::UnitRange)
   runs = ind2run(rle,indices)
@@ -224,9 +229,3 @@ function done(x::RLEEachIterator, state)
     state > nrun(x.rle)
 end
 
-## Stuff I should get for free from AbstractVector
-# Also optimized here, though
-#function Base.getindex(rle::RLEVector, i::AbstractVector)
-#    run_indices = searchsortedfirst(rle.runends, i)
-#    return( rle.runvalues[ run_indices ] )
-#end

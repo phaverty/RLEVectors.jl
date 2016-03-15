@@ -26,8 +26,8 @@ x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
 
 ## getindex on multiple positions
 x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
-@test x[ [1,2,3] ] == [1,1,2]  # Fail
-@test x[ [8,2,4] ] == [4,1,2]  # Fail
+@test x[ [1,2,3] ] == [1,1,2]
+@test x[ [8,2,4] ] == [4,1,2]
 @test x[ 2:5 ] == RLEVector([1,2,2,3])
 @test x[ 5:-1:2 ] == [3,2,2,1]
 @test x[ 1:end ] == RLEVector([1,1,2,2,3,3,4,4])
@@ -173,7 +173,7 @@ x[9:12] = 2
 #
 ## range with range
 #x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
-#x[2:4] = collect(5:7)
+#x[(2:4)] = 5:7
 #@test x[ [2,3,4] ] == [5,6,7] # Fail
 #
 # reverse range with vector
@@ -189,7 +189,7 @@ x[:] = 4
 
 # Logical
 x = RLEVectors.RLEVector([1,2],[2,4])
-@test x[ [ true,true,true,false ] ] == x[ [1,2,3] ] # Fail
+@test x[ [ true,true,true,false ] ] == x[ [1,2,3] ]
 x[ [true,true,true,false] ] = 4
 @test x == RLEVector([4,4,4,2])
 x = RLEVectors.RLEVector([1,2],[2,4])
