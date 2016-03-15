@@ -91,7 +91,7 @@ end
 
 # conversions
 convert(::Type{Vector}, x::RLEVector) = collect(x)
-convert{T1,T2}(::Type{Set{T1}}, x::RLEVector{T1,T2}) = Set(runvalues(x))
+convert(::Type{Set}, x::RLEVector) = Set(rvalue(x))
 promote_rule(::Type{Set}, ::Type{RLEVector}) = Set
 
 # the basics

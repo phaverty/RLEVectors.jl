@@ -17,7 +17,7 @@ x = RLEVector([4,5,6],[3,6,9])
 
 # isempty
 @test isempty(x) == false
-@test isempty( RLEVector(None[],None[]) ) == true
+@test isempty( RLEVector(Int[], Int[]) ) == true
 
 # ==
 @test x == x
