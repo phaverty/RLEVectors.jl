@@ -10,6 +10,11 @@ is useful to know the bounds of genome regions covered by these runs,
 the values associated with these runs, and to be able to perform
 various mathematical operations on these values.
 
+[![RLEVectors](http://pkg.julialang.org/badges/RLEVectors_0.4.svg)](http://pkg.julialang.org/?pkg=RLEVectors&ver=0.4)
+[![RLEVectors](http://pkg.julialang.org/badges/RLEVectors_0.5.svg)](http://pkg.julialang.org/?pkg=RLEVectors&ver=0.5)
+
+[![Coverage Status](http://img.shields.io/coveralls/phaverty/RLEVectors.jl.svg)](https://coveralls.io/r/phaverty/RLEVectors.jl)
+[![Build Status](https://travis-ci.org/phaverty/RLEVectors.jl.svg?branch=master)](https://travis-ci.org/phaverty/RLEVectors.jl)
 
 ## Background
 Bioconductor has some widely used and extremely convenient types for
