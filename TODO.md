@@ -147,3 +147,4 @@
  * [ ] setindex!(rle, 801:900, 1:100) does setindex!(rle::RLEVector,
    value, indices::UnitRange) rather than looking for a two vector method
  * [ ] It seems that one cannot make a vector of RLEVectors
+ * [x] Codecov.io

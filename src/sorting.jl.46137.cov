@@ -1,0 +1,61 @@
+        - ## Sorting
+        - 
+        - function issorted(x::RLEVector, order::Ordering)
+        3   issorted(x.runvalues)
+        - end
+        - 
+        - function reverse(x::RLEVector, start=1, stop=length(x))
+        2   rle = RLEVector(reverse(x.runvalues), cumsum(reverse(rwidth(x))))
+        1   return(rle)
+        - end
+        - 
+        - function reverse!(x::RLEVector, start=1, stop=length(x))
+        2   reverse!(x.runvalues)
+        1   x.runends = cumsum(reverse(rwidth(x)))
+        1   return(x)
+        - end
+        - 
+        - function permute_runends(x::RLEVector, indices)
+        -   # Assuming equal length
+        -   rval = similar(x.runends)
+        -   sum = zero(eltype(rval))
+        -   for i in indices
+        -     rw = rwidth(x,i)
+        -     @inbounds sum = rval[i] = rw + sum
+        -   end
+        -   return(rval)
+        - end
+        - 
+        - # function permute_runends2(x::RLEVector, indices)
+        - #   # Assuming equal length
+        - #   rval = similar(x.runends)
+        - #   for i in indices
+        - #     @inbounds rval[i] = rwidth(x,i)
+        - #   end
+        - #   return(rval)
+        - # end
+        - 
+        - function sort(x::RLEVector)
+        3   ord = sortperm(x.runvalues)
+        3   rle = RLEVector( x.runvalues[ord], cumsum(rwidth(x)[ord]) )
+        3   return(rle)
+        - end
+        - 
+        - # function sort2{T1,T2}(x::RLEVector{T1,T2})
+        - #   ord = sortperm(x.runvalues)
+        - #   rle = RLEVector{T1,T2}( x.runvalues[ord], cumsum(rwidth(x)[ord]) )  # Skipping ree worth 1/3 the time
+        - #   return(rle)
+        - # end
+        - 
+        - function sort!(x::RLEVector)
+        1   ord = sortperm(x.runvalues)
+        1   x.runvalues = x.runvalues[ord]
+        1   x.runends = cumsum(rwidth(x)[ord])
+        1   return(x)
+        - end
+        - 
+        - function sortperm(x::RLEVector)
+        1   ord = sortperm(x.runvalues)
+        1   RLEVector(ord, cumsum(rwidth(x)[ord]))
+        - end
+        - 

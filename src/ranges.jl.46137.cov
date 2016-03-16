@@ -1,0 +1,173 @@
+        - ## Range operations
+        - function numruns(re::AbstractVector)
+      118   n = 1
+      118   current = re[1]
+      118   for i in 2:length(re)
+      800     if re[i] != current
+      415       n += 1
+      415       current = re[i]
+        -     end
+        -   end
+      118   return(n)
+        - end
+        - 
+        - # Run End Encode: Like RLE, but return (runvalues,runends) rather than (runvalues,runlengths)
+        - function ree{T}(x::AbstractVector{T})
+      120   xlen = length(x)
+      120   xlen < 2 && return( (x,[xlen]) )
+      116   nrun = numruns(x)
+      116   runvalues = similar(x,nrun)
+      116   runends = Vector{Int}(nrun)
+      116   run = 1
+      116   current = x[1]
+      116   for i in 2:xlen
+      792     if x[i] != current
+      411       runvalues[run] = current
+      411       runends[run] = i-1
+      411       current = x[i]
+      411       run = run + 1
+        -     end
+        -   end
+      116   runvalues[nrun] = current
+      116   runends[nrun] = xlen
+      116   return( (runvalues,runends) )
+        - end
+        - 
+        - # Recompress runvalues and runends for an RLEVector
+        - function numruns(runvalues, runends)
+      238   len = length(runends)
+      238   length(runends) != len && throw(ArgumentError("runvalues and runends must be the same length."))
+      238   len < 2 && return(len)
+      212   n = 1
+      212   current_val = runvalues[1]
+      212   current_end = runends[1]
+      212     @inbounds for i in 2:len
+      747         rv = runvalues[i]
+      747         re = runends[i]
+      747     if rv != current_val && re != current_end
+      718       n = n + 1
+      718       re < current_end && throw(ArgumentError("The provided runends were not sorted, please use cumsum(runlengths) to get the right values."))
+      716       current_val = rv
+      716       current_end = re
+        -     end
+        -   end
+      210   return(n)
+        - end
+        - 
+        - # Tidy up an existing (mostly) Run End Encoded vector pair, dropping zero length runs and fixing any runvalue runs
+        - function ree(runvalues, runends)
+       18   ree(runvalues, runends, numruns(runvalues, runends))
+        - end
+        - 
+        - function ree(runvalues, runends, nrun)
+       24   newv = similar(runvalues,nrun)
+       24   newe = similar(runends,nrun)
+       24   current_val = runvalues[1]
+       24   current_end = runends[1]
+       24   n = 1
+       24     @inbounds for i in 2:length(runvalues)
+      142         rv = runvalues[i]
+      142         re = runends[i]
+      142     if runends[i] != current_end
+      135       if rv != current_val
+      120         newv[n] = current_val
+      120         newe[n] = current_end
+      120         n = n + 1
+      120         current_val = rv
+        -       end
+      135       current_end = re
+        -     end
+        -   end
+       24   @inbounds newv[n] = current_val
+       24   @inbounds newe[n] = current_end
+       24   return( (newv,newe))
+        - end
+        - 
+        - function ree(x)
+        1   return( ([x],[1]) )
+        - end
+        - 
+        - function inverse_ree(runvalues,runends)
+       26   len = length(runvalues)
+       26   len != length(runends) && throw(ArgumentError("runvalues and runends must be of the same length."))
+       25   len == 0 && return(similar(runvalues,0))
+       24   n = runends[end]
+       24   rval = Array(eltype(runvalues),n)
+       24   j=1
+       24   @inbounds for i in 1:n
+      155     rval[i] = runvalues[j]
+      155     if runends[j] == i
+       81       j = j + 1
+        -     end
+        -   end
+       24   return(rval)
+        - end
+        - 
+        - # Take two runends vectors (strictly increasing uints) and find the number of unique values for the disjoin operation
+        - function disjoin_length(x::Vector, y::Vector)
+        6   i = length(x)
+        6   j = length(y)
+        6   nrun = i + j
+        6   @inbounds while i > 0 && j > 0
+       10     if x[i] > y[j]
+        1       i = i - 1
+        9     elseif x[i] < y[j]
+        8       j = j - 1
+        -     else
+        1       i = i - 1
+        1       j = j - 1
+        1       nrun = nrun - 1
+        -     end
+        -   end
+        6   return(nrun)
+        - end
+        - 
+        - # @doc """
+        - # # disjoin
+        - # Takes runends from two RLEVectors, make one new runends breaking the pair into non-overlapping runs.
+        - # Basically, this is an optimized `sort!(unique([x,y])))`. This is useful when comparing two RLEVector
+        - # objects. The values corresponding to each disjoint run in `x` and `y` can then be compared directly.
+        - 
+        - # ## Arguments
+        - # * x, an RLEVector
+        - # * y, an RLEVector
+        - 
+        - # ## Returns
+        - # An integer vector, of a type that is the promotion of the eltypes of the runends of x and y.
+        - 
+        - # ## Examples
+        - # x = RLEVector([1,1,2,2,3,3])
+        - # y = RLEVector([1,1,1,2,3,4])
+        - # for (i,j) in disjoin(x,y)
+        - #   println(x[i] + y[j])
+        - # end
+        - # """ ->
+        - function disjoin(x::Vector, y::Vector)
+        2     length(x) == 0 && return(y) # At least one value to work on
+        2     ni = length(x)
+        2     nj = length(y)
+        2     nrun = ni + nj
+        2     i = j = runind = 1
+        2     runends = Array(promote_type(eltype(x),eltype(y)),nrun)
+        2     @inbounds while i <= ni && j <= nj
+       12         if x[i] < y[j]
+        4             runends[runind] = x[i]
+        4             i = i + 1
+        8         elseif x[i] > y[j]
+        4             runends[runind] = y[j]
+        4             j = j + 1
+        -         else
+        4             runends[runind] = x[i]
+        4             i = i + 1
+        4             j = j + 1
+        4             nrun = nrun - 1
+        -         end
+       12         runind = runind + 1
+        -     end
+        -     # Finished one vector, add in what's left of the other (which will be a no-op due to 1:0 indexing)
+        2     runends[runind:nrun] = x[i:ni]
+        - #    runends[runind:nrun] = y[j:nj]
+        2     resize!(runends,  nrun)
+        2     return(runends)
+        - end
+        - 
