@@ -189,3 +189,19 @@ function empty!(x::RLEVector)
   empty!(x.runends)
   return(x)
 end
+
+### Set API
+# Mostly handled by convert and promote rules in RLEVector-type.jl
+
+function intersect(x::RLEVector, sets...)
+    ok = trues(length(x.runvalues))
+    for (i, v) in enumerate(x.runvalues)
+        for s in sets
+            if !in(v, s)
+                ok[i] = false
+                break
+            end
+        end
+    end
+    RLEVector( x.runvalues[ ok ], cumsum( rwidth(x)[ ok ] ) )
+end

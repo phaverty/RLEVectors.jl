@@ -92,7 +92,7 @@
  * [ ] get ree and vcat out of splice
  * [ ] iterator called 'ranges' that gives (first,last) indices for
  runs. Will require a new type with the 3 iterator methods, say RLERangesIterator.
- * [ ] Make sure my hash and == are what AutoHashEquals would say
+ * [x] Make sure my hash and == are what AutoHashEquals would say
  * [ ] linalg operations
  * [ ] make 'each' a Task?
  * [ ] make disjoin Task for two RLEs?
@@ -129,7 +129,8 @@
  disjoin_length.
  * [x] More tests for similar using 2 or 3 args
  * [x] Add badges to README
- 
+ * [x] Codecov.io
+
 ## Bugs
  * [x] fix mode, needs to do table not just which.max
  * [x] fix vcat, what about merging adjacent runs?
@@ -147,4 +148,4 @@
  * [ ] setindex!(rle, 801:900, 1:100) does setindex!(rle::RLEVector,
    value, indices::UnitRange) rather than looking for a two vector method
  * [ ] It seems that one cannot make a vector of RLEVectors
- * [x] Codecov.io
+ * [x] intersect should maintain multiplicity of 1st arg

@@ -112,5 +112,9 @@ x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 @test empty!(x) == RLEVector(Int[],Int[])
 
+# intersect
+x = RLEVector([9, 9, 12, 12, 13, 13, 9, 9, 14, 14])
+@test intersect(x, [12, 9]) == RLEVector([9, 9, 12, 12, 9, 9])
+@test intersect(x, [9, 12], [12]) == RLEVector([12, 12])
 end # module
 

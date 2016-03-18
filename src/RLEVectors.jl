@@ -1,4 +1,4 @@
-VERSION >= v"0.4.0-dev+6521" && __precompile__(true)
+VERSION >= v"0.4.0" && __precompile__(true)
 
 module RLEVectors
 
@@ -11,13 +11,12 @@ export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, rfirst, rwidth, rlas
 import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect, isequal
 
 # collections
-import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in
-export       eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in
+import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in, intersect
+export       eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in, intersect
 export shove!, deleterun!, decrement_run!
 
 # indexing
 import Base: getindex, setindex!
-#import DataArrays: head, tail
 export getindex, setindex!, ind2run, setrun!, ind2runcontext, head, tail, RLERangesIterator, each
 
 # describe
