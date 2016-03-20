@@ -1,0 +1,7 @@
+using RLEVectors
+x = [3, 4]
+y = [1, 3, 5]
+@time for i in 1:1e4 disjoin(x, y) end
+@time for i in 1:1e4 disjoin2(x, y) end
+@time for i in 1:1e6 disjoin2(x, y) end
+exit()

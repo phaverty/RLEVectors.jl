@@ -21,7 +21,7 @@ export getindex, setindex!, ind2run, setrun!, ind2runcontext, head, tail, RLERan
 
 # describe
 import Base: isempty, ndims
-export ndims
+export ndims, endtype
 
 # group_generics
 import Base: +, -, *, /, ^, .+, .-, .*, ./, .^, div, mod, fld, rem
@@ -40,7 +40,7 @@ export indexin, findin, median, findmin, findmax
 export findin2
 
 # math
-#import StatsBase: mode, countmap
+import StatsBase: mode, countmap
 export mode, countmap
 
 # ranges

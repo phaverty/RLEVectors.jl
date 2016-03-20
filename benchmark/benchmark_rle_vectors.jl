@@ -14,7 +14,7 @@ macro timeit(ex)
   end
 end
 
-foo = IntegerRle(int32(collect(1:1000)), int32(collect(5:5:5000)))
+foo = IntegerRle(Vector{Int32}(collect(1:1000)), Vector{Int32}(collect(5:5:5000)))
 length(foo)
 timings = DataFrame()
 timings[:language] = "julia"
@@ -23,7 +23,7 @@ timings[:date] = chomp(readall(`date "+%Y-%m-%d"`))
 timings[:indexing] = @timeit foo[100]
 timings[:range_indexing] = @timeit foo[801:900]
 timings[:setting] = @timeit foo[800] = 5
-#timings[:range_setting] = @timeit foo[801:900] = 1:100
+timings[:range_setting] = @timeit foo[801:900] = 1:100
 timings[:scalar_add] = @timeit foo + 4
 timings[:length] = @timeit length(foo)
 timings[:nrun] = @timeit nrun(foo)
@@ -66,7 +66,9 @@ for (i in 1:length(r_over_julia))
   r_over_julia[i] = log2(rdf[1,i+3] / jdf[1,i+3])
 end
 
+### Plotting
 using Gadfly
+
 ## Performance Relative to R
 bench_plot = plot(x=names(bdf)[4:end],y=r_over_julia, Geom.bar, Guide.ylabel("Elapsed Time: log2(R/julia)"),
      Guide.xticks(orientation=:vertical),Scale.color_continuous(minvalue=-15,maxvalue=15),color=r_over_julia,

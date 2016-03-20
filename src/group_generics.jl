@@ -45,14 +45,45 @@ for op in ops_group
     @eval begin
         # Rle, Rle
         function ($op)(x::RLEVector, y::RLEVector)
-            length(x) != length(y) && error("RLEVectors must be of the same length for this operation.")
-            runends = disjoin(x,y)
-            x_inds = searchsortedfirst(x.runends, runends)
-            y_inds = searchsortedfirst(y.runends, runends)
-            runvals = ($op)( x.runvalues[x_inds], y.runvalues[y_inds] )
-            RLEVector( runvals, runends )
+            ni = length(x)
+            nj = length(y)
+            ni != nj && error("RLEVectors must be of the same length for this operation.")
+            xv = x.runvalues
+            yv = y.runvalues
+            xe = x.runends
+            ye = y.runends
+            nrun = ni + nj
+            i = j = runind = 1
+            runends = Array(promote_type(eltype(x),eltype(y)),nrun)
+            runvalues = Array(typeof( $(op)(xv[1], yv[1])), nrun)
+            @inbounds while true
+                if x[i] < y[j]
+                    runends[runind] = xe[i]
+                    runvalues[runind] = $(op)(xv[i], yv[j])
+                    i = i + 1
+                elseif x[i] > y[j]
+                    runends[runind] = ye[j]
+                    runvalues[runind] = $(op)(xv[i], yv[j])
+                    j = j + 1
+                else
+                    runends[runind] = xe[i]
+                    runvalues[runind] = $(op)(xv[i], yv[j])
+                    i = i + 1
+                    j = j + 1
+                    nrun = nrun - 1
+                end
+                println(runvalues[runind])
+                runind = runind + 1
+                i > ni && j > nj && break
+            end
+            # Finished one vector, add in what's left of the other (which will be a no-op due to 1:0 indexing)
+            runends[runind:nrun] = xe[i:ni]
+            runends[runind:nrun] = ye[j:nj]
+            resize!(runends, nrun)
+            resize!(runvalues, nrun)
+            RLEVector{eltype(runvalues), eltype(runends)}( runvalues, runends )
         end
-        # Rle, scalar
+        # Rle, Number
         ($op){T<:Integer}(x::RLEVector{Bool,T},y::Bool) = RLEVector( ($op)(x.runvalues,y), x.runends ) # Ambig fix
         ($op)(x::RLEVector,y::Number) = RLEVector( ($op)(x.runvalues,y), x.runends )
         # Number, Rle

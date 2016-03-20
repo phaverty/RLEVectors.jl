@@ -122,51 +122,50 @@ function disjoin_length(x::Vector, y::Vector)
   return(nrun)
 end
 
-# @doc """
-# # disjoin
-# Takes runends from two RLEVectors, make one new runends breaking the pair into non-overlapping runs.
-# Basically, this is an optimized `sort!(unique([x,y])))`. This is useful when comparing two RLEVector
-# objects. The values corresponding to each disjoint run in `x` and `y` can then be compared directly.
+"""
+Takes runends from two RLEVectors, make one new runends breaking the pair into non-overlapping runs.
+Basically, this is an optimized `sort!(unique([x,y])))`. This is useful when comparing two RLEVector
+objects. The values corresponding to each disjoint run in `x` and `y` can then be compared directly.
 
-# ## Arguments
-# * x, an RLEVector
-# * y, an RLEVector
+## Returns
+An integer vector, of a type that is the promotion of the eltypes of the runends of x and y.
 
-# ## Returns
-# An integer vector, of a type that is the promotion of the eltypes of the runends of x and y.
-
-# ## Examples
-# x = RLEVector([1,1,2,2,3,3])
-# y = RLEVector([1,1,1,2,3,4])
-# for (i,j) in disjoin(x,y)
-#   println(x[i] + y[j])
-# end
-# """ ->
-function disjoin(x::Vector, y::Vector)
+## Examples
+x = RLEVector([1,1,2,2,3,3])
+y = RLEVector([1,1,1,2,3,4])
+for (i,j) in disjoin(x,y)
+  println(x[i] + y[j])
+end
+"""
+function disjoin(x::Vector,  y::Vector)
     length(x) == 0 && return(y) # At least one value to work on
-    ni = length(x)
-    nj = length(y)
-    nrun = ni + nj
-    i = j = runind = 1
-    runends = Array(promote_type(eltype(x),eltype(y)),nrun)
-    @inbounds while i <= ni && j <= nj
-        if x[i] < y[j]
-            runends[runind] = x[i]
-            i = i + 1
-        elseif x[i] > y[j]
-            runends[runind] = y[j]
-            j = j + 1
+    nrun = disjoin_length(x, y)
+    i = length(x)
+    j = length(y)
+    runends = Array(promote_type(eltype(x), eltype(y)), nrun)
+    @inbounds while true
+        xi = x[i]
+        yj = y[j]
+        if xi > yj
+            runends[nrun] = xi
+            i = i - 1
+        elseif xi < yj
+            runends[nrun] = yj
+            j = j - 1
         else
-            runends[runind] = x[i]
-            i = i + 1
-            j = j + 1
-            nrun = nrun - 1
+            runends[nrun] = xi
+            i = i - 1
+            j = j - 1
         end
-        runind = runind + 1
+        nrun = nrun - 1
+        if i == 0
+            for r in 1:j runends[r] = y[r] end
+            break
+        elseif j == 0
+            for r in 1:i runends[r] = x[r] end
+            break
+        end
     end
-    # Finished one vector, add in what's left of the other (which will be a no-op due to 1:0 indexing)
-    runends[runind:nrun] = x[i:ni]
-#    runends[runind:nrun] = y[j:nj]
-    resize!(runends,  nrun)
     return(runends)
 end
+

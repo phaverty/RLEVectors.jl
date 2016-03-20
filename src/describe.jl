@@ -12,9 +12,10 @@ For an RLEVector `x = RLEVector([4,5,6],[3,6,9])`
  * `rlast(x)` The data value for each run
  * `isempty(x)` Returns boolean, as for any other vector
  * `nrun(x)` Returns the number of runs represented in the array
+ * `endtype(x)` Returns the element type of the run ends
 
 ## See also
-length, size, rstart, rwidth, rstop, rvalue, isempty, nrun
+length, size, rstart, rwidth, rstop, rvalue, isempty, nrun, endtype
 "
 
 @doc desc ->
@@ -103,3 +104,7 @@ end
 function rvalue(x::RLEVector)
   x.runvalues
 end
+
+@doc desc->
+endtype(x::RLEVector) = eltype(rlast(x))
+
