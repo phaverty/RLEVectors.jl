@@ -35,17 +35,11 @@ end
 #   return(rval)
 # end
 
-function sort(x::RLEVector)
+function sort{T1,T2}(x::RLEVector{T1,T2})
   ord = sortperm(x.runvalues)
-  rle = RLEVector( x.runvalues[ord], cumsum(rwidth(x)[ord]) )
+  rle = RLEVector{T1,T2}( x.runvalues[ord], cumsum(rwidth(x)[ord]) )
   return(rle)
 end
-
-# function sort2{T1,T2}(x::RLEVector{T1,T2})
-#   ord = sortperm(x.runvalues)
-#   rle = RLEVector{T1,T2}( x.runvalues[ord], cumsum(rwidth(x)[ord]) )  # Skipping ree worth 1/3 the time
-#   return(rle)
-# end
 
 function sort!(x::RLEVector)
   ord = sortperm(x.runvalues)

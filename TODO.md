@@ -96,6 +96,11 @@
  * [ ] linalg operations
  * [ ] make 'each' a Task?
  * [ ] make disjoin Task for two RLEs?
+ * [ ] faster group_generic operations based on disjoin
+ * [ ] Some way to disjoin two RLEs such that the runends are made
+ identical, with some repeated runvalues (necessarily). Should it be
+ OK have an RLE be less than fully compressed? Would 'ree' then
+ re-compress it?
  
 ## Optimizations
  * [ ] Re-read julia/base/range.jl, some day understand the meaning of "# to make StepRange constructor inlineable, so optimizer can see `step` value"
@@ -149,3 +154,5 @@
    value, indices::UnitRange) rather than looking for a two vector method
  * [ ] It seems that one cannot make a vector of RLEVectors
  * [x] intersect should maintain multiplicity of 1st arg
+ * [ ] new disjoin-based group ops does not work for .< and friends as
+   it does scalar ops inside a loop

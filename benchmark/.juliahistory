@@ -30,3 +30,83 @@ Pkg.add("FontConfig")
 Pkg.add("Fontconfig")
 Pkg.update()
 exit()
+foo = RLEVectors([1, 2, 3, 3])
+foo = RLEVector([1, 2, 3, 3])
+goo = RLEVector([1, 2, 3, 4])
+disjoinn2(foo, goo)
+disjoin2(foo, goo)
+disjoin2(foo, goo)
+foo
+goo
+goo = RLEVector([1, 3, 4])
+disjoin2(foo, goo)
+foo = RLEVector([1, 2, 3, 4])
+goo = RLEVector([1, 3, 3, 4])
+foo
+goo
+disjoin2(foo, goo)
+collect(foo)
+hcat(foo, goo)
+vcat(foo, goo)
+collect(foo)
+collect(goo)
+hcat(collect(foo), collect(goo))
+vcat(collect(foo), collect(goo))
+hcat(collect(foo), collect(goo))
+goo = foo
+disjoin2(foo, goo)
+disjoin2(foo, goo)
+foo = RLEVector([1, 2, 3, 4])
+goo = RLEVector([1, 2, 3, 4])
+disjoin2(foo, goo)
+disjoin2(foo, goo)
+foo
+goo
+goo
+foo
+foo
+disjoin(foo, foo)
+@timeit disjoin(foo, foo)
+@timeit disjoin2(foo, foo)
+@timeit disjoin2(foo, foo)
+@timeit for i in 1:1e3 disjoin2(foo, foo) end
+@timeit for i in 1:1e3 disjoin(foo, foo) end
+disjoin(foo, foo)
+length(foo)
+typeof(disjoin(foo))
+typeof(disjoin(foo, foo))
+@timeit for i in 1:1e3 disjoin(foo, foo) end
+length(foo)
+length(foo)
+disjoin(foo, foo)
+disjoin2(foo, foo)
+@timeit disjoin(foo, foo)
+@timeit disjoin2(foo, foo)
+@timeit for i in 1:1e2 disjoin2(foo, foo) end
+@timeit for i in 1:1e2 disjoin(foo, foo) end
+@timeit for i in 1:1e2 disjoin(foo.runends, foo.runends) end
+@timeit for i in 1:1e2 disjoin2(foo, foo) end
+@timeit for i in 1:1e2 disjoin(foo, foo) end
+@timeit for i in 1:1e2 disjoin2(foo, foo) end
+length(foo)
+@timeit for i in 1:1e2 x = disjoin(foo, foo); bob = foo[x]; joe = foo[x]; end
+@timeit for i in 1:10 x = disjoin(foo, foo); bob = foo[x]; joe = foo[x]; end
+@timeit for i in 1:10 x = disjoin2(foo, foo); bob = foo.runends[x]; joe = foo.runends[x]; end
+@timeit for i in 1:10 x = disjoin2(foo, foo) end
+@timeit for i in 1:10 x = disjoin2(foo, foo); bob = x[2] + x[3]; end
+@timeit for i in 1:10 x = disjoin2(foo, foo); bob = foo.runvalues[x] + foo.runvalues[x]; end
+@timeit for i in 1:10 x = disjoin(foo, foo); bob = foo.runvalues[x] + foo.runvalues[x]; end
+@timeit for i in 1:10 x = disjoin(foo, foo); bob = foo[x] + foo[x]; end
+@timeit for i in 1:10 x = disjoin2(foo, foo); bob = x[2] + x[3]; end
+33.6/1.4
+ exit()
+using RLEVectors
+disjoin( RLEVector([1,2,3,4], [1,3,8,10]), RLEVector([4,5,6,7],[3,4,9,10]))
+disjoin( RLEVector([4,5,6,7],[3,4,9,10]), RLEVector([1,2,3,4], [1,3,8,10]) )
+foo .< foo
+exit()
+exit()
+exit()
+?sort
+?sortperm
+exit()

@@ -61,9 +61,10 @@ export RLEDataFrame
 
 ### Includes
 include("utils.jl")
-include("ranges.jl")
+include("runs.jl")
 include("RLEVector-type.jl")
 include("RLEDataFrame-type.jl")
+include("ranges.jl")
 include("describe.jl")
 include("indexing.jl")
 include("group_generics.jl")

@@ -45,50 +45,16 @@ for op in ops_group
     @eval begin
         # Rle, Rle
         function ($op)(x::RLEVector, y::RLEVector)
-            ni = length(x)
-            nj = length(y)
-            ni != nj && error("RLEVectors must be of the same length for this operation.")
-            xv = x.runvalues
-            yv = y.runvalues
-            xe = x.runends
-            ye = y.runends
-            nrun = ni + nj
-            i = j = runind = 1
-            runends = Array(promote_type(eltype(x),eltype(y)),nrun)
-            runvalues = Array(typeof( $(op)(xv[1], yv[1])), nrun)
-            @inbounds while true
-                if x[i] < y[j]
-                    runends[runind] = xe[i]
-                    runvalues[runind] = $(op)(xv[i], yv[j])
-                    i = i + 1
-                elseif x[i] > y[j]
-                    runends[runind] = ye[j]
-                    runvalues[runind] = $(op)(xv[i], yv[j])
-                    j = j + 1
-                else
-                    runends[runind] = xe[i]
-                    runvalues[runind] = $(op)(xv[i], yv[j])
-                    i = i + 1
-                    j = j + 1
-                    nrun = nrun - 1
-                end
-                println(runvalues[runind])
-                runind = runind + 1
-                i > ni && j > nj && break
-            end
-            # Finished one vector, add in what's left of the other (which will be a no-op due to 1:0 indexing)
-            runends[runind:nrun] = xe[i:ni]
-            runends[runind:nrun] = ye[j:nj]
-            resize!(runends, nrun)
-            resize!(runvalues, nrun)
-            RLEVector{eltype(runvalues), eltype(runends)}( runvalues, runends )
+            (runends, runvalues_x, runvalues_y) = disjoin(x, y)
+            runvalues = $(op)(runvalues_x, runvalues_y)
+            RLEVector{eltype(runvalues), eltype(runends)}(runvalues, runends)
         end
         # Rle, Number
-        ($op){T<:Integer}(x::RLEVector{Bool,T},y::Bool) = RLEVector( ($op)(x.runvalues,y), x.runends ) # Ambig fix
-        ($op)(x::RLEVector,y::Number) = RLEVector( ($op)(x.runvalues,y), x.runends )
+        ($op){T<:Integer}(x::RLEVector{Bool,T},y::Bool) = RLEVector{eltype(x), endtype(x)}( ($op)(x.runvalues,y), x.runends ) # Ambig fix
+        ($op)(x::RLEVector,y::Number) = RLEVector{eltype(x), endtype(x)}( ($op)(x.runvalues,y), x.runends )
         # Number, Rle
-        ($op){T<:Integer}(y::Bool, x::RLEVector{Bool,T}) = RLEVector( ($op)(y,x.runvalues), x.runends ) # Ambig fix
-        ($op)(y::Number, x::RLEVector) = RLEVector( ($op)(y,x.runvalues), x.runends )
+        ($op){T<:Integer}(y::Bool, x::RLEVector{Bool,T}) = RLEVector{eltype(x), endtype(x)}( ($op)(y,x.runvalues), x.runends ) # Ambig fix
+        ($op)(y::Number, x::RLEVector) = RLEVector{eltype(x), endtype(x)}( ($op)(y,x.runvalues), x.runends )
     end
 end
 
@@ -106,7 +72,7 @@ end
 ## Methods that take two arguments, delegate to rle.runvalues and return something other than an RLEVector
 in{T1,T2<:Integer}(y::T1, x::RLEVector{T1,T2}) = in(y, x.runvalues)
 
-# Defaulting to fun(itr) for prod, sumabs, sumabs2, count
+# Defaulting to fun(itr) for some things
 for op in [:findmin, :findmax]
   @eval begin
     function ($op)(x::RLEVector)
