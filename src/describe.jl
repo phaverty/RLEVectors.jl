@@ -66,9 +66,9 @@ function rfirst(x::RLEVector)
   re = x.runends
   rval = similar(re)
   prev = zero(eltype(re))
-  for i in eachindex(re)
-    @inbounds rval[i] = prev + 1
-    @inbounds prev = re[i]
+    @inbounds for i in eachindex(re)
+        rval[i] = prev + 1
+        prev = re[i]
   end
   return(rval)
 end
@@ -83,10 +83,10 @@ function rwidth(x::RLEVector)
   re = x.runends
   rval = similar(re)
   prev = zero(eltype(re))
-  for i in eachindex(re)
-    @inbounds rei = re[i]
-    @inbounds rval[i] = rei - prev
-    @inbounds prev = rei
+  @inbounds for i in eachindex(re)
+      rei = re[i]
+      rval[i] = rei - prev
+      prev = rei
   end
   return(rval)
 end

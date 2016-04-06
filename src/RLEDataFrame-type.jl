@@ -28,3 +28,14 @@ end
 function RLEDataFrame{T1, T2}(rles::Array{RLEVector{T1, T2}}, names::Vector{Symbol})
     RLEDataFrame{T1, T2}(rles, names)
 end
+
+function rowSums(df::RLEDataFrame)
+    sums = x[1]
+    for i in 2:ncol(x)
+        sums = sums + x[i]
+    end
+    return(sums)
+end
+rowMeans(df::RLEDataFrame) = rowSum(df) ./ ncol(df)
+colSums(df::RLEDataFrame) = map(sum, df)
+colMeans(df::RLEDataFrame) = colSums(df) ./ nrow(df)

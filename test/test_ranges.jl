@@ -17,4 +17,7 @@ using Base.Test
 @test disjoin( RLEVector([1,2,3,4], [1,3,8,10]), RLEVector([4,5,6,7],[3,4,9,10])) == ([1,3,4,8,9,10], (1,2,3,3,4,4), (4,4,5,6,6,7))
 @test disjoin( RLEVector([4,5,6,7],[3,4,9,10]), RLEVector([1,2,3,4], [1,3,8,10])) == ([1,3,4,8,9,10], (), ())
 
+# rangeMeans
+
+
 end # module
