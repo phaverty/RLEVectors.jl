@@ -19,7 +19,7 @@ length(foo)
 timings = DataFrame()
 timings[:language] = "julia"
 timings[:language_version] = VERSION
-timings[:date] = chomp(readall(`date "+%Y-%m-%d"`))
+timings[:date] = chomp(readstring(`date "+%Y-%m-%d"`))
 timings[:indexing] = @timeit foo[100]
 timings[:range_indexing] = @timeit foo[801:900]
 timings[:setting] = @timeit foo[800] = 5
@@ -32,7 +32,7 @@ timings[:max] = @timeit maximum(foo)
 timings[:width] = @timeit rwidth(foo)
 timings[:last] = @timeit rlast(foo)
 timings[:first] = @timeit rfirst(foo)
-timings[:add_two_rles] = @timeit foo + foo
+timings[:add_two_rles] = NaN #@timeit foo + foo
 timings[:disjoin] = @timeit disjoin(foo.runends,foo.runends)
 timings[:which] = @timeit findin(foo,[800,200,357])
 timings[:scalar_less] = @timeit foo .< 3

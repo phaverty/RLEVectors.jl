@@ -75,7 +75,8 @@ end
 
 @doc desc ->
 function rfirst(x::RLEVector, run::Integer)
-  run == 1 ? one(eltype(x.runends)) : x.runends[run-1] + 1
+    num_one = one(eltype(x.runends))
+    run == 1 ? num_one : x.runends[run-1] + num_one
 end
 
 @doc desc ->

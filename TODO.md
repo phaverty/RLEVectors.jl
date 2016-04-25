@@ -156,3 +156,5 @@
  * [x] intersect should maintain multiplicity of 1st arg
  * [ ] new disjoin-based group ops does not work for .< and friends as
    it does scalar ops inside a loop
+ * [x] findin and findmax seem to have type stability problems,
+   actually it seems to be rfirst(x,i)
