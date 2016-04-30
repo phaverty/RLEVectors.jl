@@ -292,3 +292,36 @@ x = foo.runends
 @timeit for i in 1:100 searchsortedfirst(x, x) end
 @timeit for i in 1:100 searchsortedfirst(x, x) end
 @timeit for i in 1:100 searchsortedfirst2(x, x) end
+using RLEVectors
+?linspace
+vcat( 1:4, 5:6 )
+exit()
+foo = IntegerRle(Vector{Int32}(collect(1:1000)), Vector{Int32}(collect(5:5:5000)))
+@code_warntype findin(foo, [800, 200, 357] )
+@timeit findin(foo, [800, 200, 357])
+@timeit findin(foo, [800, 200, 357])
+@timeit findin2(foo, [800, 200, 357])
+@timeit findin2(foo, [800, 200, 357])
+@timeit findin(foo, [800, 200, 357])
+vcat[ [800, 200], [100, 500] )
+vcat( [800, 200], [100, 500] )
+vcat( [[800, 200], [100, 500]] )
+hcat( [[800, 200], [100, 500]] )
+median
+middle
+middle(2, 1)
+?middle
+isodd
+?isodd
+middle(sorted.runvalues[mid_run], sorted.runvalues[mid_run+1])
+foo
+x = foo
+middle(sorted.runvalues[mid_run], sorted.runvalues[mid_run+1])
+middle(500, 600)
+middle([500, 600])
+middle(3, 4)
+exit()
+using RLEVectors
+exit()
+using RLEVectors
+exit()

@@ -86,39 +86,35 @@ indexin(x::RLEVector,y::RLEVector) = RLEVector( indexin(x.runvalues,y), x.runend
 indexin(x::RLEVector,y::AbstractVector) = RLEVector( indexin(x.runvalues,y), x.runends )
 indexin(x::AbstractVector,y::RLEVector) = Int[ i == 0 ? 0 : y.runends[i] for i in indexin(x,y.runvalues) ]
 
+findin(x,y::RLEVector) = findin(x,y.runvalues)
 function findin(x::RLEVector,y::RLEVector)
   runs = findin(x.runvalues,y.runvalues)
   re = x.runends
-  vcat( [ collect( rfirst(x,i):re[i] ) for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
+  vcat( [ rfirst(x,i):re[i] for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
-function findin(x::RLEVector,y::UnitRange)
+function findin(x::RLEVector,y::UnitRange) # ambig fix
   runs = findin(x.runvalues,y)
   re = x.runends
-  vcat( [ collect( rfirst(x,i):re[i] ) for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
+  vcat( [ rfirst(x,i):re[i] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
 function findin(x::RLEVector,y)
   runs = findin(x.runvalues,y)
   re = x.runends
-  vcat( [ collect( rfirst(x,i):re[i] ) for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
-end
-
-function findin(x,y::RLEVector)
-  findin(x,y.runvalues)
+  vcat( [ rfirst(x,i):re[i] for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
 function median(x::RLEVector)
-    # Superfluous x / 1.0 is to always return a Float64
   len = length(x)
-  len < 2 && return(x.runvalues[1] / 1.0)
+  len < 2 && return(middle(x.runvalues[1]))
   sorted = sort(x)
   mid = fld(len,2)
   mid_run = ind2run(sorted,mid)
   if mod(len,2) == 0 && mid == sorted.runends[mid_run] # even numbered and at end of run, avg with next value
-    median = (sorted.runvalues[mid_run] + sorted.runvalues[mid_run+1]) / 2
+    median = middle(sorted.runvalues[mid_run], sorted.runvalues[mid_run+1])
   else
-    median = sorted.runvalues[mid_run] / 1.0
+    median = middle(sorted.runvalues[mid_run])
   end
   return(median)
 end

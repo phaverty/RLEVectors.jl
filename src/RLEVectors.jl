@@ -44,7 +44,7 @@ import StatsBase: mode, countmap
 export mode, countmap
 
 # ranges
-export disjoin, disjoin_length, ree, inverse_ree, numruns
+export disjoin, disjoin_length, ree, inverse_ree, numruns, rangeMeans
 
 # utils
 export rep, searchsortedfirst
