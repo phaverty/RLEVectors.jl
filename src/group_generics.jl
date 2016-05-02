@@ -50,11 +50,11 @@ for op in ops_group
             RLEVector{eltype(runvalues), eltype(runends)}(runvalues, runends)
         end
         # Rle, Number
-        ($op){T<:Integer}(x::RLEVector{Bool,T},y::Bool) = RLEVector{eltype(x), endtype(x)}( ($op)(x.runvalues,y), x.runends ) # Ambig fix
-        ($op)(x::RLEVector,y::Number) = RLEVector{eltype(x), endtype(x)}( ($op)(x.runvalues,y), x.runends )
+        ($op){T<:Integer}(x::RLEVector{Bool,T},y::Bool) = RLEVector( ($op)(x.runvalues,y), x.runends ) # Ambig fix
+        ($op)(x::RLEVector,y::Number) = RLEVector( ($op)(x.runvalues,y), x.runends )
         # Number, Rle
-        ($op){T<:Integer}(y::Bool, x::RLEVector{Bool,T}) = RLEVector{eltype(x), endtype(x)}( ($op)(y,x.runvalues), x.runends ) # Ambig fix
-        ($op)(y::Number, x::RLEVector) = RLEVector{eltype(x), endtype(x)}( ($op)(y,x.runvalues), x.runends )
+        ($op){T<:Integer}(y::Bool, x::RLEVector{Bool,T}) = RLEVector( ($op)(y,x.runvalues), x.runends ) # Ambig fix
+        ($op)(y::Number, x::RLEVector) = RLEVector( ($op)(y,x.runvalues), x.runends )
     end
 end
 
