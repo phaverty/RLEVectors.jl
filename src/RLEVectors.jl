@@ -2,6 +2,8 @@ VERSION >= v"0.4.0" && __precompile__(true)
 
 module RLEVectors
 
+using Compat
+import Compat.String
 using Reexport
 @reexport using DataFrames
 

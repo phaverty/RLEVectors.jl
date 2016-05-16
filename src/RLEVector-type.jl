@@ -58,7 +58,7 @@ end
 typealias FloatRle RLEVector{Float64,UInt32}
 typealias IntegerRle RLEVector{Int64,UInt32}
 typealias BoolRle RLEVector{Bool,UInt32}
-typealias StringRle RLEVector{ASCIIString,UInt32}
+typealias StringRle RLEVector{String,UInt32}
 
 ### Some kind of magic that makes REPL printing work
 Base.writemime(io::IO, ::MIME"text/plain", a::RLEVector) = show(io, a) # REPL pretty printing, inspired by how NamedArrays does this
