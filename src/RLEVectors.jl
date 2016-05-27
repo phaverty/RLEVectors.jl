@@ -1,4 +1,4 @@
-VERSION >= v"0.4.0" && __precompile__(true)
+__precompile__()
 
 module RLEVectors
 

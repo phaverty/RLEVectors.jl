@@ -107,13 +107,6 @@ function Base.setindex!(rle::RLEVector, value::AbstractArray, ind::Array{Bool, 1
     rle[ find(ind) ] = value
 end
 
-function Base.setindex!(rle::RLEVector, value::AbstractArray, ind::AbstractArray)
-    @inbounds for (i, v) in zip(ind, value)
-        rle[i] = v
-    end
-    return(rle)
-end
-
 ## Indexing optimizations
 # Range case optimization
 function Base.getindex(rle::RLEVector, indices::UnitRange)
