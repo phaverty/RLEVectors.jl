@@ -13,6 +13,9 @@ various mathematical operations on these values.
 [![Build Status](https://travis-ci.org/phaverty/RLEVectors.jl.svg?branch=master)](https://travis-ci.org/phaverty/RLEVectors.jl)
 [![Coverage Status](https://codecov.io/github/phaverty/RLEVectors.jl/coverage.svg?branch=master)](https://codecov.io/github/phaverty/RLEVectors.jl?branch=master)
 
+[![RLEVectors](http://pkg.julialang.org/badges/RLEVectors_0.4.svg)](http://pkg.julialang.org/?pkg=RLEVectors&ver=0.4)
+[![RLEVectors](http://pkg.julialang.org/badges/RLEVectors_0.5.svg)](http://pkg.julialang.org/?pkg=RLEVectors&ver=0.5)
+
 ## Background
 Bioconductor has some widely used and extremely convenient types for
 working with collections of ranges, which sometimes are with
