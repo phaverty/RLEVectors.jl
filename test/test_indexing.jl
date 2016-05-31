@@ -177,7 +177,7 @@ x[2:4] = [5,6,7]
 
 ## range with range
 x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
-x[(2:4)] = 5:7
+x[2:4] = 5:7
 @test x[ [2,3,4] ] == [5,6,7]
 
 # reverse range with vector
