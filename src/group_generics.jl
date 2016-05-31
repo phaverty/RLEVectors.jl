@@ -122,7 +122,7 @@ end
 function sum{T1,T2}(x::RLEVector{T1,T2})
   rval = zero(T1)
    @simd for i in 1:nrun(x)
-    @inbounds rval = rval + (x.runvalues[i] * x.runends[i])
+    @inbounds rval = rval + (x.runvalues[i] * rwidth(x, i))
   end
   return(rval)
 end

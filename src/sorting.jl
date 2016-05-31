@@ -26,15 +26,6 @@ function permute_runends(x::RLEVector, indices)
   return(rval)
 end
 
-# function permute_runends2(x::RLEVector, indices)
-#   # Assuming equal length
-#   rval = similar(x.runends)
-#   for i in indices
-#     @inbounds rval[i] = rwidth(x,i)
-#   end
-#   return(rval)
-# end
-
 function sort{T1,T2}(x::RLEVector{T1,T2})
   ord = sortperm(x.runvalues)
   rle = RLEVector{T1,T2}( x.runvalues[ord], cumsum(rwidth(x)[ord]) )

@@ -6,7 +6,6 @@ using Base.Test
 # compare group
 vec = [1,1,2,2,4,4]
 x = RLEVector(vec)
-@test collect(x .< 3) == collect(x) .< 3
 @test (x .< 3) == RLEVector([true,false],[4,6])
 
 # math group
@@ -17,6 +16,9 @@ x = RLEVector(vec)
 @test div(vec,2) == collect(div(x,2))
 @test median(RLEVector([1,2,3,2,1,5,4])) == median([1,2,3,2,1,5,4])
 @test median(RLEVector([1,2,3,2,1,5])) == median([1,2,3,2,1,5])
+@test median(RLEVector([2, 2, 2, 3, 3, 3])) == 2.5 # median is average of end of run and next value
+@test sum(RLEVector([4, 4, 5, 5, 6, 6])) == 30
+@test mean(RLEVector([4, 4, 5, 5, 6, 6])) == 5.0
 
 # findmax, findmin
 @test findmin(RLEVector([1,2,3,4,1,1])) == findmin([1,2,3,4,1,1])
