@@ -55,7 +55,7 @@ export rep, searchsortedfirst
 import Base.Order: Ordering
 import Base.Sort: QuickSortAlg
 import Base: sort, sort!, issorted, reverse, reverse!, sortperm, Algorithm
-export       sort, sort!, issorted, reverse, reverse!, sortperm
+export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 
 # data frames
 import DataFrames: AbstractDataFrame, DataFrame, Index, head, tail

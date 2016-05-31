@@ -15,15 +15,8 @@ function reverse!(x::RLEVector, start=1, stop=length(x))
   return(x)
 end
 
-function permute_runends(x::RLEVector, indices)
-  # Assuming equal length
-  rval = similar(x.runends)
-  sum = zero(eltype(rval))
-  for i in indices
-    rw = rwidth(x,i)
-    @inbounds sum = rval[i] = rw + sum
-  end
-  return(rval)
+function permute_runs(x::RLEVector, indices)
+  RLEVector(rvalue(x)[indices], cumsum(rwidth(x)[indices]))
 end
 
 function sort{T1,T2}(x::RLEVector{T1,T2})
