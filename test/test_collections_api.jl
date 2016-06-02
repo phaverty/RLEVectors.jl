@@ -11,6 +11,9 @@ x = RLEVector([4,5,6],[3,6,9])
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 push!(x,9)
 @test x == RLEVector([1,1,2,2,3,3,4,4,5,5,9])
+x = RLEVector(Int64[], Int64[])
+push!(x, 12)
+@test x == RLEVector([12])
 
 # pop!
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
