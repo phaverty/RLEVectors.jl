@@ -18,11 +18,11 @@ end
 
 function push!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
   item = convert(T,item) # Copying how base does it for arrays
-  if item == x.runvalues[end]
+  if !isempty(x) && (item == x.runvalues[end])
     x.runends[end] += 1
   else
     push!(x.runvalues,item)
-    push!(x.runends,x.runends[end]+1)
+    push!(x.runends, (isempty(x) ? 0 : x.runends[end]) + 1)
   end
   return(x)
 end
