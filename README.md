@@ -76,8 +76,8 @@ Naming for some of these functions is difficult given that many useful names are
 `RLEVectors` has been extensively profiled and somewhat optimized. Please see the benchmarking section for the evolution over time and comparisons to like operations in R.
 
 ### Benchmarks
-* Please note that these benchmarks include data structure / algorithmic differences as well as language
-differences * For example, indexing is O( log(n) ) in RLEVectors.jl and O(n) in the original R
+** Please note that these benchmarks include data structure / algorithmic differences as well as language
+differences ** For example, indexing is O( log(n) ) in RLEVectors.jl and O(n) in the original R
 implementation. Similarly, `last` is a simple lookup in RLEVectors.jl where `width` is a lookup in the R
 version. Other functions listed here of the same computational order, but not necessarily direct
 translations. RLEVectors.jl is written in my interpretation of idiomatic julia.
