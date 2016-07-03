@@ -28,13 +28,13 @@ x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
 x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
 @test x[ [1,2,3] ] == [1,1,2]
 @test x[ [8,2,4] ] == [4,1,2]
-@test x[ 2:5 ] == RLEVector([1,2,2,3])
+@test x[ 2:5 ] == [1,2,2,3]
 @test x[ 5:-1:2 ] == [3,2,2,1]
-@test x[ 1:end ] == RLEVector([1,1,2,2,3,3,4,4])
+@test x[ 1:end ] == [1,1,2,2,3,3,4,4]
 
 ## getindex with logical
 x = RLEVectors.RLEVector([1,2],[2,4])
-@test x[ [true, false, false, true] ] == RLEVector([1, 2])
+@test x[ [true, false, false, true] ] == [1, 2]
 
 ## setindex! for single position
 y = RLEVectors.RLEVector([3,4,4,5,5])

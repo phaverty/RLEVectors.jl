@@ -109,19 +109,25 @@ end
 
 ## Indexing optimizations
 # Range case optimization
-function Base.getindex(rle::RLEVector, indices::UnitRange)
-  runs = ind2run(rle,indices)
-  nrun = length(runs)
-  rv = rle.runvalues[runs]
-  re = similar(rle.runends, nrun)
-  offset = start(indices) - 1
-  @inbounds for (i,r) in enumerate( start(runs):(last(runs) - 1) )
-    re[i] = rle.runends[r] - offset
-  end
-  re[nrun] = last(indices) - offset # length(indices)
-  rval = RLEVector{eltype(rv),eltype(re)}(rv,re)
-  return(rval)
-end
+#function Base.getindex(rle::RLEVector, indices::UnitRange)
+#    runs = ind2run(rle,indices)
+#    rv = rle.runvalues[runs]
+#    return(rv)
+#end
+#
+#function Base.slice(rle::RLEVector, indices::UnitRange)
+#    runs = ind2run(rle,indices)
+#    rv = rle.runvalues[runs]
+#    nrun = length(runs)
+#    re = similar(rle.runends, nrun)
+#    offset = start(indices) - 1
+#    @inbounds for (i,r) in enumerate( start(runs):(last(runs) - 1) )
+#        re[i] = rle.runends[r] - offset
+#    end
+#    re[nrun] = last(indices) - offset # length(indices)
+#    rval = RLEVector{eltype(rv),eltype(re)}(rv,re)
+#    return(rval)
+#end
 
 #function Base.getindex(rle::RLEVector, i::AbstractVector)
 #    run_indices = searchsortedfirst(rle.runends, i)

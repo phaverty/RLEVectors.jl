@@ -1,34 +1,5 @@
 # TODO list
 
-## Initial features for V0.1.0
- * [x] Examples in toplevel README
- * [x] Some bleeping unit tests already!  It's time.
- * [x] Test for types
- * [x] Test for collections
- * [x] Test for indexing
- * [x] Test for describe
- * [x] Test for math
- * [x] Tests for utils
- * [x] Split RLEVectors.jl into multiple files by subject. It's getting unweildy.
- * [x] conversion of RLEVector{T} to Vector{T}
- * [x] runind or findRun or whichRun method, return index or (index,offset)
- * [x] how does julia do R's table? R's S4vectors doesn't do table(rle1,rle2), but wants to
- * [x] Set operations like setdiff, union, symdiff
- * [x] rle method on Rle, drop zero length runs and join runs with same value
- * [x] clarity on zero-length runs. OK? start and end == 1? What would value be (would I need to get myself involved with DataArrays and Nullable do do this?)
- * [x] in initializer check incoming runends are sorted
- * [x] initializer checks incoming runends are stricly increasing, would be nice to use issorted with a new comparator
- * [x] rep utility to match R's
- * [x] more vector funs: head, tail
- * [x] getindex and setindex! for i::AbstractArray
- * [x] deleteat!
- * [x] splice!
- * [x] inverse_rle method for RLEVector, use in collect etc., skip rwidth
- * [x] fix setindex when on end of run, check for zero length run
- * [x] resize!
- * [x] constructor that takes bitarray and converts to bool array: convert(Vector{Int32},bob)
- * [x] sorting including sort, issorted, reverse and sortperm
-
 ## Decisions
  * [ ] Decide when getindex gives an Vector or an RLEVector, be consistent
  * [ ] How do I set up the type hierarchy?
@@ -101,6 +72,8 @@
  identical, with some repeated runvalues (necessarily). Should it be
  OK have an RLE be less than fully compressed? Would 'ree' then
  re-compress it?
+ * [ ] Vector{RLEVector} called RLEList with group_generics that loop over elements and match elements when
+   given twor RLEs
  
 ## Optimizations
  * [ ] Re-read julia/base/range.jl, some day understand the meaning of "# to make StepRange constructor inlineable, so optimizer can see `step` value"
@@ -158,3 +131,32 @@
    it does scalar ops inside a loop
  * [ ] findin and findmax seem to have type stability problems
  * [x] rfirst(x,i) also has type stability issues
+
+## Initial features for V0.1.0
+ * [x] Examples in toplevel README
+ * [x] Some bleeping unit tests already!  It's time.
+ * [x] Test for types
+ * [x] Test for collections
+ * [x] Test for indexing
+ * [x] Test for describe
+ * [x] Test for math
+ * [x] Tests for utils
+ * [x] Split RLEVectors.jl into multiple files by subject. It's getting unweildy.
+ * [x] conversion of RLEVector{T} to Vector{T}
+ * [x] runind or findRun or whichRun method, return index or (index,offset)
+ * [x] how does julia do R's table? R's S4vectors doesn't do table(rle1,rle2), but wants to
+ * [x] Set operations like setdiff, union, symdiff
+ * [x] rle method on Rle, drop zero length runs and join runs with same value
+ * [x] clarity on zero-length runs. OK? start and end == 1? What would value be (would I need to get myself involved with DataArrays and Nullable do do this?)
+ * [x] in initializer check incoming runends are sorted
+ * [x] initializer checks incoming runends are stricly increasing, would be nice to use issorted with a new comparator
+ * [x] rep utility to match R's
+ * [x] more vector funs: head, tail
+ * [x] getindex and setindex! for i::AbstractArray
+ * [x] deleteat!
+ * [x] splice!
+ * [x] inverse_rle method for RLEVector, use in collect etc., skip rwidth
+ * [x] fix setindex when on end of run, check for zero length run
+ * [x] resize!
+ * [x] constructor that takes bitarray and converts to bool array: convert(Vector{Int32},bob)
+ * [x] sorting including sort, issorted, reverse and sortperm
