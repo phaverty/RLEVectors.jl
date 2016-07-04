@@ -1,4 +1,3 @@
-
 # Like R's rep, repeat
 #  No length_out arg at this time
 function rep(x::Union{Any,Vector}; each::Union{Int,Vector{Int}} = ones(Int,length(x)), times::Int = 1)
@@ -49,35 +48,37 @@ function Base.searchsortedfirst(v::AbstractVector, x::AbstractVector, lo::Int, h
     n = hi
     hi = hi + 1
     @inbounds for (i,query) in enumerate(x)
-        # unsorted x, restart left side
-        if lo < 1 || query <= v[lo]
-            lo = 0
-        end
-        # cast out exponentially to get hi to the right of query
-        jump = 1
-        while true
-            if hi >= n
-                hi = n + 1
-                break
-            end
-            if query < v[hi]
-                break
-            end
-            lo = hi
-            hi = hi + jump
-            jump = jump * 2
-        end
-        # binary search for the exact bin
-        while lo < hi-1
-            m = (lo+hi)>>>1
-            if query > v[m]
-                lo = m
-            else
-                hi = m
-            end
-        end
-        indices[i] = hi
-        lo = hi - 1
+        indices[i] = searchsortedfirst(v, query, 1, n)
     end
+#        # unsorted x, restart left side
+#        if lo < 1 || query <= v[lo]
+#            lo = 0
+#        end
+#        # cast out exponentially to get hi to the right of query
+#        jump = 1
+#        while true
+#            if hi >= n
+#                hi = n + 1
+#                break
+#            end
+#            if query < v[hi]
+#                break
+#            end
+#            lo = hi
+#            hi = hi + jump
+#            jump = jump * 2
+#        end
+#        # binary search for the exact bin
+#        while hi - lo > 1
+#            m = (lo+hi)>>>1
+#            if query > v[m]
+#                lo = m
+#            else
+#                hi = m
+#            end
+#        end
+#        indices[i] = hi
+#        lo = hi - 1
+#    end
     return(indices)
 end
