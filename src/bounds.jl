@@ -1,6 +1,3 @@
-Base.searchsortedlast(v::AbstractVector, x::AbstractVector) = searchsortedfirst(v, x, 1, length(x))
-function Base.searchsortedlast(v::AbstractVector, x::AbstractVector, lo::Int, hi::Int)
-
 #function leftBound(values, low, high, query)
 #    # Right bound likely close to previous (low) so jump towards it exponentially
 #    probe = low + 1

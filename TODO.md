@@ -1,5 +1,41 @@
 # TODO list
 
+## Enhancements
+ * [ ] Make Runs type, split from and use in RLEVector
+ * [x] pretty `show` with elipsis if length > 6, show runs and also expanded vector, use utils.rep
+ * [x] Add benchmark/ with R and .jl scripts comparing timings on some common things. Have one read a CSV from the other and plot.
+ * [ ] outer constructor for RLEVectors that takes runends or vector and then optional named args runends and runwidths
+ * [ ] Can I make a special zip-like loop that runs over the disjoint runs of 2+ RLEVectors and the associated values?
+ * [ ] vcat with splat for multiple args (vararg vcat)
+ * [x] deleterun! should give a ree'd RLEVector, check for newly adjacent runs, use deleteat![x,itr] if necessary
+ * [x] Any other function groups from DataArrays that I need?
+ * [x] factor out run counting stuff in ree(Vector) and disjoin, call it `nrun`
+ * [x] implement comparison operators <=, etc.
+ * [x] Rle to set conversion
+ * [ ] iterator versions of rwidth and rstart. Allocation is the root of all evil. Allocation in rwidth seems to be the bulk of 'median' at this point, for example.
+ * [x] ind2runcontext for UnitRange, use for setindex(x::RLEVector, value, indices::UnitRange)
+ * [x] Make sure this works with Julia V0.4. Likely we have some tuple trouble and the tests will be riddled with the Range expansion change ([1:4] is a 1-vector of Ranges rather than [1,2,3,4]).
+ * [x] function documentation section: describing
+ * [x] function documentation section: creating
+ * [x] function documentation section: range functions
+ * [ ] get ree and vcat out of splice
+ * [ ] iterator called 'ranges' that gives (first,last) indices for
+ runs. Will require a new type with the 3 iterator methods, say RLERangesIterator.
+ * [x] Make sure my hash and == are what AutoHashEquals would say
+ * [ ] linalg operations
+ * [ ] make 'each' a Task?
+ * [ ] make disjoin Task for two RLEs?
+ * [ ] faster group_generic operations based on disjoin
+ * [ ] Some way to disjoin two RLEs such that the runends are made
+ identical, with some repeated runvalues (necessarily). Should it be
+ OK have an RLE be less than fully compressed? Would 'ree' then
+ re-compress it?
+ * [ ] Vector{RLEVector} called RLEList with group_generics that loop over elements and match elements when
+   given twor RLEs
+   * [ ] test for ind2run(rle::RLEVector, i::AbstractArray)
+   * [ ] new testing framework with nice reports
+   
+
 ## Decisions
  * [ ] Decide when getindex gives an Vector or an RLEVector, be consistent
  * [ ] How do I set up the type hierarchy?
@@ -41,39 +77,6 @@
  * [x] when incoming runvalues for RLEVector creation is a BitArray (like from .<) where do I unpack it? Probably best during ree, because it will probably get shorter. Use numruns(runvalues) then deal with 0-len runs separately?
  * [x] What type to return for a slice of an RLEVector?
  * [x] likewise, maybe ind2range(RLEVector, UnitRange) should return a UnitRange
-
-## Enhancements
- * [ ] Make Runs type, split from and use in RLEVector
- * [x] pretty `show` with elipsis if length > 6, show runs and also expanded vector, use utils.rep
- * [x] Add benchmark/ with R and .jl scripts comparing timings on some common things. Have one read a CSV from the other and plot.
- * [ ] outer constructor for RLEVectors that takes runends or vector and then optional named args runends and runwidths
- * [ ] Can I make a special zip-like loop that runs over the disjoint runs of 2+ RLEVectors and the associated values?
- * [ ] vcat with splat for multiple args (vararg vcat)
- * [x] deleterun! should give a ree'd RLEVector, check for newly adjacent runs, use deleteat![x,itr] if necessary
- * [x] Any other function groups from DataArrays that I need?
- * [x] factor out run counting stuff in ree(Vector) and disjoin, call it `nrun`
- * [x] implement comparison operators <=, etc.
- * [x] Rle to set conversion
- * [ ] iterator versions of rwidth and rstart. Allocation is the root of all evil. Allocation in rwidth seems to be the bulk of 'median' at this point, for example.
- * [x] ind2runcontext for UnitRange, use for setindex(x::RLEVector, value, indices::UnitRange)
- * [x] Make sure this works with Julia V0.4. Likely we have some tuple trouble and the tests will be riddled with the Range expansion change ([1:4] is a 1-vector of Ranges rather than [1,2,3,4]).
- * [x] function documentation section: describing
- * [x] function documentation section: creating
- * [x] function documentation section: range functions
- * [ ] get ree and vcat out of splice
- * [ ] iterator called 'ranges' that gives (first,last) indices for
- runs. Will require a new type with the 3 iterator methods, say RLERangesIterator.
- * [x] Make sure my hash and == are what AutoHashEquals would say
- * [ ] linalg operations
- * [ ] make 'each' a Task?
- * [ ] make disjoin Task for two RLEs?
- * [ ] faster group_generic operations based on disjoin
- * [ ] Some way to disjoin two RLEs such that the runends are made
- identical, with some repeated runvalues (necessarily). Should it be
- OK have an RLE be less than fully compressed? Would 'ree' then
- re-compress it?
- * [ ] Vector{RLEVector} called RLEList with group_generics that loop over elements and match elements when
-   given twor RLEs
  
 ## Optimizations
  * [ ] Re-read julia/base/range.jl, some day understand the meaning of "# to make StepRange constructor inlineable, so optimizer can see `step` value"

@@ -19,6 +19,14 @@ function ind2run(rle::RLEVector,i::UnitRange)
   return( left_run:right_run )
 end
 
+function ind2run(rle::RLEVector, i::AbstractArray)
+  re = rle.runends
+  n = length(re)
+  runs = searchsortedfirst(re,i,1,n)
+  maximum(runs) <= n || throw(BoundsError())  # Can't be < 1
+  return(runs)
+end
+
 # get index of the run corresponding to the i'th value in the expanded runs, index in run and remainder of run
 #  (runindex, index_in_run, values_in_run_after_i)
 function ind2runcontext(rle::RLEVector, i::Integer)
@@ -52,8 +60,8 @@ Base.linearindexing{T<:RLEVector}(::Type{T}) = Base.LinearFast()
 endof(rle::RLEVector) = length(rle)
 
 function Base.getindex(rle::RLEVector, i::Int)
-  run = ind2run(rle,i)
-  return( rle.runvalues[run] )
+    run = ind2run(rle,i)
+    return( rle.runvalues[run] )
 end
 
 function Base.setindex!(rle::RLEVector, value, i::Int)
@@ -96,11 +104,15 @@ function Base.setindex!(rle::RLEVector, value, i::Int)
       insert!(rle.runvalues, run, value)
       insert!(rle.runends, run, i)
     end
-  else # middle of a run, average case
+ else # middle of a run, average case
     splice!(rle.runvalues, run, [runvalue,value,runvalue])
     splice!(rle.runends, run, [i-1,i,runend])
   end
   return(rle)
+end
+
+function Base.getindex(rle::RLEVector, ind::Array{Bool, 1})
+    rle[ find(ind) ]
 end
 
 function Base.setindex!(rle::RLEVector, value::AbstractArray, ind::Array{Bool, 1})
@@ -129,10 +141,10 @@ end
 #    return(rval)
 #end
 
-#function Base.getindex(rle::RLEVector, i::AbstractVector)
-#    run_indices = searchsortedfirst(rle.runends, i)
-#    return( rle.runvalues[ run_indices ] )
-#end
+function Base.getindex(rle::RLEVector, i::AbstractVector)
+    run_indices = searchsortedfirst(rle.runends, i)
+    return( RLEVector( rle.runvalues[ run_indices ] ) )
+end
 
 function Base.setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::T1, indices::UnitRange)
   runs = ind2run(rle,indices)

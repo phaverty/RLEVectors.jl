@@ -17,6 +17,7 @@ function disjoin_length(x::Vector, y::Vector)
     end
     return(nrun)
 end
+disjoin_length(x::RLEVector, y::RLEVector) = disjoin_length(x.runends, y.runends)
 
 """
 Takes runends from two RLEVectors, make one new runends breaking the pair into non-overlapping runs.
@@ -49,6 +50,7 @@ function disjoin(x::Vector,  y::Vector)
         elseif xi < yj
             runends[nrun] = yj
             j = j - 1
+
         else
             runends[nrun] = xi
             i = i - 1
@@ -69,8 +71,8 @@ end
 function disjoin(x::RLEVector, y::RLEVector)
     length(x) != length(y) && error("RLEVectors of unequal length.")
     runends = disjoin(x.runends, y.runends)
-    runvalues_x = x[runends]
-    runvalues_y = y[runends]
+    runvalues_x = x.runvalues[ ind2run(x, runends) ]
+    runvalues_y = y.runvalues[ ind2run(y, runends) ]
 #    #nrun = disjoin_length(x.runends, y.runends) # Alternative
 #    #nx = nrun(x)
 #    #ny = nrun(y)
@@ -112,7 +114,7 @@ function disjoin(x::RLEVector, y::RLEVector)
 #        println(runvalues_x)
 #        println(runvalues_y)
 #    end
-    return( (runends, runvalues_x, runvalues_y ) )
+    return( (runends, runvalues_x, runvalues_y) )
 end
 
 # optimization opportunities: hoist rle element lookups and use the searchsortedfirst with all the args

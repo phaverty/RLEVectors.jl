@@ -1,7 +1,7 @@
 workspace()
 module TestIndexing
-importall RLEVectors
 
+importall RLEVectors
 using Base.Test
 
 # ind2run
@@ -9,6 +9,7 @@ using Base.Test
 @test ind2run(RLEVector([3,3,4,4,5,5,6,6,7,7]),6) == 3
 @test ind2run(RLEVector([3,3,4,4,5,5,6,6,7,7]),7) == 4
 @test ind2run(RLEVector([3,3,4,4,5,5,6,6,7,7]),7:9) == 4:5
+@test ind2run(RLEVector([3,3,4,4,5,5,6,6,7,7]),[3, 5, 6]) == [2, 3, 3]
 
 # ind2runcontext
 @test ind2runcontext(RLEVector([3,3,4,4,5,5,6,6,7,7]),5) == (3,1,1)
@@ -22,18 +23,17 @@ x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
 @test x[3] == 2
 @test x[8] == 4
 @test_throws BoundsError x[9]
-# @test_throws BoundsError x[-1] # Indexing changed to never go off the left end. Good, right?
 
 ## getindex on multiple positions
 x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
-@test x[ [1,2,3] ] == [1,1,2]
-@test x[ [8,2,4] ] == [4,1,2]
-@test x[ 2:5 ] == [1,2,2,3]
-@test x[ 5:-1:2 ] == [3,2,2,1]
-@test x[ 1:end ] == [1,1,2,2,3,3,4,4]
+@test x[ [1,2,3] ] == RLEVector([1,1,2])
+@test x[ [8,2,4] ] == RLEVector([4,1,2])
+@test x[ 2:5 ] == RLEVector([1,2,2,3])
+@test x[ 5:-1:2 ] == RLEVector([3,2,2,1])
+@test x[ 1:end ] == x
 
 ## getindex with logical
-x = RLEVectors.RLEVector([1,2],[2,4])
+#x = RLEVectors.RLEVector([1,2],[2,4])
 @test x[ [true, false, false, true] ] == [1, 2]
 
 ## setindex! for single position
