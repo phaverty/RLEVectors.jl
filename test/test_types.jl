@@ -1,6 +1,4 @@
-workspace()
-module TestTypes
-importall RLEVectors
+using RLEVectors
 using Base.Test
 
 # Initialization
@@ -66,4 +64,3 @@ x = RLEVector([1,1,2,2,3,3,3])
 d = Dict("bob" => x)
 typeof(d["bob"]) == typeof(x)
 
-end # module

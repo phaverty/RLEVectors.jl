@@ -1,6 +1,4 @@
-module TestUtils
-
-importall RLEVectors
+using RLEVectors
 using Base.Test
 
 # rep
@@ -22,4 +20,3 @@ using Base.Test
 @test searchsortedfirst( [0,5,10,15], [-3,2,3,7,22] ) == [1, 2, 2, 3, 5]
 @test searchsortedfirst( [0,5,10,15], [-3,2,-3,7,22] ) == [1, 2, 1, 3, 5]
 
-end

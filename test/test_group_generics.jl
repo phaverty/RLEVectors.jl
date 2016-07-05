@@ -1,6 +1,4 @@
-workspace()
-module TestGroupGenerics
-importall RLEVectors
+using RLEVectors
 using Base.Test
 
 # compare group
@@ -43,4 +41,3 @@ y = RLEVector([0,0,0,3,3,3,4,4])
 @test in(4, RLEVector( [ 1,2,2,3 ] )) == false
 @test setdiff( Set([1,2,3,4,5]), RLEVector([1,1,2,2,4,4,5,5]) ) == [3]
 
-end

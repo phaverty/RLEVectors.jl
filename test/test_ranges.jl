@@ -1,5 +1,4 @@
-module TestRanges
-importall RLEVectors
+using RLEVectors
 using Base.Test
 
 # disjoin_length
@@ -20,4 +19,3 @@ using Base.Test
 # rangeMeans
 
 
-end # module
