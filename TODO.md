@@ -1,5 +1,13 @@
 # TODO list
 
+## New types
+   * [ ] Vector{RLEVector} called RLEVectorList (RVL) with group_generics that loop over elements and match elements when
+   given two RLEs
+   * [ ] RLEDataFrame based on RLEVectorList
+   * [ ] RVL implements all RLEVector functions as map(x,rvl)
+   * [ ] which functions apply to the list and which map over the elements?
+   * [ ] RLEDF needs the same creation functions as DataFrame
+   
 ## Enhancements
  * [ ] Make Runs type, split from and use in RLEVector
  * [x] pretty `show` with elipsis if length > 6, show runs and also expanded vector, use utils.rep
@@ -30,54 +38,9 @@
  identical, with some repeated runvalues (necessarily). Should it be
  OK have an RLE be less than fully compressed? Would 'ree' then
  re-compress it?
- * [ ] Vector{RLEVector} called RLEList with group_generics that loop over elements and match elements when
-   given twor RLEs
-   * [ ] test for ind2run(rle::RLEVector, i::AbstractArray)
-   * [ ] new testing framework with nice reports
-   
-
-## Decisions
- * [ ] Decide when getindex gives an Vector or an RLEVector, be consistent
- * [ ] How do I set up the type hierarchy?
-   a.  How do I share common code as high in the tree as possible? (wait for new features of abstract types in 0.4?)
-   b.  Can I make it a subtype of Vector and get lots of the Vector
-   API for free?  Can I then use it in other places that take a
-   vector? Like a DataFrame column?
-
-* [x] How do I represent the runs? length, end, start/end?
-
-    end allows for direct binarysearch for indexing and makes size a simple lookup
-    Gives 5X speedup for size, 40X for indexing on RLEVector(int([1:1:1e3]),int([1:1:1e3]))
-    19956X speedup over R (more efficient algo here though) for
-      foo = Rle( seq(1,1000,5), rep.int(5,200) )
-      l = 1:1e3; system.time( for(i in l) { foo[100] } )
-        vs.
-      foo = IntegerRle([ int(linspace(1,1000,200)) ], [ int(linspace(1,1000,200)) ])
-      @time for i in 1:1e3 foo[100] end
-      2000X speedup for foo + 4
-
-* [ ] Is there a strictly increasing and positive int vector type I can leverage or make for the runs?
-       Maybe something that could be linked to the values?  OrderedSet, IntSet?
-       For disjoin operations, it will be useful to know the unique runends in two+ sets of runs
-       Would be nice to have disjoin for RLEVector and RunEnds and IRanges and GRanges types
-
-* [ ] What do I call the getters and setters? I want to use same getters for RLEs and GRanges and such.
-    begin, end and start are taken. first, step, and last make sense because of what they mean for ranges, but they would mean something else for a Vector
-    Maybe confusion between Ranges and Vector API means that I should just make my own and use rangestart, rangewidth, rangeend or rfirst, rwidth and rlast. With the latter, the 'r' could be range or run.
-	Maybe starts, widths, ends?
-
- * [x] Is it a good idea to require two arg vectors to be the same length like this: function bob{T1,T1,N}(x::Vector{T1,N},y::Vector{T2,N})  ?  Or just test the lengths and throw an ArgumentError?
-
-
- * [x] Is 1 an appropriate start for an empty RLEVector? Does that imply that there is a value associated? Go to zero-based, half open (#can-of-worms)?. NO.
- * [x] does one export methods defined on generics from Base?
- * [x] similar. What would length arg do?  length, nrun, always return an empty one?
- * [x] better naming for runindex, ind2run
- * [x] maybe drop ree!(x::RLEVector) for a ree that returns a tuple of cleaned up runvalues and runends? With the new 0.4 tuple hotness performance won't matter anymore (right?)
- * [x] when incoming runvalues for RLEVector creation is a BitArray (like from .<) where do I unpack it? Probably best during ree, because it will probably get shorter. Use numruns(runvalues) then deal with 0-len runs separately?
- * [x] What type to return for a slice of an RLEVector?
- * [x] likewise, maybe ind2range(RLEVector, UnitRange) should return a UnitRange
- 
+ * [x] test for ind2run(rle::RLEVector, i::AbstractArray)
+ * [ ] new testing framework with nice reports
+    
 ## Optimizations
  * [ ] Re-read julia/base/range.jl, some day understand the meaning of "# to make StepRange constructor inlineable, so optimizer can see `step` value"
  * [x] getindex and setindex! optimizations for sorted i, especially for i::UnitRange
@@ -126,11 +89,11 @@
  * [x] Do I need Base.linearindexing{T<:MyArray}(::Type{T}) = LinearFast() 
  * [x] median with an Int RLE is type unstable, div by 2 gives float
    otherwise Int
- * [ ] setindex!(rle, 801:900, 1:100) does setindex!(rle::RLEVector,
+ * [x] setindex!(rle, 801:900, 1:100) does setindex!(rle::RLEVector,
    value, indices::UnitRange) rather than looking for a two vector method
  * [ ] It seems that one cannot make a vector of RLEVectors
  * [x] intersect should maintain multiplicity of 1st arg
- * [ ] new disjoin-based group ops does not work for .< and friends as
+ * [x] new disjoin-based group ops does not work for .< and friends as
    it does scalar ops inside a loop
  * [ ] findin and findmax seem to have type stability problems
  * [x] rfirst(x,i) also has type stability issues
@@ -163,3 +126,45 @@
  * [x] resize!
  * [x] constructor that takes bitarray and converts to bool array: convert(Vector{Int32},bob)
  * [x] sorting including sort, issorted, reverse and sortperm
+
+## Decisions
+ * [x] Decide when getindex gives an Vector or an RLEVector, be consistent
+ * [x] How do I set up the type hierarchy?
+   a.  How do I share common code as high in the tree as possible? (wait for new features of abstract types in 0.4?)
+   b.  Can I make it a subtype of Vector and get lots of the Vector
+   API for free?  Can I then use it in other places that take a
+   vector? Like a DataFrame column?
+
+* [x] How do I represent the runs? length, end, start/end?
+
+    end allows for direct binarysearch for indexing and makes size a simple lookup
+    Gives 5X speedup for size, 40X for indexing on RLEVector(int([1:1:1e3]),int([1:1:1e3]))
+    19956X speedup over R (more efficient algo here though) for
+      foo = Rle( seq(1,1000,5), rep.int(5,200) )
+      l = 1:1e3; system.time( for(i in l) { foo[100] } )
+        vs.
+      foo = IntegerRle([ int(linspace(1,1000,200)) ], [ int(linspace(1,1000,200)) ])
+      @time for i in 1:1e3 foo[100] end
+      2000X speedup for foo + 4
+
+* [x] Is there a strictly increasing and positive int vector type I can leverage or make for the runs?
+       Maybe something that could be linked to the values?  OrderedSet, IntSet?
+       For disjoin operations, it will be useful to know the unique runends in two+ sets of runs
+       Would be nice to have disjoin for RLEVector and RunEnds and IRanges and GRanges types
+
+* [x] What do I call the getters and setters? I want to use same getters for RLEs and GRanges and such.
+    begin, end and start are taken. first, step, and last make sense because of what they mean for ranges, but they would mean something else for a Vector
+    Maybe confusion between Ranges and Vector API means that I should just make my own and use rangestart, rangewidth, rangeend or rfirst, rwidth and rlast. With the latter, the 'r' could be range or run.
+	Maybe starts, widths, ends?
+
+* [x] Is it a good idea to require two arg vectors to be the same length like this: function bob{T1,T1,N}(x::Vector{T1,N},y::Vector{T2,N})  ?  Or just test the lengths and throw an ArgumentError?
+
+
+ * [x] Is 1 an appropriate start for an empty RLEVector? Does that imply that there is a value associated? Go to zero-based, half open (#can-of-worms)?. NO.
+ * [x] does one export methods defined on generics from Base?
+ * [x] similar. What would length arg do?  length, nrun, always return an empty one?
+ * [x] better naming for runindex, ind2run
+ * [x] maybe drop ree!(x::RLEVector) for a ree that returns a tuple of cleaned up runvalues and runends? With the new 0.4 tuple hotness performance won't matter anymore (right?)
+ * [x] when incoming runvalues for RLEVector creation is a BitArray (like from .<) where do I unpack it? Probably best during ree, because it will probably get shorter. Use numruns(runvalues) then deal with 0-len runs separately?
+ * [x] What type to return for a slice of an RLEVector?
+ * [x] likewise, maybe ind2range(RLEVector, UnitRange) should return a UnitRange
