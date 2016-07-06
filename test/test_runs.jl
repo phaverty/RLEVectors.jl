@@ -1,4 +1,6 @@
-using  RLEVectors
+module TestRuns
+
+using RLEVectors
 using Base.Test
 
 # numruns single
@@ -33,3 +35,5 @@ using Base.Test
 @test inverse_ree([4,5,6],[2,5,7]) == [4,4,5,5,5,6,6]
 @test inverse_ree(Real[],Int64[]) == Real[]
 @test_throws ArgumentError inverse_ree([],[1])
+
+end

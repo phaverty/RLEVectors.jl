@@ -1,3 +1,5 @@
+module TestRanges
+
 using RLEVectors
 using Base.Test
 
@@ -19,3 +21,4 @@ using Base.Test
 # rangeMeans
 
 
+end

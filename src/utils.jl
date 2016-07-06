@@ -53,7 +53,7 @@ function Base.searchsortedfirst(v::AbstractVector, x::AbstractVector, lo::Int, h
 #        indices[i] = searchsortedfirst(v, query, 1, n)
 #    end
         # unsorted x, restart left side
-        if lo < min || query <= v[lo]
+        if lo <= min || query <= v[lo]
             lo = min
         end
         # cast out exponentially to get hi to the right of query

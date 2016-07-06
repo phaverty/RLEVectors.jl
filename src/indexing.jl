@@ -120,13 +120,12 @@ function Base.setindex!(rle::RLEVector, value::AbstractArray, ind::Array{Bool, 1
 end
 
 ## Indexing optimizations
-# Range case optimization
-#function Base.getindex(rle::RLEVector, indices::UnitRange)
-#    runs = ind2run(rle,indices)
-#    rv = rle.runvalues[runs]
-#    return(rv)
-#end
-#
+function Base.getindex(rle::RLEVector, ind::UnitRange)
+    runs = ind2run(rle,collect(ind)) # OPTIMIZE ME: ind2runcontext
+    rv = rle.runvalues[runs]
+    return(rv)
+end
+
 #function Base.slice(rle::RLEVector, indices::UnitRange)
 #    runs = ind2run(rle,indices)
 #    rv = rle.runvalues[runs]
@@ -141,8 +140,8 @@ end
 #    return(rval)
 #end
 
-function Base.getindex(rle::RLEVector, i::AbstractVector)
-    run_indices = searchsortedfirst(rle.runends, i)
+function Base.getindex(rle::RLEVector, ind::AbstractVector)
+    run_indices = ind2run(rle, ind)
     return( RLEVector( rle.runvalues[ run_indices ] ) )
 end
 

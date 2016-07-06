@@ -1,3 +1,5 @@
+module TestDescribe
+
 using RLEVectors
 using Base.Test
 
@@ -22,3 +24,5 @@ x = RLEVector([4,5,6],[3,6,9])
 
 # isequal
 @test isequal(x,x)
+
+end

@@ -1,4 +1,5 @@
-workspace()
+module TestIndexing
+
 using RLEVectors
 using Base.Test
 
@@ -205,3 +206,4 @@ x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
 @test tail(x) == [2,2,3,3,4,4]
 @test tail(x,3) == [3,4,4]
 
+end

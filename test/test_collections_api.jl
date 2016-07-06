@@ -1,4 +1,4 @@
-workspace()
+module TestCollections
 
 using RLEVectors
 using Base.Test
@@ -120,3 +120,4 @@ x = RLEVector([9, 9, 12, 12, 13, 13, 9, 9, 14, 14])
 @test intersect(x, [9, 12], [12]) == RLEVector([12, 12])
 @test intersect(x, Set([12, 14])) == RLEVector([12, 12, 14, 14])
 
+end

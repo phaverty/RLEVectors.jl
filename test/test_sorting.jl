@@ -1,3 +1,5 @@
+module TestSorting
+
 using RLEVectors
 using Base.Test
 
@@ -24,3 +26,5 @@ x = RLEVector([2,4,3,5],[4,7,9,10])
 x = RLEVector([2,4,3,5],[4,7,9,10])
 y = RLEVector([4,5,3,2],[3,4,6,10])
 @test permute_runs(x, [2, 4, 3, 1]) == y
+
+end

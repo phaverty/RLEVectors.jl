@@ -1,4 +1,4 @@
-## Range operations
+# Range operations
 # Take two runends vectors (strictly increasing uints) and find the number of unique values for the disjoin operation
 function disjoin_length(x::Vector, y::Vector)
     i = length(x)

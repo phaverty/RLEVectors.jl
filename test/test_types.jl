@@ -1,3 +1,5 @@
+module TestTypes
+
 using RLEVectors
 using Base.Test
 
@@ -42,10 +44,10 @@ x = RLEVector([4,4,5,5,6,7,8])
 @test collect(RLEVector([1,1,2,2,3,3])) == [1,1,2,2,3,3]
 @test convert(Vector, RLEVector([1,1,2,2,3,3])) == [1,1,2,2,3,3]
 
-# Describing
+## Describing
 x = RLEVector(expected_run_values,expected_run_ends)
 @test eltype(x) == eltype(expected_run_values)
-@test typeof(show(x)) == Void # At least test that show does not give error
+#@test typeof(show(x)) == Void # At least test that show does not give error
 
 # Getters and setters
 x = RLEVector([1,2,3],[2,9,22])
@@ -64,3 +66,4 @@ x = RLEVector([1,1,2,2,3,3,3])
 d = Dict("bob" => x)
 typeof(d["bob"]) == typeof(x)
 
+end
