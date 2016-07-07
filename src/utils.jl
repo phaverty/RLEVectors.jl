@@ -43,32 +43,19 @@ end
 The method for two vectors is like R's findinterval.
 """
 Base.searchsortedfirst(v::AbstractVector, x::AbstractVector) = searchsortedfirst(v, x, 1, length(v))
-function Base.searchsortedfirst(v::AbstractVector, x::AbstractVector, lo::Int, hi::Int)
+
+function searchsortedfirst(v::AbstractVector, x::AbstractVector, lo::Int, hi::Int)
     indices = similar(x)
-    const min = lo - 1
-    const max = hi + 1
-    hi = hi + 1
+    min = lo - 1
+    max = hi + 1
     @inbounds for (i,query) in enumerate(x)
-#        println("starting, query: ", query, " lo ", lo, " hi ", hi)
-#        indices[i] = searchsortedfirst(v, query, 1, n)
-#    end
+        hi = hi + 1 # 2X speedup with this *inside* the loop for sorted x
         # unsorted x, restart left side
         if lo <= min || query <= v[lo]
             lo = min
         end
-        # cast out exponentially to get hi to the right of query
-        jump = 1
-        while true
-            if hi >= max
-                hi = max
-                break
-            end
-            if query <= v[hi]
-                break
-            end
-            lo = hi
-            hi = hi + jump
-            jump = jump * 2
+        if hi >= max || query >= v[hi]
+            hi = max
         end
         # binary search for the exact bin
         while hi - lo > 1
@@ -80,10 +67,6 @@ function Base.searchsortedfirst(v::AbstractVector, x::AbstractVector, lo::Int, h
             end
         end
         indices[i] = hi
-#        println("ending,   query: ", query, " lo ", lo, " hi ", hi)
     end
     return(indices)
 end
-# Debug code
-#x = [2, 4, 6, 8]
-#searchsortedfirst( x, [1, 2, 3] )

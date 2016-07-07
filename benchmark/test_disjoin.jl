@@ -1,57 +1,111 @@
 using RLEVectors
 
-function disjoin(x::RLEVector, y::RLEVector)
-    i = nrun(x)
-    j = nrun(y)
-    length(x) != length(y) && error("RLEVectors of unequal length.")
-    runind = disjoin_length(x.runends, y.runends)
-    xv = x.runvalues
-    yv = y.runvalues
-    xe = x.runends
-    ye = y.runends
-    runends = Array(promote_type(eltype(x), eltype(y)), runind)
-    runvalues_x = Array(eltype(x), runind)
-    runvalues_y = Array(eltype(x), runind)
-    @inbounds while true
-        if xe[i] > ye[j]
-            runends[runind] = xe[i]
-            runvalues_x[runind] = xv[i]
-            runvalues_y[runind] = yv[j]
-            i = i - 1
-        elseif xe[i] < ye[j]
-            runends[runind] = ye[j]
-            runvalues_x[runind] = xv[i]
-            runvalues_y[runind] = yv[j]
-            j = j - 1
-        else
-            runends[runind] = xe[i]
-            runvalues_x[runind] = xv[i]
-            runvalues_y[runind] = yv[j]
-            i = i - 1
-            j = j - 1
-        end
-        runind = runind - 1
-        if i == 0
-            for r in 1:j
-                runends[r] = ye[r]
-                runvalues_x[r] = xv[i]
-                runvalues_y[r] = yv[r]
-            end
-            break
-        elseif j == 0
-            for r in 1:i
-                runends[r] = xe[r]
-                runvalues_x[r] = xv[r]
-                runvalues_y[r] = yv[j]
-            end
-            break
-        end
+
+function searchsortedfirst1(v::AbstractVector, x::AbstractVector, lo::Int, hi::Int)
+    indices = similar(x)
+    const n = hi
+    const min = lo - 1
+    const max = hi + 1
+    hi = hi + 1
+    @inbounds for (i,query) in enumerate(x)
+        indices[i] = searchsortedfirst(v, query, 1, n)
     end
-    return( (runends, runvalues_x, runvalues_y ) )
+    return(indices)
 end
 
+function searchsortedfirst2(v::AbstractVector, x::AbstractVector, lo::Int, hi::Int)
+    indices = similar(x)
+    const min = lo - 1
+    const max = hi + 1
+    hi = hi + 1
+    @inbounds for (i,query) in enumerate(x)
+        # unsorted x, restart left side
+        if lo <= min || query <= v[lo]
+            lo = min
+        end
+        # cast out exponentially to get hi to the right of query
+        jump = 1
+        while true
+            if hi >= max
+                hi = max
+                break
+            end
+            if query <= v[hi]
+                break
+            end
+            lo = hi
+            hi = hi + jump
+            jump = jump * 2
+        end
+        # binary search for the exact bin
+        while hi - lo > 1
+            m = (lo+hi)>>>1
+            if query > v[m]
+                lo = m
+            else
+                hi = m
+            end
+        end
+        indices[i] = hi
+    end
+    return(indices)
+end
 
-foo = RLEVector([1, 1, 2, 3, 4])
-#goo = RLEVector([1, 2, 3, 4])
-goo = RLEVector([1, 1, 2, 3, 3])
-disjoin2(foo, goo)
+function searchsortedfirst3(v::AbstractVector, x::AbstractVector, lo::Int, hi::Int)
+    indices = similar(x)
+    min = lo - 1
+    max = hi + 1
+    @inbounds for (i,query) in enumerate(x)
+        hi = hi + 1 # 2X speedup with this *inside* the loop for sorted x
+        # unsorted x, restart left side
+        if lo <= min || query <= v[lo]
+            lo = min
+        end
+        if hi >= max || query >= v[hi]
+            hi = max
+        end
+        # binary search for the exact bin
+        while hi - lo > 1
+            m = (lo+hi)>>>1
+            if query > v[m]
+                lo = m
+            else
+                hi = m
+            end
+        end
+        indices[i] = hi
+    end
+    return(indices)
+end
+
+macro timeit(ex)
+# like @time, but returning the timing rather than the computed value
+  return quote
+    #gc_disable()
+    local val = $ex # compile
+    local t0 = time()
+    for i in 1:1e5 val = $ex end
+    local t1 = time()
+    #gc_enable()
+    t1-t0
+  end
+end
+
+foo = RLEVector(collect(1:1000), collect(5:5:5000))
+re = rlast(foo)
+x = rand(1:1000, 1000)
+sx = sort(x)
+
+@timeit searchsortedfirst1(re, x, 1, 1000)
+@timeit searchsortedfirst1(re, sx, 1, 1000)
+
+@timeit searchsortedfirst2(re, x, 1, 1000)
+@timeit searchsortedfirst2(re, sx, 1, 1000)
+
+@timeit searchsortedfirst3(re, x, 1, 1000)
+@timeit searchsortedfirst3(re, sx, 1, 1000)
+
+using ProfileView
+searchsortedfirst3(re, sx, 1, 1000); Profile.clear(); @profile for i in 1:1e4 foo + foo end; ProfileView.view()
+
+
