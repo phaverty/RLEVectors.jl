@@ -1,7 +1,15 @@
 module TestTypes
 
+if VERSION >= v"0.5.0-dev+7720"
+    using Base.Test
+else
+    using BaseTestNext
+    const Test = BaseTestNext
+end
+
 using RLEVectors
-using Base.Test
+
+@testset begin
 
 # Initialization
 expected_run_values = [1,2,3]
@@ -66,4 +74,6 @@ x = RLEVector([1,1,2,2,3,3,3])
 d = Dict("bob" => x)
 typeof(d["bob"]) == typeof(x)
 
-end
+end # testset
+
+end # module

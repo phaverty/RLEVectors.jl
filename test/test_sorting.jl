@@ -1,7 +1,15 @@
 module TestSorting
 
+if VERSION >= v"0.5.0-dev+7720"
+    using Base.Test
+else
+    using BaseTestNext
+    const Test = BaseTestNext
+end
+
 using RLEVectors
-using Base.Test
+
+@testset begin
 
 # issorted
 @test issorted( RLEVector([3,4,2],[3,6,9])) == false
@@ -27,4 +35,6 @@ x = RLEVector([2,4,3,5],[4,7,9,10])
 y = RLEVector([4,5,3,2],[3,4,6,10])
 @test permute_runs(x, [2, 4, 3, 1]) == y
 
-end
+end # testset
+
+end # module

@@ -1,7 +1,15 @@
 module TestRuns
 
+if VERSION >= v"0.5.0-dev+7720"
+    using Base.Test
+else
+    using BaseTestNext
+    const Test = BaseTestNext
+end
+
 using RLEVectors
-using Base.Test
+
+@testset begin
 
 # numruns single
 @test numruns([1,2,2,3,3]) == 3
@@ -36,4 +44,6 @@ using Base.Test
 @test inverse_ree(Real[],Int64[]) == Real[]
 @test_throws ArgumentError inverse_ree([],[1])
 
-end
+end # testset
+
+end # module

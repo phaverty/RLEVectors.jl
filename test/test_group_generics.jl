@@ -1,7 +1,15 @@
 module TestGroupGenerics
 
+if VERSION >= v"0.5.0-dev+7720"
+    using Base.Test
+else
+    using BaseTestNext
+    const Test = BaseTestNext
+end
+
 using RLEVectors
-using Base.Test
+
+@testset begin
 
 # compare group
 vec = [1,1,2,2,4,4]
@@ -43,4 +51,6 @@ y = RLEVector([0,0,0,3,3,3,4,4])
 @test in(4, RLEVector( [ 1,2,2,3 ] )) == false
 @test setdiff( Set([1,2,3,4,5]), RLEVector([1,1,2,2,4,4,5,5]) ) == [3]
 
-end
+end # testset
+
+end # module

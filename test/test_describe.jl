@@ -1,7 +1,15 @@
 module TestDescribe
 
+if VERSION >= v"0.5.0-dev+7720"
+    using Base.Test
+else
+    using BaseTestNext
+    const Test = BaseTestNext
+end
+
 using RLEVectors
-using Base.Test
+
+@testset begin
 
 x = RLEVector([4,5,6],[3,6,9])
 
@@ -25,4 +33,6 @@ x = RLEVector([4,5,6],[3,6,9])
 # isequal
 @test isequal(x,x)
 
-end
+end # testset
+
+end # module

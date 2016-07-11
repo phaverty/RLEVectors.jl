@@ -1,7 +1,15 @@
 module TestRanges
 
+if VERSION >= v"0.5.0-dev+7720"
+    using Base.Test
+else
+    using BaseTestNext
+    const Test = BaseTestNext
+end
+
 using RLEVectors
-using Base.Test
+
+@testset begin
 
 # disjoin_length
 @test disjoin_length([],[]) == 0
@@ -20,5 +28,6 @@ using Base.Test
 
 # rangeMeans
 
+end # testset
 
-end
+end # module

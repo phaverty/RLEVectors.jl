@@ -1,7 +1,15 @@
 module TestCollections
 
+if VERSION >= v"0.5.0-dev+7720"
+    using Base.Test
+else
+    using BaseTestNext
+    const Test = BaseTestNext
+end
+
 using RLEVectors
-using Base.Test
+
+@testset begin
 
 x = RLEVector([4,5,6],[3,6,9])
 # setdiff, symdiff, union, endof, maxabs, minabs, any, all, in
@@ -120,4 +128,6 @@ x = RLEVector([9, 9, 12, 12, 13, 13, 9, 9, 14, 14])
 @test intersect(x, [9, 12], [12]) == RLEVector([12, 12])
 @test intersect(x, Set([12, 14])) == RLEVector([12, 12, 14, 14])
 
-end
+end # testset
+
+end # module

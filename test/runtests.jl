@@ -1,7 +1,11 @@
 using RLEVectors
-using Base.Test
-#using RunTests
-#exit(run_tests())
+
+if VERSION >= v"0.5.0-dev+7720"
+    using Base.Test
+else
+    using BaseTestNext
+    const Test = BaseTestNext
+    end
 
 test_files = [
               "test_indexing.jl",

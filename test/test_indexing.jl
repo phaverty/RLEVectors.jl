@@ -1,7 +1,15 @@
 module TestIndexing
 
+if VERSION >= v"0.5.0-dev+7720"
+    using Base.Test
+else
+    using BaseTestNext
+    const Test = BaseTestNext
+end
+
 using RLEVectors
-using Base.Test
+
+@testset begin
 
 # ind2run
 @test ind2run(RLEVector([3,3,4,4,5,5,6,6,7,7]),5) == 3
@@ -206,4 +214,6 @@ x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
 @test tail(x) == [2,2,3,3,4,4]
 @test tail(x,3) == [3,4,4]
 
-end
+end # testset
+
+end # module

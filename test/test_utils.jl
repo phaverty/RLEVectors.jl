@@ -1,7 +1,15 @@
 module TestUtils
 
+if VERSION >= v"0.5.0-dev+7720"
+    using Base.Test
+else
+    using BaseTestNext
+    const Test = BaseTestNext
+end
+
 using RLEVectors
-using Base.Test
+
+@testset begin
 
 # rep
 @test RLEVectors.rep([4,5,6], each=2) == [4,4,5,5,6,6]
@@ -22,4 +30,6 @@ using Base.Test
 @test searchsortedfirst( [0,5,10,15], [-3,2,3,7,22] ) == [1, 2, 2, 3, 5]
 @test searchsortedfirst( [0,5,10,15], [-3,2,-3,7,22] ) == [1, 2, 1, 3, 5]
 
-end
+end # testset
+
+end # module
