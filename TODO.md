@@ -7,7 +7,10 @@
    * [ ] RVL implements all RLEVector functions as map(x,rvl)
    * [ ] which functions apply to the list and which map over the elements?
    * [ ] RLEDF needs the same creation functions as DataFrame
-   
+
+## 0.5 changes
+ * [ ] Base.:(symbol) should now be Base.:symbol, requiring some changes in group_generics.jl
+
 ## Enhancements
  * [ ] Make Runs type, split from and use in RLEVector
  * [x] pretty `show` with elipsis if length > 6, show runs and also expanded vector, use utils.rep
