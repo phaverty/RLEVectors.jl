@@ -1,11 +1,11 @@
 using RLEVectors
 
-if VERSION >= v"0.5.0-dev+7720"
+if VERSION >= v"0.5.0"
     using Base.Test
 else
     using BaseTestNext
     const Test = BaseTestNext
-    end
+end
 
 test_files = [
               "test_indexing.jl",
@@ -18,11 +18,6 @@ test_files = [
               "test_group_generics.jl",
               "test_ranges.jl",
               "test_runs.jl"]
-
-# println("Linting ...")
-# using Lint
-# @test isempty(lintpkg( "MyPackage", returnMsgs=true))
-# println("Done.")
 
 println("Testing ...")
 for f in test_files
