@@ -20,7 +20,6 @@ docs_dir: 'build'
 
 pages:
   - Home: index.md
-  - Vignette: rlevectors_vignette.md
   - News:
     - Changelog: NEWS.md
     - TODO: TODO.md
