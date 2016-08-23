@@ -1,17 +1,27 @@
-site_name: RLEVectors.jl
+site_name:        RLEVectors.jl
+repo_url:         https://github.com/phaverty/RLEVectors.jl
+site_description: Run Length Encoded vectors for julia, inspired by BioConductor.
+site_author:      phavertyp
 
-site_description: A vector type representing runs of values
+theme: readthedocs
 
-site_dir: html
+extra_css:
+  - assets/Documenter.css
 
-repo_url: http://resscm.gene.com/bioinfo/projects/julia/trunk/RLEVectors/
+extra_javascript:
+  - https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+  - assets/mathjaxhelper.js
+
+markdown_extensions:
+  - extra
+  - tables
+  - fenced_code
+
+build: 'docs/build'
 
 pages:
-- [index.md, Introduction]
-- [rlevectors_vignette.md, Vignettes, Introduction]
-- [api.md, User guide, Function Descriptions]
-- [NEWS.md, About, Release notes]
-- [TODO.md, About, Project task list]
-- [LICENSE.md, About, License]
-
-markdown_extensions: [codehilite]
+  - Home: build/index.md
+  - Vignette: build/rlevectors_vignette.md
+  - TODO: build/TODO.md
+  - NEWS: build/NEWS.md
+  - API: build/api.md

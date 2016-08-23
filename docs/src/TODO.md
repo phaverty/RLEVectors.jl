@@ -12,6 +12,10 @@
  * [ ] Base.:(symbol) should now be Base.:symbol, requiring some changes in group_generics.jl
 
 ## Enhancements
+* [ ]
+for f in  [:sum, :prod, :mean, :var, :std]
+    @eval mapslices(f::typeof($f), A, dims) = $f(A, dims)
+end
  * [ ] Make Runs type, split from and use in RLEVector
  * [x] pretty `show` with elipsis if length > 6, show runs and also expanded vector, use utils.rep
  * [x] Add benchmark/ with R and .jl scripts comparing timings on some common things. Have one read a CSV from the other and plot.
