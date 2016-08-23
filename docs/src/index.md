@@ -35,8 +35,9 @@ this plays out.
 ```@example
 using RLEVectors
 x = RLEVector([1,1,2,2,3,3,4,4,4])
-x = RLEVector([4,5,6],[3,6,9])
 collect(x)
+y = RLEVector([4,5,6],[3,6,9])
+collect(y)
 ```
 
 ### Describing
@@ -75,10 +76,10 @@ implementation. Similarly, `last` is a simple lookup in RLEVectors.jl where `wid
 version. Other functions listed here of the same computational order, but not necessarily direct
 translations. RLEVectors.jl is written in my interpretation of idiomatic julia.
 
-![Benchmarking results](html/benchmark_rle_vectors.png)
+![Benchmarking results](benchmark_rle_vectors.png)
 
 ### Optimization progress
-![Optimization progress](html/benchmark_rle_vectors.timeline.png)
+![Optimization progress](benchmark_rle_vectors.timeline.png)
 
 ## Memory considerations
 Data compression is a secondary benefit of `RLEVector`s, but it can be convenient. Generally run ends are stored as Int64. However, if further memory savings are desired, consider smaller and unsigned types. UInt32 is sufficient to hold the length of the human genome and UInt16 can hold the length of the longest human chromosome.
