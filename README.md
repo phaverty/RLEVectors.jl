@@ -16,6 +16,9 @@ various mathematical operations on these values.
 [![RLEVectors](http://pkg.julialang.org/badges/RLEVectors_0.4.svg)](http://pkg.julialang.org/?pkg=RLEVectors&ver=0.4)
 [![RLEVectors](http://pkg.julialang.org/badges/RLEVectors_0.5.svg)](http://pkg.julialang.org/?pkg=RLEVectors&ver=0.5)
 
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://phaverty.github.io/RLEVectors.jl/stable)
+[![](https://img.shields.io/badge/docs-latest-blue.svg)](https://phaverty.github.io/RLEVectors.jl/latest)
+
 ## Background
 Bioconductor has some widely used and extremely convenient types for
 working with collections of ranges, which sometimes are with
@@ -24,8 +27,6 @@ end pairs in [1,Inf). `GRanges` uses `IRanges` to represent locations
 on a genome and adds annotation of the chromosome and strand for each
 range. Children of `GRanges` add other annotations the the ranges. `Rle`
 represents the range [1:n] broken into arbitrary chunks or segments.
-
-
 
 ## Implementation Details
 `RLEVectors` differs from R's `Rle` in that we store the run values

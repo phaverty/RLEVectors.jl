@@ -1,21 +1,17 @@
 # TODO list
 
 ## New types
-   * [ ] Vector{RLEVector} called RLEVectorList (RVL) with group_generics that loop over elements and match elements when
-   given two RLEs
-   * [ ] RLEDataFrame based on RLEVectorList
-   * [ ] RVL implements all RLEVector functions as map(x,rvl)
-   * [ ] which functions apply to the list and which map over the elements?
-   * [ ] RLEDF needs the same creation functions as DataFrame
+ * [ ] Vector{RLEVector} called RLEVectorList (RVL) with group_generics that loop over elements and match elements when given two RLEs
+ * [ ] RLEDataFrame based on RLEVectorList
+ * [ ] RVL implements all RLEVector functions as map(x,rvl)
+ * [ ] which functions apply to the list and which map over the elements?
+ * [ ] RLEDF needs the same creation functions as DataFrame
 
 ## 0.5 changes
  * [ ] Base.:(symbol) should now be Base.:symbol, requiring some changes in group_generics.jl
 
 ## Enhancements
-* [ ]
-for f in  [:sum, :prod, :mean, :var, :std]
-    @eval mapslices(f::typeof($f), A, dims) = $f(A, dims)
-end
+ * [ ] for f in  [:sum, :prod, :mean, :var, :std] @eval mapslices(f::typeof($f), A, dims) = $f(A, dims) end
  * [ ] Make Runs type, split from and use in RLEVector
  * [x] pretty `show` with elipsis if length > 6, show runs and also expanded vector, use utils.rep
  * [x] Add benchmark/ with R and .jl scripts comparing timings on some common things. Have one read a CSV from the other and plot.
@@ -34,17 +30,13 @@ end
  * [x] function documentation section: creating
  * [x] function documentation section: range functions
  * [ ] get ree and vcat out of splice
- * [ ] iterator called 'ranges' that gives (first,last) indices for
- runs. Will require a new type with the 3 iterator methods, say RLERangesIterator.
+ * [ ] iterator called 'ranges' that gives (first,last) indices for runs. Will require a new type with the 3 iterator methods, say RLERangesIterator.
  * [x] Make sure my hash and == are what AutoHashEquals would say
  * [ ] linalg operations
  * [ ] make 'each' a Task?
  * [ ] make disjoin Task for two RLEs?
  * [ ] faster group_generic operations based on disjoin
- * [ ] Some way to disjoin two RLEs such that the runends are made
- identical, with some repeated runvalues (necessarily). Should it be
- OK have an RLE be less than fully compressed? Would 'ree' then
- re-compress it?
+ * [ ] Some way to disjoin two RLEs such that the runends are made identical, with some repeated runvalues (necessarily). Should it be OK have an RLE be less than fully compressed? Would 'ree' then re-compress it?
  * [x] test for ind2run(rle::RLEVector, i::AbstractArray)
  * [ ] new testing framework with nice reports
     
@@ -75,9 +67,7 @@ end
  * [ ] implement Selection algorithm for median: https://en.wikipedia.org/wiki/Selection_algorithm
  * [ ] while true break for ree and numruns?
  * [x] rle + rle spends all its time doing ind2run 
- * [x] Do disjoin from 1 towards n so that we can use resize! to
- shrink and account for shorter length due to ties rather than using
- disjoin_length.
+ * [x] Do disjoin from 1 towards n so that we can use resize! to shrink and account for shorter length due to ties rather than using disjoin_length.
  * [x] More tests for similar using 2 or 3 args
  * [x] Add badges to README
  * [x] Codecov.io
@@ -91,17 +81,13 @@ end
  * [x] something is wrong with the iterator, which breaks sum and mean
  * [x] something in splice and insert
  * [x] ree(runvalues,runends) needs to avoid modifying input
- * [x] do I need a print_matrix method to make auto-printing work?
-   print and show work fine.
+ * [x] do I need a print_matrix method to make auto-printing work? print and show work fine.
  * [x] Do I need Base.linearindexing{T<:MyArray}(::Type{T}) = LinearFast() 
- * [x] median with an Int RLE is type unstable, div by 2 gives float
-   otherwise Int
- * [x] setindex!(rle, 801:900, 1:100) does setindex!(rle::RLEVector,
-   value, indices::UnitRange) rather than looking for a two vector method
+ * [x] median with an Int RLE is type unstable, div by 2 gives float otherwise Int
+ * [x] setindex!(rle, 801:900, 1:100) does setindex!(rle::RLEVector, value, indices::UnitRange) rather than looking for a two vector method
  * [ ] It seems that one cannot make a vector of RLEVectors
  * [x] intersect should maintain multiplicity of 1st arg
- * [x] new disjoin-based group ops does not work for .< and friends as
-   it does scalar ops inside a loop
+ * [x] new disjoin-based group ops does not work for .< and friends as it does scalar ops inside a loop
  * [ ] findin and findmax seem to have type stability problems
  * [x] rfirst(x,i) also has type stability issues
 
@@ -142,7 +128,7 @@ end
    API for free?  Can I then use it in other places that take a
    vector? Like a DataFrame column?
 
-* [x] How do I represent the runs? length, end, start/end?
+ * [x] How do I represent the runs? length, end, start/end?
 
     end allows for direct binarysearch for indexing and makes size a simple lookup
     Gives 5X speedup for size, 40X for indexing on RLEVector(int([1:1:1e3]),int([1:1:1e3]))
@@ -154,17 +140,17 @@ end
       @time for i in 1:1e3 foo[100] end
       2000X speedup for foo + 4
 
-* [x] Is there a strictly increasing and positive int vector type I can leverage or make for the runs?
+ * [x] Is there a strictly increasing and positive int vector type I can leverage or make for the runs?
        Maybe something that could be linked to the values?  OrderedSet, IntSet?
        For disjoin operations, it will be useful to know the unique runends in two+ sets of runs
        Would be nice to have disjoin for RLEVector and RunEnds and IRanges and GRanges types
 
-* [x] What do I call the getters and setters? I want to use same getters for RLEs and GRanges and such.
+ * [x] What do I call the getters and setters? I want to use same getters for RLEs and GRanges and such.
     begin, end and start are taken. first, step, and last make sense because of what they mean for ranges, but they would mean something else for a Vector
     Maybe confusion between Ranges and Vector API means that I should just make my own and use rangestart, rangewidth, rangeend or rfirst, rwidth and rlast. With the latter, the 'r' could be range or run.
 	Maybe starts, widths, ends?
 
-* [x] Is it a good idea to require two arg vectors to be the same length like this: function bob{T1,T1,N}(x::Vector{T1,N},y::Vector{T2,N})  ?  Or just test the lengths and throw an ArgumentError?
+ * [x] Is it a good idea to require two arg vectors to be the same length like this: function bob{T1,T1,N}(x::Vector{T1,N},y::Vector{T2,N})  ?  Or just test the lengths and throw an ArgumentError?
 
 
  * [x] Is 1 an appropriate start for an empty RLEVector? Does that imply that there is a value associated? Go to zero-based, half open (#can-of-worms)?. NO.

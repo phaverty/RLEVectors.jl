@@ -1,5 +1,4 @@
 # RLEVectors
-
 `RLEVectors` is an alternate implementation of the Rle type from
 Bioconductor's IRanges package by H. Pages, P. Aboyoun and
 M. Lawrence. RLEVectors represent a vector with repeated values as the
@@ -9,12 +8,6 @@ the human genome can often be represented in a few thousand runs. It
 is useful to know the bounds of genome regions covered by these runs,
 the values associated with these runs, and to be able to perform
 various mathematical operations on these values.
-
-[![Build Status](https://travis-ci.org/phaverty/RLEVectors.jl.svg?branch=master)](https://travis-ci.org/phaverty/RLEVectors.jl)
-[![Coverage Status](https://codecov.io/github/phaverty/RLEVectors.jl/coverage.svg?branch=master)](https://codecov.io/github/phaverty/RLEVectors.jl?branch=master)
-
-[![RLEVectors](http://pkg.julialang.org/badges/RLEVectors_0.4.svg)](http://pkg.julialang.org/?pkg=RLEVectors&ver=0.4)
-[![RLEVectors](http://pkg.julialang.org/badges/RLEVectors_0.5.svg)](http://pkg.julialang.org/?pkg=RLEVectors&ver=0.5)
 
 ## Background
 Bioconductor has some widely used and extremely convenient types for

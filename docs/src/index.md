@@ -3,13 +3,13 @@
 ```@contents
 ```
 
+## Index
+
+```@index
+```
+
 ## Functions
 
 ```@docs
 disjoin
-```
-
-## Index
-
-```@index
 ```
