@@ -1,5 +1,7 @@
-# Like R's rep, repeat
-#  No length_out arg at this time
+"""
+Construct a vector of repeated values, just like R's `rep` function.
+We do not have a length_out argument at this time.
+"""
 function rep(x::Union{Any,Vector}; each::Union{Int,Vector{Int}} = ones(Int,length(x)), times::Int = 1)
   if !isa(x,Vector)
     x = [ x ]

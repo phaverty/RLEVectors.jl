@@ -3,7 +3,7 @@ An RLEDataFrame extends DataFrame and contains a colection of like-length and li
     RLEVectors. In a way, this creates a type like an RLE matrix. But, we deliberately
     avoid the complexity of matrix operations, such as factorization. It is expected
     that most operations will be column-wise. Based on RleDataFrame from Bioconductor's
-    `genoset` package, also by Peter Haverty.
+    `genoset` package (also by Peter Haverty).
 
 ### Constructors
 
