@@ -19,7 +19,7 @@ be compressed out. RLEVectors can be expanded to a full vector like a
 ### Examples
  * `x = RLEVector([1,1,2,2,3,3,4,4,4])`
  * `x = RLEVector([4,5,6],[3,6,9])`
- * `collect(x)`
+
 """
 ## Types and constructors
 

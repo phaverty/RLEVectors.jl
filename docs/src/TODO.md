@@ -39,7 +39,8 @@
 - [ ] Some way to disjoin two RLEs such that the runends are made identical, with some repeated runvalues (necessarily). Should it be OK have an RLE be less than fully compressed? Would 'ree' then re-compress it?
 - [x] test for ind2run(rle::RLEVector, i::AbstractArray)
 - [ ] new testing framework with nice reports
-    
+- [x] Setup Documenter.jl - based docs pushed to github by travis
+
 ## Optimizations
 - [ ] Re-read julia/base/range.jl, some day understand the meaning of "# to make StepRange constructor inlineable, so optimizer can see `step` value"
 - [x] getindex and setindex! optimizations for sorted i, especially for i::UnitRange
