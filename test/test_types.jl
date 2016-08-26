@@ -1,10 +1,10 @@
 module TestTypes
 
-if VERSION >= v"0.5.0-dev+7720"
-    using Base.Test
-else
+if VERSION >= v"0.5.0"
     using BaseTestNext
     const Test = BaseTestNext
+else
+    using Base.Test
 end
 
 using RLEVectors

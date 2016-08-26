@@ -58,10 +58,7 @@ end
 typealias FloatRle RLEVector{Float64,UInt32}
 typealias IntegerRle RLEVector{Int64,UInt32}
 typealias BoolRle RLEVector{Bool,UInt32}
-@compat typealias StringRle RLEVector{UTF8String,UInt32}
-
-### Some kind of magic that makes REPL printing work
-Base.writemime(io::IO, ::MIME"text/plain", a::RLEVector) = show(io, a) # REPL pretty printing, inspired by how NamedArrays does this
+typealias StringRle RLEVector{String,UInt32}
 
 # similar
 function similar(x::RLEVector, element_type::Type, dims::Dims)
@@ -98,10 +95,6 @@ promote_rule(::Type{Set}, ::Type{RLEVector}) = Set
 # the basics
 function collect(x::RLEVector)
   inverse_ree(x.runvalues,x.runends)
-end
-
-function ==(x::RLEVector, y::RLEVector)
-  x.runends == y.runends && x.runvalues == y.runvalues
 end
 
 function isequal(x::RLEVector, y::RLEVector)

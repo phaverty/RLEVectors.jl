@@ -4,15 +4,15 @@
 # Arith
 # "+", "-", "*", "^", "%%", "%/%", "/"
 #const arith_group = [:(+), :(-), :(*), :(/), :(^), :(.+), :(.-), :(.*), :(./), :(.^), :(div), :(mod), :(fld), :(rem)]
-const arith_group = [:(+), :(-), :(.+), :(.-), :(.*), :(./), :(.^), :(div), :(mod), :(fld), :(rem)] # Just scalar arith for vectors
+const arith_group = [:+, :-, :.+, :.-, :.*, :./, :.^, :div, :mod, :fld, :rem] # Just scalar arith for vectors
 
 # Compare
 # "=="), ">"), "<"), "!="), "<="), ">="
-const compare_group = [:(.==), :(.>), :(.<), :(.!=), :(.<=), :(.>=)]
+const compare_group = [:.==, :.>, :.<, :.!=, :.<=, :.>=]
 
 # Logic
 # "&"), "|".
-const logic_group = [:(&), :(|)]
+const logic_group = [:&, :|]
 
 # Ops
 # "Arith", "Compare", "Logic"
