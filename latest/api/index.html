@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Peter Haverty">
+  
+  <title>API - RLEVectors.jl</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  <link href="../assets/Documenter.css" rel="stylesheet">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "API";
+    var mkdocs_page_input_path = "api.md";
+    var mkdocs_page_url = "/api/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script src="../assets/mathjaxhelper.js"></script>
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> RLEVectors.jl</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>News</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../NEWS/">Changelog</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../TODO/">TODO</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">API</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#the-rlevectors-types-and-methods">The RLEVectors Types and Methods</a></li>
+                
+                    <li><a class="toctree-l4" href="#index">Index</a></li>
+                
+                    <li><a class="toctree-l4" href="#types">Types</a></li>
+                
+                    <li><a class="toctree-l4" href="#working-with-runs-and-run-boundaries">Working with runs and run boundaries</a></li>
+                
+                    <li><a class="toctree-l4" href="#standard-vector-api-methods">Standard Vector API methods</a></li>
+                
+                    <li><a class="toctree-l4" href="#utility-functions">Utility Functions</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">RLEVectors.jl</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>API</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/phaverty/RLEVectors.jl" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><a id='The-RLEVectors-Types-and-Methods-1'></a></p>
+<h1 id="the-rlevectors-types-and-methods">The RLEVectors Types and Methods</h1>
+<p><a id='Index-1'></a></p>
+<h2 id="index">Index</h2>
+<ul>
+<li><a href="./#RLEVectors.RLEDataFrame"><code>RLEVectors.RLEDataFrame</code></a></li>
+<li><a href="./#RLEVectors.RLEVector"><code>RLEVectors.RLEVector</code></a></li>
+<li><a href="./#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1}}"><code>Base.Sort.searchsortedfirst</code></a></li>
+<li><a href="./#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1},Int64,Int64}"><code>Base.Sort.searchsortedfirst</code></a></li>
+<li><a href="./#RLEVectors.disjoin"><code>RLEVectors.disjoin</code></a></li>
+<li><a href="./#RLEVectors.rep"><code>RLEVectors.rep</code></a></li>
+</ul>
+<p><a id='Types-1'></a></p>
+<h2 id="types">Types</h2>
+<p><a id='RLEVectors.RLEVector' href='#RLEVectors.RLEVector'>#</a>
+<strong><code>RLEVectors.RLEVector</code></strong> &mdash; <em>Type</em>.</p>
+<p><strong>RLEVectors</strong></p>
+<p><code>RLEVectors</code> is an alternate implementation of the Rle type from Bioconductor's IRanges package by H. Pages, P. Aboyoun and M. Lawrence. RLEVectors represent a vector with repeated values as the ordered set of values and repeat extents. In the field of genomics, data of various types measured across the ~3 billion letters in the human genome can often be represented in a few thousand runs. It is useful to know the bounds of genome regions covered by these runs, the values associated with these runs, and to be able to perform various mathematical operations on these values.</p>
+<p><code>RLEVectors</code> can be created from a single vector or a vector of values and a vector of run ends. In either case runs of values or zero length runs will be compressed out. RLEVectors can be expanded to a full vector like a <code>Range</code> with <code>collect</code>.</p>
+<p><strong>Examples</strong></p>
+<ul>
+<li><code>x = RLEVector([1,1,2,2,3,3,4,4,4])</code></li>
+<li><code>x = RLEVector([4,5,6],[3,6,9])</code></li>
+</ul>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/97cfebf974c67d356f470ba97d99b8cf32eab8fb/src/RLEVector-type.jl#L3-L23' class='documenter-source'>source</a><br></p>
+<p><a id='RLEVectors.RLEDataFrame' href='#RLEVectors.RLEDataFrame'>#</a>
+<strong><code>RLEVectors.RLEDataFrame</code></strong> &mdash; <em>Type</em>.</p>
+<p>An RLEDataFrame extends DataFrame and contains a colection of like-length and like-type     RLEVectors. In a way, this creates a type like an RLE matrix. But, we deliberately     avoid the complexity of matrix operations, such as factorization. It is expected     that most operations will be column-wise. Based on RleDataFrame from Bioconductor's     <code>genoset</code> package (also by Peter Haverty).</p>
+<p><strong>Constructors</strong></p>
+<pre><code class="julia">DataFrame(columns::Vector{RLEVector},  names::Vector{Symbol})
+DataFrame(kwargs...)
+</code></pre>
+
+<p><strong>Examples</strong></p>
+<pre><code class="julia">RLEDataFrame( [RLEVector([1, 1, 2]),  RLEVector([2, 2, 2])], [:a, :b] )
+</code></pre>
+
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/97cfebf974c67d356f470ba97d99b8cf32eab8fb/src/RLEDataFrame-type.jl#L1-L20' class='documenter-source'>source</a><br></p>
+<p><a id='Working-with-runs-and-run-boundaries-1'></a></p>
+<h2 id="working-with-runs-and-run-boundaries">Working with runs and run boundaries</h2>
+<p><a id='RLEVectors.disjoin' href='#RLEVectors.disjoin'>#</a>
+<strong><code>RLEVectors.disjoin</code></strong> &mdash; <em>Function</em>.</p>
+<p>Takes runends from two RLEVectors, make one new runends breaking the pair into non-overlapping runs. Basically, this is an optimized <code>sort!(unique([x,y])))</code>. This is useful when comparing two RLEVector objects. The values corresponding to each disjoint run in <code>x</code> and <code>y</code> can then be compared directly.</p>
+<p><strong>Returns</strong></p>
+<p>An integer vector, of a type that is the promotion of the eltypes of the runends of x and y.</p>
+<pre><code>## Examples
+x = RLEVector([1,1,2,2,3,3])
+y = RLEVector([1,1,1,2,3,4])
+for (i,j) in disjoin(x,y)
+    println(x[i] + y[j])
+end
+</code></pre>
+
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/97cfebf974c67d356f470ba97d99b8cf32eab8fb/src/ranges.jl#L22-L36' class='documenter-source'>source</a><br></p>
+<p><a id='Standard-Vector-API-methods-1'></a></p>
+<h2 id="standard-vector-api-methods">Standard Vector API methods</h2>
+<p><a id='Utility-Functions-1'></a></p>
+<h2 id="utility-functions">Utility Functions</h2>
+<p><a id='RLEVectors.rep' href='#RLEVectors.rep'>#</a>
+<strong><code>RLEVectors.rep</code></strong> &mdash; <em>Function</em>.</p>
+<p>Construct a vector of repeated values, just like R's <code>rep</code> function. We do not have a length_out argument at this time.</p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/97cfebf974c67d356f470ba97d99b8cf32eab8fb/src/utils.jl#L1-L4' class='documenter-source'>source</a><br></p>
+<p><a id='Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1}}' href='#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1}}'>#</a>
+<strong><code>Base.Sort.searchsortedfirst</code></strong> &mdash; <em>Method</em>.</p>
+<p>The method for two vectors is like R's findinterval.</p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/97cfebf974c67d356f470ba97d99b8cf32eab8fb/src/utils.jl#L44-L46' class='documenter-source'>source</a><br></p>
+<p><a id='Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1},Int64,Int64}' href='#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1},Int64,Int64}'>#</a>
+<strong><code>Base.Sort.searchsortedfirst</code></strong> &mdash; <em>Method</em>.</p>
+<p>The four argument version substitutes customized ordering for a hard-coded '&lt;'.</p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/97cfebf974c67d356f470ba97d99b8cf32eab8fb/src/utils.jl#L27-L29' class='documenter-source'>source</a><br></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../TODO/" class="btn btn-neutral" title="TODO"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/phaverty/RLEVectors.jl" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../TODO/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+
+</body>
+</html>
