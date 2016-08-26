@@ -40,6 +40,8 @@
 - [x] test for ind2run(rle::RLEVector, i::AbstractArray)
 - [ ] new testing framework with nice reports
 - [x] Setup Documenter.jl - based docs pushed to github by travis
+- [ ] add stable docs badge after next version bump
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://phaverty.github.io/RLEVectors.jl/stable)
 
 ## Optimizations
 - [ ] Re-read julia/base/range.jl, some day understand the meaning of "# to make StepRange constructor inlineable, so optimizer can see `step` value"
