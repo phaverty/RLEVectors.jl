@@ -8,7 +8,8 @@
 -  [ ] RLEDF needs the same creation functions as DataFrame
 
 ## 0.5 changes
-- [ ] Base.:(symbol) should now be Base.:symbol, requiring some changes in group_generics.jl
+- [x] Base.:(symbol) should now be Base.:symbol, requiring some changes in group_generics.jl
+- [x] BaseTestNext
 
 ## Enhancements
 - [ ] for f in  [:sum, :prod, :mean, :var, :std] @eval mapslices(f::typeof($f), A, dims) = $f(A, dims) end
@@ -38,7 +39,7 @@
 - [ ] faster group_generic operations based on disjoin
 - [ ] Some way to disjoin two RLEs such that the runends are made identical, with some repeated runvalues (necessarily). Should it be OK have an RLE be less than fully compressed? Would 'ree' then re-compress it?
 - [x] test for ind2run(rle::RLEVector, i::AbstractArray)
-- [ ] new testing framework with nice reports
+- [x] new testing framework with nice reports
 - [x] Setup Documenter.jl - based docs pushed to github by travis
 - [ ] add stable docs badge after next version bump
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://phaverty.github.io/RLEVectors.jl/stable)
