@@ -1,6 +1,6 @@
 """
 Construct a vector of repeated values, just like R's `rep` function.
-We do not have a length_out argument at this time.
+We do not have a `length_out` argument at this time.
 
 # Examples
 
