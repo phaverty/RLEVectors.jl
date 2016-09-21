@@ -4,7 +4,7 @@ l = 1:1e4
 
 timings = data.frame(
     language = "R",
-    language_version = "3.2.0",
+    language_version = "3.3.1",
     date = as.character(Sys.Date()), 
     indexing = system.time( for(i in l) { foo[800] } )["elapsed"],
     range_indexing = system.time( for(i in l) { foo[801:900] } )["elapsed"],
@@ -33,6 +33,6 @@ for (x in setdiff(colnames(timings), colnames(foo))) {
 foo = foo[, colnames(timings)]
 
 timings = rbind(foo, timings)
-write.csv(timings, "/Users/phaverty/julia/RLEVectors/benchmark/rle.timings.csv",
+write.csv(timings, "/Users/phaverty/.julia/v0.5/RLEVectors/benchmark/rle.timings.csv",
           row.names=FALSE,append=TRUE, na="NaN")
 print(timings)

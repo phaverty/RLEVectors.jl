@@ -71,6 +71,7 @@ function similar(x::RLEVector, element_type::Type, dims::Dims)
 end
 
 # show
+Base.show(io::IO, ::MIME"text/plain",  a::RLEVector) = show(io, a)
 function show(io::IO, x::RLEVector)
     t = typeof(x)::DataType
     show(io, t)
