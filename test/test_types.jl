@@ -1,12 +1,6 @@
 module TestTypes
 
-if VERSION >= v"0.5.0"
-    using BaseTestNext
-    const Test = BaseTestNext
-else
-    using Base.Test
-end
-
+using Base.Test
 using RLEVectors
 
 @testset begin

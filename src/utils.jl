@@ -1,6 +1,33 @@
 """
 Construct a vector of repeated values, just like R's `rep` function.
 We do not have a length_out argument at this time.
+
+# Examples
+
+```jldoctest
+julia> rep(["Go", "Fight", "Win"], times=2)
+6-element Array{String,1}:
+ "Go"   
+ "Fight"
+ "Win"  
+ "Go"   
+ "Fight"
+ "Win"  
+```
+
+```jldoctest
+julia> rep(["A", "B", "C"], each=3)
+9-element Array{String,1}:
+ "A"
+ "A"
+ "A"
+ "B"
+ "B"
+ "B"
+ "C"
+ "C"
+ "C"
+```
 """
 function rep(x::Union{Any,Vector}; each::Union{Int,Vector{Int}} = ones(Int,length(x)), times::Int = 1)
   if !isa(x,Vector)
