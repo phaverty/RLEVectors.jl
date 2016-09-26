@@ -35,3 +35,6 @@ exit()
 using RLEVectors
 RLEVectors.RLEDataFrame( [:a, :b, :c], RLEVector([1,1,2,2]), RLEVector([4,4,4,4]), RLEVector([9,8,7,4]) )
 exit()
+using RLEVectors
+RLEVectors.RLEDataFrame( [:a, :b, :c], RLEVector([1,1,2,2]), RLEVector([4,4,4,4]), RLEVector([9,8,7,4]) )
+ exit()

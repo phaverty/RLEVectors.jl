@@ -66,7 +66,6 @@ export RLEDataFrame
 include("utils.jl")
 include("runs.jl")
 include("RLEVector-type.jl")
-include("RLEVectorList-type.jl")
 include("RLEDataFrame-type.jl")
 include("ranges.jl")
 include("describe.jl")
