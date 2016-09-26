@@ -91,7 +91,10 @@ x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 @test splice!(x,3) == 2
 @test x == RLEVector([1,1,2,3,3,4,4,5,5])
-
+x = RLEVector([1,1,2,2,3,3,4,4,5,5])
+@test_throws BoundsError splice!(x, 100, [5])
+@test_throws BoundsError splice!(x, 0:100, [5])
+    
 # splice! replacing
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 @test splice!(x,1,[9]) == 1
@@ -125,7 +128,11 @@ x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 @test splice!(x,10:9,[9,11]) == similar(x,0)
 @test x == RLEVector([1,1,2,2,3,3,4,4,5,9,11,5])
-
+xd = [1,1,2,2,3,3,4,4,5,5]
+xr = RLEVector(xd)
+@test splice!(xr,9:10,[9,11]) == splice!(xd,9:10,[9,11])
+@test xr == RLEVector([1,1,2,2,3,3,4,4,9,11])
+    
 # resize!
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 @test resize!(x,5) == RLEVector([1,1,2,2,3])

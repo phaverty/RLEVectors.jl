@@ -98,3 +98,8 @@ RLEVector(Int64[])
 x
 RLEVector(Int64[])
 exit()
+length( 10:9 )
+xd
+length(x)
+Pkg.test("RLEVectors")
+exit()
