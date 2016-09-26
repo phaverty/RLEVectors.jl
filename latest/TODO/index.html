@@ -170,10 +170,12 @@
 <ul>
 <li>[x] Base.:(symbol) should now be Base.:symbol, requiring some changes in group_generics.jl</li>
 <li>[x] BaseTestNext</li>
+<li>[x] different show for MIME type for printing in REPL</li>
 </ul>
 <p><a id='Enhancements-1'></a></p>
 <h2 id="enhancements">Enhancements</h2>
 <ul>
+<li>[ ] Figure out how Documenter and doctests work together</li>
 <li>[ ] for f in  [:sum, :prod, :mean, :var, :std] @eval mapslices(f::typeof(:f), A, dims) = :f(A, dims) end</li>
 <li>[ ] Make Runs type, split from and use in RLEVector</li>
 <li>[x] pretty <code>show</code> with elipsis if length &gt; 6, show runs and also expanded vector, use utils.rep</li>

@@ -170,7 +170,7 @@
 <li><code>x = RLEVector([1,1,2,2,3,3,4,4,4])</code></li>
 <li><code>x = RLEVector([4,5,6],[3,6,9])</code></li>
 </ul>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/97f1269eb94adb7adc76d924a1db88f432d163cb/src/RLEVector-type.jl#L3-L23' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/4983c79e5228d4f6bb2e788ed287c0715a3fa0e4/src/RLEVector-type.jl#L3-L23' class='documenter-source'>source</a><br></p>
 <p><a id='RLEVectors.RLEDataFrame' href='#RLEVectors.RLEDataFrame'>#</a>
 <strong><code>RLEVectors.RLEDataFrame</code></strong> &mdash; <em>Type</em>.</p>
 <p>An RLEDataFrame extends DataFrame and contains a colection of like-length and like-type     RLEVectors. In a way, this creates a type like an RLE matrix. But, we deliberately     avoid the complexity of matrix operations, such as factorization. It is expected     that most operations will be column-wise. Based on RleDataFrame from Bioconductor's     <code>genoset</code> package (also by Peter Haverty).</p>
@@ -183,7 +183,7 @@ DataFrame(kwargs...)
 <pre><code class="julia">RLEDataFrame( [RLEVector([1, 1, 2]),  RLEVector([2, 2, 2])], [:a, :b] )
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/97f1269eb94adb7adc76d924a1db88f432d163cb/src/RLEDataFrame-type.jl#L1-L20' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/4983c79e5228d4f6bb2e788ed287c0715a3fa0e4/src/RLEDataFrame-type.jl#L1-L20' class='documenter-source'>source</a><br></p>
 <p><a id='Working-with-runs-and-run-boundaries-1'></a></p>
 <h2 id="working-with-runs-and-run-boundaries">Working with runs and run boundaries</h2>
 <p><a id='RLEVectors.disjoin' href='#RLEVectors.disjoin'>#</a>
@@ -199,7 +199,7 @@ for (i,j) in disjoin(x,y)
 end
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/97f1269eb94adb7adc76d924a1db88f432d163cb/src/ranges.jl#L22-L36' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/4983c79e5228d4f6bb2e788ed287c0715a3fa0e4/src/ranges.jl#L22-L36' class='documenter-source'>source</a><br></p>
 <p><a id='Standard-Vector-API-methods-1'></a></p>
 <h2 id="standard-vector-api-methods">Standard Vector API methods</h2>
 <p><a id='Utility-Functions-1'></a></p>
@@ -208,7 +208,9 @@ end
 <strong><code>RLEVectors.rep</code></strong> &mdash; <em>Function</em>.</p>
 <p>Construct a vector of repeated values, just like R's <code>rep</code> function. We do not have a <code>length_out</code> argument at this time.</p>
 <p><strong>Examples</strong></p>
-<pre><code class="jlcon">julia&gt; rep([&quot;Go&quot;, &quot;Fight&quot;, &quot;Win&quot;], times=2)
+<pre><code class="julia">rep([&quot;Go&quot;, &quot;Fight&quot;, &quot;Win&quot;], times=2)
+
+# output
 6-element Array{String,1}:
  &quot;Go&quot;   
  &quot;Fight&quot;
@@ -218,7 +220,9 @@ end
  &quot;Win&quot;  
 </code></pre>
 
-<pre><code class="jlcon">julia&gt; rep([&quot;A&quot;, &quot;B&quot;, &quot;C&quot;], each=3)
+<pre><code class="julia">rep([&quot;A&quot;, &quot;B&quot;, &quot;C&quot;], each=3)
+
+# output
 9-element Array{String,1}:
  &quot;A&quot;
  &quot;A&quot;
@@ -231,15 +235,15 @@ end
  &quot;C&quot;
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/97f1269eb94adb7adc76d924a1db88f432d163cb/src/utils.jl#L1-L31' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/4983c79e5228d4f6bb2e788ed287c0715a3fa0e4/src/utils.jl#L1-L35' class='documenter-source'>source</a><br></p>
 <p><a id='Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1}}' href='#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1}}'>#</a>
 <strong><code>Base.Sort.searchsortedfirst</code></strong> &mdash; <em>Method</em>.</p>
 <p>The method for two vectors is like R's findinterval.</p>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/97f1269eb94adb7adc76d924a1db88f432d163cb/src/utils.jl#L71-L73' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/4983c79e5228d4f6bb2e788ed287c0715a3fa0e4/src/utils.jl#L75-L77' class='documenter-source'>source</a><br></p>
 <p><a id='Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1},Int64,Int64}' href='#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1},Int64,Int64}'>#</a>
 <strong><code>Base.Sort.searchsortedfirst</code></strong> &mdash; <em>Method</em>.</p>
 <p>The four argument version substitutes customized ordering for a hard-coded '&lt;'.</p>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/97f1269eb94adb7adc76d924a1db88f432d163cb/src/utils.jl#L54-L56' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/4983c79e5228d4f6bb2e788ed287c0715a3fa0e4/src/utils.jl#L58-L60' class='documenter-source'>source</a><br></p>
               
             </div>
           </div>
