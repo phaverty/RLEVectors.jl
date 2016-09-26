@@ -31,6 +31,10 @@ rle = RLEVector( [4, 4, 9, 9, 16, 16] )
 # math on bools
 vec = [1,1,2,2,4,4]
 x = RLEVector(vec)
+@test x .+ true == x .+ 1
+@test x .+ false == x
+vec = [1,1,2,2,4,4]
+x = RLEVector(vec)
 @test x + true == x + 1
 @test x + false == x
     
