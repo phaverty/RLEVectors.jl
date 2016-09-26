@@ -27,6 +27,12 @@ x = RLEVector(vec)
 @test x - x == RLEVector( [0, 0, 0, 0, 0, 0] )
 rle = RLEVector( [4, 4, 9, 9, 16, 16] )    
 @test sqrt(rle) == RLEVector( [2, 2, 3, 3, 4, 4] )
+
+# math on bools
+vec = [1,1,2,2,4,4]
+x = RLEVector(vec)
+@test x + true == x + 1
+@test x + false == x
     
 # findmax, findmin
 @test findmin(RLEVector([1,2,3,4,1,1])) == findmin([1,2,3,4,1,1])

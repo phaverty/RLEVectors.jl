@@ -12,6 +12,7 @@ using RLEVectors
 @test disjoin_length([1,2,3],[4,5,6]) == 6
 @test disjoin_length([1,2,3],[3,5,6]) == 5
 @test disjoin_length([1,3],[2,5,6]) == 5
+@test disjoin_length(RLEVector([1,2], [1,3]), RLEVector([3,2,1], [2,5,6])) == 5
 
 # disjoin
 @test disjoin( [1,3,8,10],[3,4,9,10] ) == [1,3,4,8,9,10]
