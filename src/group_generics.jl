@@ -44,10 +44,8 @@ for op in ops_group
             RLEVector(runvalues, runends)
         end
         # Rle, Number
-        ($op){T<:Integer}(x::RLEVector{Bool,T},y::Bool) = RLEVector( ($op)(x.runvalues,y), x.runends ) # Ambig fix
         ($op)(x::RLEVector,y::Number) = RLEVector( ($op)(x.runvalues,y), x.runends )
         # Number, Rle
-        ($op){T<:Integer}(y::Bool, x::RLEVector{Bool,T}) = RLEVector( ($op)(y,x.runvalues), x.runends ) # Ambig fix
         ($op)(y::Number, x::RLEVector) = RLEVector( ($op)(y,x.runvalues), x.runends )
     end
 end
