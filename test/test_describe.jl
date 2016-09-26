@@ -16,6 +16,7 @@ x = RLEVector([4,5,6],[3,6,9])
 # size
 @test size(x) == (9,)
 @test size(x,1) == 9
+@test size(x,2) == (9, 1)
 
 # isempty
 @test isempty(x) == false
