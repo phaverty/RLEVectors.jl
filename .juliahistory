@@ -18,3 +18,9 @@ using RLEVectors
 isa( Vector{UnitRange},  ranges )
 UnitRange
 exit()
+x ^ 2
+x .^ 2
+RLEVector( [2, 3, 4, 4, 8, 8] )
+RLEVector( [0, 0, 0, 0, 0, 0] )
+x - x
+exit()

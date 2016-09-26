@@ -47,7 +47,8 @@ for op in ops_group
         function ($op)(x::RLEVector, y::RLEVector)
             (runends, runvalues_x, runvalues_y) = disjoin(x, y)
             runvalues = $(op)(runvalues_x, runvalues_y)
-            RLEVector{eltype(runvalues), eltype(runends)}(runvalues, runends)
+            #RLEVector{eltype(runvalues), eltype(runends)}(runvalues, runends)  # Nope, what if op makes adjacent values equal?
+            RLEVector(runvalues, runends)
         end
         # Rle, Number
         ($op){T<:Integer}(x::RLEVector{Bool,T},y::Bool) = RLEVector( ($op)(x.runvalues,y), x.runends ) # Ambig fix

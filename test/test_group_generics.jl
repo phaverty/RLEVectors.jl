@@ -21,7 +21,13 @@ x = RLEVector(vec)
 @test median(RLEVector([2, 2, 2, 3, 3, 3])) == 2.5 # median is average of end of run and next value
 @test sum(RLEVector([4, 4, 5, 5, 6, 6])) == 30
 @test mean(RLEVector([4, 4, 5, 5, 6, 6])) == 5.0
-
+@test x .^ 2 == RLEVector( [1, 1, 4, 4, 16, 16] )
+@test x .^ 3 == RLEVector( [1, 1, 8, 8, 64, 64] )    
+@test x + x == RLEVector( [2, 2, 4, 4, 8, 8] )
+@test x - x == RLEVector( [0, 0, 0, 0, 0, 0] )
+rle = RLEVector( [4, 4, 9, 9, 16, 16] )    
+@test sqrt(rle) == RLEVector( [2, 2, 3, 3, 4, 4] )
+    
 # findmax, findmin
 @test findmin(RLEVector([1,2,3,4,1,1])) == findmin([1,2,3,4,1,1])
 @test findmax(RLEVector([1,2,3,4,1,1])) == findmax([1,2,3,4,1,1])
