@@ -47,7 +47,7 @@ function shove!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
   end
   return(x)
 end
-unshift!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = shove(x,item) # Does unshift come from perl? Isn't Larry Wall a linguist? C'mon!
+unshift!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = shove!(x,item) # Does unshift come from perl? Isn't Larry Wall a linguist? C'mon!
 
 function insert!{T,T2 <: Integer}(x::RLEVector{T,T2},i::Integer,item)
   if i == length(x) + 1
