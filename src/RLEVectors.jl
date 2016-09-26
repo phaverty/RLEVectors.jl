@@ -9,7 +9,7 @@ using Reexport
 
 
 # RLEVector type
-export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar
+export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar
 import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect, isequal
 
 # collections

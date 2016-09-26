@@ -70,7 +70,8 @@ d = Dict("bob" => x)
 typeof(d["bob"]) == typeof(x)
 
 # RLEDataFrame
-x = RLEDataFrame( [:a, :b, :c], RLEVector([1,1,2,2]), RLEVector([4,4,4,4]), RLEVector([9,8,7,4]) )
+    #x = RLEDataFrame( [:a, :b, :c], RLEVector([1,1,2,2]), RLEVector([4,4,4,4]), RLEVector([9,8,7,4]) )
+    #x = RLEDataFrame( a=RLEVector([1,1,2,2]), b=RLEVector([4,4,4,4]), c=RLEVector([9,8,7,4]) )
     
 end # testset
 

@@ -21,7 +21,7 @@ RLEDataFrame( [RLEVector([1, 1, 2]),  RLEVector([2, 2, 2])], [:a, :b] )
 type RLEDataFrame{T1, T2} <: AbstractDataFrame
     columns::RLEVectorList{T1, T2}
     colindex::Index
-    function RLEDataFrame(names, rvl)
+    function RLEDataFrame(rvl, names)
         lens = map(length, rvl)
         (min, max) = extrema(lens)
         if min != max # Redundant with DataFrame
@@ -31,10 +31,16 @@ type RLEDataFrame{T1, T2} <: AbstractDataFrame
     end
 end
 
-function RLEDataFrame{T1, T2}(names::Vector{Symbol}, rles::RLEVector{T1, T2}...)
-    println("Hey it is a ", typeof(rles))
-    rvl = RLEVectorList(rles)
-    RLEDataFrame{T1, T2}(names, rvl)
+function RLEDataFrame{T1, T2}( a )
+    rles = RLEVectorList{T1,T2}()
+    names = Symbol[]
+#    for (k, v) in pairs
+#        push!(names, k)
+#        push!(rles, v)
+    #    end
+    push!(names, :a)
+    push!(rels, a)
+    RLEDataFrame{T1, T2}(rles, names)
 end
 
 function rowSums(df::RLEDataFrame)

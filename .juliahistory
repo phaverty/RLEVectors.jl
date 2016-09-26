@@ -38,3 +38,56 @@ exit()
 using RLEVectors
 RLEVectors.RLEDataFrame( [:a, :b, :c], RLEVector([1,1,2,2]), RLEVector([4,4,4,4]), RLEVector([9,8,7,4]) )
  exit()
+using RLEVectors
+exit()
+using RLEVectors
+x = RLEVector([1, 1, 2, 2])
+y = RLEVector([1, 1, 2, 4])
+(x, y)
+convert((x, y), Vector)
+convert(Vector, (x, y))
+Vector{RLEVector}( (x, y) )
+Vector{RLEVector}( (x, y)... )
+rles = (x, y)
+Vector{RLEVector}( rles... )
+Vector( rles... )
+exit()
+using RLEVectors
+x = RLEVector([1, 1, 2, 2])
+y = RLEVector([1, 1, 2, 4])
+RLEDataFrame( [:a, :b], x, y)
+rles = [x, y]
+RLEVectorList( rles... )
+typealias RLEVectorList{T1,T2} Vector{ RLEVector{T1,T2} }
+RLEVectorList( rles... )
+RLEVectorList( x, y)
+RLEVectorList[ x, y]
+x
+y
+x = RLEVectorList()
+Symbol[]
+?push!
+exit()
+using RLEVectors
+exit()
+using RLEVectors
+RLEDataFrame( a=RLEVector([1, 1, 2]), b=RLEVector([2, 2, 2]) )
+rles = RLEVectorList{Int64,Int64}()
+pairs = (a=RLEVector([1, 1, 2]), b=RLEVector([2, 2, 2]))
+pairs = Dict(a=RLEVector([1, 1, 2]), b=RLEVector([2, 2, 2]))
+pairs = Dict(a=>RLEVector([1, 1, 2]), b=>RLEVector([2, 2, 2]))
+push!(names, :a)
+push!(rles, RLEVector([1, 1, 2]))
+exit()
+using RLEVectors
+x = RLEVector([1, 1, 2, 2])
+y = RLEVector([1, 1, 2, 4])
+RLEDataFrame(a=x, b=y)
+exit()
+using RLEVectors
+x = RLEVector([1, 1, 2, 2])
+y = RLEVector([1, 1, 2, 4])
+RLEDataFrame(a=x, b=y)
+RLEDataFrame(:a=x, :b=y)
+RLEDataFrame(a=x, b=y)
+exit()
