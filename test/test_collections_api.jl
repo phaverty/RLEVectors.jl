@@ -15,12 +15,19 @@ push!(x,9)
 x = RLEVector(Int64[], Int64[])
 push!(x, 12)
 @test x == RLEVector([12])
-
+x = RLEVector([2, 2, 4, 4, 5])
+push!(x, 5)
+@test x == RLEVector([2, 2, 4, 4, 5, 5])
+    
 # pop!
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 @test pop!(x) == 5
 @test x == RLEVector([1,1,2,2,3,3,4,4,5])
-
+x = RLEVector([7])
+@test pop!(x) == 7
+@test x.runends == Int64[]
+@test x.runvalues == Int64[]
+    
 # shove!
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 shove!(x,4)
@@ -33,7 +40,11 @@ unshift!(x,4)
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 @test shift!(x) == 1
 @test x == RLEVector([1,2,2,3,3,4,4,5,5])
-
+x = RLEVector([7])
+@test shift!(x) == 7
+@test x.runends == Int64[]
+@test x.runvalues == Int64[]
+    
 # vcat
 @test RLEVector([1,1,2,2,3,3,4,4]) == vcat( RLEVector([1,1,2,2]), RLEVector([3,3,4,4]) )
 @test RLEVector([1,1,2,2,2,2,4,4]) == vcat( RLEVector([1,1,2,2]), RLEVector([2,2,4,4]) )
@@ -46,7 +57,13 @@ x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 @test insert!(x,3,9) == RLEVector([9,1,9,1,2,2,3,3,4,4,5,5])
 @test insert!(x,1,7) == RLEVector([7,9,1,9,1,2,2,3,3,4,4,5,5])
 @test insert!(x,length(x) + 1,100) == RLEVector([7,9,1,9,1,2,2,3,3,4,4,5,5,100])
-
+x = RLEVector([2, 2, 4, 4, 5])
+insert!(x, 3, 4)
+@test x == RLEVector([2, 2, 4, 4, 4, 5])
+x = RLEVector([2, 2, 4, 4, 5])
+insert!(x, 4, 4)
+@test x == RLEVector([2, 2, 4, 4, 4, 5])
+    
 # deleterun!
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 @test deleterun!(x,1) == RLEVector([2,2,3,3,4,4,5,5])

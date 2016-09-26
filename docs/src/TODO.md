@@ -91,11 +91,12 @@
 - [x] Do I need Base.linearindexing{T<:MyArray}(::Type{T}) = LinearFast() 
 - [x] median with an Int RLE is type unstable, div by 2 gives float otherwise Int
 - [x] setindex!(rle, 801:900, 1:100) does setindex!(rle::RLEVector, value, indices::UnitRange) rather than looking for a two vector method
-- [ ] It seems that one cannot make a vector of RLEVectors
+- [x] It seems that one cannot make a vector of RLEVectors
 - [x] intersect should maintain multiplicity of 1st arg
 - [x] new disjoin-based group ops does not work for .< and friends as it does scalar ops inside a loop
 - [ ] findin and findmax seem to have type stability problems
 - [x] rfirst(x,i) also has type stability issues
+- [ ] Should RLEVector() have a runvalue of [0] or []?  It is the former at the moment.
 
 ## Initial features for V0.1.0
 - [x] Examples in toplevel README

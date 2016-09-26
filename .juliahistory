@@ -91,3 +91,10 @@ RLEDataFrame(a=x, b=y)
 RLEDataFrame(:a=x, :b=y)
 RLEDataFrame(a=x, b=y)
 exit()
+x
+pop!(x)
+RLEVector{Int64, Int64}()
+RLEVector(Int64[])
+x
+RLEVector(Int64[])
+exit()
