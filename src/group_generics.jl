@@ -34,12 +34,6 @@ const summary_group =[:maximum, :minimum, :range, :prod, :sum, :any, :all, :elty
 # "Arg", "Conj", "Im", "Mod", "Re"
 # leaving out for now
 
-### Operators, methods that take two arguments and return a modified RLEVector
-function ^(x::RLEVector,y::Integer) # Necessary to prevent an ambiguity warning
-  rv = ^(x.runvalues,y)
-  RLEVector(rv,x.runends)
-end
-
 .^(x::Base.Irrational{:e}, y::RLEVectors.RLEVector) = .^(x,y) # Ambig fix
 for op in ops_group
     @eval begin

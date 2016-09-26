@@ -1,0 +1,9 @@
+x ^ 2
+x
+x ^ 2
+x.runvalues ^ 2
+x.runvalues .^ 2
+exit()
+x ^ 2
+x ^ 2
+exit()
