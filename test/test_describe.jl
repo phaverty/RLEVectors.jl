@@ -27,6 +27,9 @@ x = RLEVector([4,5,6],[3,6,9])
 # isequal
 @test isequal(x,x)
 
+# ndims
+@test ndims(x) == 1
+    
 end # testset
 
 end # module

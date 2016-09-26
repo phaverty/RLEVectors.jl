@@ -25,6 +25,9 @@ x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 shove!(x,4)
 @test x == RLEVector([4,1,1,2,2,3,3,4,4,5,5])
+x = RLEVector([1,1,2,2,3,3,4,4,5,5])
+unshift!(x,4)
+@test x == RLEVector([4,1,1,2,2,3,3,4,4,5,5])
 
 # shift!
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])

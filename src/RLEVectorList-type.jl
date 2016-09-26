@@ -5,8 +5,7 @@
 type RLEVectorList{T1,T2 <: Integer} <: AbstractArray{T1, 1}
     els::Vector{ RLEVector{T1,T2} }
     function RLEVectorList(rles...)
-        rvl = ""
-        return(rvl)
+        new(rles)
     end
 end
     

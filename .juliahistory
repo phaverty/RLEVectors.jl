@@ -24,3 +24,14 @@ RLEVector( [2, 3, 4, 4, 8, 8] )
 RLEVector( [0, 0, 0, 0, 0, 0] )
 x - x
 exit()
+x = RLEDataFrame( [:a, :b, :c], RLEVector([1,1,2,2]), RLEVector([4,4,4,4]), RLEVector([9,8,7,4]) )
+RLEVectors.RLEDataFrame( [:a, :b, :c], RLEVector([1,1,2,2]), RLEVector([4,4,4,4]), RLEVector([9,8,7,4]) )
+RLEVectors.RLEDataFrame( [:a, :b, :c], RLEVector([1,1,2,2]), RLEVector([4,4,4,4]), RLEVector([9,8,7,4]) )
+RLEVectors.RLEDataFrame( [:a, :b, :c], RLEVector([1,1,2,2]), RLEVector([4,4,4,4]), RLEVector([9,8,7,4]) )
+using RLEVectors
+RLEVectors.RLEDataFrame( [:a, :b, :c], RLEVector([1,1,2,2]), RLEVector([4,4,4,4]), RLEVector([9,8,7,4]) )
+RLEVectors.RLEDataFrame( [:a, :b, :c], RLEVector([1,1,2,2]), RLEVector([4,4,4,4]), RLEVector([9,8,7,4]) )
+exit()
+using RLEVectors
+RLEVectors.RLEDataFrame( [:a, :b, :c], RLEVector([1,1,2,2]), RLEVector([4,4,4,4]), RLEVector([9,8,7,4]) )
+exit()
