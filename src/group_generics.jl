@@ -34,7 +34,6 @@ const summary_group =[:maximum, :minimum, :range, :prod, :sum, :any, :all, :elty
 # "Arg", "Conj", "Im", "Mod", "Re"
 # leaving out for now
 
-.^(x::Base.Irrational{:e}, y::RLEVectors.RLEVector) = .^(x,y) # Ambig fix
 for op in ops_group
     @eval begin
         # Rle, Rle
