@@ -48,4 +48,4 @@ rowMeans(df::RLEDataFrame) = rowSum(df) ./ ncol(df)
 colSums(df::RLEDataFrame) = map(sum, df)
 colMeans(df::RLEDataFrame) = colSums(df) ./ nrow(df)
 
-typealias RLEVectorList{T1,T2} = Vector{ RLEVector{T1,T2} }
+
