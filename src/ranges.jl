@@ -118,7 +118,7 @@ function disjoin(x::RLEVector, y::RLEVector)
 end
 
 # optimization opportunities: hoist rle element lookups and use the searchsortedfirst with all the args
-function rangeMeans(ranges::Vector{UnitRange}, rle::RLEVector)
+function rangeMeans{T <: Integer}(ranges::Vector{UnitRange{T}}, rle::RLEVector)
     res = similar(ranges, Float64)
     first_run = 1
     last_run = nrun(rle)

@@ -4,8 +4,10 @@ We do not have a `length_out` argument at this time.
 
 # Examples
 
-```jldoctest
-julia> rep(["Go", "Fight", "Win"], times=2)
+```julia
+rep(["Go", "Fight", "Win"], times=2)
+
+# output
 6-element Array{String,1}:
  "Go"   
  "Fight"
@@ -15,8 +17,10 @@ julia> rep(["Go", "Fight", "Win"], times=2)
  "Win"  
 ```
 
-```jldoctest
-julia> rep(["A", "B", "C"], each=3)
+```julia
+rep(["A", "B", "C"], each=3)
+
+# output
 9-element Array{String,1}:
  "A"
  "A"

@@ -1,3 +1,20 @@
 foo
 foo
 exit()
+1:2:20
+collect(1:2:20)
+collect(2:2:20)
+[ mean(x[ r ]) for r in ranges ]
+[ mean(x[ r ]) for r in ranges ]
+length(x)
+length(y)
+[ mean(x[ r ]) for r in ranges ]
+typeof(ranges)
+isa( ranges, Vector{UnitRange} )
+isa( Vector{UnitRange},  ranges )
+import RLEVectors::rangeMeans
+exit()
+using RLEVectors
+isa( Vector{UnitRange},  ranges )
+UnitRange
+exit()
