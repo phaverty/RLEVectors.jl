@@ -24,14 +24,29 @@ Several aliases are defined for specific types of RLEVector (or collections ther
     StringRle             RLEVector{String,UInt32}
     RLEVectorList{T1,T2}  Vector{ RLEVector{T1,T2} }
     
-## Examples
+## Constructors
 `RLEVector`s can be created by specifying a vector to compress or the runvalues and run ends.
-* `x = RLEVector([1,1,2,2,3,3,4,4,4])`
-* `x = RLEVector([4,5,6],[3,6,9])`
+
+    x = RLEVector([1,1,2,2,3,3,4,4,4])
+    x = RLEVector([4,5,6],[3,6,9])
+
+## Describing `RLEVector` objects
+`RLEVector`s implement the usual descriptive functions for an array as well as some that are
+specific to the type.
+    
+* `length(x)` The full length of the vector, uncompressed
+* `size(x)` Same as `length`, as for any other vector
+* `size(x,dim)` Returns `(length(x),1) for dim == 1`
+* `rfirst(x)` The index of the beginning of each run
+* `rwidth(x)` The width of each run
+* `rlast(x)` The index of the end of each run
+* `rvalue(x)` The data value for each run
+* `isempty(x)` Returns boolean, as for any other vector
+* `nrun(x)` Returns the number of runs represented in the array
+* `eltype(x)` Returns the element type of the runs
+* `endtype(x)` Returns the element type of the run ends
 
 """
-## Types and constructors
-
 type RLEVector{T1,T2 <: Integer} <: AbstractArray{T1, 1}
   runvalues::Vector{T1}
   runends::Vector{T2}
