@@ -30,7 +30,12 @@ x = RLEVector([4,5,6],[3,6,9])
 
 # ndims
 @test ndims(x) == 1
-    
+
+# eltype, endtype
+@test endtype(x) == Int64
+@test eltype(x) == Int64
+
+
 end # testset
 
 end # module
