@@ -13,12 +13,21 @@ mathematical operations on these values.
 
 `RLEVectors` can be created from a single vector or a vector of values and a
 vector of run ends. In either case runs of values or zero length runs will
-be compressed out. RLEVectors can be expanded to a full vector like a
-`Range` with `collect`.
+be compressed out. RLEVectors can be expanded to a full vector with `collect`.
 
-### Examples
- * `x = RLEVector([1,1,2,2,3,3,4,4,4])`
- * `x = RLEVector([4,5,6],[3,6,9])`
+## Aliases
+Several aliases are defined for specific types of RLEVector (or collections thereof).
+    
+    FloatRle              RLEVector{Float64,UInt32}
+    IntegerRle            RLEVector{Int64,UInt32}
+    BoolRle               RLEVector{Bool,UInt32}
+    StringRle             RLEVector{String,UInt32}
+    RLEVectorList{T1,T2}  Vector{ RLEVector{T1,T2} }
+    
+## Examples
+`RLEVector`s can be created by specifying a vector to compress or the runvalues and run ends.
+* `x = RLEVector([1,1,2,2,3,3,4,4,4])`
+* `x = RLEVector([4,5,6],[3,6,9])`
 
 """
 ## Types and constructors
@@ -100,9 +109,8 @@ function collect(x::RLEVector)
 end
 
 function isequal(x::RLEVector, y::RLEVector)
-  isequal(x.runends,y.runends) && isequal(x.runvalues, y.runvalues)
+isequal(x.runends,y.runends) && isequal(x.runvalues, y.runvalues)
 end
 
 Base.hash(a::RLEVector) = hash(a.runvalues, hash(a.runlengths, hash(:RLEVector)))
 ==(a::RLEVector, b::RLEVector) = isequal(a.runvalues, b.runvalues) && isequal(a.runends, b.runends) && true
-

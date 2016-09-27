@@ -325,3 +325,21 @@ using RLEVectors
 exit()
 using RLEVectors
 exit()
+using RLEVectors
+x = [2, 4]
+v = [1, 2, 3, 4, 5]
+searchsortedfirst(v, x)
+collect( 1:10 < 5 )
+1:10 < 5
+collect(1:10) < 5
+exit()
+using RLEVectors
+?searchsortedfirst
+exit()
+using RLEVectors
+?searchsortedfirst
+exit()
+using RLEVectors
+?searchsortedfirst
+?searchsortedfirst
+exit()
