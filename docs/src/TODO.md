@@ -128,6 +128,7 @@
 - [x] sorting including sort, issorted, reverse and sortperm
 
 ## Decisions
+- [ ] Should setindex and setrun recompress? More generally, are imperfectly compressed RLEVectors OK?
 - [x] Decide when getindex gives an Vector or an RLEVector, be consistent
 - [x] How do I set up the type hierarchy?
    a.  How do I share common code as high in the tree as possible? (wait for new features of abstract types in 0.4?)

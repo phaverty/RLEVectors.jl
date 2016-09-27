@@ -208,6 +208,22 @@ x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
 @test tail(x) == [2,2,3,3,4,4]
 @test tail(x,3) == [3,4,4]
 
+# setrun
+x = RLEVector([1, 1, 2, 2, 1, 1])
+setrun!(x, 12, 3)
+@test x == RLEVector([1, 1, 12, 12, 1, 1])
+
+# each iterator
+x = RLEVector([1, 1, 2, 2, 7, 12])
+a_list = []
+b_list = []
+for (a, b) in each(x)
+    push!(a_list, a)
+    push!(b_list, b)
+end
+@test a_list == Any[1, 2, 7, 12]
+@test b_list == Any[1:2, 3:4, 5:5, 6:6]
+
 end # testset
 
 end # module
