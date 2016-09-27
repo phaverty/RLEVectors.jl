@@ -177,13 +177,19 @@ collect(y)
 
 <p><a id='Describing-1'></a></p>
 <h3 id="describing">Describing</h3>
-<p>RLEVectors implement the standard Vector API and also other methods for describing the ranges and values:</p>
+<p><code>RLEVector</code>s implement the usual descriptive functions for an array as well as some that are specific to the type.</p>
 <ul>
-<li><code>length(x)</code> # The full length of the vector, uncompressed</li>
-<li><code>nrun(x)</code> # The number of runs in the vector</li>
-<li><code>rstart(x)</code> # The index of the beginning of each run</li>
-<li><code>rwidth(x)</code> # The width of each run</li>
-<li><code>rstart(x)</code> # The index of the end of each run</li>
+<li><code>length(x)</code> The full length of the vector, uncompressed</li>
+<li><code>size(x)</code> Same as <code>length</code>, as for any other vector</li>
+<li><code>size(x,dim)</code> Returns <code>(length(x),1) for dim == 1</code></li>
+<li><code>rfirst(x)</code> The index of the beginning of each run</li>
+<li><code>rwidth(x)</code> The width of each run</li>
+<li><code>rlast(x)</code> The index of the end of each run</li>
+<li><code>rvalue(x)</code> The data value for each run</li>
+<li><code>isempty(x)</code> Returns boolean, as for any other vector</li>
+<li><code>nrun(x)</code> Returns the number of runs represented in the array</li>
+<li><code>eltype(x)</code> Returns the element type of the runs</li>
+<li><code>endtype(x)</code> Returns the element type of the run ends</li>
 </ul>
 <p>Naming for some of these functions is difficult given that many useful names are already reserved words (<code>end</code>, <code>start</code>, <code>last</code>). Suggestions are welcome at this stage of development.</p>
 <p><a id='Standard-vector-operations-1'></a></p>
@@ -262,5 +268,5 @@ collect(y)
 
 <!--
 MkDocs version : 0.15.3
-Build Date UTC : 2016-09-27 17:00:30.386092
+Build Date UTC : 2016-09-27 22:43:33.124159
 -->
