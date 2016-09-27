@@ -208,11 +208,6 @@ x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
 @test tail(x) == [2,2,3,3,4,4]
 @test tail(x,3) == [3,4,4]
 
-# setrun
-x = RLEVector([1, 1, 2, 2, 1, 1])
-setrun!(x, 12, 3)
-@test x == RLEVector([1, 1, 12, 12, 1, 1])
-
 # each iterator
 x = RLEVector([1, 1, 2, 2, 7, 12])
 a_list = []

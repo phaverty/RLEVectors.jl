@@ -48,12 +48,6 @@ function ind2runcontext(rle::RLEVector, i::UnitRange)
   (left_run, right_run, ind_in_run, runend - e)
 end
 
-function setrun!(rle::RLEVector, value, i::Int)
-  run = ind2run(rle,i)
-  rle.runvalues[run] = value
-  return(rle)
-end
-
 ## Just enough for AbstractArray
 Base.linearindexing{T<:RLEVector}(::Type{T}) = Base.LinearFast()
 
