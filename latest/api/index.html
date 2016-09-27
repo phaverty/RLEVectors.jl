@@ -164,13 +164,23 @@
 <strong><code>RLEVectors.RLEVector</code></strong> &mdash; <em>Type</em>.</p>
 <p><strong>RLEVectors</strong></p>
 <p><code>RLEVectors</code> is an alternate implementation of the Rle type from Bioconductor's IRanges package by H. Pages, P. Aboyoun and M. Lawrence. RLEVectors represent a vector with repeated values as the ordered set of values and repeat extents. In the field of genomics, data of various types measured across the ~3 billion letters in the human genome can often be represented in a few thousand runs. It is useful to know the bounds of genome regions covered by these runs, the values associated with these runs, and to be able to perform various mathematical operations on these values.</p>
-<p><code>RLEVectors</code> can be created from a single vector or a vector of values and a vector of run ends. In either case runs of values or zero length runs will be compressed out. RLEVectors can be expanded to a full vector like a <code>Range</code> with <code>collect</code>.</p>
+<p><code>RLEVectors</code> can be created from a single vector or a vector of values and a vector of run ends. In either case runs of values or zero length runs will be compressed out. RLEVectors can be expanded to a full vector with <code>collect</code>.</p>
+<p><strong>Aliases</strong></p>
+<p>Several aliases are defined for specific types of RLEVector (or collections thereof).</p>
+<pre><code>FloatRle              RLEVector{Float64,UInt32}
+IntegerRle            RLEVector{Int64,UInt32}
+BoolRle               RLEVector{Bool,UInt32}
+StringRle             RLEVector{String,UInt32}
+RLEVectorList{T1,T2}  Vector{ RLEVector{T1,T2} }
+</code></pre>
+
 <p><strong>Examples</strong></p>
+<p><code>RLEVector</code>s can be created by specifying a vector to compress or the runvalues and run ends.</p>
 <ul>
 <li><code>x = RLEVector([1,1,2,2,3,3,4,4,4])</code></li>
 <li><code>x = RLEVector([4,5,6],[3,6,9])</code></li>
 </ul>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e8d9b93efa9c5db8206512fec1294d0f04512604/src/RLEVector-type.jl#L3-L23' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/514e4b9c210a9184b5e19dcf42f7bad6d99bab67/src/RLEVector-type.jl#L3-L32' class='documenter-source'>source</a><br></p>
 <p><a id='RLEVectors.RLEDataFrame' href='#RLEVectors.RLEDataFrame'>#</a>
 <strong><code>RLEVectors.RLEDataFrame</code></strong> &mdash; <em>Type</em>.</p>
 <p>An RLEDataFrame extends DataFrame and contains a colection of like-length and like-type     RLEVectors. In a way, this creates a type like an RLE matrix. But, we deliberately     avoid the complexity of matrix operations, such as factorization. It is expected     that most operations will be column-wise. Based on RleDataFrame from Bioconductor's     <code>genoset</code> package (also by Peter Haverty).</p>
@@ -183,7 +193,7 @@ DataFrame(kwargs...)
 <pre><code class="julia">RLEDataFrame( [RLEVector([1, 1, 2]),  RLEVector([2, 2, 2])], [:a, :b] )
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e8d9b93efa9c5db8206512fec1294d0f04512604/src/RLEDataFrame-type.jl#L1-L20' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/514e4b9c210a9184b5e19dcf42f7bad6d99bab67/src/RLEDataFrame-type.jl#L1-L20' class='documenter-source'>source</a><br></p>
 <p><a id='Working-with-runs-and-run-boundaries-1'></a></p>
 <h2 id="working-with-runs-and-run-boundaries">Working with runs and run boundaries</h2>
 <p><a id='RLEVectors.disjoin' href='#RLEVectors.disjoin'>#</a>
@@ -199,13 +209,16 @@ for (i,j) in disjoin(x,y)
 end
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e8d9b93efa9c5db8206512fec1294d0f04512604/src/ranges.jl#L22-L36' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/514e4b9c210a9184b5e19dcf42f7bad6d99bab67/src/ranges.jl#L22-L36' class='documenter-source'>source</a><br></p>
 <p><a id='Standard-Vector-API-methods-1'></a></p>
 <h2 id="standard-vector-api-methods">Standard Vector API methods</h2>
 <p><a id='Utility-Functions-1'></a></p>
 <h2 id="utility-functions">Utility Functions</h2>
 <p><a id='RLEVectors.rep' href='#RLEVectors.rep'>#</a>
 <strong><code>RLEVectors.rep</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>rep(x::Union{Any,Vector}; each::Union{Int,Vector{Int}} = ones(Int,length(x)), times::Int = 1)
+</code></pre>
+
 <p>Construct a vector of repeated values, just like R's <code>rep</code> function. We do not have a <code>length_out</code> argument at this time.</p>
 <p><strong>Examples</strong></p>
 <pre><code class="julia">rep([&quot;Go&quot;, &quot;Fight&quot;, &quot;Win&quot;], times=2)
@@ -235,15 +248,29 @@ end
  &quot;C&quot;
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e8d9b93efa9c5db8206512fec1294d0f04512604/src/utils.jl#L1-L35' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/514e4b9c210a9184b5e19dcf42f7bad6d99bab67/src/utils.jl#L1-L37' class='documenter-source'>source</a><br></p>
 <p><a id='Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1}}' href='#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1}}'>#</a>
 <strong><code>Base.Sort.searchsortedfirst</code></strong> &mdash; <em>Method</em>.</p>
-<p>The method for two vectors is like R's findinterval.</p>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e8d9b93efa9c5db8206512fec1294d0f04512604/src/utils.jl#L75-L77' class='documenter-source'>source</a><br></p>
+<p>RLEVectors.jl define new methods for this binary search function. The method for two vectors is like R's findinterval. The index of the position of each <code>x</code> in <code>v</code> is     determined searching within the index bounds <code>lo</code> and <code>hi</code>, inclusive. For the returned     indices <code>i</code>, <code>v[i] &lt;= x[i] &lt; v[i+1]</code>.</p>
+<p>This operation is helpful for finding the RLE run corresponding to each of a set of indices or     general tasks such as binning values for empirical density functions.</p>
+<p><strong>Examples</strong></p>
+<pre><code class="julia">v = [2, 4, 6, 8, 10]
+x = [1, 3, 4, 8, 11]
+searchsortedfirst(v, x)
+5-element Array{Int64,1}:
+ 1
+ 2
+ 2
+ 4
+ 6
+
+</code></pre>
+
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/514e4b9c210a9184b5e19dcf42f7bad6d99bab67/src/utils.jl#L60-L82' class='documenter-source'>source</a><br></p>
 <p><a id='Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1},Int64,Int64}' href='#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1},Int64,Int64}'>#</a>
 <strong><code>Base.Sort.searchsortedfirst</code></strong> &mdash; <em>Method</em>.</p>
-<p>The four argument version substitutes customized ordering for a hard-coded '&lt;'.</p>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e8d9b93efa9c5db8206512fec1294d0f04512604/src/utils.jl#L58-L60' class='documenter-source'>source</a><br></p>
+<p>The four argument version substitutes customized ordering for a hard-coded '&lt;'.     This is a is a silly optimization that I hope to get rid of soon.</p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/514e4b9c210a9184b5e19dcf42f7bad6d99bab67/src/utils.jl#L111-L114' class='documenter-source'>source</a><br></p>
               
             </div>
           </div>
