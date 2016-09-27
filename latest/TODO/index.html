@@ -298,6 +298,7 @@
 <p><a id='Decisions-1'></a></p>
 <h2 id="decisions">Decisions</h2>
 <ul>
+<li>[ ] Should setindex and setrun recompress? More generally, are imperfectly compressed RLEVectors OK?</li>
 <li>[x] Decide when getindex gives an Vector or an RLEVector, be consistent</li>
 <li>[x] How do I set up the type hierarchy?  a.  How do I share common code as high in the tree as possible? (wait for new features of abstract types in 0.4?)  b.  Can I make it a subtype of Vector and get lots of the Vector  API for free?  Can I then use it in other places that take a  vector? Like a DataFrame column?</li>
 <li>
