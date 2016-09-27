@@ -1,5 +1,11 @@
 # Range operations
-# Take two runends vectors (strictly increasing uints) and find the number of unique values for the disjoin operation
+
+"""
+    disjoin_length(x, y)
+
+Take two runends vectors (strictly increasing integers) and find the number of unique values
+for the disjoin operation. This is essentially an optimized `length(unique( vcat(x, y) ))`.
+"""
 function disjoin_length(x::Vector, y::Vector)
     i = length(x)
     j = length(y)
@@ -20,6 +26,7 @@ end
 disjoin_length(x::RLEVector, y::RLEVector) = disjoin_length(x.runends, y.runends)
 
 """
+    disjoin(x, y)
 Takes runends from two RLEVectors, make one new runends breaking the pair into non-overlapping runs.
 Basically, this is an optimized `sort!(unique([x,y])))`. This is useful when comparing two RLEVector
 objects. The values corresponding to each disjoint run in `x` and `y` can then be compared directly.
@@ -27,12 +34,18 @@ objects. The values corresponding to each disjoint run in `x` and `y` can then b
 ## Returns
 An integer vector, of a type that is the promotion of the eltypes of the runends of x and y.
 
-    ## Examples
-    x = RLEVector([1,1,2,2,3,3])
-    y = RLEVector([1,1,1,2,3,4])
-    for (i,j) in disjoin(x,y)
-        println(x[i] + y[j])
-    end
+## Examples    
+```julia
+x = [2, 4, 6]
+y = [3, 4, 5, 6]
+disjoin(x,y)
+5-element Array{Int64,1}:
+ 2
+ 3
+ 4
+ 5
+ 6
+```
 """
 function disjoin(x::Vector,  y::Vector)
     length(x) == 0 && return(y) # At least one value to work on
@@ -68,6 +81,17 @@ function disjoin(x::Vector,  y::Vector)
     return(runends)
 end
 
+"""
+    disjoin(rle_x, rle_y)
+
+## Examples
+```julia
+x = RLEVector([1,1,2,2,3,3])
+y = RLEVector([1,1,1,2,3,4])
+disjoin(x,y)
+([2,3,4,5,6],[1,2,2,3,3],[1,1,2,3,4])
+```
+"""
 function disjoin(x::RLEVector, y::RLEVector)
     length(x) != length(y) && error("RLEVectors of unequal length.")
     runends = disjoin(x.runends, y.runends)
@@ -116,6 +140,13 @@ function disjoin(x::RLEVector, y::RLEVector)
 #    end
     return( (runends, runvalues_x, runvalues_y) )
 end
+
+"""
+    rangeMeans(ranges::Vector{UnitRange{T}}, rle::RLEVector)
+
+    Subset an RLEVector by one or more ranges, returning the average value within each range. Really, an
+    optimized `[ mean(x[ r ]) for r in ranges ]`.
+"""
 
 # optimization opportunities: hoist rle element lookups and use the searchsortedfirst with all the args
 function rangeMeans{T <: Integer}(ranges::Vector{UnitRange{T}}, rle::RLEVector)

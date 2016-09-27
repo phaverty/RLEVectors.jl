@@ -41,13 +41,20 @@ collect(y)
 ```
 
 ### Describing
-RLEVectors implement the standard Vector API and also other methods for describing the ranges and values:
-
-- `length(x)` # The full length of the vector, uncompressed
-- `nrun(x)` # The number of runs in the vector
-- `rstart(x)` # The index of the beginning of each run
-- `rwidth(x)` # The width of each run
-- `rstart(x)` # The index of the end of each run
+`RLEVector`s implement the usual descriptive functions for an array as well as some that are
+specific to the type.
+    
+* `length(x)` The full length of the vector, uncompressed
+* `size(x)` Same as `length`, as for any other vector
+* `size(x,dim)` Returns `(length(x),1) for dim == 1`
+* `rfirst(x)` The index of the beginning of each run
+* `rwidth(x)` The width of each run
+* `rlast(x)` The index of the end of each run
+* `rvalue(x)` The data value for each run
+* `isempty(x)` Returns boolean, as for any other vector
+* `nrun(x)` Returns the number of runs represented in the array
+* `eltype(x)` Returns the element type of the runs
+* `endtype(x)` Returns the element type of the run ends
 
 Naming for some of these functions is difficult given that many useful names are already reserved words (`end`, `start`, `last`). Suggestions are welcome at this stage of development.
 

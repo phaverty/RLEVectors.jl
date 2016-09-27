@@ -1,4 +1,10 @@
 ## Run operations
+
+"""
+    numruns(x)
+
+Count the number of runs of repeated values present in a vector.
+"""
 function numruns(re::AbstractVector)
   n = 1
   current = re[1]
@@ -11,7 +17,14 @@ function numruns(re::AbstractVector)
   return(n)
 end
 
-# Run End Encode: Like RLE, but return (runvalues,runends) rather than (runvalues,runlengths)
+
+"""
+    ree(x)
+
+Run End Encode a vector
+
+Like RLE, but returns (runvalues,runends) rather than (runvalues,runlengths)
+"""
 function ree{T}(x::AbstractVector{T})
   xlen = length(x)
   xlen < 2 && return( (x,[xlen]) )
@@ -33,7 +46,13 @@ function ree{T}(x::AbstractVector{T})
   return( (runvalues,runends) )
 end
 
-# Recompress runvalues and runends for an RLEVector
+"""
+    numruns(runvalues, runends)
+
+Given run values and run ends for a RLEVector, determine the number of runs that would
+    be present if it were re-compressed. RLEVectors.jl does this operation after modifying
+    an RLEVector, for example.
+"""
 function numruns(runvalues, runends)
   len = length(runends)
   length(runends) != len && throw(ArgumentError("runvalues and runends must be the same length."))
@@ -54,7 +73,13 @@ function numruns(runvalues, runends)
   return(n)
 end
 
-# Tidy up an existing (mostly) Run End Encoded vector pair, dropping zero length runs and fixing any runvalue runs
+"""
+    ree(runvalues, runends)
+        
+Tidy up an existing (mostly) Run End Encoded vector, dropping zero length runs and fixing
+        any adjacent identical values. `RLEVectors.jl` does this operation after modifying an
+     RLEVector, for example.
+"""
 function ree(runvalues, runends)
   ree(runvalues, runends, numruns(runvalues, runends))
 end
@@ -87,6 +112,15 @@ function ree(x)
   return( ([x],[1]) )
 end
 
+"""
+    inverse_ree(rle)
+
+Uncompress the runs and runends of an RLEVector.
+
+## Examples
+    collect(rle)
+    inverse_ree( runvalues(rle), runends(rle) )
+"""
 function inverse_ree(runvalues,runends)
   len = length(runvalues)
   len != length(runends) && throw(ArgumentError("runvalues and runends must be of the same length."))
