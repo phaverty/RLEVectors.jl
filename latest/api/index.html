@@ -170,7 +170,7 @@
 <li><code>x = RLEVector([1,1,2,2,3,3,4,4,4])</code></li>
 <li><code>x = RLEVector([4,5,6],[3,6,9])</code></li>
 </ul>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/493d60a654c54289357800b42374834d18c640b9/src/RLEVector-type.jl#L3-L23' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e8d9b93efa9c5db8206512fec1294d0f04512604/src/RLEVector-type.jl#L3-L23' class='documenter-source'>source</a><br></p>
 <p><a id='RLEVectors.RLEDataFrame' href='#RLEVectors.RLEDataFrame'>#</a>
 <strong><code>RLEVectors.RLEDataFrame</code></strong> &mdash; <em>Type</em>.</p>
 <p>An RLEDataFrame extends DataFrame and contains a colection of like-length and like-type     RLEVectors. In a way, this creates a type like an RLE matrix. But, we deliberately     avoid the complexity of matrix operations, such as factorization. It is expected     that most operations will be column-wise. Based on RleDataFrame from Bioconductor's     <code>genoset</code> package (also by Peter Haverty).</p>
@@ -183,7 +183,7 @@ DataFrame(kwargs...)
 <pre><code class="julia">RLEDataFrame( [RLEVector([1, 1, 2]),  RLEVector([2, 2, 2])], [:a, :b] )
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/493d60a654c54289357800b42374834d18c640b9/src/RLEDataFrame-type.jl#L1-L20' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e8d9b93efa9c5db8206512fec1294d0f04512604/src/RLEDataFrame-type.jl#L1-L20' class='documenter-source'>source</a><br></p>
 <p><a id='Working-with-runs-and-run-boundaries-1'></a></p>
 <h2 id="working-with-runs-and-run-boundaries">Working with runs and run boundaries</h2>
 <p><a id='RLEVectors.disjoin' href='#RLEVectors.disjoin'>#</a>
@@ -199,7 +199,7 @@ for (i,j) in disjoin(x,y)
 end
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/493d60a654c54289357800b42374834d18c640b9/src/ranges.jl#L22-L36' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e8d9b93efa9c5db8206512fec1294d0f04512604/src/ranges.jl#L22-L36' class='documenter-source'>source</a><br></p>
 <p><a id='Standard-Vector-API-methods-1'></a></p>
 <h2 id="standard-vector-api-methods">Standard Vector API methods</h2>
 <p><a id='Utility-Functions-1'></a></p>
@@ -235,15 +235,15 @@ end
  &quot;C&quot;
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/493d60a654c54289357800b42374834d18c640b9/src/utils.jl#L1-L35' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e8d9b93efa9c5db8206512fec1294d0f04512604/src/utils.jl#L1-L35' class='documenter-source'>source</a><br></p>
 <p><a id='Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1}}' href='#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1}}'>#</a>
 <strong><code>Base.Sort.searchsortedfirst</code></strong> &mdash; <em>Method</em>.</p>
 <p>The method for two vectors is like R's findinterval.</p>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/493d60a654c54289357800b42374834d18c640b9/src/utils.jl#L75-L77' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e8d9b93efa9c5db8206512fec1294d0f04512604/src/utils.jl#L75-L77' class='documenter-source'>source</a><br></p>
 <p><a id='Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1},Int64,Int64}' href='#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1},Int64,Int64}'>#</a>
 <strong><code>Base.Sort.searchsortedfirst</code></strong> &mdash; <em>Method</em>.</p>
 <p>The four argument version substitutes customized ordering for a hard-coded '&lt;'.</p>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/493d60a654c54289357800b42374834d18c640b9/src/utils.jl#L58-L60' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e8d9b93efa9c5db8206512fec1294d0f04512604/src/utils.jl#L58-L60' class='documenter-source'>source</a><br></p>
               
             </div>
           </div>
