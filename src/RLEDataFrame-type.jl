@@ -23,7 +23,7 @@ type RLEDataFrame{T1, T2} <: AbstractDataFrame
     colindex::Index
     function RLEDataFrame(rvl, names)
         lens = map(length, rvl)
-        (min, max) = extrema(lens)
+        (min, max) = Base.extrema(lens)
         if min != max # Redundant with DataFrame
             throw(ArgumentError("All incoming columns must be of equal length."))
         end
@@ -31,17 +31,25 @@ type RLEDataFrame{T1, T2} <: AbstractDataFrame
     end
 end
 
-function RLEDataFrame{T1, T2}( a )
-    rles = RLEVectorList{T1,T2}()
-    names = Symbol[]
-#    for (k, v) in pairs
-#        push!(names, k)
-#        push!(rles, v)
-    #    end
-    push!(names, :a)
-    push!(rels, a)
-    RLEDataFrame{T1, T2}(rles, names)
+function RLEDataFrame{T1, T2}(names, x::RLEVector{T1, T2}... )
+    rvl = RLEVectorList{T1,T2}()
+    for rle in x
+        push!(rvl, rle)
+    end
+    RLEDataFrame{T1, T2}(rvl, names)
 end
+
+Base.show(io::IO, ::MIME"text/plain",  a::RLEDataFrame) = show(io, a)
+function show(io::IO, x::RLEDataFrame)
+    show(io, names(x))
+end
+function show(x::RLEDataFrame)
+    println(names(x))
+end
+
+
+nrow(x::RLEDataFrame) = length(x.columns[1])
+index(x::RLEDataFrame) = x.colindex
 
 function rowSums(df::RLEDataFrame)
     sums = x[1]

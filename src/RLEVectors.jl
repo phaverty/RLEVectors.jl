@@ -60,7 +60,7 @@ export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 
 # data frames
 import DataFrames: AbstractDataFrame, DataFrame, Index, head, tail
-export RLEDataFrame
+export RLEDataFrame, nrow
 
 ### Includes
 include("utils.jl")
