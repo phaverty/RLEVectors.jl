@@ -84,6 +84,7 @@ typealias IntegerRle RLEVector{Int64,UInt32}
 typealias BoolRle RLEVector{Bool,UInt32}
 typealias StringRle RLEVector{String,UInt32}
 typealias RLEVectorList{T1,T2} Vector{ RLEVector{T1,T2} }
+@doc (@doc RLEVector) FloatRle,  IntegerRle, BoolRle, StringRle, RLEVectorList
 
 # similar
 function similar(x::RLEVector, element_type::Type, dims::Dims)
