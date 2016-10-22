@@ -244,3 +244,7 @@ function done(x::RLEEachIterator, state)
     state > nrun(x.rle)
 end
 
+function length(x::RLEEachIterator)
+    nrun(x.rle)
+end
+

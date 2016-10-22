@@ -1,3 +1,4 @@
+
 module TestIndexing
 
 using Base.Test
@@ -218,6 +219,7 @@ for (a, b) in each(x)
 end
 @test a_list == Any[1, 2, 7, 12]
 @test b_list == Any[1:2, 3:4, 5:5, 6:6]
+@test length(each(x)) == 4
 
 end # testset
 
