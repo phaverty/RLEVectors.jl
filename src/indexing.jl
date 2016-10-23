@@ -248,3 +248,30 @@ function length(x::RLEEachIterator)
     nrun(x.rle)
 end
 
+"""
+    tapply(data_vector, rle, function)
+    tapply(data_vector, factor_vector, function)
+
+Map a function to blocks of vector, like `tapply` in R. The first and second argument must be of the same
+    length. For the case of a standard vector as the second argument, this vector need not be sorted.
+
+## Examples
+    factor = repeat( ["a","b","c","d","e"], inner=20 )
+    rle = RLEVector( factor )
+    x = collect(1:100)
+    tapply( x, factor, mean )
+    tapply( x, rle, mean )
+"""
+function tapply(x::Vector, rle::RLEVector, fun::Function)
+    length(x) == length(rle) || throw(ArgumentError("Arguments 'x' and 'rle' must have the same length."))
+    [ fun(x[r]) for (v,r) in each(rle) ]
+end
+
+function tapply(x::Vector, factor::Vector, fun::Function)
+    length(x) == length(factor) || throw(ArgumentError("Arguments 'x' and 'factor' must have the same length."))
+    ind = sortperm(factor)
+    x = x[ind]
+    rle = RLEVector( factor[ind] )
+    [ fun(x[r]) for (v,r) in each(rle) ]
+end
+

@@ -32,7 +32,7 @@ this plays out.
 ### Creation
 `RLEVectors` can be created from a single vector or a vector of values and a vector of run ends. In either case runs of values or zero length runs will be compressed out. RLEVectors can be expanded to a full vector like a `Range` with `collect`.
 
-```@example
+```julia
 using RLEVectors
 x = RLEVector([1,1,2,2,3,3,4,4,4])
 collect(x)
@@ -72,6 +72,36 @@ Naming for some of these functions is difficult given that many useful names are
 - `x > 4.2`
 - `sort(x)`
 - `median(x)`
+
+## split and tapply -like operations
+An RLEVector can be used like R's factor type to apply a function over (contiguous) sections of another
+vector. For example, here we break a vector into 5 groups and take the average of each group. In the second
+example, we also scale each mean by the RLE run value corresponding to each group.
+
+```julia
+factor = repeat( ["a","b","c","d","e"], inner=20 )
+rle = RLEVector( factor )
+x = collect(1:100)
+group_means = Float64[ mean(x[r]) for (v,r) in each(rle) ]
+```
+
+This is much like the `tapply` operation in R. A convenience wrapper with this name is provided. The second,
+factor, argument can be an `RLEVector` or a `Vector` to be converted to an `RLEVector`. This vector need not be
+sorted.
+
+```julia
+tapply( x, factor, mean )
+tapply( x, rle, mean )
+```
+
+In addition to the `Range` for each RLE run, the `each` iterator provides the corresponding run value. These
+values can be used in calculations on each vector block.
+
+```julia
+x = collect(1:100)
+rle2 = RLEVector( repeat( [1,2,3,4,5], inner=20 ) )
+scaled_group_means = Float64[ v * mean(x[r]) for (v,r) in each(rle2) ]
+```
 
 ## Relative speed
 `RLEVectors` has been extensively profiled and somewhat optimized. Please see the benchmarking section for the evolution over time and comparisons to like operations in R.

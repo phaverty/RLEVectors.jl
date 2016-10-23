@@ -221,6 +221,14 @@ end
 @test b_list == Any[1:2, 3:4, 5:5, 6:6]
 @test length(each(x)) == 4
 
+# tapply
+factor = repeat( ["a","b","c","d","e"], inner=5 )
+rle = RLEVector( factor )
+x = collect(1:25)
+tapply_res = [ mean(x[1:5]), mean(x[6:10]), mean(x[11:15]), mean(x[16:20]), mean(x[21:25]) ]
+@test tapply_res == tapply( x, factor, mean )
+@test tapply_res == tapply( x, rle, mean )
+
 end # testset
 
 end # module
