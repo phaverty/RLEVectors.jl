@@ -32,6 +32,15 @@ disjoin
 disjoin_length
 ```
 
+## split and tapply -like operations
+An RLEVector can be used like R's factor type to apply a function over (contiguous) sections of another
+vector. For example, here we break a vector into 5 groups and take the average of each group. In the second
+example, we also scale each mean by the RLE run value corresponding to each group.
+
+```docs
+tapply
+```
+
 ## Summaries on RLEVectors
 Often we want to summarize sections of our RLEVectors. For example, if the RLEVector
 represent data along a genome, what are the average values associated with each of
