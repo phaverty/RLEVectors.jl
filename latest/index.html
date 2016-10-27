@@ -69,6 +69,8 @@
                 
                     <li><a class="toctree-l4" href="#implementation-details">Implementation Details</a></li>
                 
+                    <li><a class="toctree-l4" href="#split-and-tapply-like-operations">split and tapply -like operations</a></li>
+                
                     <li><a class="toctree-l4" href="#relative-speed">Relative speed</a></li>
                 
                     <li><a class="toctree-l4" href="#memory-considerations">Memory considerations</a></li>
@@ -163,18 +165,6 @@ y = RLEVector([4,5,6],[3,6,9])
 collect(y)
 </code></pre>
 
-<pre><code>9-element Array{Int64,1}:
- 4
- 4
- 4
- 5
- 5
- 5
- 6
- 6
- 6
-</code></pre>
-
 <p><a id='Describing-1'></a></p>
 <h3 id="describing">Describing</h3>
 <p><code>RLEVector</code>s implement the usual descriptive functions for an array as well as some that are specific to the type.</p>
@@ -207,6 +197,26 @@ collect(y)
 <li><code>sort(x)</code></li>
 <li><code>median(x)</code></li>
 </ul>
+<p><a id='split-and-tapply-like-operations-1'></a></p>
+<h2 id="split-and-tapply-like-operations">split and tapply -like operations</h2>
+<p>An RLEVector can be used like R's factor type to apply a function over (contiguous) sections of another vector. For example, here we break a vector into 5 groups and take the average of each group. In the second example, we also scale each mean by the RLE run value corresponding to each group.</p>
+<pre><code class="julia">factor = repeat( [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,&quot;e&quot;], inner=20 )
+rle = RLEVector( factor )
+x = collect(1:100)
+group_means = Float64[ mean(x[r]) for (v,r) in each(rle) ]
+</code></pre>
+
+<p>This is much like the <code>tapply</code> operation in R. A convenience wrapper with this name is provided. The second, factor, argument can be an <code>RLEVector</code> or a <code>Vector</code> to be converted to an <code>RLEVector</code>. This vector need not be sorted.</p>
+<pre><code class="julia">tapply( x, factor, mean )
+tapply( x, rle, mean )
+</code></pre>
+
+<p>In addition to the <code>Range</code> for each RLE run, the <code>each</code> iterator provides the corresponding run value. These values can be used in calculations on each vector block.</p>
+<pre><code class="julia">x = collect(1:100)
+rle2 = RLEVector( repeat( [1,2,3,4,5], inner=20 ) )
+scaled_group_means = Float64[ v * mean(x[r]) for (v,r) in each(rle2) ]
+</code></pre>
+
 <p><a id='Relative-speed-1'></a></p>
 <h2 id="relative-speed">Relative speed</h2>
 <p><code>RLEVectors</code> has been extensively profiled and somewhat optimized. Please see the benchmarking section for the evolution over time and comparisons to like operations in R.</p>
@@ -268,5 +278,5 @@ collect(y)
 
 <!--
 MkDocs version : 0.15.3
-Build Date UTC : 2016-09-28 16:57:31.592123
+Build Date UTC : 2016-10-27 04:30:22.634020
 -->
