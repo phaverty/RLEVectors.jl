@@ -7,20 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Peter Haverty">
-  
-  <title>API - RLEVectors.jl</title>
-  
-
   <link rel="shortcut icon" href="../img/favicon.ico">
-
-  
+  <title>API - RLEVectors.jl</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="../css/highlight.css">
   <link href="../assets/Documenter.css" rel="stylesheet">
-
   
   <script>
     // Current page data
@@ -31,11 +25,7 @@
   
   <script src="../js/jquery-2.1.1.min.js"></script>
   <script src="../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../js/highlight.pack.js"></script>
-  <script src="../js/theme.js"></script> 
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script src="../assets/mathjaxhelper.js"></script>
-
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
   
 </head>
 
@@ -55,7 +45,7 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        <ul class="current">
+	<ul class="current">
           
             <li>
     <li class="toctree-l1 ">
@@ -141,9 +131,8 @@
     <li>API</li>
     <li class="wy-breadcrumbs-aside">
       
-        
-          <a href="https://github.com/phaverty/RLEVectors.jl" class="icon icon-github"> Edit on GitHub</a>
-        
+        <a href="https://github.com/phaverty/RLEVectors.jl/edit/master/docs/api.md"
+          class="icon icon-github"> Edit on GitHub</a>
       
     </li>
   </ul>
@@ -159,8 +148,8 @@
 <ul>
 <li><a href="./#RLEVectors.RLEDataFrame"><code>RLEVectors.RLEDataFrame</code></a></li>
 <li><a href="./#RLEVectors.RLEVector"><code>RLEVectors.RLEVector</code></a></li>
-<li><a href="./#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1},Int64,Int64}"><code>Base.Sort.searchsortedfirst</code></a></li>
 <li><a href="./#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1}}"><code>Base.Sort.searchsortedfirst</code></a></li>
+<li><a href="./#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1},Int64,Int64}"><code>Base.Sort.searchsortedfirst</code></a></li>
 <li><a href="./#RLEVectors.disjoin"><code>RLEVectors.disjoin</code></a></li>
 <li><a href="./#RLEVectors.disjoin_length"><code>RLEVectors.disjoin_length</code></a></li>
 <li><a href="./#RLEVectors.inverse_ree"><code>RLEVectors.inverse_ree</code></a></li>
@@ -206,7 +195,7 @@ x = RLEVector([4,5,6],[3,6,9])
 <li><code>eltype(x)</code> Returns the element type of the runs</li>
 <li><code>endtype(x)</code> Returns the element type of the run ends</li>
 </ul>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e9f73cd54b264d55a5512ffc5353279b2f96e7aa/src/RLEVector-type.jl#L3-L49' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/edefd902275b2d7b9bf840819bb7b26a528c8304/src/RLEVector-type.jl#L3-L49' class='documenter-source'>source</a><br></p>
 <p><a id='RLEVectors.RLEDataFrame' href='#RLEVectors.RLEDataFrame'>#</a>
 <strong><code>RLEVectors.RLEDataFrame</code></strong> &mdash; <em>Type</em>.</p>
 <p>An RLEDataFrame extends DataFrame and contains a colection of like-length and like-type     RLEVectors. In a way, this creates a type like an RLE matrix. But, we deliberately     avoid the complexity of matrix operations, such as factorization. It is expected     that most operations will be column-wise. Based on RleDataFrame from Bioconductor's     <code>genoset</code> package (also by Peter Haverty).</p>
@@ -219,7 +208,7 @@ DataFrame(kwargs...)
 <pre><code class="julia">RLEDataFrame( [RLEVector([1, 1, 2]),  RLEVector([2, 2, 2])], [:a, :b] )
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e9f73cd54b264d55a5512ffc5353279b2f96e7aa/src/RLEDataFrame-type.jl#L1-L20' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/edefd902275b2d7b9bf840819bb7b26a528c8304/src/RLEDataFrame-type.jl#L1-L20' class='documenter-source'>source</a><br></p>
 <p><a id='Standard-Vector-API-methods-1'></a></p>
 <h2 id="standard-vector-api-methods">Standard Vector API methods</h2>
 <p><a id='Working-with-runs-1'></a></p>
@@ -231,12 +220,12 @@ DataFrame(kwargs...)
 </code></pre>
 
 <p>Count the number of runs of repeated values present in a vector.</p>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e9f73cd54b264d55a5512ffc5353279b2f96e7aa/src/runs.jl#L3-L7' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/edefd902275b2d7b9bf840819bb7b26a528c8304/src/runs.jl#L3-L7' class='documenter-source'>source</a><br></p>
 <pre><code>numruns(runvalues, runends)
 </code></pre>
 
 <p>Given run values and run ends for a RLEVector, determine the number of runs that would     be present if it were re-compressed. RLEVectors.jl does this operation after modifying     an RLEVector, for example.</p>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e9f73cd54b264d55a5512ffc5353279b2f96e7aa/src/runs.jl#L49-L55' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/edefd902275b2d7b9bf840819bb7b26a528c8304/src/runs.jl#L49-L55' class='documenter-source'>source</a><br></p>
 <p><a id='RLEVectors.ree' href='#RLEVectors.ree'>#</a>
 <strong><code>RLEVectors.ree</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>ree(x)
@@ -244,12 +233,12 @@ DataFrame(kwargs...)
 
 <p>Run End Encode a vector</p>
 <p>Like RLE, but returns (runvalues,runends) rather than (runvalues,runlengths)</p>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e9f73cd54b264d55a5512ffc5353279b2f96e7aa/src/runs.jl#L21-L27' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/edefd902275b2d7b9bf840819bb7b26a528c8304/src/runs.jl#L21-L27' class='documenter-source'>source</a><br></p>
 <pre><code>ree(runvalues, runends)
 </code></pre>
 
 <p>Tidy up an existing (mostly) Run End Encoded vector, dropping zero length runs and fixing         any adjacent identical values. <code>RLEVectors.jl</code> does this operation after modifying an      RLEVector, for example.</p>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e9f73cd54b264d55a5512ffc5353279b2f96e7aa/src/runs.jl#L76-L82' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/edefd902275b2d7b9bf840819bb7b26a528c8304/src/runs.jl#L76-L82' class='documenter-source'>source</a><br></p>
 <p><a id='RLEVectors.inverse_ree' href='#RLEVectors.inverse_ree'>#</a>
 <strong><code>RLEVectors.inverse_ree</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>inverse_ree(rle)
@@ -261,7 +250,7 @@ DataFrame(kwargs...)
 inverse_ree( runvalues(rle), runends(rle) )
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e9f73cd54b264d55a5512ffc5353279b2f96e7aa/src/runs.jl#L115-L123' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/edefd902275b2d7b9bf840819bb7b26a528c8304/src/runs.jl#L115-L123' class='documenter-source'>source</a><br></p>
 <p><a id='Working-with-run-boundaries-/-ranges-1'></a></p>
 <h2 id="working-with-run-boundaries-ranges">Working with run boundaries / ranges</h2>
 <p>We define some functions for comparing bins defined by our run end values.</p>
@@ -285,7 +274,7 @@ disjoin(x,y)
  6
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e9f73cd54b264d55a5512ffc5353279b2f96e7aa/src/ranges.jl#L28-L49' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/edefd902275b2d7b9bf840819bb7b26a528c8304/src/ranges.jl#L28-L49' class='documenter-source'>source</a><br></p>
 <pre><code>disjoin(rle_x, rle_y)
 </code></pre>
 
@@ -296,14 +285,14 @@ disjoin(x,y)
 ([2,3,4,5,6],[1,2,2,3,3],[1,1,2,3,4])
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e9f73cd54b264d55a5512ffc5353279b2f96e7aa/src/ranges.jl#L84-L94' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/edefd902275b2d7b9bf840819bb7b26a528c8304/src/ranges.jl#L84-L94' class='documenter-source'>source</a><br></p>
 <p><a id='RLEVectors.disjoin_length' href='#RLEVectors.disjoin_length'>#</a>
 <strong><code>RLEVectors.disjoin_length</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>disjoin_length(x, y)
 </code></pre>
 
 <p>Take two runends vectors (strictly increasing integers) and find the number of unique values for the disjoin operation. This is essentially an optimized <code>length(unique( vcat(x, y) ))</code>.</p>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e9f73cd54b264d55a5512ffc5353279b2f96e7aa/src/ranges.jl#L3-L8' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/edefd902275b2d7b9bf840819bb7b26a528c8304/src/ranges.jl#L3-L8' class='documenter-source'>source</a><br></p>
 <p><a id='split-and-tapply-like-operations-1'></a></p>
 <h2 id="split-and-tapply-like-operations">split and tapply -like operations</h2>
 <p>An RLEVector can be used like R's factor type to apply a function over (contiguous) sections of another vector. For example, here we break a vector into 5 groups and take the average of each group. In the second example, we also scale each mean by the RLE run value corresponding to each group.</p>
@@ -321,7 +310,7 @@ Subset an RLEVector by one or more ranges, returning the average value within ea
 optimized `[ mean(x[ r ]) for r in ranges ]`.
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e9f73cd54b264d55a5512ffc5353279b2f96e7aa/src/ranges.jl#L144-L149' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/edefd902275b2d7b9bf840819bb7b26a528c8304/src/ranges.jl#L144-L149' class='documenter-source'>source</a><br></p>
 <p><a id='Utility-Functions-1'></a></p>
 <h2 id="utility-functions">Utility Functions</h2>
 <p>We also define some utility functions for working with repeated values and binary searching in bins/sorted integers like our run end values.</p>
@@ -359,7 +348,7 @@ optimized `[ mean(x[ r ]) for r in ranges ]`.
  &quot;C&quot;
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e9f73cd54b264d55a5512ffc5353279b2f96e7aa/src/utils.jl#L1-L37' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/edefd902275b2d7b9bf840819bb7b26a528c8304/src/utils.jl#L1-L37' class='documenter-source'>source</a><br></p>
 <p><a id='Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1}}' href='#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1}}'>#</a>
 <strong><code>Base.Sort.searchsortedfirst</code></strong> &mdash; <em>Method</em>.</p>
 <p>RLEVectors.jl define new methods for this binary search function. The method for two vectors is like R's findinterval. The index of the position of each <code>x</code> in <code>v</code> is     determined searching within the index bounds <code>lo</code> and <code>hi</code>, inclusive. For the returned     indices <code>i</code>, <code>v[i] &lt;= x[i] &lt; v[i+1]</code>.</p>
@@ -377,11 +366,11 @@ searchsortedfirst(v, x)
 
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e9f73cd54b264d55a5512ffc5353279b2f96e7aa/src/utils.jl#L60-L82' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/edefd902275b2d7b9bf840819bb7b26a528c8304/src/utils.jl#L60-L82' class='documenter-source'>source</a><br></p>
 <p><a id='Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1},Int64,Int64}' href='#Base.Sort.searchsortedfirst-Tuple{AbstractArray{T,1},AbstractArray{T,1},Int64,Int64}'>#</a>
 <strong><code>Base.Sort.searchsortedfirst</code></strong> &mdash; <em>Method</em>.</p>
 <p>The four argument version substitutes customized ordering for a hard-coded '&lt;'.     This is a is a silly optimization that I hope to get rid of soon.</p>
-<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/e9f73cd54b264d55a5512ffc5353279b2f96e7aa/src/utils.jl#L111-L114' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/phaverty/RLEVectors.jl/tree/edefd902275b2d7b9bf840819bb7b26a528c8304/src/utils.jl#L111-L114' class='documenter-source'>source</a><br></p>
               
             </div>
           </div>
@@ -409,10 +398,10 @@ searchsortedfirst(v, x)
       </div>
 
     </section>
-
+    
   </div>
 
-<div class="rst-versions" role="note" style="cursor: pointer">
+  <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
           <a href="https://github.com/phaverty/RLEVectors.jl" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
@@ -423,6 +412,9 @@ searchsortedfirst(v, x)
       
     </span>
 </div>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script src="../assets/mathjaxhelper.js"></script>
 
 </body>
 </html>
