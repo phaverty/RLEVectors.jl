@@ -2,11 +2,8 @@ __precompile__()
 
 module RLEVectors
 
-using Compat
-import Compat.String
 using Reexport
 @reexport using DataFrames
-
 
 # RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar
