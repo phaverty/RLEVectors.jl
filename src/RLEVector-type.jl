@@ -77,6 +77,8 @@ function RLEVector(vec::Vector)
   RLEVector(runvalues, runends)
 end
 
+RLEVector{T1,T2 <: Integer}(runvalues::T1, runends::T2) = RLEVector{T1,T2}([runvalues], [runends])
+
 #  Having specific types of Rle would be useful for lists of the same type, but Julia does a good job noticing that
 #  Could also be useful for method definitions
 typealias FloatRle RLEVector{Float64,UInt32}
