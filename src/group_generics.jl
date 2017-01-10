@@ -69,7 +69,7 @@ for op in [:findmin, :findmax]
   @eval begin
     function ($op)(x::RLEVector)
       m = ($op)(x.runvalues)
-      (m[1], rfirst(x,m[2]))
+      (m[1], starts(x,m[2]))
     end
   end
 end
@@ -82,19 +82,19 @@ findin(x,y::RLEVector) = findin(x,y.runvalues)
 function findin(x::RLEVector,y::RLEVector)
   runs = findin(x.runvalues,y.runvalues)
   re = x.runends
-  vcat( [ rfirst(x,i):re[i] for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
+  vcat( [ starts(x,i):re[i] for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
 function findin(x::RLEVector,y::UnitRange) # ambig fix
   runs = findin(x.runvalues,y)
   re = x.runends
-  vcat( [ rfirst(x,i):re[i] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
+  vcat( [ starts(x,i):re[i] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
 function findin(x::RLEVector,y)
   runs = findin(x.runvalues,y)
   re = x.runends
-  vcat( [ rfirst(x,i):re[i] for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
+  vcat( [ starts(x,i):re[i] for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
 function median(x::RLEVector)
@@ -114,7 +114,7 @@ end
 function sum{T1,T2}(x::RLEVector{T1,T2})
   rval = zero(T1)
    @simd for i in 1:nrun(x)
-    @inbounds rval = rval + (x.runvalues[i] * rwidth(x, i))
+    @inbounds rval = rval + (x.runvalues[i] * widths(x, i))
   end
   return(rval)
 end

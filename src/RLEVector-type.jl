@@ -37,10 +37,10 @@ specific to the type.
 * `length(x)` The full length of the vector, uncompressed
 * `size(x)` Same as `length`, as for any other vector
 * `size(x,dim)` Returns `(length(x),1) for dim == 1`
-* `rfirst(x)` The index of the beginning of each run
-* `rwidth(x)` The width of each run
-* `rlast(x)` The index of the end of each run
-* `rvalue(x)` The data value for each run
+* `starts(x)` The index of the beginning of each run
+* `widths(x)` The width of each run
+* `ends(x)` The index of the end of each run
+* `values(x)` The data value for each run
 * `isempty(x)` Returns boolean, as for any other vector
 * `nrun(x)` Returns the number of runs represented in the array
 * `eltype(x)` Returns the element type of the runs
@@ -118,7 +118,7 @@ end
 
 # conversions
 convert(::Type{Vector}, x::RLEVector) = collect(x)
-convert(::Type{Set}, x::RLEVector) = Set(rvalue(x))
+convert(::Type{Set}, x::RLEVector) = Set(values(x))
 promote_rule(::Type{Set}, ::Type{RLEVector}) = Set
 
 # the basics

@@ -235,9 +235,9 @@ end
 
 function next(x::RLEEachIterator, state)
     newstate = state + 1
-    first = rfirst(x.rle,state)
-    last = rlast(x.rle)[state]
-    ( (rvalue(x.rle)[state], first:last ), newstate )
+    first = starts(x.rle,state)
+    last = ends(x.rle)[state]
+    ( (values(x.rle)[state], first:last ), newstate )
 end
 
 function done(x::RLEEachIterator, state)

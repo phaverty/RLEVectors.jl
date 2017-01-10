@@ -54,15 +54,15 @@ x = RLEVector(expected_run_values,expected_run_ends)
 
 # Getters and setters
 x = RLEVector([1,2,3],[2,9,22])
-@test rfirst(x) == [1,3,10]
-@test rfirst(x,1) == 1
-@test rfirst(x,3) == 10
-@test rwidth(x) == [2,7,13]
-@test rwidth(x,1) == 2
-@test rwidth(x,2) == 7
-@test rwidth(x,3) == 13
-@test rlast(x) == [2,9,22]
-@test rvalue(x) == [1,2,3]
+@test starts(x) == [1,3,10]
+@test starts(x,1) == 1
+@test starts(x,3) == 10
+@test widths(x) == [2,7,13]
+@test widths(x,1) == 2
+@test widths(x,2) == 7
+@test widths(x,3) == 13
+@test ends(x) == [2,9,22]
+@test values(x) == [1,2,3]
 
 # Hashing
 x = RLEVector([1,1,2,2,3,3,3])

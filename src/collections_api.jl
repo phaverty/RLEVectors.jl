@@ -76,7 +76,7 @@ function insert!{T,T2 <: Integer}(x::RLEVector{T,T2},i::Integer,item)
 end
 
 function deleterun!(x::RLEVector,i::Integer)
-  x.runends[i:end] -= rwidth(x,i)
+  x.runends[i:end] -= widths(x,i)
   if (i > 1 && i < nrun(x) && x.runvalues[i-1] == x.runvalues[i+1])
     splice!(x.runvalues,(i-1):i)
     splice!(x.runends,(i-1):i)
@@ -88,7 +88,7 @@ function deleterun!(x::RLEVector,i::Integer)
 end
 
 function decrement_run!(x::RLEVector,run::Integer)
-  if rwidth(x,run) == 1
+  if widths(x,run) == 1
     deleterun!(x,run)
   else
     x.runends[run:end] -= 1
@@ -203,5 +203,5 @@ function intersect(x::RLEVector, sets...)
             end
         end
     end
-    RLEVector( x.runvalues[ ok ], cumsum( rwidth(x)[ ok ] ) )
+    RLEVector( x.runvalues[ ok ], cumsum( widths(x)[ ok ] ) )
 end
