@@ -47,16 +47,14 @@ specific to the type.
 * `length(x)` The full length of the vector, uncompressed
 * `size(x)` Same as `length`, as for any other vector
 * `size(x,dim)` Returns `(length(x),1) for dim == 1`
-* `rfirst(x)` The index of the beginning of each run
-* `rwidth(x)` The width of each run
-* `rlast(x)` The index of the end of each run
-* `rvalue(x)` The data value for each run
+* `starts(x)` The index of the beginning of each run
+* `widths(x)` The width of each run
+* `ends(x)` The index of the end of each run
+* `values(x)` The data value for each run
 * `isempty(x)` Returns boolean, as for any other vector
 * `nrun(x)` Returns the number of runs represented in the array
 * `eltype(x)` Returns the element type of the runs
 * `endtype(x)` Returns the element type of the run ends
-
-Naming for some of these functions is difficult given that many useful names are already reserved words (`end`, `start`, `last`). Suggestions are welcome at this stage of development.
 
 ### Standard vector operations
 
@@ -122,6 +120,4 @@ translations. RLEVectors.jl is written in my interpretation of idiomatic julia.
 Data compression is a secondary benefit of `RLEVector`s, but it can be convenient. Generally run ends are stored as Int64. However, if further memory savings are desired, consider smaller and unsigned types. UInt32 is sufficient to hold the length of the human genome and UInt16 can hold the length of the longest human chromosome.
 
 `RLEVector([5.1,2.9,100.7], UInt16[4,8,22])`
-
-
 
