@@ -37,7 +37,7 @@ An RLEVector can be used like R's factor type to apply a function over (contiguo
 vector. For example, here we break a vector into 5 groups and take the average of each group. In the second
 example, we also scale each mean by the RLE run value corresponding to each group.
 
-```docs
+```@docs
 tapply
 ```
 
