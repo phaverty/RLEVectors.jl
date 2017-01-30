@@ -161,16 +161,15 @@ collect(y)
 <li><code>length(x)</code> The full length of the vector, uncompressed</li>
 <li><code>size(x)</code> Same as <code>length</code>, as for any other vector</li>
 <li><code>size(x,dim)</code> Returns <code>(length(x),1) for dim == 1</code></li>
-<li><code>rfirst(x)</code> The index of the beginning of each run</li>
-<li><code>rwidth(x)</code> The width of each run</li>
-<li><code>rlast(x)</code> The index of the end of each run</li>
-<li><code>rvalue(x)</code> The data value for each run</li>
+<li><code>starts(x)</code> The index of the beginning of each run</li>
+<li><code>widths(x)</code> The width of each run</li>
+<li><code>ends(x)</code> The index of the end of each run</li>
+<li><code>values(x)</code> The data value for each run</li>
 <li><code>isempty(x)</code> Returns boolean, as for any other vector</li>
 <li><code>nrun(x)</code> Returns the number of runs represented in the array</li>
 <li><code>eltype(x)</code> Returns the element type of the runs</li>
 <li><code>endtype(x)</code> Returns the element type of the run ends</li>
 </ul>
-<p>Naming for some of these functions is difficult given that many useful names are already reserved words (<code>end</code>, <code>start</code>, <code>last</code>). Suggestions are welcome at this stage of development.</p>
 <p><a id='Standard-vector-operations-1'></a></p>
 <h3 id="standard-vector-operations">Standard vector operations</h3>
 <p><code>RLEVector</code>s can be treated as standard Vectors for arithmetic and collection operations. In many cases these operations are more efficient than operations on a standard vector.</p>
@@ -270,5 +269,5 @@ scaled_group_means = Float64[ v * mean(x[r]) for (v,r) in each(rle2) ]
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-01-10 00:22:07
+Build Date UTC : 2017-01-30 22:52:21
 -->
