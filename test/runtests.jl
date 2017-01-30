@@ -11,7 +11,8 @@ test_files = [
               "test_describe.jl",
               "test_group_generics.jl",
               "test_ranges.jl",
-              "test_runs.jl"]
+              "test_runs.jl"
+              ]
 
 println("Testing ...")
 for f in test_files
