@@ -17,13 +17,13 @@ be compressed out. RLEVectors can be expanded to a full vector with `collect`.
 
 ## Aliases
 Several aliases are defined for specific types of RLEVector (or collections thereof).
-    
+
     FloatRle              RLEVector{Float64,UInt32}
     IntegerRle            RLEVector{Int64,UInt32}
     BoolRle               RLEVector{Bool,UInt32}
     StringRle             RLEVector{String,UInt32}
     RLEVectorList{T1,T2}  Vector{ RLEVector{T1,T2} }
-    
+
 ## Constructors
 `RLEVector`s can be created by specifying a vector to compress or the runvalues and run ends.
 
@@ -33,7 +33,7 @@ Several aliases are defined for specific types of RLEVector (or collections ther
 ## Describing `RLEVector` objects
 `RLEVector`s implement the usual descriptive functions for an array as well as some that are
 specific to the type.
-    
+
 * `length(x)` The full length of the vector, uncompressed
 * `size(x)` Same as `length`, as for any other vector
 * `size(x,dim)` Returns `(length(x),1) for dim == 1`
@@ -99,20 +99,20 @@ function similar(x::RLEVector, element_type::Type, dims::Dims)
 end
 
 # show
-Base.show(io::IO, ::MIME"text/plain",  a::RLEVector) = show(io, a)
-function show(io::IO, x::RLEVector)
+function Base.show(io::IO, ::MIME"text/plain", x::RLEVector)
     t = typeof(x)::DataType
     show(io, t)
-    print("\n")
     n = nrun(x)
     if n > 10
         rv = x.runvalues
         re = x.runends
-        print("run values: [$(rv[1]),$(rv[2]),$(rv[5]) \u2026 $(rv[n-4]),$(rv[n-1]),$(rv[n])]\n")
-        print("run ends:   [$(re[1]),$(re[2]),$(re[5]) \u2026 $(re[n-4]),$(re[n-1]),$(re[n])]")
+        write(io,"\n run values: [$(rv[1]),$(rv[2]),$(rv[5]) \u2026 $(rv[n-4]),$(rv[n-1]),$(rv[n])]")
+        write(io,"\n run ends:   [$(re[1]),$(re[2]),$(re[5]) \u2026 $(re[n-4]),$(re[n-1]),$(re[n])]")
     else
-        println("run values: ", x.runvalues)
-        println("run ends:   ", x.runends)
+        write(io,"\n run values: ")
+        show(io, x.runvalues)
+        write(io,"\n run ends: ")
+        show(io, x.runends)
     end
 end
 
