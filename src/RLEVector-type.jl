@@ -103,17 +103,10 @@ function Base.show(io::IO, ::MIME"text/plain", x::RLEVector)
     t = typeof(x)::DataType
     show(io, t)
     n = nrun(x)
-    if n > 10
-        rv = x.runvalues
-        re = x.runends
-        write(io,"\n run values: [$(rv[1]),$(rv[2]),$(rv[5]) \u2026 $(rv[n-4]),$(rv[n-1]),$(rv[n])]")
-        write(io,"\n run ends:   [$(re[1]),$(re[2]),$(re[5]) \u2026 $(re[n-4]),$(re[n-1]),$(re[n])]")
-    else
-        write(io,"\n run values: ")
-        show(io, x.runvalues)
-        write(io,"\n run ends: ")
-        show(io, x.runends)
-    end
+    write(io,"\n run values: ")
+    Base.show_vector(io,x.runvalues,"[", "]")
+    write(io,"\n run ends: ")
+    Base.show_vector(io,x.runends,"[", "]")
 end
 
 # conversions
