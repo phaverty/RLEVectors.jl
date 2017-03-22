@@ -62,8 +62,8 @@ for n in names(bdf)[4:end]
 end
 r_over_julia = zeros(ncol(bdf)-3)
 
-for (i in 1:length(r_over_julia))
-  r_over_julia[i] = log2(rdf[1,i+3] / jdf[1,i+3])
+for i in 1:length(r_over_julia)
+    r_over_julia[i] = log2(rdf[1,i+3] / jdf[1,i+3])
 end
 
 ### Plotting

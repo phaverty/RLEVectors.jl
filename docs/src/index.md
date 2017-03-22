@@ -7,7 +7,7 @@ data of various types are  measured across the ~3 billion letters in
 the human genome can often be represented in a few thousand runs. It
 is useful to know the bounds of genome regions covered by these runs,
 the values associated with these runs, and to be able to perform
-various mathematical operations on these values.
+various mathematical operations as if the vector were uncompressed.
 
 ## Background
 Bioconductor has some widely used and extremely convenient types for
