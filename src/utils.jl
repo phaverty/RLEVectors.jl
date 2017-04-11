@@ -80,7 +80,7 @@ searchsortedfirst(v, x)
 
 ```
 """
-Base.searchsortedfirst(v::AbstractVector, x::AbstractVector) = searchsortedfirst(v, x, 1, length(v))
+searchsortedfirst(v::AbstractVector, x::AbstractVector) = searchsortedfirst(v, x, 1, length(v))
 function searchsortedfirst(v::AbstractVector, x::AbstractVector, lo::Int, hi::Int)
     indices = similar(x)
     min = lo - 1
@@ -112,7 +112,7 @@ end
 The four argument version substitutes customized ordering for a hard-coded '<'.
     This is a is a silly optimization that I hope to get rid of soon.
 """
-function Base.searchsortedfirst(v::AbstractVector, x, lo::Int, hi::Int)
+function searchsortedfirst(v::AbstractVector, x, lo::Int, hi::Int)
     lo = lo - 1
     hi = min(length(v), hi) + 1
     @inbounds while lo < hi-1

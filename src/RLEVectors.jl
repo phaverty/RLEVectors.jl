@@ -46,8 +46,7 @@ export mode, countmap
 export disjoin, disjoin_length, ree, inverse_ree, numruns, rangeMeans
 
 # utils
-import Base: searchsortedfirst
-export rep, searchsortedfirst
+export rep
 
 # sorting
 import Base.Order: Ordering

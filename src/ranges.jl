@@ -156,8 +156,8 @@ function rangeMeans{T <: Integer}(ranges::Vector{UnitRange{T}}, rle::RLEVector)
     @inbounds for (i, r) in enumerate(ranges)
         first_ind = r[1]
         last_ind = r[end]
-        first_run = searchsortedfirst(rle.runends, first_ind)
-        last_run = searchsortedlast(rle.runends, last_ind)
+        first_run = Base.searchsortedfirst(rle.runends, first_ind)
+        last_run = Base.searchsortedlast(rle.runends, last_ind)
         if first_run == last_run  # Range all in one run, special case here allows simpler logic below
             res[i] = rle.runvalues[first_run]
         else
