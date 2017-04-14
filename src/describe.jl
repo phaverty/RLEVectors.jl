@@ -35,13 +35,12 @@ function starts(x::RLEVector)
   end
   return(rval)
 end
-rfirst(x::RLEVector) = starts(x)
+
 
 function starts(x::RLEVector, run::Integer)
     num_one = one(eltype(x.runends))
     run == 1 ? num_one : x.runends[run-1] + num_one
 end
-rfirst(x::RLEVector, run::Integer) = starts(x, run)
 
 function widths(x::RLEVector)
   re = x.runends
@@ -54,22 +53,27 @@ function widths(x::RLEVector)
   end
   return(rval)
 end
-rwidth(x::RLEVector) = widths(x)
 
 function widths(x::RLEVector, run::Integer)
   run == 1 ? x.runends[1] : x.runends[run] - x.runends[run-1]
 end
-rwidth(x::RLEVector, run::Integer) = widths(x, run)
 
-rlast(x::RLEVector) =  x.runends
 ends(x::RLEVector) =  x.runends
-rvalue(x::RLEVector) = x.runvalues
+ends(x::RLEVector, run::Integer) =  x.runends[run]
+
 values(x::RLEVector) = x.runvalues
 endtype(x::RLEVector) = eltype(rlast(x))
 
-@doc (@doc RLEVector) starts, widths, ends, values, rfirst, rwidth, rlast, rvalue, nrun, endtype
+rfirst(x::RLEVector) = starts(x)
+rfirst(x::RLEVector, run::Integer) = starts(x, run)
+rwidth(x::RLEVector) = widths(x)
+rwidth(x::RLEVector, run::Integer) = widths(x, run)
+rlast(x::RLEVector) =  x.runends
+rvalue(x::RLEVector) = x.runvalues
 
 @deprecate rwidth widths
 @deprecate rstart starts
 @deprecate rlast ends
 @deprecate rvalue values
+
+@doc (@doc RLEVector) starts, widths, ends, values, rfirst, rwidth, rlast, rvalue, nrun, endtype

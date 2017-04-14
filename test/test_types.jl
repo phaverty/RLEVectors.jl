@@ -65,6 +65,7 @@ x = RLEVector([1,2,3],[2,9,22])
 @test widths(x,2) == 7
 @test widths(x,3) == 13
 @test ends(x) == [2,9,22]
+@test ends(x,3) == 22
 @test values(x) == [1,2,3]
 
 # Hashing
