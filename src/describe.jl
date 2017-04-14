@@ -1,11 +1,9 @@
 ## Dimensions and descriptions
 
-isempty(x::RLEVector) = isempty(x.runends)
-ndims(x::RLEVector) = 1
-nrun(x::RLEVector) = length(x.runends)
-size(x::RLEVector) =  (length(x),)
+Base.isempty(x::RLEVector) = isempty(x.runends)
+Base.size(x::RLEVector) =  (length(x),)
 
-function size(x::RLEVector, dim::Integer)
+function Base.size(x::RLEVector, dim::Integer)
   len = length(x)
   if dim == 1
     return(len)
@@ -14,7 +12,9 @@ function size(x::RLEVector, dim::Integer)
   end
 end
 
-function length{T1,T2<:Integer}(x::RLEVector{T1,T2})
+nrun(x::RLEVector) = length(x.runends)
+
+function Base.length{T1,T2<:Integer}(x::RLEVector{T1,T2})
   re = x.runends
   ind = endof(re)
   if (ind > 0)
@@ -24,7 +24,6 @@ function length{T1,T2<:Integer}(x::RLEVector{T1,T2})
   end
   return(len)
 end
-
 
 function starts(x::RLEVector)
   re = x.runends

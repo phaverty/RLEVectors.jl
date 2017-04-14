@@ -16,8 +16,8 @@ import Base: getindex, setindex!
 export getindex, setindex!, ind2run, setrun!, ind2runcontext, head, tail, RLERangesIterator, each, tapply
 
 # describe
-import Base: isempty, ndims
-export ndims, endtype
+import Base: isempty
+export endtype
 
 # group_generics
 import Base: +, -, *, /, ^, .+, .-, .*, ./, .^, div, mod, fld, rem
