@@ -2,9 +2,6 @@ __precompile__()
 
 module RLEVectors
 
-using Reexport
-@reexport using DataFrames
-
 # RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar, starts, widths, ends, values
 import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect, isequal, values
@@ -54,15 +51,10 @@ import Base.Sort: QuickSortAlg
 import Base: sort, sort!, issorted, reverse, reverse!, sortperm, Algorithm
 export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 
-# data frames
-import DataFrames: AbstractDataFrame, DataFrame, Index, head, tail
-export RLEDataFrame, nrow
-
 ### Includes
 include("utils.jl")
 include("runs.jl")
 include("RLEVector-type.jl")
-include("RLEDataFrame-type.jl")
 include("ranges.jl")
 include("describe.jl")
 include("indexing.jl")
