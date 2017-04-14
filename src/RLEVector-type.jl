@@ -99,7 +99,7 @@ function similar(x::RLEVector, element_type::Type, dims::Dims)
 end
 
 # show
-function Base.show(io::IO, ::MIME"text/plain", x::RLEVector)
+function Base.show(io::IO, x::RLEVector)
     t = typeof(x)::DataType
     show(io, t)
     n = nrun(x)

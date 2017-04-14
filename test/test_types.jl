@@ -49,8 +49,9 @@ x = RLEVector([4,4,5,5,6,7,8])
 ## Describing
 x = RLEVector(expected_run_values,expected_run_ends)
 @test eltype(x) == eltype(expected_run_values)
-@test typeof(show(x)) == Void # At least test that show does not give error
-@test typeof(show(RLEVector(collect(1:100)))) == Void # At least test that show does not give error
+io = IOBuffer()
+@test typeof(show(io,x)) == Void # At least test that show does not give error
+@test typeof(show(io,RLEVector(collect(1:100)))) == Void # At least test that show does not give error
 
 # Getters and setters
 x = RLEVector([1,2,3],[2,9,22])
