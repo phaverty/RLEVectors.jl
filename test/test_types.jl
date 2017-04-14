@@ -32,6 +32,8 @@ y = RLEVector([4,4,5,5,6,6])
 @test BoolRle([true,false,true],[2,4,6]) == RLEVector([true,false,true],Int32[2,4,6])
 @test StringRle(["a","bob","joe"],[2,4,6]) == RLEVector(["a","bob","joe"],Int32[2,4,6])
 
+@test RLEVector(5,3) == RLEVector([5,5,5])
+    
 # Creating
 y = RLEVector([1.0,1,2,2,3,3,3])
 @test similar(y) == RLEVector([0.0],[length(y)])
