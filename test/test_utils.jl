@@ -11,7 +11,8 @@ using RLEVectors
 @test RLEVectors.rep([4,5,6], each=3, times=2) == [4,4,4,5,5,5,6,6,6,4,4,4,5,5,5,6,6,6]
 @test RLEVectors.rep(["p","d","q"], each=3, times=2) == ["p","p","p","d","d","d","q","q","q","p","p","p","d","d","d","q","q","q"]
 @test_throws ArgumentError RLEVectors.rep([1,2,3], each=[4,5])
-
+@test rep(3,each=2) == [3,3]
+    
 # searchsortedfirst
 @test RLEVectors.searchsortedfirst( [3, 6, 9, 12, 15 ], 6, 1, 5 ) == 2
 @test RLEVectors.searchsortedfirst( [3, 6, 9, 12, 15 ], 7, 1, 5 ) == 3
