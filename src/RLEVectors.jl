@@ -55,8 +55,8 @@ import Base: sort, sort!, issorted, reverse, reverse!, sortperm, Algorithm
 export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 
 # data frames
-import DataTables: AbstractDataTable, DataTable, Index, head, tail
-export RLEDataTable, nrow
+import DataTables: AbstractDataTable, DataTable, Index, head, tail, index
+export RLEDataTable, nrow, ncol, rowSums, rowMeans, colSums, colMeans
 
 ### Includes
 include("utils.jl")
