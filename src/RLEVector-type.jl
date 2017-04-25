@@ -115,6 +115,7 @@ function Base.show(io::IO, ::MIME"text/plain", x::RLEVector)
     Base.show_vector(io,values(x),"[", "]")
     print(io,", Widths: ")
     Base.show_vector(io,widths(x),"[", "]")
+    print("\n")
 end
 
 # conversions
