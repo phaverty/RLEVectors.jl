@@ -103,10 +103,18 @@ function Base.show(io::IO, x::RLEVector)
     t = typeof(x)::DataType
     show(io, t)
     n = nrun(x)
-    write(io,"\n run values: ")
+    write(io,"\n Run values: ")
     Base.show_vector(io,x.runvalues,"[", "]")
-    write(io,"\n run ends: ")
+    write(io,"\n Run ends: ")
     Base.show_vector(io,x.runends,"[", "]")
+end
+
+function Base.show(io::IO, ::MIME"text/plain", x::RLEVector)
+    show(io,typeof(x))
+    print(io,", Values: ")
+    Base.show_vector(io,values(x),"[", "]")
+    print(io,", Widths: ")
+    Base.show_vector(io,widths(x),"[", "]")
 end
 
 # conversions
