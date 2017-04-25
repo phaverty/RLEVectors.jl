@@ -1,3 +1,4 @@
 julia 0.5
-DataFrames 0.6.10
+DataTables
 Reexport
+StatsBase
