@@ -43,7 +43,8 @@ y = RLEVector([1.0,1,2,2,3,3,3])
 x = RLEVector([4,4,5,5,6,7,8])
 @test convert(Vector,x) == [4,4,5,5,6,7,8]
 @test convert(Set,x) == Set([4,5,6,7,8])
-
+@test convert(RLEVector,[1,1,2,2]) == RLEVector( [1,2], [2,4] )
+    
 # Expanding
 @test collect(RLEVector([1,1,2,2,3,3])) == [1,1,2,2,3,3]
 @test convert(Vector, RLEVector([1,1,2,2,3,3])) == [1,1,2,2,3,3]
