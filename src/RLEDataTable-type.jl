@@ -1,10 +1,4 @@
 # A few things we want from DataTables
-#import DataTables.Index
-#import DataTables._names
-#import DataTables.index
-#import DataTables.ColumnIndex
-#Base.getindex(x::Index,i::Vector{Bool}) = x[ find(i) ]
-#Base.getindex(x::Index,i::BitVector) = x[ find(i) ]
 
 typealias DFIndex AxisArray{Int64,1,Vector{Int64},Tuple{AxisArrays.Axis{:row,Array{Symbol,1}}}}
 typealias ColumnIndex Union{Symbol,Integer}
@@ -50,21 +44,20 @@ type RLEDataTable <: AbstractDataTable
     end
 end
 
-#RLEDataTable(columns, cnames::Vector{Symbol}) = RLEDataTable(columns, Index(cnames))
-
 nrow(x::RLEDataTable) = length(x.columns[1])
 ncol(x::RLEDataTable) = length(x.columns)
 index(x::RLEDataTable) = x.colindex
 columns(x::RLEDataTable) = x.columns
-Base.names(x::RLEDataTable) = axisvalues(x.colindex)
+Base.names(x::RLEDataTable) = axisvalues(x.colindex)[1]
 
 function Base.show(io::IO, x::RLEDataTable)
     t = typeof(x)
     show(io, t)
-    write(io,"\n Names: ")
-    Base.show_vector(io,names(x),"[", "]")
-    write(io,"\n Columns: \n")
-    print(io,x.columns)
+    println()
+    for (c,v) in zip(names(x),columns(x))
+        println(io,"Column: $c")
+        println(io,v)
+    end
 end
 
 function RLEDataTable(; kwargs...)
@@ -77,15 +70,33 @@ end
 Base.getindex(x::RLEDataTable,j::ColumnIndex) = columns(x)[index(x)[j]]
 function Base.getindex(x::RLEDataTable,j::AbstractArray)
     inds = index(x)[j]
-    RLEDataTable( columns(x)[inds], Index(_names(x)[inds]) )
+    RLEDataTable( columns(x)[inds], names(x)[inds] )
 end
 
-#function Base.setindex!(x::RLEVector,value,j::ColumnIndex)
-#    ind = index(x)[j]
-#    
-#    
-#end
+function Base.setindex!(x::RLEDataTable,value,j::Integer)
+    if length(value) != nrow(x)
+        throw(ArgumentError("length of value must match existing columns."))
+    end
+    if j <= length(x)
+        columns(x)[1] = columns(x)[2]
+    else
+        throw(BoundsError())
+    end
+    x
+end
 
+function Base.setindex!(x::RLEDataTable,value::RLEVector,j::Symbol)
+    if length(value) != nrow(x)
+        throw(ArgumentError("length of value must match existing columns."))
+    end
+    if j in names(x)
+        columns(x)[1] = columns(x)[2]
+    else
+        x.colindex = merge(index(x), AxisArray( [length(x) + 1], [j] ) )
+        x.columns = push!(x.columns,value)
+    end
+    x
+end
 
 ### Familiar operations over rows or columns from R
 #rowMeans(x::RLEDataTable) = rowSum(x) ./ ncol(x)
