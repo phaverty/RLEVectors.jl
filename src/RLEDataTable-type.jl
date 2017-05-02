@@ -66,37 +66,46 @@ function RLEDataTable(; kwargs...)
     RLEDataTable(cvalues,cnames)
 end
 
-### Need getindex, setindex!
+### Get/set
+## Just columns
 Base.getindex(x::RLEDataTable,j::ColumnIndex) = columns(x)[index(x)[j]]
 function Base.getindex(x::RLEDataTable,j::AbstractArray)
     inds = index(x)[j]
     RLEDataTable( columns(x)[inds], names(x)[inds] )
 end
 
-function Base.setindex!(x::RLEDataTable,value,j::Integer)
+function Base.setindex!(x::RLEDataTable, value::AbstractVector, j::Integer)
     if length(value) != nrow(x)
         throw(ArgumentError("length of value must match existing columns."))
     end
     if j <= length(x)
-        columns(x)[1] = columns(x)[2]
+        columns(x)[1] = value
     else
         throw(BoundsError())
     end
     x
 end
 
-function Base.setindex!(x::RLEDataTable,value::RLEVector,j::Symbol)
+function Base.setindex!(x::RLEDataTable, value::AbstractVector, j::Symbol)
     if length(value) != nrow(x)
         throw(ArgumentError("length of value must match existing columns."))
     end
     if j in names(x)
-        columns(x)[1] = columns(x)[2]
+        columns(x)[1] = value
     else
         x.colindex = merge(index(x), AxisArray( [length(x) + 1], [j] ) )
         x.columns = push!(x.columns,value)
     end
     x
 end
+
+## just rows
+#function Base.getindex(x::RLEDataTable, i, j)
+#    
+#end
+
+
+## rows and cols
 
 ### Familiar operations over rows or columns from R
 #rowMeans(x::RLEDataTable) = rowSum(x) ./ ncol(x)

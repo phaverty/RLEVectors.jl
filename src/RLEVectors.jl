@@ -46,7 +46,7 @@ export mode, countmap
 export disjoin, disjoin_length, ree, inverse_ree, numruns, rangeMeans
 
 # utils
-export rep
+export rep, rowSums, rowMeans, rowMedians, colSums, colMeans, colMedians
 
 # sorting
 import Base.Order: Ordering
@@ -56,7 +56,7 @@ export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 
 # data frames
 import DataTables: AbstractDataTable, DataTable, Index, head, tail, index, columns, nrow, ncol
-export RLEDataTable, nrow, ncol, rowSums, rowMeans, colSums, colMeans
+export RLEDataTable, nrow, ncol, columns, index, names
 
 ### Includes
 include("utils.jl")
