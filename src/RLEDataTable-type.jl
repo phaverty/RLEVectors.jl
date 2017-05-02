@@ -66,8 +66,11 @@ function RLEDataTable(; kwargs...)
     RLEDataTable(cvalues,cnames)
 end
 
+Base.copy(x::RLEDataTable) = RLEDataTable( copy(columns(x)), copy(names(x)) )
+
 ### Get/set
 ## Just columns
+Base.getindex(x::RLEDataTable,j::Colon) = copy(x)
 Base.getindex(x::RLEDataTable,j::ColumnIndex) = columns(x)[index(x)[j]]
 function Base.getindex(x::RLEDataTable,j::AbstractArray)
     inds = index(x)[j]
@@ -76,7 +79,7 @@ end
 
 function Base.setindex!(x::RLEDataTable, value::AbstractVector, j::Integer)
     if length(value) != nrow(x)
-        throw(ArgumentError("length of value must match existing columns."))
+        throw(ArgumentError("Length of incoming value must match existing columns."))
     end
     if j <= length(x)
         columns(x)[1] = value
@@ -88,7 +91,7 @@ end
 
 function Base.setindex!(x::RLEDataTable, value::AbstractVector, j::Symbol)
     if length(value) != nrow(x)
-        throw(ArgumentError("length of value must match existing columns."))
+        throw(ArgumentError("Length of incoming value must match existing columns."))
     end
     if j in names(x)
         columns(x)[1] = value
@@ -100,9 +103,9 @@ function Base.setindex!(x::RLEDataTable, value::AbstractVector, j::Symbol)
 end
 
 ## just rows
-#function Base.getindex(x::RLEDataTable, i, j)
-#    
-#end
+function Base.getindex(x::RLEDataTable, i, j)
+    
+end
 
 
 ## rows and cols
