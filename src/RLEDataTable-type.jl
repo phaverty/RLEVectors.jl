@@ -102,13 +102,12 @@ function Base.setindex!(x::RLEDataTable, value::AbstractVector, j::Symbol)
     x
 end
 
-## just rows
+## with rows
 function Base.getindex(x::RLEDataTable, i, j)
-    
+    dt = x[j]
+    dt.columns = map( c -> c[i], columns(dt) )
+    dt
 end
-
-
-## rows and cols
 
 ### Familiar operations over rows or columns from R
 #rowMeans(x::RLEDataTable) = rowSum(x) ./ ncol(x)
