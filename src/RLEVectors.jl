@@ -2,8 +2,8 @@ __precompile__()
 
 module RLEVectors
 
-using Reexport
-@reexport using DataTables
+using DataTables
+using AxisArrays
 
 # RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar, starts, widths, ends, values
@@ -55,7 +55,7 @@ import Base: sort, sort!, issorted, reverse, reverse!, sortperm, Algorithm
 export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 
 # data frames
-import DataTables: AbstractDataTable, DataTable, Index, head, tail, index
+import DataTables: AbstractDataTable, DataTable, Index, head, tail, index, columns, nrow, ncol
 export RLEDataTable, nrow, ncol, rowSums, rowMeans, colSums, colMeans
 
 ### Includes
