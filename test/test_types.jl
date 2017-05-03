@@ -66,6 +66,7 @@ x = RLEVector([1,2,3],[2,9,22])
 @test widths(x,2) == 7
 @test widths(x,3) == 13
 @test ends(x) == [2,9,22]
+@test ends(x,3) == 22
 @test values(x) == [1,2,3]
 
 # Hashing
@@ -73,6 +74,7 @@ x = RLEVector([1,1,2,2,3,3,3])
 d = Dict("bob" => x)
 typeof(d["bob"]) == typeof(x)
 
+  
 end # testset
 
 end # module
