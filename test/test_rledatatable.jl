@@ -21,7 +21,9 @@ using AxisArrays
     @test index(z) == AxisArray(collect(1:3),[:a,:b,:c])
     @test columns(z) == [ RLEVector([5,2,2]), RLEVector([4,4,4]), RLEVector([3,2,1]) ]
     @test names(z) == [:a,:b,:c]
-                      
+    @test_throws ArgumentError RLEDataTable( [RLEVector([1])], [:a,:b] )
+    @test_throws ArgumentError RLEDataTable( [RLEVector([1]), RLEVector([2,3])], [:a,:b] )
+    
     # Getting and setting
     z = RLEDataTable( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
     @test z[:] == z
@@ -60,7 +62,11 @@ using AxisArrays
     z = RLEDataTable( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
     z[1,3] = 12
     @test z == RLEDataTable( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([12,2,1]) )
-    
+
+    z = RLEDataTable( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
+    z[1,[2,3]] = 12
+    @test z == RLEDataTable( a=RLEVector([5,2,2]), b=RLEVector([12,4,4]), c=RLEVector([12,2,1]) )
+
     z = RLEDataTable( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
     #@test rowMeans(z) == [7,8/3,7/3]
     #@test rowSums(z) == [12,8,7]
