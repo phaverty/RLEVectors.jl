@@ -82,7 +82,7 @@ function Base.setindex!(x::RLEDataTable, value::AbstractVector, j::Integer)
         throw(ArgumentError("Length of incoming value must match existing columns."))
     end
     if j <= length(x)
-        columns(x)[1] = value
+        columns(x)[j] = value
     else
         throw(BoundsError())
     end
@@ -94,7 +94,7 @@ function Base.setindex!(x::RLEDataTable, value::AbstractVector, j::Symbol)
         throw(ArgumentError("Length of incoming value must match existing columns."))
     end
     if j in names(x)
-        columns(x)[1] = value
+        columns(x)[index(x)[j]] = value
     else
         x.colindex = merge(index(x), AxisArray( [length(x) + 1], [j] ) )
         x.columns = push!(x.columns,value)
@@ -104,11 +104,21 @@ end
 
 ## with rows
 function Base.getindex(x::RLEDataTable, i, j)
-    dt = x[j]
-    dt.columns = map( c -> c[i], columns(dt) )
-    dt
+    cols = [ x.columns[j_ind][i] for j_ind in index(x)[j] ]
+    RLEDataTable( cols, names(x)[j] )
 end
+Base.getindex(x::RLEDataTable, i::Integer, j) = x[ [i], j ]
+Base.getindex(x::RLEDataTable, i::Integer, j::ColumnIndex) = x[j][i]
 
+function Base.setindex!(x::RLEDataTable, value, i, j)
+    for j_ind in index(x)[j]
+        x.columns[j_ind][i] = value
+    end
+    x
+end
+Base.setindex!(x::RLEDataTable, value, i::Integer, j) = setindex!(x,value,[i],j)
+Base.setindex!(x::RLEDataTable, value, i::Integer, j::ColumnIndex) = setindex!(x[j],value,i)
+    
 ### Familiar operations over rows or columns from R
 #rowMeans(x::RLEDataTable) = rowSum(x) ./ ncol(x)
 colSums(x::RLEDataTable) = map(sum, columns(x))
