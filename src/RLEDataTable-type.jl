@@ -104,8 +104,9 @@ end
 
 ## with rows
 function Base.getindex(x::RLEDataTable, i, j)
-    cols = [ x.columns[j_ind][i] for j_ind in index(x)[j] ]
-    RLEDataTable( cols, names(x)[j] )
+    j_inds = index(x)[j]
+    cols = [ x.columns[j_ind][i] for j_ind in j_inds ]
+    RLEDataTable( cols, names(x)[j_inds] )
 end
 Base.getindex(x::RLEDataTable, i::Integer, j) = x[ [i], j ]
 Base.getindex(x::RLEDataTable, i::Integer, j::ColumnIndex) = x[j][i]
