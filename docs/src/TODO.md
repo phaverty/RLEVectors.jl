@@ -43,8 +43,7 @@
 - [x] test for ind2run(rle::RLEVector, i::AbstractArray)
 - [x] new testing framework with nice reports
 - [x] Setup Documenter.jl - based docs pushed to github by travis
-- [ ] add stable docs badge after next version bump
-[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://phaverty.github.io/RLEVectors.jl/stable)
+- [x] add stable docs badge after next version bump
 
 ## Optimizations
 - [ ] Re-read julia/base/range.jl, some day understand the meaning of "# to make StepRange constructor inlineable, so optimizer can see `step` value"
@@ -77,6 +76,7 @@
 - [x] More tests for similar using 2 or 3 args
 - [x] Add badges to README
 - [x] Codecov.io
+- [x] getindex x[i,j] on RLEDT has an extra copies the j columns unnecessarily
 
 ## Bugs
 - [x] fix mode, needs to do table not just which.max

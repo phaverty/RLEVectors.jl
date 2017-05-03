@@ -121,6 +121,7 @@ end
 # conversions
 convert(::Type{Vector}, x::RLEVector) = collect(x)
 convert(::Type{Set}, x::RLEVector) = Set(values(x))
+convert(::Type{RLEVector}, x::Vector) = RLEVector(x)
 promote_rule(::Type{Set}, ::Type{RLEVector}) = Set
 
 # the basics

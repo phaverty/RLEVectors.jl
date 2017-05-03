@@ -2,6 +2,9 @@ __precompile__()
 
 module RLEVectors
 
+using DataTables
+using AxisArrays
+
 # RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar, starts, widths, ends, values
 import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect, isequal, values
@@ -43,7 +46,7 @@ export mode, countmap
 export disjoin, disjoin_length, ree, inverse_ree, numruns, rangeMeans
 
 # utils
-export rep
+export rep, rowSums, rowMeans, rowMedians, colSums, colMeans, colMedians
 
 # sorting
 import Base.Order: Ordering
@@ -51,10 +54,15 @@ import Base.Sort: QuickSortAlg
 import Base: sort, sort!, issorted, reverse, reverse!, sortperm, Algorithm
 export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 
+# data frames
+import DataTables: AbstractDataTable, DataTable, Index, head, tail, index, columns, nrow, ncol
+export RLEDataTable, nrow, ncol, columns, index, names
+
 ### Includes
 include("utils.jl")
 include("runs.jl")
 include("RLEVector-type.jl")
+include("RLEDataTable-type.jl")
 include("ranges.jl")
 include("describe.jl")
 include("indexing.jl")
