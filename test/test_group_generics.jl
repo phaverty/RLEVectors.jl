@@ -18,6 +18,7 @@ x = RLEVector(vec)
 @test div(vec,2) == collect(div(x,2))
 @test median(RLEVector([1,2,3,2,1,5,4])) == median([1,2,3,2,1,5,4])
 @test median(RLEVector([1,2,3,2,1,5])) == median([1,2,3,2,1,5])
+@test median(RLEVector([3,2,1])) == 2.0
 @test median(RLEVector([2, 2, 2, 3, 3, 3])) == 2.5 # median is average of end of run and next value
 @test sum(RLEVector([4, 4, 5, 5, 6, 6])) == 30
 @test mean(RLEVector([4, 4, 5, 5, 6, 6])) == 5.0

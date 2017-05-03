@@ -99,9 +99,9 @@ end
 
 function median(x::RLEVector)
   len = length(x)
-  len < 2 && return(middle(x.runvalues[1]))
+  len <= 2 && return(middle(x.runvalues))
   sorted = sort(x)
-  mid = fld(len,2)
+  mid = cld(len,2)
   mid_run = ind2run(sorted,mid)
   if mod(len,2) == 0 && mid == sorted.runends[mid_run] # even numbered and at end of run, avg with next value
     median = middle(sorted.runvalues[mid_run], sorted.runvalues[mid_run+1])

@@ -118,7 +118,7 @@ function Base.setindex!(x::RLEDataTable, value, i, j)
     x
 end
 Base.setindex!(x::RLEDataTable, value, i::Integer, j) = setindex!(x,value,[i],j)
-Base.setindex!(x::RLEDataTable, value, i::Integer, j::ColumnIndex) = setindex!(x[j],value,i)
+Base.setindex!(x::RLEDataTable, value, i::Integer, j::ColumnIndex) = setindex!(x.columns[j],value,i)
     
 ### Familiar operations over rows or columns from R
 #rowMeans(x::RLEDataTable) = rowSum(x) ./ ncol(x)

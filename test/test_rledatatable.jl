@@ -61,8 +61,13 @@ using AxisArrays
     z[1,3] = 12
     @test z == RLEDataTable( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([12,2,1]) )
     
-
-
+    z = RLEDataTable( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
+    #@test rowMeans(z) == [7,8/3,7/3]
+    #@test rowSums(z) == [12,8,7]
+    #@test rowMedians(z) == [5,4,4]
+    @test colMeans(z) == [3,4,2]
+    @test colSums(z) == [9,12,6]
+    @test colMedians(z) == [2.0,4.0,2.0]
     
 end # testset
 end # module
