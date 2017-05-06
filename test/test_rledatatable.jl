@@ -74,6 +74,14 @@ using AxisArrays
     @test colMeans(z) == [3,4,2]
     @test colSums(z) == [9,12,6]
     @test colMedians(z) == [2.0,4.0,2.0]
-    
+
+    zm = convert(Matrix,z)
+    @test rowMeans(zm) == [12/3,8/3,7/3]
+    @test rowSums(zm) == [12,8,7]
+    @test rowMedians(zm) == [4,2,2]
+    @test colMeans(zm) == [3,4,2]
+    @test colSums(zm) == [9,12,6]
+    @test colMedians(zm) == [2.0,4.0,2.0]
+
 end # testset
 end # module
