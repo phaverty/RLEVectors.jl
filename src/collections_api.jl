@@ -49,32 +49,6 @@ function shove!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
 end
 unshift!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = shove!(x,item) # Does unshift come from perl? Isn't Larry Wall a linguist? C'mon!
 
-function insert!{T,T2 <: Integer}(x::RLEVector{T,T2},i::Integer,item)
-  if i == length(x) + 1
-    push!(x,item)
-    return(x)
-  end
-  if i < 1 || i > length(x)
-    throw(BoundsError())
-  end
-  (run, index_in_run, run_remainder) = ind2runcontext(x,i)
-  if item == x.runvalues[run]
-    x.runends[run:end] += 1
-  else
-    if index_in_run == 1
-      ins_vals = [item; x.runvalues[run]]
-      ins_ends = [i; x.runends[run]+1]
-    else
-      ins_vals = [x.runvalues[run]; item; x.runvalues[run]]
-      ins_ends = [i-1; i; x.runends[run]+1]
-    end
-    x.runvalues = vcat( x.runvalues[1:run-1], ins_vals, x.runvalues[run+1:end] )
-    x.runends = vcat( x.runends[1:run-1], ins_ends, x.runends[run+1:end] + 1 )
-  end
-  x.runvalues,x.runends = ree(x.runvalues,x.runends)
-  return(x)
-end
-
 function deleterun!(x::RLEVector,i::Integer)
   x.runends[i:end] -= widths(x,i)
   if (i > 1 && i < nrun(x) && x.runvalues[i-1] == x.runvalues[i+1])
@@ -99,6 +73,15 @@ end
 function deleteat!(x::RLEVector,i::Integer)
   run = ind2run(x,i)
   decrement_run!(x,run)
+end
+
+function insert!{T,T2 <: Integer}(x::RLEVector{T,T2},i::Integer,item)
+    if i == length(x) + 1
+        splice!(x,length(x),[x[end],item])
+    else
+        splice!(x,i,[item,x[i]])
+    end
+    x
 end
 
 _default_splice = RLEVector(Union{}[],Int64[])
