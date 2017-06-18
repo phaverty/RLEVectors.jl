@@ -170,18 +170,18 @@ end
 
 # Appended space initialized with zero unlike base array
 function resize!(x::RLEVector, nl::Integer) # Based on base version for array
-  l = length(x)
-  if nl > l
-    push!(x.runends,nl)
-    push!(x.runvalues,0)
-  else
-    nl < 0 && throw(ArgumentError("new length must be ≥ 0"))
-    (run, index_in_run, run_remainder) = ind2runcontext(x,nl)
-    x.runends = x.runends[1:run]
-    x.runends[end] = x.runends[end] - run_remainder
-    x.runvalues = x.runvalues[1:run]
-  end
-  return(x)
+    l = length(x)
+    if nl > l
+        push!(x.runends,nl)
+        push!(x.runvalues,0)
+    else
+        nl < 0 && throw(ArgumentError("new length must be ≥ 0"))
+        (run, index_in_run, run_remainder) = ind2runcontext(x,nl)
+        resize!(x.runends,run)
+        resize!(x.runvalues,run)
+        x.runends[end] = x.runends[end] - run_remainder
+    end
+    return(x)
 end
 
 function empty!(x::RLEVector)

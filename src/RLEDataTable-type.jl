@@ -1,5 +1,3 @@
-# A few things we want from DataTables
-
 typealias DFIndex AxisArray{Int64,1,Vector{Int64},Tuple{AxisArrays.Axis{:row,Array{Symbol,1}}}}
 typealias ColumnIndex Union{Symbol,Integer}
 
