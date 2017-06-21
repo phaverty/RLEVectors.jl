@@ -108,7 +108,7 @@ function splice!(x::RLEVector, i::Integer, ins::RLEVector=_default_splice)
     end
     x.runvalues = vcat( x.runvalues[1:run-1], ins_vals, x.runvalues[run+1:end] )
     x.runends = vcat( x.runends[1:run-1], ins_ends, x.runends[run+1:end])
-    x.runvalues,x.runends = ree(x.runvalues,x.runends)
+    ree!(x.runvalues,x.runends)
   end
   return(current)
 end
@@ -139,7 +139,7 @@ function splice!(x::RLEVector, index::Range, ins::RLEVector=_default_splice) # C
   end
   x.runvalues = vcat( x.runvalues[1:run_left-1], ins_vals, x.runvalues[run_right+1:end] )
   x.runends = vcat( x.runends[1:run_left-1], ins_ends, x.runends[run_right+1:end] )
-  x.runvalues, x.runends = ree(x.runvalues,x.runends)
+  ree!(x.runvalues,x.runends)
   return(current)
 end
 

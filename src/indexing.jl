@@ -49,7 +49,7 @@ function ind2runcontext(rle::RLEVector, i::UnitRange)
 end
 
 ## Just enough for AbstractArray
-Base.linearindexing{T<:RLEVector}(::Type{T}) = Base.LinearFast()
+Base.linearindexing{T<:RLEVector}(::Type{T}) = Base.IndexLinear()
 
 endof(rle::RLEVector) = length(rle)
 

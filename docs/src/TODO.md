@@ -2,7 +2,7 @@
 
 ## New types
 -  [ ] Vector{RLEVector} called RLEVectorList (RVL) with group_generics that loop over elements and match elements when given two RLEs
--  [ ] RLEDataFrame based on RLEVectorList
+-  [x] RLEDataFrame based on RLEVectorList
 -  [ ] RVL implements all RLEVector functions as map(x,rvl)
 -  [ ] which functions apply to the list and which map over the elements?
 -  [ ] RLEDF needs the same creation functions as DataFrame
@@ -11,6 +11,10 @@
 - [x] Base.:(symbol) should now be Base.:symbol, requiring some changes in group_generics.jl
 - [x] BaseTestNext
 - [x] different show for MIME type for printing in REPL
+
+## 0.6 changes
+- [ ] Figure out how to write a method for broadcast
+- [ ] Get rid of the .+ type operators
 
 ## Enhancements
 - [ ] Figure out how Documenter and doctests work together
