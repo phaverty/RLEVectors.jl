@@ -47,7 +47,7 @@ specific to the type.
 * `endtype(x)` Returns the element type of the run ends
 
 """
-immutable RLEVector{T1,T2 <: Integer} <: AbstractArray{T1, 1}
+type RLEVector{T1,T2 <: Integer} <: AbstractArray{T1, 1}
   runvalues::Vector{T1}
   runends::Vector{T2}
   function RLEVector(runvalues, runends)
