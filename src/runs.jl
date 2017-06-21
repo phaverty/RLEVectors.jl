@@ -75,37 +75,45 @@ end
 
 """
     ree(runvalues, runends)
+    ree!(runvalues, runends)
+    ree!(x::RLEVector)
         
 Tidy up an existing (mostly) Run End Encoded vector, dropping zero length runs and fixing
-        any adjacent identical values. `RLEVectors.jl` does this operation after modifying an
-     RLEVector, for example.
+any adjacent identical values. `RLEVectors.jl` does this operation after modifying an
+RLEVector, for example.
 """
 function ree(runvalues, runends)
   ree(runvalues, runends, numruns(runvalues, runends))
 end
 
-function ree(runvalues, runends, nrun)
-  newv = similar(runvalues,nrun)
-  newe = similar(runends,nrun)
-  current_val = runvalues[1]
-  current_end = runends[1]
-  n = 1
-    @inbounds for i in 2:length(runvalues)
-        rv = runvalues[i]
-        re = runends[i]
-    if runends[i] != current_end
-      if rv != current_val
-        newv[n] = current_val
-        newe[n] = current_end
-        n = n + 1
-        current_val = rv
-      end
-      current_end = re
+function ree!(runvalues, runends)
+    n = length(runvalues)
+    if n < 2
+        return( runvalues, runends )
     end
-  end
-  @inbounds newv[n] = current_val
-  @inbounds newe[n] = current_end
-  return( (newv,newe))
+    current_val = runvalues[1]
+    current_end = runends[1]
+    left_i = 1
+    @inbounds for right_i in 2:length(runvalues)
+        rv = runvalues[right_i]
+        re = runends[right_i]
+        if rv != current_val && re != current_end
+            left_i = left_i + 1
+            current_val = runvalues[left_i] = rv
+        end
+        current_end = runends[left_i] = re
+    end
+    if left_i != n
+        resize!(runvalues,left_i)
+        resize!(runends,left_i)
+    end
+    runvalues, runends
+end
+
+function ree(runvalues, runends, nrun)
+    newv = copy(runvalues)
+    newe = copy(runends)
+    ree!(newv,newe)
 end
 
 function ree(x)
@@ -126,7 +134,7 @@ function inverse_ree(runvalues,runends)
   len != length(runends) && throw(ArgumentError("runvalues and runends must be of the same length."))
   len == 0 && return(similar(runvalues,0))
   n = runends[end]
-  rval = Array(eltype(runvalues),n)
+  rval = similar(runvalues,n)
   j=1
   @inbounds for i in 1:n
     rval[i] = runvalues[j]

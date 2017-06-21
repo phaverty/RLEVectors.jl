@@ -57,19 +57,15 @@ type RLEVector{T1,T2 <: Integer} <: AbstractArray{T1, 1}
 end
 
 function RLEVector{T1,T2 <: Integer}(runvalues::Vector{T1}, runends::Vector{T2})
-  nrun = numruns(runvalues,runends)
-  if nrun != length(runends)
-    runvalues, runends = ree(runvalues,runends,nrun)
-  end
-  RLEVector{T1,T2}(runvalues, runends)
+    ! issorted(runends) && throw(ArgumentError("RLEVector run ends must be sorted"))
+    runvalues, runends = ree!(runvalues,runends)
+    RLEVector{T1,T2}(runvalues, runends)
 end
 
 function RLEVector{T2 <: Integer}(runvalues::BitVector, runends::Vector{T2})
-  nrun = numruns(runvalues,runends)
-  if nrun != length(runends)
-    runvalues, runends = ree(runvalues,runends,nrun)
-  end
-  RLEVector{Bool,T2}(runvalues, runends)
+    ! issorted(runends) && throw(ArgumentError("RLEVector run ends must be sorted"))
+    runvalues, runends = ree!(runvalues,runends)
+    RLEVector{Bool,T2}(runvalues, runends)
 end
 
 function RLEVector(vec::Vector)
@@ -116,6 +112,10 @@ function Base.show(io::IO, ::MIME"text/plain", x::RLEVector)
     print(io,", Widths: ")
     Base.show_vector(io,widths(x),"[", "]")
     print("\n")
+end
+
+function ree!(x::RLEVector)
+    ree!(x.runvalues,x.runends)
 end
 
 # conversions

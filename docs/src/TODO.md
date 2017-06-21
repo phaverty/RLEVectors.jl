@@ -44,6 +44,7 @@
 - [x] new testing framework with nice reports
 - [x] Setup Documenter.jl - based docs pushed to github by travis
 - [x] add stable docs badge after next version bump
+- [ ] in-place ree!(runs,lengths) as a step towards immutable RLEVector
 
 ## Optimizations
 - [ ] Re-read julia/base/range.jl, some day understand the meaning of "# to make StepRange constructor inlineable, so optimizer can see `step` value"
