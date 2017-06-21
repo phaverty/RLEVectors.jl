@@ -155,8 +155,8 @@ function Base.setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::T1, indices::UnitRa
   at_end_of_run = right_i == right_runend
   match_left = left_run > 1 && rle.runvalues[previous_run] == value
   match_right = right_run < nrun(rle) && rle.runvalues[next_run] == value
-  adjusted_runvalues = Array(typeof(left_runvalue),0)
-  adjusted_runends = Array(typeof(left_runend),0)
+  adjusted_runvalues = similar(rle.runvalues,0)
+  adjusted_runends = similar(rle.runends,0)
   if at_end_of_run
     if at_start_of_run # in a run of length 1
       if match_right && match_left

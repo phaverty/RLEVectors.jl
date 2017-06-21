@@ -39,7 +39,7 @@ An integer vector, of a type that is the promotion of the eltypes of the runends
 x = [2, 4, 6]
 y = [3, 4, 5, 6]
 disjoin(x,y)
-5-element Array{Int64,1}:
+5-element Array{Int64}(1):
  2
  3
  4
@@ -53,7 +53,7 @@ function disjoin(x::Vector,  y::Vector)
     nrun = disjoin_length(x, y)
     i = length(x)
     j = length(y)
-    runends = Array(promote_type(eltype(x), eltype(y)), nrun)
+    runends = Array{promote_type(eltype(x), eltype(y))}(nrun)
     @inbounds while true
         xi = x[i]
         yj = y[j]
