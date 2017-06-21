@@ -48,6 +48,7 @@ x = RLEVector([7])
 # vcat
 @test RLEVector([1,1,2,2,3,3,4,4]) == vcat( RLEVector([1,1,2,2]), RLEVector([3,3,4,4]) )
 @test RLEVector([1,1,2,2,2,2,4,4]) == vcat( RLEVector([1,1,2,2]), RLEVector([2,2,4,4]) )
+@test RLEVector([1,1,2,2,3,3,4,4,5,5,6,6]) == vcat( RLEVector([1,1,2,2]), RLEVector([3,3,4,4]), RLEVector([5,5,6,6]) )
 
 # insert!
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
