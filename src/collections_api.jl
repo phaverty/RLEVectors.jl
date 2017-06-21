@@ -30,7 +30,7 @@ end
 function shift!(x::RLEVector)
   isempty(x) && throw(ArgumentError("array must be non-empty"))
   item = x.runvalues[1]
-  x.runends -= 1
+  x.runends[:] = x.runends - 1
   if x.runends[1] == 0
     deleteat!(x.runvalues,1)
     deleteat!(x.runends,1)
@@ -40,7 +40,7 @@ end
 
 function shove!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
   item = convert(T,item) # Copying how base does it for arrays
-  x.runends += 1
+  x.runends[:] = x.runends + 1
   if item != x.runvalues[1]
     unshift!(x.runvalues,item)
     unshift!(x.runends,1)
