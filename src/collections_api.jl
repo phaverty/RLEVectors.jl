@@ -89,9 +89,7 @@ end
 
 _default_splice = RLEVector(Union{}[],Int64[])
 function splice!(x::RLEVector, i::Integer, ins::RLEVector=_default_splice)
-    if ! (1 <= i <= length(x))
-        throw(BoundsError())
-    end
+    (1 <= i <= length(x)) || throw(BoundsError())
     if length(ins) == 0
         run = ind2run(x,i)
         current = x.runvalues[run]
@@ -117,11 +115,8 @@ function splice!(x::RLEVector, i::Integer, ins::RLEVector=_default_splice)
 end
 
 function splice!(x::RLEVector, index::Range, ins::RLEVector=_default_splice) # Can I do index::Union(Integer,UnitRange) here to have just one method?
-    i_left = start(index)
-    i_right = last(index)
-    if !( 1 <= i_left <= i_right <= length(x))
-        throw(BoundsError())
-    end
+    i_left, i_right = extrema(index)
+    (1 <= i_left <= i_right <= length(x)) || throw(BoundsError())
     if length(index) == 0
         current = similar(x,0)
         (run_right, index_in_run_right, run_remainder_right) = (run_left, index_in_run_left, run_remainder_left) = ind2runcontext(x,i_left)
