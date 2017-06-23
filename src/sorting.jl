@@ -11,7 +11,7 @@ end
 
 function reverse!(x::RLEVector, start=1, stop=length(x))
   reverse!(x.runvalues)
-  x.runends = cumsum(reverse(widths(x)))
+  x.runends[:] = cumsum(reverse(widths(x)))
   return(x)
 end
 
@@ -27,8 +27,8 @@ end
 
 function sort!(x::RLEVector)
   ord = sortperm(x.runvalues)
-  x.runvalues = x.runvalues[ord]
-  x.runends = cumsum(widths(x)[ord])
+  x.runvalues[:] = x.runvalues[ord]
+  x.runends[:] = cumsum(widths(x)[ord])
   return(x)
 end
 

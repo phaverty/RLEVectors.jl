@@ -107,21 +107,22 @@ function splice!(x::RLEVector, i::Integer, ins::RLEVector=_default_splice)
             ins_vals = [x.runvalues[run]; ins.runvalues; x.runvalues[run]]
             ins_ends = [i-1; ins.runends; x.runends[run]]
         end
-        x.runvalues = vcat( x.runvalues[1:run-1], ins_vals, x.runvalues[run+1:end] )
-        x.runends = vcat( x.runends[1:run-1], ins_ends, x.runends[run+1:end])
+        splice!( x.runvalues, run, ins_vals)
+        splice!( x.runends, run, ins_ends)
         ree!(x.runvalues,x.runends)
     end
     return(current)
 end
 
-function splice!(x::RLEVector, index::Range, ins::RLEVector=_default_splice) # Can I do index::Union(Integer,UnitRange) here to have just one method?
-    i_left, i_right = extrema(index)
-    (1 <= i_left <= i_right <= length(x)) || throw(BoundsError())
-    if length(index) == 0
+function splice!(x::RLEVector, index::UnitRange, ins::RLEVector=_default_splice) # Can I do index::Union(Integer,UnitRange) here to have just one method?
+    i_left = first(index)
+    i_right = last(index)
+    if i_left > i_right # Insert without removing
         current = similar(x,0)
-        (run_right, index_in_run_right, run_remainder_right) = (run_left, index_in_run_left, run_remainder_left) = ind2runcontext(x,i_left)
+        (run_right, index_in_run_right, run_remainder_right) = (run_left, index_in_run_left, run_remainder_left) = ind2runcontext(x,first(index))
     else
         current = x[index]
+        (1 <= i_left <= i_right <= length(x)) || throw(BoundsError())
         (run_left, index_in_run_left, run_remainder_left) = ind2runcontext(x,i_left)
         (run_right, index_in_run_right, run_remainder_right) = ind2runcontext(x,i_right)
     end
@@ -135,8 +136,8 @@ function splice!(x::RLEVector, index::Range, ins::RLEVector=_default_splice) # C
         ins_vals = [x.runvalues[run_left]; ins.runvalues; x.runvalues[run_right]]
         ins_ends = [i_left-1; ins.runends; x.runends[run_right]]
     end
-    x.runvalues = vcat( x.runvalues[1:run_left-1], ins_vals, x.runvalues[run_right+1:end] )
-    x.runends = vcat( x.runends[1:run_left-1], ins_ends, x.runends[run_right+1:end] )
+    splice!( x.runvalues, run_left:run_right, ins_vals)
+    splice!( x.runends, run_left:run_right, ins_ends)
     ree!(x.runvalues,x.runends)
     return(current)
 end
