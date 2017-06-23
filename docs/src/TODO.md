@@ -163,7 +163,7 @@
 	Maybe starts, widths, ends?
 
 - [x] Is it a good idea to require two arg vectors to be the same length like this: function bob{T1,T1,N}(x::Vector{T1,N},y::Vector{T2,N})  ?  Or just test the lengths and throw an ArgumentError?
-
+- [ ] `each` should probably be `eachrange`
 
 - [x] Is 1 an appropriate start for an empty RLEVector? Does that imply that there is a value associated? Go to zero-based, half open (#can-of-worms)?. NO.
 - [x] does one export methods defined on generics from Base?

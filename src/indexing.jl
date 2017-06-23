@@ -229,27 +229,28 @@ function done(rle::RLEVector, state)
 end
 
 # Iterator for ranges based on RLE e.g. (value, start, end)
-immutable RLEEachIterator{T1,T2}
+immutable RLEEachRangeIterator{T1,T2}
     rle::RLEVector{T1,T2}
 end
-each(x::RLEVector) = RLEEachIterator(x)
+eachrange(x::RLEVector) = RLEEachRangeIterator(x)
+@deprecate each(x::RLEVector) = RLEEachRangeIterator(x)
 
-function start(x::RLEEachIterator)
+function start(x::RLEEachRangeIterator)
     1
 end
 
-function next(x::RLEEachIterator, state)
+function next(x::RLEEachRangeIterator, state)
     newstate = state + 1
     first = starts(x.rle,state)
     last = ends(x.rle)[state]
     ( (values(x.rle)[state], first:last ), newstate )
 end
 
-function done(x::RLEEachIterator, state)
+function done(x::RLEEachRangeIterator, state)
     state > nrun(x.rle)
 end
 
-function length(x::RLEEachIterator)
+function length(x::RLEEachRangeIterator)
     nrun(x.rle)
 end
 
@@ -269,7 +270,7 @@ Map a function to blocks of vector, like `tapply` in R. The first and second arg
 """
 function tapply(x::Vector, rle::RLEVector, fun::Function)
     length(x) == length(rle) || throw(ArgumentError("Arguments 'x' and 'rle' must have the same length."))
-    [ fun(x[r]) for (v,r) in each(rle) ]
+    [ fun(x[r]) for (v,r) in eachrange(rle) ]
 end
 
 function tapply(x::Vector, factor::Vector, fun::Function)
@@ -277,6 +278,6 @@ function tapply(x::Vector, factor::Vector, fun::Function)
     ind = sortperm(factor)
     x = x[ind]
     rle = RLEVector( factor[ind] )
-    [ fun(x[r]) for (v,r) in each(rle) ]
+    [ fun(x[r]) for (v,r) in eachrange(rle) ]
 end
 
