@@ -125,20 +125,6 @@ function Base.getindex(rle::RLEVector, ind::UnitRange)
     return(rv)
 end
 
-#function Base.slice(rle::RLEVector, indices::UnitRange)
-#    runs = ind2run(rle,indices)
-#    rv = rle.runvalues[runs]
-#    nrun = length(runs)
-#    re = similar(rle.runends, nrun)
-#    offset = start(indices) - 1
-#    @inbounds for (i,r) in enumerate( start(runs):(last(runs) - 1) )
-#        re[i] = rle.runends[r] - offset
-#    end
-#    re[nrun] = last(indices) - offset # length(indices)
-#    rval = RLEVector{eltype(rv),eltype(re)}(rv,re)
-#    return(rval)
-#end
-
 function Base.getindex(rle::RLEVector, ind::AbstractVector)
     run_indices = ind2run(rle, ind)
     return( RLEVector( rle.runvalues[ run_indices ] ) )
@@ -233,7 +219,7 @@ immutable RLEEachRangeIterator{T1,T2}
     rle::RLEVector{T1,T2}
 end
 eachrange(x::RLEVector) = RLEEachRangeIterator(x)
-@deprecate each(x::RLEVector) = RLEEachRangeIterator(x)
+@deprecate each(x::RLEVector) eachrange(x)
 
 function start(x::RLEEachRangeIterator)
     1

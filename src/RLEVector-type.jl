@@ -95,7 +95,7 @@ function similar(x::RLEVector, element_type::Type, dims::Dims)
 end
 
 # show
-function Base.show(io::IO, x::RLEVector)
+function Base.show(io::IO, ::MIME"text/plain", x::RLEVector)
     t = typeof(x)::DataType
     show(io, t)
     n = nrun(x)
@@ -105,13 +105,11 @@ function Base.show(io::IO, x::RLEVector)
     Base.show_vector(io,x.runends,"[", "]")
 end
 
-function Base.show(io::IO, ::MIME"text/plain", x::RLEVector)
-    show(io,typeof(x))
-    print(io,", Values: ")
+function Base.show(io::IO, x::RLEVector)
+    write(io,"Values: ")
     Base.show_vector(io,values(x),"[", "]")
-    print(io,", Widths: ")
+    write(io," Ends: ")
     Base.show_vector(io,widths(x),"[", "]")
-    print("\n")
 end
 
 function ree!(x::RLEVector)

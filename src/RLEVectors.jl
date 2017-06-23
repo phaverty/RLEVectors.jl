@@ -16,7 +16,7 @@ export shove!, deleterun!, decrement_run!
 
 # indexing
 import Base: getindex, setindex!
-export getindex, setindex!, ind2run, setrun!, ind2runcontext, head, tail, RLERangesIterator, each, eachrange, tapply
+export getindex, setindex!, ind2run, setrun!, ind2runcontext, head, tail, RLERangesIterator, eachrange, tapply
 
 # describe
 import Base: isempty
