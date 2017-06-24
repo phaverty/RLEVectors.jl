@@ -4,7 +4,8 @@
 # Arith
 # "+", "-", "*", "^", "%%", "%/%", "/"
 #const arith_group = [:(+), :(-), :(*), :(/), :(^), :(.+), :(.-), :(.*), :(./), :(.^), :(div), :(mod), :(fld), :(rem)]
-const arith_group = [:+, :-, :.+, :.-, :.*, :./, :.^, :div, :mod, :fld, :rem] # Just scalar arith for vectors
+const arith_group = [:+, :-, :.+, :.-, :.*, :./, :.^] # Just scalar arith for vectors
+const arith_group2 = [:div, :mod, :fld, :rem] 
 
 # Compare
 # "=="), ">"), "<"), "!="), "<="), ">="
@@ -12,11 +13,11 @@ const compare_group = [:.==, :.>, :.<, :.!=, :.<=, :.>=]
 
 # Logic
 # "&"), "|".
-const logic_group = [:&, :|]
+const logic_group = [:.&, :.|]
 
 # Ops
 # "Arith", "Compare", "Logic"
-const ops_group = vcat( arith_group, compare_group, logic_group )
+const ops_group = vcat( arith_group, arith_group2, compare_group, logic_group )
 
 # Math
 # "abs", "sign", "sqrt", "ceiling", "floor", "trunc", "cummax", "cummin", "cumprod", "cumsum", "log", "log10", "log2", "log1p", "acos", "acosh", "asin", "asinh", "atan", "atanh", "exp", "expm1", "cos", "cosh", "sin", "sinh", "tan", "tanh", "gamma", "lgamma", "digamma", "trigamma"
@@ -34,12 +35,12 @@ const summary_group =[:range, :prod, :sum, :any, :all, :eltype, :unique, :minimu
 # "Arg", "Conj", "Im", "Mod", "Re"
 # leaving out for now
 
-Base.broadcast(f, x::RLEVector, y...) = RLEVector( broadcast(f,values(x),y...), ends(x) )
+Base.broadcast(f, x::RLEVector, y...) = RLEVector( broadcast(f,x.runvalues,y...), ends(x) )
 Base.broadcast!(f, x::RLEVector, y...) = RLEVector( broadcast!(f,x.runvalues,y...), ends(x) )
 function Base.broadcast(f, x::RLEVector, y::RLEVector)
     if length(x) == length(y)
         (runends, runvalues_x, runvalues_y) = disjoin(x, y)
-        return RLEVector( broadcast(f,runvalues_x,runvalues_y), runends)
+        return RLEVector( map(f,runvalues_x,runvalues_y), runends )
     else
         return RLEVector( broadcast(f,collect(x),collect(y)) )
     end
@@ -48,7 +49,6 @@ end
 Base.map(f, x::RLEVector...) = RLEVector( map(f,values(x)...), ends(x) )
 Base.map!(f, x::RLEVector...) = RLEVector( map!(f,x.runvalues...), ends(x) )
 
-
 if VERSION < v"0.6.0"
     for op in ops_group
         @eval begin
@@ -56,7 +56,6 @@ if VERSION < v"0.6.0"
             function ($op)(x::RLEVector, y::RLEVector)
                 (runends, runvalues_x, runvalues_y) = disjoin(x, y)
                 runvalues = $(op)(runvalues_x, runvalues_y)
-                #RLEVector{eltype(runvalues), eltype(runends)}(runvalues, runends)  # Nope, what if op makes adjacent values equal?
                 RLEVector(runvalues, runends)
             end
             # Rle, Number
@@ -69,8 +68,8 @@ end
 
 ## Methods that delegate to the runvalues and return an RLEVector
 ## Methods that take one argument, an RLEVector, and delegate to rle.runvalues and return an RLEVector
-for op in math_group
-  @eval ($op)(x::RLEVector) = RLEVector( ($op)(x.runvalues), x.runends )
+for op in setdiff(math_group,[:cumsum,:cumprod])
+    @eval ($op)(x::RLEVector) = RLEVector( ($op)(x.runvalues), x.runends )
 end
 
 ## Methods that take one argument, an RLEVector, and delegate to rle.runvalues and return something other than an RLEVector
@@ -136,6 +135,4 @@ function sum{T1,T2}(x::RLEVector{T1,T2})
   return(rval)
 end
 
-function mean{T1,T2}(x::RLEVector{T1,T2})
-  rval = sum(x) / length(x)
-end
+mean(x::RLEVector) = rval = sum(x) / length(x)

@@ -15,6 +15,7 @@
 ## 0.6 changes
 - [ ] Figure out how to write a method for broadcast
 - [ ] Get rid of the .+ type operators
+- [ ] need accumulate, maybe cumsum, cumprod
 
 ## Enhancements
 - [ ] Figure out how Documenter and doctests work together

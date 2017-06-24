@@ -58,10 +58,12 @@ function widths(x::RLEVector, run::Integer)
   run == 1 ? x.runends[1] : x.runends[run] - x.runends[run-1]
 end
 
-ends(x::RLEVector) =  x.runends
+ends(x::RLEVector) =  copy(x.runends)
+_ends(x::RLEVector) =  x.runends
 ends(x::RLEVector, run::Integer) =  x.runends[run]
 
-values(x::RLEVector) = x.runvalues
+values(x::RLEVector) = copy(x.runvalues)
+_values(x::RLEVector) = x.runvalues
 endtype(x::RLEVector) = eltype(rlast(x))
 
 rfirst(x::RLEVector) = starts(x)
