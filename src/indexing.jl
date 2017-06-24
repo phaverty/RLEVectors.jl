@@ -55,7 +55,6 @@ else
     Base.linearindexing{T<:RLEVector}(::Type{T}) = Base.LinearFast()
 end
 
-
 endof(rle::RLEVector) = length(rle)
 
 function Base.getindex(rle::RLEVector, i::Int)

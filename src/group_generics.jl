@@ -28,25 +28,42 @@ const math_group = [:abs, :sign, :sqrt, :ceil, :floor, :trunc, :cummax, :cummin,
 
 # Summary
 # "max", "min", "range", "prod", "sum", "any", "all"
-const summary_group =[:maximum, :minimum, :range, :prod, :sum, :any, :all, :eltype, :unique, :minimum, :maximum, :extrema, :first, :last, :maxabs, :minabs, :any, :all] # sum and prod special
+const summary_group =[:range, :prod, :sum, :any, :all, :eltype, :unique, :minimum, :maximum, :extrema, :first, :last, :maxabs, :minabs, :any, :all] # sum and prod special
 
 # Complex
 # "Arg", "Conj", "Im", "Mod", "Re"
 # leaving out for now
 
-for op in ops_group
-    @eval begin
-        # Rle, Rle
-        function ($op)(x::RLEVector, y::RLEVector)
-            (runends, runvalues_x, runvalues_y) = disjoin(x, y)
-            runvalues = $(op)(runvalues_x, runvalues_y)
-            #RLEVector{eltype(runvalues), eltype(runends)}(runvalues, runends)  # Nope, what if op makes adjacent values equal?
-            RLEVector(runvalues, runends)
+Base.broadcast(f, x::RLEVector, y...) = RLEVector( broadcast(f,values(x),y...), ends(x) )
+Base.broadcast!(f, x::RLEVector, y...) = RLEVector( broadcast!(f,x.runvalues,y...), ends(x) )
+function Base.broadcast(f, x::RLEVector, y::RLEVector)
+    if length(x) == length(y)
+        (runends, runvalues_x, runvalues_y) = disjoin(x, y)
+        return RLEVector( broadcast(f,runvalues_x,runvalues_y), runends)
+    else
+        return RLEVector( broadcast(f,collect(x),collect(y)) )
+    end
+end
+    
+Base.map(f, x::RLEVector...) = RLEVector( map(f,values(x)...), ends(x) )
+Base.map!(f, x::RLEVector...) = RLEVector( map!(f,x.runvalues...), ends(x) )
+
+
+if VERSION < v"0.6.0"
+    for op in ops_group
+        @eval begin
+            # Rle, Rle
+            function ($op)(x::RLEVector, y::RLEVector)
+                (runends, runvalues_x, runvalues_y) = disjoin(x, y)
+                runvalues = $(op)(runvalues_x, runvalues_y)
+                #RLEVector{eltype(runvalues), eltype(runends)}(runvalues, runends)  # Nope, what if op makes adjacent values equal?
+                RLEVector(runvalues, runends)
+            end
+            # Rle, Number
+            ($op)(x::RLEVector,y::Number) = RLEVector( ($op)(x.runvalues,y), x.runends )
+            # Number, Rle
+            ($op)(y::Number, x::RLEVector) = RLEVector( ($op)(y,x.runvalues), x.runends )
         end
-        # Rle, Number
-        ($op)(x::RLEVector,y::Number) = RLEVector( ($op)(x.runvalues,y), x.runends )
-        # Number, Rle
-        ($op)(y::Number, x::RLEVector) = RLEVector( ($op)(y,x.runvalues), x.runends )
     end
 end
 
