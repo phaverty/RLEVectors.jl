@@ -4,6 +4,7 @@ module RLEVectors
 
 using DataTables
 using AxisArrays
+using Compat
 
 # RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar, starts, widths, ends, values

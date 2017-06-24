@@ -1,4 +1,4 @@
-### RLEVectors Type
+### RLEVectorsType
 
 """
 # RLEVectors
@@ -77,11 +77,11 @@ RLEVector{T1,T2 <: Integer}(runvalues::T1, runends::T2) = RLEVector{T1,T2}([runv
 
 #  Having specific types of Rle would be useful for lists of the same type, but Julia does a good job noticing that
 #  Could also be useful for method definitions
-const FloatRle = RLEVector{Float64,UInt32}
-const IntegerRle = RLEVector{Int64,UInt32}
-const BoolRle = RLEVector{Bool,UInt32}
-const StringRle = RLEVector{String,UInt32}
-const RLEVectorList{T1,T2} = Vector{ RLEVector{T1,T2} }
+const FloatRle = RLEVector{Float64,UInt32} end
+const IntegerRle = RLEVector{Int64,UInt32} end
+const BoolRle = RLEVector{Bool,UInt32} end
+const StringRle = RLEVector{String,UInt32} end
+@compat const RLEVectorList{T1,T2} = Vector{ RLEVector{T1,T2} } end
 @doc (@doc RLEVector) FloatRle,  IntegerRle, BoolRle, StringRle, RLEVectorList
 
 # similar
