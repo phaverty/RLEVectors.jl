@@ -23,7 +23,7 @@ import Base: isempty
 export endtype
 
 # group_generics
-import Base: broadcast, broadcast!, map, map!
+import Base: broadcast, map
 import Base: +, -, *, /, ^, .+, .-, .*, ./, .^, div, mod, fld, rem
 import Base: ==, >, <, !=, <=, >=, .==, .>, .<, .!=, .<=, .>=, &, |
 import Base: abs, sign, sqrt, ceil, floor, trunc, cummax, cummin, cumprod, cumsum, log, log10, log2, log1p, acos, acosh, asin, asinh, atan, atanh

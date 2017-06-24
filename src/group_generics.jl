@@ -35,19 +35,12 @@ const summary_group =[:range, :prod, :sum, :any, :all, :eltype, :unique, :minimu
 # "Arg", "Conj", "Im", "Mod", "Re"
 # leaving out for now
 
-Base.broadcast(f, x::RLEVector, y...) = RLEVector( broadcast(f,x.runvalues,y...), ends(x) )
-Base.broadcast!(f, x::RLEVector, y...) = RLEVector( broadcast!(f,x.runvalues,y...), ends(x) )
+Base.broadcast(f, x::RLEVector, y...) = RLEVector( [f(el,y...) for el in x.runvalues], ends(x) )
 function Base.broadcast(f, x::RLEVector, y::RLEVector)
-    if length(x) == length(y)
-        (runends, runvalues_x, runvalues_y) = disjoin(x, y)
-        return RLEVector( map(f,runvalues_x,runvalues_y), runends )
-    else
-        return RLEVector( broadcast(f,collect(x),collect(y)) )
-    end
+    (runends, runvalues_x, runvalues_y) = disjoin(x, y)
+    RLEVector( map(f,runvalues_x,runvalues_y), runends )
 end
-    
-Base.map(f, x::RLEVector...) = RLEVector( map(f,values(x)...), ends(x) )
-Base.map!(f, x::RLEVector...) = RLEVector( map!(f,x.runvalues...), ends(x) )
+Base.map(f, x::RLEVector)  = RLEVector( map(f,x.runvalues), ends(x) )
 
 if VERSION < v"0.6.0"
     for op in ops_group
