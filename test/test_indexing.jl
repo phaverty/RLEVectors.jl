@@ -209,17 +209,17 @@ x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
 @test tail(x) == [2,2,3,3,4,4]
 @test tail(x,3) == [3,4,4]
 
-# each iterator
+# eachrange iterator
 x = RLEVector([1, 1, 2, 2, 7, 12])
 a_list = []
 b_list = []
-for (a, b) in each(x)
+for (a, b) in eachrange(x)
     push!(a_list, a)
     push!(b_list, b)
 end
 @test a_list == Any[1, 2, 7, 12]
 @test b_list == Any[1:2, 3:4, 5:5, 6:6]
-@test length(each(x)) == 4
+@test length(eachrange(x)) == 4
 
 # tapply
 factor = repeat( ["a","b","c","d","e"], inner=5 )
