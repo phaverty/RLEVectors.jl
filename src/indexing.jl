@@ -50,7 +50,7 @@ end
 
 ## Just enough for AbstractArray
 if VERSION >= v"0.6.0"
-    Base.linearindexing{T<:RLEVector}(::Type{T}) = Base.IndexLinear()
+    Base.IndexStyle(::Type{<:RLEVector}) = IndexLinear()
 else
     Base.linearindexing{T<:RLEVector}(::Type{T}) = Base.LinearFast()
 end
