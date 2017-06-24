@@ -1,5 +1,5 @@
-typealias DFIndex AxisArray{Int64,1,Vector{Int64},Tuple{AxisArrays.Axis{:row,Array{Symbol,1}}}}
-typealias ColumnIndex Union{Symbol,Integer}
+const DFIndex = AxisArray{Int64,1,Vector{Int64},Tuple{AxisArrays.Axis{:row,Array{Symbol,1}}}}
+const ColumnIndex = Union{Symbol,Integer}
 
 """
 An RLEDataTable extends DataTable and contains a colection of like-length and like-type
