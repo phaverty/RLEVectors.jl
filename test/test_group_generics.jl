@@ -2,7 +2,7 @@ module TestGroupGenerics
 
 using Base.Test
 using RLEVectors
-
+using Compat
 @testset begin
 
 # compare group
@@ -15,7 +15,7 @@ vec = [1,1,2,2,4,4]
 x = RLEVector(vec)
 @test x + 5 == 5 + x
 @test x + 4 == RLEVector([5,5,6,6,8,8])
-@test div.(vec,2) == collect(div.(x,2))
+@test @compat div.(vec,2) == collect(div.(x,2))
 @test median(RLEVector([1,2,3,2,1,5,4])) == median([1,2,3,2,1,5,4])
 @test median(RLEVector([1,2,3,2,1,5])) == median([1,2,3,2,1,5])
 @test median(RLEVector([3,2,1])) == 2.0
@@ -27,7 +27,7 @@ x = RLEVector(vec)
 @test x + x == RLEVector( [2, 2, 4, 4, 8, 8] )
 @test x - x == RLEVector( [0, 0, 0, 0, 0, 0] )
 rle = RLEVector( [4, 4, 9, 9, 16, 16] )    
-@test sqrt.(rle) == RLEVector( [2, 2, 3, 3, 4, 4] )
+@test @compat sqrt.(rle) == RLEVector( [2, 2, 3, 3, 4, 4] )
 
 # math on bools
 vec = [1,1,2,2,4,4]
