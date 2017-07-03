@@ -255,7 +255,10 @@ Map a function to blocks of vector, like `tapply` in R. The first and second arg
 """
 function tapply(x::Vector, rle::RLEVector, fun::Function)
     length(x) == length(rle) || throw(ArgumentError("Arguments 'x' and 'rle' must have the same length."))
-    [ fun(x[r]) for (v,r) in eachrange(rle) ]
+    if ! issorted(rle)
+        
+    end
+    Dict( (v,fun(x[r])) for (v,r) in eachrange(rle) )
 end
 
 function tapply(x::Vector, factor::Vector, fun::Function)
@@ -263,6 +266,6 @@ function tapply(x::Vector, factor::Vector, fun::Function)
     ind = sortperm(factor)
     x = x[ind]
     rle = RLEVector( factor[ind] )
-    [ fun(x[r]) for (v,r) in eachrange(rle) ]
+    Dict( (v,fun(x[r])) for (v,r) in eachrange(rle) )
 end
 

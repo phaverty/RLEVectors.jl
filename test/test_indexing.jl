@@ -225,13 +225,13 @@ end
 factor = repeat( ["a","b","c","d","e"], inner=5 )
 rle = RLEVector( factor )
 x = collect(1:25)
-tapply_res = [ mean(x[1:5]), mean(x[6:10]), mean(x[11:15]), mean(x[16:20]), mean(x[21:25]) ]
+tapply_res = Dict( "a" => mean(x[1:5]), "b" => mean(x[6:10]), "c" => mean(x[11:15]), "d" => mean(x[16:20]), "e" => mean(x[21:25]) )
 @test tapply_res == tapply( x, factor, mean )
 @test tapply_res == tapply( x, rle, mean )
 
 factor2 = ["a", "b", "a", "c", "b", "c"]
 x2 = collect(1:6)
-@test tapply(x2, factor2, mean) == [2, 3.5, 5]
+@test tapply(x2, factor2, mean) == Dict( "a" => 2.0, "b" => 3.5, "c" => 5.0 )
 
 end # testset
 
