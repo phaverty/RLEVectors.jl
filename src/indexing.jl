@@ -256,14 +256,18 @@ Map a function to blocks of vector, like `tapply` in R. The first and second arg
 function tapply(x::Vector, rle::RLEVector, fun::Function)
     length(x) == length(rle) || throw(ArgumentError("Arguments 'x' and 'rle' must have the same length."))
     allunique(rle) || throw(ArgumentError("The values in an `RLEVector` must be unique when used as a factor with `tapply`."))
-    Dict( (v,fun(x[r])) for (v,r) in eachrange(rle) )
+    Dict( (v,fun(x[r])) for (v,r) in eachrange(rle) ) # Note: using view on x[r] is not faster
 end
 
-function tapply(x::Vector, factor::Vector, fun::Function)
+function tapply(x::Vector{T1}, factor::Vector{T2}, fun::Function) where T1 where T2
     length(x) == length(factor) || throw(ArgumentError("Arguments 'x' and 'factor' must have the same length."))
-    ind = sortperm(factor)
-    x = x[ind]
-    rle = RLEVector( factor[ind] )
+    if ! issorted(factor)
+        ind = sortperm(factor)
+        y = x[ind]
+        rle = RLEVector( factor[ind] )
+    else
+        rle = RLEVector( factor )
+        y = x
+    end
     Dict( (v,fun(x[r])) for (v,r) in eachrange(rle) )
 end
-
