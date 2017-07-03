@@ -233,6 +233,14 @@ factor2 = ["a", "b", "a", "c", "b", "c"]
 x2 = collect(1:6)
 @test tapply(x2, factor2, mean) == Dict( "a" => 2.0, "b" => 3.5, "c" => 5.0 )
 
+# tapply, non-unique RLE values
+factor = repeat( ["a","b","c","d","e","b"], inner=5 )
+rle = RLEVector( factor )
+x = collect(1:30)
+tapply_res = Dict( "a" => mean(x[1:5]), "b" => mean(x[vcat(6:10,26:30)]), "c" => mean(x[11:15]), "d" => mean(x[16:20]), "e" => mean(x[21:25]) )
+@test_throws ArgumentError tapply( x, rle, mean )
+
+
 end # testset
 
 end # module

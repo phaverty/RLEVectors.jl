@@ -255,9 +255,7 @@ Map a function to blocks of vector, like `tapply` in R. The first and second arg
 """
 function tapply(x::Vector, rle::RLEVector, fun::Function)
     length(x) == length(rle) || throw(ArgumentError("Arguments 'x' and 'rle' must have the same length."))
-    if ! issorted(rle)
-        
-    end
+    allunique(rle) || throw(ArgumentError("The values in an `RLEVector` must be unique when used as a factor with `tapply`."))
     Dict( (v,fun(x[r])) for (v,r) in eachrange(rle) )
 end
 
