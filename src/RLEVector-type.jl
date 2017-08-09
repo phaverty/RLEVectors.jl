@@ -47,13 +47,10 @@ specific to the type.
 * `endtype(x)` Returns the element type of the run ends
 
 """
-immutable RLEVector{T1,T2 <: Integer} <: AbstractArray{T1, 1}
+struct RLEVector{T1,T2 <: Integer} <: AbstractArray{T1,1}
   runvalues::Vector{T1}
   runends::Vector{T2}
-  function RLEVector(runvalues, runends)
-    rle = new(runvalues,runends)
-    return(rle)
-  end
+  RLEVector{T1,T2}(runvalues,runends) where {T1,T2<:Integer} = new(runvalues,runends)
 end
 
 function RLEVector{T1,T2 <: Integer}(runvalues::Vector{T1}, runends::Vector{T2})
@@ -81,7 +78,7 @@ const FloatRle = RLEVector{Float64,UInt32}
 const IntegerRle = RLEVector{Int64,UInt32}
 const BoolRle = RLEVector{Bool,UInt32}
 const StringRle = RLEVector{String,UInt32}
-@compat const RLEVectorList{T1,T2} = Vector{ RLEVector{T1,T2} }
+const RLEVectorList{T1,T2} = Vector{ RLEVector{T1,T2} }
 @doc (@doc RLEVector) FloatRle,  IntegerRle, BoolRle, StringRle, RLEVectorList
 
 # similar

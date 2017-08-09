@@ -22,7 +22,7 @@ y = RLEDataTable( [RLEVector([5])],[:a] )
 z = RLEDataTable( a=RLEVector([5,2,2]), b=RLEVector([4,4,4])
 ```
 """
-type RLEDataTable <: AbstractDataTable
+mutable struct RLEDataTable <: AbstractDataTable
     columns::Vector{RLEVector}
     colindex::DFIndex
     function RLEDataTable(columns,colnames::Vector{Symbol})
