@@ -72,10 +72,6 @@ include("group_generics.jl")
 include("collections_api.jl")
 include("math.jl")
 include("sorting.jl")
-
-if VERSION >= v"0.4.0"
-    include("precompile.jl")
-    _precompile_()
-end
+include("precompile.jl")
 
 end # Module RLEVectors
