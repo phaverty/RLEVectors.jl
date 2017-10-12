@@ -50,6 +50,16 @@ a set of regions/genes?
 rangeMeans
 ```
 
+## Going back and forth to R
+```julia
+using RCall
+x = RLEVector([1,1,2,2,1,1,3,4])
+y = RObject(x)
+@rput y
+R"z = y + 2L"
+@rget z
+```
+
 ## Utility Functions
 We also define some utility functions for working with repeated values and binary
 searching in bins/sorted integers like our run end values.
