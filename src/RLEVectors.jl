@@ -72,6 +72,7 @@ include("group_generics.jl")
 include("collections_api.jl")
 include("math.jl")
 include("sorting.jl")
+include("rcall.jl")
 include("precompile.jl")
 
 end # Module RLEVectors
