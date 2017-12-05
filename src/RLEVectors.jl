@@ -56,15 +56,17 @@ import Base: sort, sort!, issorted, reverse, reverse!, sortperm, Algorithm
 export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 
 # data frames
-import DataTables: AbstractDataTable, DataTable, Index, head, tail, index, columns, nrow, ncol
-export RLEDataTable, nrow, ncol, columns, index, names
+import DataTables: AbstractDataTable, DataTable
+import DataFrames: AbstractDataFrame, DataFrame, Index, head, tail, index, columns, nrow, ncol
+export RLEDataTable
+export RLEDataFrame, nrow, ncol, columns, index, names
 export rowSums, rowMeans, rowMedians, colSums, colMeans, colMedians
 
 ### Includes
 include("utils.jl")
 include("runs.jl")
 include("RLEVector-type.jl")
-include("RLEDataTable-type.jl")
+include("RLEDataFrame-type.jl")
 include("ranges.jl")
 include("describe.jl")
 include("indexing.jl")
@@ -73,6 +75,7 @@ include("collections_api.jl")
 include("math.jl")
 include("sorting.jl")
 include("rcall.jl")
+include("RLEDataTable-type.jl")
 include("precompile.jl")
 
 end # Module RLEVectors

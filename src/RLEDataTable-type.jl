@@ -1,6 +1,3 @@
-const DFIndex = AxisArray{Int64,1,Vector{Int64},Tuple{AxisArrays.Axis{:row,Array{Symbol,1}}}}
-const ColumnIndex = Union{Symbol,Integer}
-
 """
 An RLEDataTable extends DataTable and contains a colection of like-length and like-type
     RLEVectors. In a way, this creates a type like an RLE matrix. But, we deliberately
@@ -110,18 +107,6 @@ function Base.setindex!(x::RLEDataTable, value, i, j)
 end
 Base.setindex!(x::RLEDataTable, value, i::Integer, j) = setindex!(x,value,[i],j)
 Base.setindex!(x::RLEDataTable, value, i::Integer, j::ColumnIndex) = setindex!(x.columns[j],value,i)
-
-### Familiar operations over rows or columns from R
-
-# Probably these are all a job for mapslice or slicedim. I need to RTM.
-rowmap(x::Matrix,f::Function) = [ f( @view x[i,:] ) for i in 1:size(x)[1] ]
-colmap(x::Matrix,f::Function) = [ f( @view x[:,j] ) for j in 1:size(x)[2] ]
-rowMeans(x) = rowmap(x,mean)
-rowMedians(x) = rowmap(x,median)
-rowSums(x) = rowmap(x,sum)
-colMeans(x) = colmap(x,mean)
-colMedians(x) = colmap(x,median)
-colSums(x) = colmap(x,sum)
 
 #rowMeans(x::RLEDataTable) = rowSum(x) ./ ncol(x)
 colSums(x::RLEDataTable) = map(sum, columns(x))
