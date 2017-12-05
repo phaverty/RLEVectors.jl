@@ -8,16 +8,9 @@ An RLEDataTable extends DataTable and contains a colection of like-length and li
     that most operations will be column-wise. Based on RleDataTable from Bioconductor's
     `genoset` package (also by Peter Haverty).
 
-### Constructors
-
-```julia
-DataTable(columns::Vector{RLEVector},  names::Vector{Symbol})
-DataTable(kwargs...)
-```
-
 ### Examples
 ```julia
-x = RLEDataTable( [RLEVector([1, 1, 2]), RLEVector([2, 2, 2])], [:a, :b]) 
+x = RLEDataTable( [RLEVector([1, 1, 2]), RLEVector([2, 2, 2])], [:a, :b])
 y = RLEDataTable( [RLEVector([5])],[:a] )
 z = RLEDataTable( a=RLEVector([5,2,2]), b=RLEVector([4,4,4])
 ```
@@ -117,7 +110,7 @@ function Base.setindex!(x::RLEDataTable, value, i, j)
 end
 Base.setindex!(x::RLEDataTable, value, i::Integer, j) = setindex!(x,value,[i],j)
 Base.setindex!(x::RLEDataTable, value, i::Integer, j::ColumnIndex) = setindex!(x.columns[j],value,i)
-    
+
 ### Familiar operations over rows or columns from R
 
 # Probably these are all a job for mapslice or slicedim. I need to RTM.
