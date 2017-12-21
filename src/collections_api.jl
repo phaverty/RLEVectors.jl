@@ -30,7 +30,7 @@ function push!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
   return(x)
 end
 
-function shift!(x::RLEVector)
+function pop_first!(x::RLEVector)
   isempty(x) && throw(ArgumentError("array must be non-empty"))
   item = x.runvalues[1]
   x.runends[:] = x.runends - 1
@@ -40,8 +40,9 @@ function shift!(x::RLEVector)
   end
   return(item)
 end
+shift!(x::RLEVector) = pop_first!(x)
 
-function shove!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
+function unshift!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
   item = convert(T,item) # Copying how base does it for arrays
   x.runends[:] = x.runends + 1
   if item != x.runvalues[1]
@@ -50,7 +51,11 @@ function shove!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
   end
   return(x)
 end
-unshift!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = shove!(x,item) # Does unshift come from perl? Isn't Larry Wall a linguist? C'mon!
+shove!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = unshift!(x,item)
+push_first!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = unshift!(x,item)
+@deprecate shove! push_first!
+@deprecate unshift! push_first!
+@deprecate shift! pop_first!
 
 function deleterun!(x::RLEVector,i::Integer)
   x.runends[i:end] -= widths(x,i)

@@ -126,5 +126,3 @@ colSums(x) = colmap(x,sum)
 colSums(x::RLEDataFrame) = map(sum, columns(x))
 colMeans(x::RLEDataFrame) = colSums(x) ./ nrow(x)
 colMedians(x::RLEDataFrame) = map(median, columns(x))
-
-@deprecate RLEDataTable RLEDataFrame

@@ -2,7 +2,7 @@ __precompile__()
 
 module RLEVectors
 
-using DataTables
+using DataFrames
 using AxisArrays
 
 # RLEVector type
@@ -11,7 +11,7 @@ import Base: show, length, size, start, next, done, Forward, first, last, step, 
 
 # collections
 import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in, intersect
-export       eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in, intersect
+export       eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, pop_first!, push_first!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in, intersect
 export shove!, deleterun!, decrement_run!
 
 # indexing
@@ -56,9 +56,7 @@ import Base: sort, sort!, issorted, reverse, reverse!, sortperm, Algorithm
 export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 
 # data frames
-import DataTables: AbstractDataTable, DataTable
 import DataFrames: AbstractDataFrame, DataFrame, Index, head, tail, index, columns, nrow, ncol
-export RLEDataTable
 export RLEDataFrame, nrow, ncol, columns, index, names
 export rowSums, rowMeans, rowMedians, colSums, colMeans, colMedians
 
@@ -75,7 +73,6 @@ include("collections_api.jl")
 include("math.jl")
 include("sorting.jl")
 include("rcall.jl")
-include("RLEDataTable-type.jl")
 include("precompile.jl")
 
 end # Module RLEVectors
