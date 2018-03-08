@@ -11,7 +11,7 @@ import Base: show, length, size, start, next, done, Forward, first, last, step, 
 
 # collections
 import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in, intersect
-export       eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, pop_first!, push_first!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in, intersect
+export       eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in, intersect
 export shove!, deleterun!, decrement_run!
 
 # indexing

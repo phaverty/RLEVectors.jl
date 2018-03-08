@@ -30,7 +30,7 @@ function push!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
   return(x)
 end
 
-function pop_first!(x::RLEVector)
+function popfirst!(x::RLEVector)
   isempty(x) && throw(ArgumentError("array must be non-empty"))
   item = x.runvalues[1]
   x.runends[:] = x.runends - 1
@@ -42,7 +42,7 @@ function pop_first!(x::RLEVector)
 end
 shift!(x::RLEVector) = pop_first!(x)
 
-function unshift!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
+function pushfirst!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
   item = convert(T,item) # Copying how base does it for arrays
   x.runends[:] = x.runends + 1
   if item != x.runvalues[1]
@@ -52,7 +52,7 @@ function unshift!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
   return(x)
 end
 shove!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = unshift!(x,item)
-push_first!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = unshift!(x,item)
+unshift!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = unshift!(x,item)
 @deprecate shove! push_first!
 @deprecate unshift! push_first!
 @deprecate shift! pop_first!

@@ -39,7 +39,7 @@ timings[:scalar_less] = @timeit broadcast(<,foo,3)
 timings[:median] = @timeit median(foo)
 timings[:which_max] = @timeit findmax(foo)
 
-bdf = DataFrames.readtable("/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/rle.timings.csv",header=true);
+bdf = DataFrames.readtable("/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/rle.timings.csv",header=true);
 
 for n in names(timings)
   if !(n in names(bdf))
@@ -49,7 +49,7 @@ end
 
 bdf = vcat(bdf,timings)
 
-writetable( "/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/rle.timings.csv",
+writetable( "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/rle.timings.csv",
              bdf, separator=',',header=true)
 
 jdf = timings
@@ -75,9 +75,9 @@ bench_plot = plot(x=names(bdf)[4:end],y=r_over_julia, Geom.bar, Guide.ylabel("El
      Guide.title("Relative Performance of R and Julia Rle Vectors"),Geom.hline(color="black"),yintercept=[0],Guide.xlabel(""))
 
 date = jdf[1,:date]
-relative_perf_file = "/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).png"
+relative_perf_file = "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).png"
 draw(PNG(relative_perf_file,8inch,5inch),bench_plot )
-current_relative_perf_file = "/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.png"
+current_relative_perf_file = "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/plots/benchmark_rle_vectors.png"
 cp(relative_perf_file, current_relative_perf_file, remove_destination=true)
 
 ## Performance over time
@@ -85,9 +85,9 @@ jdf = bdf[ bdf[:,:language] .== "julia", 3:end ]
 melted_bdf = melt(jdf, :date)
 timeline_plot = plot(melted_bdf, x="date", y="value", color="variable", Guide.xlabel("Date"), Geom.line,
                      Scale.y_log10, Guide.ylabel("log2 elapsed seconds (1e4 runs)"))
-timeline_file = "/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).timeline.png"
+timeline_file = "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).timeline.png"
 draw(PNG(timeline_file,10inch,6inch),timeline_plot )
-current_timeline_file = "/Users/phaverty/.julia/v0.4/RLEVectors/benchmark/plots/benchmark_rle_vectors.timeline.png"
+current_timeline_file = "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/plots/benchmark_rle_vectors.timeline.png"
 cp(timeline_file, current_timeline_file, remove_destination=true)
 
 ## Profiling
