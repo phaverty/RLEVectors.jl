@@ -40,7 +40,7 @@ function popfirst!(x::RLEVector)
   end
   return(item)
 end
-shift!(x::RLEVector) = pop_first!(x)
+shift!(x::RLEVector) = popfirst!(x)
 
 function pushfirst!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
   item = convert(T,item) # Copying how base does it for arrays
@@ -51,11 +51,11 @@ function pushfirst!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
   end
   return(x)
 end
-shove!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = unshift!(x,item)
-unshift!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = unshift!(x,item)
-@deprecate shove! push_first!
-@deprecate unshift! push_first!
-@deprecate shift! pop_first!
+shove!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = pushfirst!(x,item)
+unshift!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = pushfirst!(x,item)
+@deprecate shove! pushfirst!
+@deprecate unshift! pushfirst!
+@deprecate shift! popfirst!
 
 function deleterun!(x::RLEVector,i::Integer)
   x.runends[i:end] -= widths(x,i)
