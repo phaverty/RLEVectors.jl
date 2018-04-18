@@ -4,6 +4,7 @@ module RLEVectors
 
 using DataFrames
 using AxisArrays
+using RCall
 
 # RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar, starts, widths, ends, values
@@ -59,6 +60,9 @@ export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 import DataFrames: AbstractDataFrame, DataFrame, Index, head, tail, index, columns, nrow, ncol
 export RLEDataFrame, nrow, ncol, columns, index, names
 export rowSums, rowMeans, rowMedians, colSums, colMeans, colMedians
+
+# RCall
+import RCall: sexp, rcopy, RClass, rcopytype, @R_str, S4Sxp
 
 ### Includes
 include("utils.jl")
