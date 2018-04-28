@@ -78,5 +78,5 @@ include("math.jl")
 include("sorting.jl")
 include("rcall.jl")
 include("precompile.jl")
-
+_precompile_()
 end # Module RLEVectors
