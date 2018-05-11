@@ -1,5 +1,6 @@
 using RLEVectors
 using DataFrames
+using CSV
 
 macro timeit(ex)
 # like @time, but returning the timing rather than the computed value
@@ -49,8 +50,8 @@ end
 
 bdf = vcat(bdf,timings)
 
-writetable( "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/rle.timings.csv",
-             bdf, separator=',',header=true)
+CSV.write( "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/rle.timings.csv",
+             bdf, header=true)
 
 jdf = timings
 rdf = bdf[ bdf[:language] .== "R",:];
