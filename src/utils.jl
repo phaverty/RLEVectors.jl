@@ -11,12 +11,12 @@ rep(["Go", "Fight", "Win"], times=2)
 
 # output
 6-element Array{String,1}:
- "Go"   
+ "Go"
  "Fight"
- "Win"  
- "Go"   
+ "Win"
+ "Go"
  "Fight"
- "Win"  
+ "Win"
 ```
 
 ```julia
@@ -66,7 +66,7 @@ This operation is helpful for finding the RLE run corresponding to each of a set
     general tasks such as binning values for empirical density functions.
 
 ## Examples
-    
+
 ```julia
 v = [2, 4, 6, 8, 10]
 x = [1, 3, 4, 8, 11]

@@ -4,24 +4,24 @@
 # Arith
 # "+", "-", "*", "^", "%%", "%/%", "/"
 #const arith_group = [:(+), :(-), :(*), :(/), :(^), :(.+), :(.-), :(.*), :(./), :(.^), :(div), :(mod), :(fld), :(rem)]
-const arith_group = [:+, :-, :.+, :.-, :.*, :./, :.^] # Just scalar arith for vectors
-const arith_group2 = [:div, :mod, :fld, :rem] 
+#const arith_group = [:+, :-, :.+, :.-, :.*, :./, :.^] # Just scalar arith for vectors
+#const arith_group2 = [:div, :mod, :fld, :rem]
 
 # Compare
 # "=="), ">"), "<"), "!="), "<="), ">="
-const compare_group = [:.==, :.>, :.<, :.!=, :.<=, :.>=]
+#const compare_group = [:.==, :.>, :.<, :.!=, :.<=, :.>=]
 
 # Logic
 # "&"), "|".
-const logic_group = [:.&, :.|]
+#const logic_group = [:.&, :.|]
 
 # Ops
 # "Arith", "Compare", "Logic"
-const ops_group = vcat( arith_group, arith_group2, compare_group, logic_group )
+#const ops_group = vcat( arith_group, arith_group2, compare_group, logic_group )
 
 # Math
 # "abs", "sign", "sqrt", "ceiling", "floor", "trunc", "cummax", "cummin", "cumprod", "cumsum", "log", "log10", "log2", "log1p", "acos", "acosh", "asin", "asinh", "atan", "atanh", "exp", "expm1", "cos", "cosh", "sin", "sinh", "tan", "tanh", "gamma", "lgamma", "digamma", "trigamma"
-const math_group = [:abs, :sign, :sqrt, :ceil, :floor, :trunc, :cummax, :cummin, :cumprod, :cumsum, :log, :log10, :log2, :log1p, :acos, :acosh, :asin, :asinh, :atan, :atanh, :exp, :expm1, :cos, :cosh, :sin, :sinh, :tan, :tanh, :gamma, :lgamma, :digamma, :trigamma]
+#const math_group = [:abs, :sign, :sqrt, :ceil, :floor, :trunc, :cummax, :cummin, :cumprod, :cumsum, :log, :log10, :log2, :log1p, :acos, :acosh, :asin, :asinh, :atan, :atanh, :exp, :expm1, :cos, :cosh, :sin, :sinh, :tan, :tanh, :gamma, :lgamma, :digamma, :trigamma]
 
 # Math2
 # "round", "signif"
@@ -40,30 +40,30 @@ function Base.broadcast(f, x::RLEVector, y::RLEVector)
     (runends, runvalues_x, runvalues_y) = disjoin(x, y)
     RLEVector( map(f,runvalues_x,runvalues_y), runends )
 end
-Base.map(f, x::RLEVector)  = RLEVector( map(f,x.runvalues), ends(x) )
+Base.map(f, x::RLEVector) = RLEVector( map(f,x.runvalues), ends(x) )
 
-if VERSION < v"0.6.0"
-    for op in ops_group
-        @eval begin
-            # Rle, Rle
-            function ($op)(x::RLEVector, y::RLEVector)
-                (runends, runvalues_x, runvalues_y) = disjoin(x, y)
-                runvalues = $(op)(runvalues_x, runvalues_y)
-                RLEVector(runvalues, runends)
-            end
-            # Rle, Number
-            ($op)(x::RLEVector,y::Number) = RLEVector( ($op)(x.runvalues,y), x.runends )
-            # Number, Rle
-            ($op)(y::Number, x::RLEVector) = RLEVector( ($op)(y,x.runvalues), x.runends )
-        end
-    end
-end
+#if VERSION < v"0.6.0"
+#    for op in ops_group
+#        @eval begin
+#            # Rle, Rle
+#            function ($op)(x::RLEVector, y::RLEVector)
+#                (runends, runvalues_x, runvalues_y) = disjoin(x, y)
+#                runvalues = $(op)(runvalues_x, runvalues_y)
+#                RLEVector(runvalues, runends)
+#            end
+#            # Rle, Number
+#            ($op)(x::RLEVector,y::Number) = RLEVector( ($op)(x.runvalues,y), x.runends )
+#            # Number, Rle
+#            ($op)(y::Number, x::RLEVector) = RLEVector( ($op)(y,x.runvalues), x.runends )
+#        end
+#    end
+#end
 
 ## Methods that delegate to the runvalues and return an RLEVector
 ## Methods that take one argument, an RLEVector, and delegate to rle.runvalues and return an RLEVector
-for op in setdiff(math_group,[:cumsum,:cumprod])
-    @eval ($op)(x::RLEVector) = RLEVector( ($op)(x.runvalues), x.runends )
-end
+#for op in setdiff(math_group,[:cumsum,:cumprod])
+#    @eval ($op)(x::RLEVector) = RLEVector( ($op)(x.runvalues), x.runends )
+#end
 
 ## Methods that take one argument, an RLEVector, and delegate to rle.runvalues and return something other than an RLEVector
 for op in setdiff(summary_group,[:sum,:prod])
@@ -91,7 +91,7 @@ findin(x,y::RLEVector) = findin(x,y.runvalues)
 function findin(x::RLEVector,y::RLEVector)
   runs = findin(x.runvalues,y.runvalues)
   re = x.runends
-  vcat( [ starts(x,i):re[i] for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
+  vcat( [ starts(x,i):re[i] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
 function findin(x::RLEVector,y::UnitRange) # ambig fix
@@ -103,7 +103,7 @@ end
 function findin(x::RLEVector,y)
   runs = findin(x.runvalues,y)
   re = x.runends
-  vcat( [ starts(x,i):re[i] for i in runs ]... )  # hashing in above findin takes the vast majority of the time, don't sweat the time here
+  vcat( [ starts(x,i):re[i] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
 function median(x::RLEVector)

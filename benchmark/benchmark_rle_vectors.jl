@@ -40,7 +40,7 @@ timings[:scalar_less] = @timeit broadcast(<,foo,3)
 timings[:median] = @timeit median(foo)
 timings[:which_max] = @timeit findmax(foo)
 
-bdf = DataFrames.readtable("/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/rle.timings.csv",header=true);
+bdf = CSV.read("/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/rle.timings.csv",header=true);
 
 for n in names(timings)
   if !(n in names(bdf))

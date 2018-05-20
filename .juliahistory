@@ -1,0 +1,51 @@
+using RLEVectors
+exit()
+using RleVector
+using RleVectors
+using RLEVectors
+VERSION < v"0.6.0"
+x = RLEVector([1,1,1])
+@code_typed +(x,x)
+import Base. + 
+import Base.+ 
+bdf
+bdf[:,11:20]
+@edit +(x,x)
+@code_typed +(x,x)
+@code_warntype +(x,x)
+@code_warntype +(x,4)
+@code_warntype +(4,x,4)
+@code_warntype +(4,x
+)
+@code_warntype +(4,x)
+@code_warntype +(x,4)
+exit()
+using RLEVectors
+x = RLEVector([1,1,1])
+@code_typed +(x,4)
+@code_typed +(4,)
+@code_typed +(4,x)
+@code_typed +(4,x)
+@code_typed +(x,4)
+@code_typed +(4,x)
++(4,x)
++(x,4)
+extrema(x)
+first(x)
+unique(x)
+@code_typed unique(x)
+!x
+x = RLEVector([true,true,false])
+!x
+!x
+!x
+.!x
+? .! == 
+? .!== 
+? !== 
+any(x)
+all(x)
+exit()
+using RLEVectors
+Pkg.test("RLEVectors")
+exit()
