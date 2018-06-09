@@ -210,3 +210,24 @@ collect(x)
 ?splice!
 ?push!
 exit()
+using RLEVectors
+?ind2run
+?ind2runcontext
+?ind2runcontext
+ind2run(x, 4:5)
+x =  RLEVector(collect(1:10))
+ind2run(x, 4:5)
+inds = 4:5
+last(inds)
+x[4:6]
+function Base.getindex(rle::RLEVector, ind::UnitRange)
+    run_indices = ind2run(rle, ind)
+    vals = values(rle, run_indices)
+    ends = runends(rle, run_indices)
+    ends[end] = last(inds)
+    ends = ends - (first(inds) - 1)
+    RLEVector(vals, ends)
+end
+
+x[4:6]
+exit()

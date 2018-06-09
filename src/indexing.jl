@@ -129,18 +129,11 @@ end
 ## Indexing optimizations
 function Base.getindex(rle::RLEVector, ind::UnitRange)
     run_indices = ind2run(rle, ind)
-
-#    out = Vector{eltype(rle)}(length(ind))
-#    run_ind = ind2run(rle, first(ind))
-#    i = 0
-#    for j in ind
-#        i = i + 1
-#        if j > rle.runends[run_ind]
-#            run_ind = run_ind +  1
-#        end
-#        out[i] = rle.runvalues[run_ind]
-#    end
-#    return(out)
+    v = values(rle)[run_indices]
+    e = ends(rle)[run_indices]
+    e[end] = last(ind)
+    e = e - (first(ind) - 1)
+    RLEVector(v, e)
 end
 
 function Base.getindex(rle::RLEVector, ind::AbstractVector)
