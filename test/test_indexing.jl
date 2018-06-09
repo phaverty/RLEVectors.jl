@@ -217,6 +217,18 @@ y = collect(eachrange(x))
 @test y[4] == (12,6:6)
 @test length(eachrange(x)) == 4
 
+# iterate
+y = [1, 1, 2, 2, 7, 12]
+x = RLEVector([1, 1, 2, 2, 7, 12])
+out = Vector{eltype(x)}()
+next = iterate(x)
+while next !== nothing
+    (i,state) = next
+    push!(out, i)
+    next = iterate(x, state)
+end
+@test out == y
+
 # tapply
 factor = repeat( ["a","b","c","d","e"], inner=5 )
 rle = RLEVector( factor )

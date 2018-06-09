@@ -50,7 +50,10 @@ end
 
 ## Just enough for AbstractArray
 Base.IndexStyle(::Type{<:RLEVector}) = IndexLinear()
-endof(rle::RLEVector) = length(rle)
+Base.endof(rle::RLEVector) = length(rle)
+#Base.firstindex(rle::RLEVector) = 1
+#Base.lastindex(rle::RLEVector) = length(rle)
+#Base.axes(rle::RLEVector) = (Base.OneTo(length(rle)),)
 
 function Base.getindex(rle::RLEVector, i::Int)
     run = ind2run(rle,i)
@@ -233,6 +236,31 @@ end
 function length(x::RLEEachRangeIterator)
     nrun(x.rle)
 end
+
+## New style iterator
+## state is (run_index, overall_index)
+## We will assume that this iterate method is the only source of `state` and
+## the only invalid state possible is one past the end
+eltype{T1,T2}(::RLEVector{T1,T2}) = T1
+function iterate(x::RLEVector, state = (1,1))
+    (run_index, overall_index) = state
+    if overall_index > length(x) # run_index > nrun(x) || overall_index > length(x)
+        out = nothing
+    else
+        this_end = ends(x)[run_index]
+        if overall_index > this_end
+            run_index = run_index + 1
+        end
+        out = (values(x)[run_index], (run_index, overall_index + 1))
+    end
+    out
+end
+
+
+
+# FIXME: add reverse iterator, see https://docs.julialang.org/en/latest/manual/interfaces/#man-interface-array-1
+
+
 
 """
     tapply(data_vector, rle, function)
