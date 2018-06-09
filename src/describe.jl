@@ -64,7 +64,7 @@ ends(x::RLEVector, run::Integer) =  x.runends[run]
 
 values(x::RLEVector) = copy(x.runvalues)
 _values(x::RLEVector) = x.runvalues
-endtype(x::RLEVector) = eltype(rlast(x)) # FIXME: why do we have this?
+endtype(x::RLEVector) = eltype(rlast(x))
 
 rfirst(x::RLEVector) = starts(x)
 rfirst(x::RLEVector, run::Integer) = starts(x, run)

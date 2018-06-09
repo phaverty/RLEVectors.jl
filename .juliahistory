@@ -49,3 +49,58 @@ exit()
 using RLEVectors
 Pkg.test("RLEVectors")
 exit()
+using RLEVectors
+x = [1,1,2,2,2,3]
+x
+y = RLEVector(x)
+out
+next
+@which iterate(x)
+)
+x
+x
+next
+out
+?push!
+push!(out, 4)
+out
+import Base.eltype
+@code_lowered iterate(x)
+@code_lowered iterate(x, (1,1))
+@code_warntype iterate(x, (1,1))
+@code_warntype iterate(x, (1,1))
+x
+ind2runs(x, 3:4)
+ind2run(x, 3:4)
+ind2run(x, 3:5)
+timings
+timings[:coverage]
+import GenomicVectors.coverage
+@timeit coverage(gr)
+@timeit coverage(gr)
+@timeit coverage(gr)
+Profile.clear()
+@profile for i in 1:100 coverage(gr) end
+Profile.print()
+x
+collect(x)
+ind2run(x, 3)
+ind2run(x, 100)
+first(10:9)
+x[2:3]
+x[2:3]
+x
+collect(x)
+collect(x)[2:3]
+x[4:6]
+collect(x)[4:6]
+@timeit coverage(gr)
+@timeit gr[900:920]
+Profile.clear()
+@profile for i in 1:100 coverage(gr) end
+coverage(gr)
+@time coverage(gr)
+Profile.clear()
+@profile coverage(gr)
+Profile.print()
+exit()
