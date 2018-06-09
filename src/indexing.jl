@@ -135,6 +135,14 @@ function Base.getindex(rle::RLEVector, ind::AbstractVector)
     return( RLEVector( rle.runvalues[ run_indices ] ) )
 end
 
+function Base.setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::Vector{T1}, indices::UnitRange)
+    setindex!(rle, RLEVector(value), indices)
+end
+
+function Base.setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::RLEVector{T1,T2}, indices::UnitRange)
+    splice!(rle, indices, value)
+end
+
 function Base.setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::T1, indices::UnitRange)
   runs = ind2run(rle,indices)
   left_run = first(runs)
