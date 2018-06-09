@@ -231,3 +231,33 @@ end
 
 x[4:6]
 exit()
+using RLEVectors
+x =  RLEVector(collect(1:10))
+x[4:6]
+x[4:6]
+ends(x)
+x[4:6]
+x[4:6]
+x[4:6]
+x[4:6]
+x = RLEVector([1,1,2,2,3,3,4,4,5,5])
+x[4:5]
+x[4:6]
+@timeit coverage(gr)
+coverage(gr)
+exit()
+using RLEVectors
+x = RLEVector([1,1,2,2,3,3,4,4,5,5])
+?Union
+import Base.splice!
+x
+splice!(x, 4, 99)
+exit()
+using RLEVectors
+x = RLEVector([1,1,2,2,3,3,4,4,5,5])
+splice!(x, 4, 98)
+splice!(x, 4:5, 98)
+splice!(x, 4:5, 98)
+splice!(x, 4:5, 98:99)
+splice!(x, 4:5, [99,99])
+exit()

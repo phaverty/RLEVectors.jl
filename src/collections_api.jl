@@ -147,11 +147,7 @@ function splice!(x::RLEVector, index::UnitRange, ins::RLEVector=_default_splice)
     return(current)
 end
 
-function splice!(x::RLEVector, i::Integer, ins::AbstractArray)
-  splice!(x,i,RLEVector(ins))
-end
-
-function splice!(x::RLEVector, i::Range, ins::AbstractArray)
+function splice!(x::RLEVector, i::Union{Integer,UnitRange}, ins::AbstractArray)
   splice!(x,i,RLEVector(ins))
 end
 
