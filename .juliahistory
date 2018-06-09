@@ -261,3 +261,12 @@ splice!(x, 4:5, 98)
 splice!(x, 4:5, 98:99)
 splice!(x, 4:5, [99,99])
 exit()
+using RLEVectors
+x = RLEVector([1,1,2,2,3,3,4,4,5,5])
+splice!(x, 4:5, [99,99])
+x
+splice!(x, 2, [99,99])
+x
+coverage(gr)
+gr
+exit()

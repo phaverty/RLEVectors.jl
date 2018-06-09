@@ -106,7 +106,7 @@ function Base.show(io::IO, x::RLEVector)
     write(io,"Values: ")
     Base.show_vector(io,values(x),"[", "]")
     write(io," Ends: ")
-    Base.show_vector(io,widths(x),"[", "]")
+    Base.show_vector(io,ends(x),"[", "]")
 end
 
 function ree!(x::RLEVector)

@@ -120,6 +120,7 @@ function splice!(x::RLEVector, i::Integer, ins::RLEVector=_default_splice)
 end
 
 function splice!(x::RLEVector, index::UnitRange, ins::RLEVector=_default_splice) # Can I do index::Union(Integer,UnitRange) here to have just one method?
+    println("splice! rle, unit_range, rle")
     i_left = first(index)
     i_right = last(index)
     if i_left > i_right # Insert without removing
