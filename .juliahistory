@@ -270,3 +270,80 @@ x
 coverage(gr)
 gr
 exit()
+coverage(gr)
+import GenomicFeatures.coverage
+coverage(gr)
+widths(gr)[1]
+coverage(gr)
+(s,e) = first(eachrange(gr))
+out[r]
+@which setindex!(out, r, out[r])
+foo = out[r]
+foo
+@which setindex!(out, r, foo)
+setindex!(out, r, foo)
+out
+typeof(out)
+typeof(foo)
+@which setindex!(out, r, foo)
+@which splice!(out, r, foo)
+splice!(out, r, foo)
+splice!(out, r, foo)
+splice!(out, r, foo)
+out
+@which splice!(out, foo, r)
+@which setindex!(out, foo, r)
+index = r
+ins = out[r] + 1
+x
+x = ou
+x = out
+ins
+ins
+ins_ends
+ins_vals
+out
+r
+out[r]
+foo = out[r] + 1
+out[r] = foo
+out
+all_ranges = collect(eachrange(gr))
+(s,e) = all_ranges[1]
+out
+out
+print(out)
+coverage(gr)
+out
+print(out)
+coverage(gr)
+coverage(gr)
+coverage(gr)
+out
+r
+@which splice!(out, r, out[r] + 1)
+out
+(s,e) = all_ranges[1]
+x = out
+r = s:e
+index = r
+ins = out[r] + 1
+ins
+length(ins)
+length(index)
+i_left > i_right # Insert without removing
+current
+3080432725 + 3326
+length(out)
+3080432676 + 3375
+[[4,5,6]; [12]]
+vcat([4,5,6], [12])
+ins_ends
+ins
+r
+coverage(gr)
+coverage(gr)
+coverage(gr)
+exit()
+coverage(gr)
+@timeit coverage(gr)

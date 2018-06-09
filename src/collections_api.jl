@@ -120,7 +120,6 @@ function splice!(x::RLEVector, i::Integer, ins::RLEVector=_default_splice)
 end
 
 function splice!(x::RLEVector, index::UnitRange, ins::RLEVector=_default_splice) # Can I do index::Union(Integer,UnitRange) here to have just one method?
-    println("splice! rle, unit_range, rle")
     i_left = first(index)
     i_right = last(index)
     if i_left > i_right # Insert without removing
@@ -132,15 +131,16 @@ function splice!(x::RLEVector, index::UnitRange, ins::RLEVector=_default_splice)
         (run_left, index_in_run_left, run_remainder_left) = ind2runcontext(x,i_left)
         (run_right, index_in_run_right, run_remainder_right) = ind2runcontext(x,i_right)
     end
-    ins.runends[:] = ins.runends + (i_left - 1)
-    right_shift = nrun(ins) - length(index)
+    ins_vals = ins.runvalues
+    ins_ends = ins.runends + (i_left - 1)
+    right_shift = length(ins) - length(index)
     x.runends[run_right:end] += right_shift
     if index_in_run_left == 1
-        ins_vals = [ins.runvalues; x.runvalues[run_right]]
-        ins_ends = [ins.runends; x.runends[run_right]]
+        ins_vals = vcat(ins_vals, x.runvalues[run_right])
+        ins_ends = vcat(ins_ends, x.runends[run_right])
     else
-        ins_vals = [x.runvalues[run_left]; ins.runvalues; x.runvalues[run_right]]
-        ins_ends = [i_left-1; ins.runends; x.runends[run_right]]
+        ins_vals = vcat(x.runvalues[run_left], ins_vals, x.runvalues[run_right])
+        ins_ends = vcat(i_left-1, ins_ends, x.runends[run_right])
     end
     splice!( x.runvalues, run_left:run_right, ins_vals)
     splice!( x.runends, run_left:run_right, ins_ends)
