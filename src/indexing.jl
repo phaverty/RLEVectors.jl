@@ -1,7 +1,14 @@
 ### Indexing
 
 ## Helper functions
-## locate runs, get index of run corresponding to the i'th value in the expanded runs
+
+"""
+    ind2run(rle::RLEVector, i::Integer) -> run_index
+    ind2run(rle::RLEVector, i::UnitRange) -> range_of_first_to_last_overlap
+    ind2run(rle::RLEVector, i::AbstractArray) -> vector_of_runs
+
+Locate runs, get index of run corresponding to the i-th value in the expanded runs
+"""
 function ind2run(rle::RLEVector, i::Integer)
   re = rle.runends
   n = length(re)
@@ -27,8 +34,12 @@ function ind2run(rle::RLEVector, i::AbstractArray)
   return(runs)
 end
 
-# get index of the run corresponding to the i'th value in the expanded runs, index in run and remainder of run
-#  (runindex, index_in_run, values_in_run_after_i)
+"""
+    ind2runcontext(rle::RLEVector, i::Integer) -> (runindex, index_in_run, values_in_run_after_i)
+    ind2runcontext(rle::RLEVector, i::UnitRange) -> (runindex, index_in_run, values_in_run_after_i)
+
+Index of the run corresponding to the i'th value in the expanded runs, index in run and remainder of run
+"""
 function ind2runcontext(rle::RLEVector, i::Integer)
   run = ind2run(rle, i)
   runend = rle.runends[run]
@@ -117,17 +128,19 @@ end
 
 ## Indexing optimizations
 function Base.getindex(rle::RLEVector, ind::UnitRange)
-    out = Vector{eltype(rle)}(length(ind))
-    run_ind = ind2run(rle, first(ind))
-    i = 0
-    for j in ind
-        i = i + 1
-        if j > rle.runends[run_ind]
-            run_ind = run_ind +  1
-        end
-        out[i] = rle.runvalues[run_ind]
-    end
-    return(out)
+    run_indices = ind2run(rle, ind)
+
+#    out = Vector{eltype(rle)}(length(ind))
+#    run_ind = ind2run(rle, first(ind))
+#    i = 0
+#    for j in ind
+#        i = i + 1
+#        if j > rle.runends[run_ind]
+#            run_ind = run_ind +  1
+#        end
+#        out[i] = rle.runvalues[run_ind]
+#    end
+#    return(out)
 end
 
 function Base.getindex(rle::RLEVector, ind::AbstractVector)

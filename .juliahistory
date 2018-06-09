@@ -181,3 +181,32 @@ coverage(gr)
 ?splice!
 exit()
 coverage(gr)
+@timeit coverage(gr)
+x = RLEVector(collect(1:10))
+using RLEVectors
+x = RLEVector(collect(1:10))
+x[3:3] = [99,100]
+x
+length(x)
+x = RLEVector(collect(1:10))
+length(x)
+x[3:2] = [99,100]
+length(x)
+x
+@timeit coverage(gr)
+x = 1:10
+x[4:6]
+x = RLEVector(1:10)
+x = RLEVector(collect(1:10))
+ind2run(x,4:5)
+x = RLEVector([1,1,2,2,3,3])
+ind2run(x,4:5)
+x[[4,5]]
+x[4:5]
+ind2run(x,4:5)
+ind2runcontext(x,4:5)
+?ind2runcontext
+collect(x)
+?splice!
+?push!
+exit()
