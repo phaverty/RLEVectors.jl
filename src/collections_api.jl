@@ -124,7 +124,7 @@ function splice!(x::RLEVector, index::UnitRange, ins::RLEVector=_default_splice)
     i_left = first(index)
     i_right = last(index)
     if i_left == i_right
-        return(slice!(x,i_left,ins))
+        return(splice!(x,i_left,ins))
     end
     if i_left > i_right # Insert without removing
         current = similar(x,0)
@@ -140,11 +140,6 @@ function splice!(x::RLEVector, index::UnitRange, ins::RLEVector=_default_splice)
     right_shift = length(ins) - length(index)
     if right_shift > 0
         x.runends[run_right:end] += right_shift
-    end
-    # Fix runs split by insertion
-    if run_left == run_right && index_in_run_left != 1 && run_remainder_right != 0 # gotta fix both ends
-            append!(ins_vals, x.runvalues[run_right])
-            append!(ins_ends, x.runends[run_right])
     end
     if index_in_run_left != 1
         # Leave original value, truncate run, increment left insertion point

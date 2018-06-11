@@ -111,8 +111,8 @@ x = RLEVector(collect(1:10))
 @test x == RLEVector([collect(1:9);100])
 x = RLEVector(collect(1:10))
 y = RLEVector([99,99])
-slice!(x,[4:5],y)
-@test collect(x) == [1,2,3,99,99,5,6,7,8,9,10] # regression test, length of x must not change when in and out same length
+splice!(x,4:5,y)
+@test collect(x) == [1,2,3,99,99,6,7,8,9,10] # regression test, length of x must not change when in and out same length
 @test y == RLEVector([99,99]) # regresssion test, splice must not change y
 
 # splice! adding

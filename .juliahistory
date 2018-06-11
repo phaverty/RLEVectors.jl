@@ -375,3 +375,66 @@ x = RLEVector([1,1,2,2,3,3,4,4])
 splice!(x, 3:5, [99,99,99])
 collect(x)
 exit()
+coverage(gr)
+import GenomicFeatures.coverage
+coverage(gr)
+coverage(gr)
+splice!(out, 100:101, [99,99])
+import Base.splice!
+splice!(out, 100:101, [99,99])
+splice!(out, 100:101, [99,99])
+out
+    out = RLEVector(0, last(chr_ends(gr)))
+out = RLEVector(0, last(chr_ends(gr)))
+splice!(out, 100:101, [99,99])
+out = RLEVector(0, last(chr_ends(gr)))
+splice!(out, 100:101, [99,99])
+out
+out = RLEVector(0, last(chr_ends(gr)))
+splice!(out, 100:101, [99,99])
+out
+foo = [1,2,3,4]
+splice1(foo, 2:2, 99)
+splice!(foo, 2:2, 99)
+foo
+out
+out = RLEVector(0, last(chr_ends(gr)))
+out = RLEVector(0, last(chr_ends(gr)))
+splice!(out, 100:101, [99,99])
+splice!([0],1:0,99)
+foo = [0]
+splice!(foo,1:0,99)
+splice!(foo,0:0,99)
+splice!(foo,0:-1,99)
+splice!(foo,1:0,99)
+splice!(foo,1:0,[99])
+?splice!
+foo
+splice!([1],1:0,[99])
+foo = [0]; splice!(foo,1:0,[99])
+foo
+foo = [0]; splice!(foo,1:-1,[99])
+foo
+coverage(gr)
+coverage(gr)
+x = collect(1:10)
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice1(x,4:4,[99])
+splice!(x,4:4,[99])
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x,4:4,[99])
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x,4:4,[99]); x
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x,4:4,[99]); collect(x)
+x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4])
+splice!(x,5:5,[99]); collect(x)
+coverage(gr)
+@time coverage(gr)
+@timeit coverage(gr)
+@timeit coverage(gr)
+Profile.clear(); @profile coverage(gr); Profile.print()
+exit()
+Pkg.test("RLEVectors")
+Pkg.test("RLEVectors")
+exit()
