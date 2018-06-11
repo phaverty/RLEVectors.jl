@@ -347,3 +347,31 @@ coverage(gr)
 exit()
 coverage(gr)
 @timeit coverage(gr)
+coverage(gr)
+@time coverage(gr)
+Profile.clear(); @profile coverage(gr); Profile.print()
+gr
+@timeit coverage(gr)
+bob = [1,2,3]
+bob[0] =  12
+import Base.splice!
+@timeit coverage(gr)
+x
+x = RLEVector(collect(1:10))
+splice!(x, 4:5, [99])
+x
+x = RLEVector(collect(1:10))
+splice!(x, 4:5, [99,99])
+x
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x, 4:5, [99,99])
+x
+collect(x)
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x, 4:6, [99,99,99])
+x
+collect(x)
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x, 3:5, [99,99,99])
+collect(x)
+exit()

@@ -104,13 +104,14 @@ function splice!(x::RLEVector, i::Integer, ins::RLEVector=_default_splice)
         current = x.runvalues[run]
         right_shift = length(ins) - length(i)
         x.runends[run:end] += right_shift
-        ins.runends[:] = ins.runends + (i-1)
+        ins_vals = ins.runvalues
+        ins_ends = ins.runends + (i-1)
         if index_in_run == 1
-            ins_vals = [ins.runvalues; x.runvalues[run]]
-            ins_ends = [ins.runends; x.runends[run]]
+            ins_vals = [ins_vals; x.runvalues[run]]
+            ins_ends = [ins_ends; x.runends[run]]
         else
-            ins_vals = [x.runvalues[run]; ins.runvalues; x.runvalues[run]]
-            ins_ends = [i-1; ins.runends; x.runends[run]]
+            ins_vals = [x.runvalues[run]; ins_vals; x.runvalues[run]]
+            ins_ends = [i-1; ins_ends; x.runends[run]]
         end
         splice!( x.runvalues, run, ins_vals)
         splice!( x.runends, run, ins_ends)
@@ -119,29 +120,41 @@ function splice!(x::RLEVector, i::Integer, ins::RLEVector=_default_splice)
     return(current)
 end
 
-function splice!(x::RLEVector, index::UnitRange, ins::RLEVector=_default_splice) # Can I do index::Union(Integer,UnitRange) here to have just one method?
+function splice!(x::RLEVector, index::UnitRange, ins::RLEVector=_default_splice)
     i_left = first(index)
     i_right = last(index)
+    if i_left == i_right
+        return(slice!(x,i_left,ins))
+    end
     if i_left > i_right # Insert without removing
         current = similar(x,0)
         (run_right, index_in_run_right, run_remainder_right) = (run_left, index_in_run_left, run_remainder_left) = ind2runcontext(x,first(index))
     else
         current = x[index]
-        (1 <= i_left <= i_right <= length(x)) || throw(BoundsError())
+        (1 <= i_left <= i_right <= length(x)) || throw(BoundsError()) # FIXME: Necessary?
         (run_left, index_in_run_left, run_remainder_left) = ind2runcontext(x,i_left)
         (run_right, index_in_run_right, run_remainder_right) = ind2runcontext(x,i_right)
     end
     ins_vals = ins.runvalues
     ins_ends = ins.runends + (i_left - 1)
     right_shift = length(ins) - length(index)
-    x.runends[run_right:end] += right_shift
-    if index_in_run_left == 1
-        ins_vals = vcat(ins_vals, x.runvalues[run_right])
-        ins_ends = vcat(ins_ends, x.runends[run_right])
-    else
-        ins_vals = vcat(x.runvalues[run_left], ins_vals, x.runvalues[run_right])
-        ins_ends = vcat(i_left-1, ins_ends, x.runends[run_right])
+    if right_shift > 0
+        x.runends[run_right:end] += right_shift
     end
+    # Fix runs split by insertion
+    if run_left == run_right && index_in_run_left != 1 && run_remainder_right != 0 # gotta fix both ends
+            append!(ins_vals, x.runvalues[run_right])
+            append!(ins_ends, x.runends[run_right])
+    end
+    if index_in_run_left != 1
+        # Leave original value, truncate run, increment left insertion point
+        x.runends[run_left] = i_left - 1
+        run_left = run_left + 1
+    end
+    if run_remainder_right != 0
+        run_right = run_right - 1
+    end
+    # Splice ins into adjusted x
     splice!( x.runvalues, run_left:run_right, ins_vals)
     splice!( x.runends, run_left:run_right, ins_ends)
     ree!(x.runvalues,x.runends)
