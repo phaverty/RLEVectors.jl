@@ -74,6 +74,7 @@ function decrement_run!(x::RLEVector,run::Integer)
     deleterun!(x,run)
   else
     x.runends[run:end] -= 1
+
   end
   return(x)
 end
@@ -124,22 +125,27 @@ function splice!(x::RLEVector, index::UnitRange, ins::RLEVector=_default_splice)
     i_left = first(index)
     i_right = last(index)
     if i_left == i_right
-        return(splice!(x,i_left,ins))
+        return(slice!(x,i_left,ins))
     end
+    (run_left, run_right, index_in_run_left, run_remainder_right) = ind2runcontext(x,index)
+    run_range = run_left:run_right
     if i_left > i_right # Insert without removing
         current = similar(x,0)
-        (run_right, index_in_run_right, run_remainder_right) = (run_left, index_in_run_left, run_remainder_left) = ind2runcontext(x,first(index))
     else
-        current = x[index]
+        current = RLEVector(x.runvalues[run_range], x.runends[run_range] - (index_in_run_left - 1))
+        current.runends[end] = current.runends[end] - run_remainder_right
         (1 <= i_left <= i_right <= length(x)) || throw(BoundsError()) # FIXME: Necessary?
-        (run_left, index_in_run_left, run_remainder_left) = ind2runcontext(x,i_left)
-        (run_right, index_in_run_right, run_remainder_right) = ind2runcontext(x,i_right)
     end
+    # Adjust insertion site
     ins_vals = ins.runvalues
     ins_ends = ins.runends + (i_left - 1)
     right_shift = length(ins) - length(index)
     if right_shift > 0
         x.runends[run_right:end] += right_shift
+    end
+    if run_left == run_right && index_in_run_left != 1 && (run_remainder_right != 0 || run_right == nrun(x))# gotta fix both ends
+        append!(ins_vals, x.runvalues[run_right])
+        append!(ins_ends, x.runends[run_right])
     end
     if index_in_run_left != 1
         # Leave original value, truncate run, increment left insertion point
@@ -150,8 +156,8 @@ function splice!(x::RLEVector, index::UnitRange, ins::RLEVector=_default_splice)
         run_right = run_right - 1
     end
     # Splice ins into adjusted x
-    splice!( x.runvalues, run_left:run_right, ins_vals)
-    splice!( x.runends, run_left:run_right, ins_ends)
+    splice!(x.runvalues, run_left:run_right, ins_vals)
+    splice!(x.runends, run_left:run_right, ins_ends)
     ree!(x.runvalues,x.runends)
     return(current)
 end

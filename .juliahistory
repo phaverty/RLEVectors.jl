@@ -1,91 +1,3 @@
-using RLEVectors
-exit()
-using RleVector
-using RleVectors
-using RLEVectors
-VERSION < v"0.6.0"
-x = RLEVector([1,1,1])
-@code_typed +(x,x)
-import Base. + 
-import Base.+ 
-bdf
-bdf[:,11:20]
-@edit +(x,x)
-@code_typed +(x,x)
-@code_warntype +(x,x)
-@code_warntype +(x,4)
-@code_warntype +(4,x,4)
-@code_warntype +(4,x
-)
-@code_warntype +(4,x)
-@code_warntype +(x,4)
-exit()
-using RLEVectors
-x = RLEVector([1,1,1])
-@code_typed +(x,4)
-@code_typed +(4,)
-@code_typed +(4,x)
-@code_typed +(4,x)
-@code_typed +(x,4)
-@code_typed +(4,x)
-+(4,x)
-+(x,4)
-extrema(x)
-first(x)
-unique(x)
-@code_typed unique(x)
-!x
-x = RLEVector([true,true,false])
-!x
-!x
-!x
-.!x
-? .! == 
-? .!== 
-? !== 
-any(x)
-all(x)
-exit()
-using RLEVectors
-Pkg.test("RLEVectors")
-exit()
-using RLEVectors
-x = [1,1,2,2,2,3]
-x
-y = RLEVector(x)
-out
-next
-@which iterate(x)
-)
-x
-x
-next
-out
-?push!
-push!(out, 4)
-out
-import Base.eltype
-@code_lowered iterate(x)
-@code_lowered iterate(x, (1,1))
-@code_warntype iterate(x, (1,1))
-@code_warntype iterate(x, (1,1))
-x
-ind2runs(x, 3:4)
-ind2run(x, 3:4)
-ind2run(x, 3:5)
-timings
-timings[:coverage]
-import GenomicVectors.coverage
-@timeit coverage(gr)
-@timeit coverage(gr)
-@timeit coverage(gr)
-Profile.clear()
-@profile for i in 1:100 coverage(gr) end
-Profile.print()
-x
-collect(x)
-ind2run(x, 3)
-ind2run(x, 100)
 first(10:9)
 x[2:3]
 x[2:3]
@@ -437,4 +349,152 @@ Profile.clear(); @profile coverage(gr); Profile.print()
 exit()
 Pkg.test("RLEVectors")
 Pkg.test("RLEVectors")
+exit()
+Pkg.test("RLEVectors")
+Pkg.test("RLEVectors")
+Pkg.test("RLEVectors")
+x
+collect(x)
+length(x)
+x
+collect(x)
+collect(x)
+collect(x)
+length(x)
+length(x)
+index = 10:9
+@which splice!(x,10:9,[9,11])
+ins
+x = RLEVector([9,11])
+ins
+x
+ins = 10:9
+x
+x
+ins
+index = 10:9
+ins = RLEVector([9,11])
+x
+x
+ins_ends
+ins_vals
+collect(x)
+collect(x)
+run_right
+collect(x)
+exit()
+Pkg.test("RLEVectors")
+ins = RLEVector([9,11])
+index = 10:9
+collect(x)
+right_shift
+run_right
+length(x.runends)
+right_run
+run_right
+right_shift
+x.runends
+x.runends
+index_in_run_left
+run_remainder_right
+run_left
+run_right
+nrun(x)
+x
+collect(x)
+x
+x
+ins
+index
+x
+x
+x
+index
+index
+x
+run_left
+run_right
+nrun(x)
+index_in_run_left
+run_remainder_left
+x
+index_in_run_left
+run_remainder_right
+import(Base.splice!)
+import Base.splice!
+exit()
+index = 10:9
+ins = RLEVector([9,11])
+using RLEVectors
+run_left == run_right && index_in_run_left != 1 && run_remainder_right != 0 # gotta fix both ends
+ins = RLEVector([9,11])
+run_left == run_right && index_in_run_left != 1 && run_remainder_right != 0
+index_in_run_left
+run_remainder_right
+splice!(x,10:9,[9,11]) == similar(x,0)
+x
+?searchsortedfirst
+x
+ind2runcontext(x, 4:5)
+@timeit coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+Profile.clear(); @profile coverage(gr); Profile.print()
+@time coverage(gr)
+Profile.clear(); @profile coverage(gr); Profile.print()
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+Profile.clear(); @profile coverage(gr); Profile.print()
+Profile.clear(); @profile coverage(gr); Profile.print()
+@time coverage(gr)
+?insert!
+?append!
+?insert
+?insert!
+Base.insert!
+?Base.insert!
+@time coverage(gr)
+Pkg.test("RLEVectors")
+exit()
+Pkg.test("RLEVectors")
+x
+x = RLEVector([1,1,2,2,3,3,4,4])
+using RLEVectors
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x,3:4)
+x = RLEVector([1,1,2,2,3,3,4,4])
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x,3:5)
+splice!(x,1:0,[9,11])
+index = 1:0
+ins = RLEVector([9,11])
+i_left
+i_right
+widths(x)
+start(1:0)
+last(1:0)
+first(1:0)
+max(1:0)
+maximum(1:0)
+maximum(1,0)
+max(1,0)
+maximum(1:0)
+max(1:0)
+exit()
+Pkg.test("RLEVectors")
+splice!(x,1:0,[9,11])
+index = 1:0
+ins = RLEVector([9,11])
+current
+exit()
+Pkg.test("RLEVectors")
+ind2runcontext(RLEVector([3,3,4,4,5,5,6,6,7,7]),7:9)
+i = 7:9
+rle = RLEVector([3,3,4,4,5,5,6,6,7,7])
 exit()

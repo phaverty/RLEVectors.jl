@@ -133,7 +133,7 @@ x = RLEVector([1,1,2,2,3,3,4,4,5,5])
 @test x == RLEVector([1,1,2,2,3,3,4,4,5,9,11,5])
 xd = [1,1,2,2,3,3,4,4,5,5]
 xr = RLEVector(xd)
-@test splice!(xr,9:10,[9,11]) == splice!(xd,9:10,[9,11])
+@test collect(splice!(xr,9:10,[9,11])) == splice!(xd,9:10,[9,11])
 @test xr == RLEVector([1,1,2,2,3,3,4,4,9,11])
 
 # resize!
