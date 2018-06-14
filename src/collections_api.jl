@@ -1,10 +1,20 @@
 ### Vector/Collections API
 
 function vcat(x::RLEVector, y::RLEVector...)
+    out = copy(x)
     for yi in y
-        x = RLEVector( vcat(x.runvalues, yi.runvalues), vcat(x.runends, yi.runends + length(x)))
+        last_out_run = nrun(out)
+        length_out = length(out)
+        if last(out) == first(yi)
+            last_out_run = last_out_run - 1
+        end
+        new_nrun = last_out_run + nrun(y)
+        resize!(out.runvalues, new_nrun)
+        resize!(out.runends, new_nrun)
+        out.runvalues[(last_out_run + 1:end)] = yi.runvalues
+        out.runends[(last_out_run + 1:end)] = yi.runends + length_out
     end
-    x
+    out
 end
 
 function pop!(x::RLEVector)
@@ -86,8 +96,9 @@ end
 function insert!{T,T2 <: Integer}(x::RLEVector{T,T2},i::Integer,item)
     # FIXME: do not use splice, avoid allocating return value by moving values and use resize
     if i == length(x) + 1
-        splice!(x,length(x),[x[end],item])
+        vcat(x,item)
     else
+        (run, index_in_run, run_remainder) = ind2runcontext(x,i)
         splice!(x,i,[item,x[i]])
     end
     x
