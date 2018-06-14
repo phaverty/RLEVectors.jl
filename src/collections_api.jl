@@ -74,7 +74,6 @@ function decrement_run!(x::RLEVector,run::Integer)
     deleterun!(x,run)
   else
     x.runends[run:end] -= 1
-
   end
   return(x)
 end
@@ -96,6 +95,7 @@ end
 
 _default_splice = RLEVector(Union{}[],Int64[])
 function splice!(x::RLEVector, i::Integer, ins::RLEVector=_default_splice)
+    nrun_x = nrun(x)
     (1 <= i <= length(x)) || throw(BoundsError())
     if length(ins) == 0
         run = ind2run(x,i)
@@ -104,20 +104,18 @@ function splice!(x::RLEVector, i::Integer, ins::RLEVector=_default_splice)
     else
         (run, index_in_run, run_remainder) = ind2runcontext(x,i)
         current = x.runvalues[run]
-        right_shift = length(ins) - length(i)
-        x.runends[run:end] += right_shift
-        ins_vals = ins.runvalues
-        ins_ends = ins.runends + (i-1)
-        if index_in_run == 1
-            ins_vals = [ins_vals; x.runvalues[run]]
-            ins_ends = [ins_ends; x.runends[run]]
-        else
-            ins_vals = [x.runvalues[run]; ins_vals; x.runvalues[run]]
-            ins_ends = [i-1; ins_ends; x.runends[run]]
-        end
-        # FIXME: do not use splice, avoid allocating return value by moving values and use resize
-        splice!( x.runvalues, run, ins_vals)
-        splice!( x.runends, run, ins_ends)
+        # Splice ins into adjusted x
+        x.runends[:] = widths(x)
+        x.runends[run] = run_remainder
+        nrun_out = run + nrun(ins) + ((nrun_x - run) + 1)
+        resize!(x.runvalues, nrun_out)
+        resize!(x.runends, nrun_out)
+        x.runvalues[(run + (nrun_out - nrun_x)):nrun_out] = x.runvalues[run:nrun_x]
+        x.runends[(run + (nrun_out - nrun_x)):nrun_out] = x.runends[run:nrun_x]
+        x.runvalues[(run + 1):(run + nrun(ins))] = ins.runvalues
+        x.runends[(run + 1):(run + nrun(ins))] = widths(ins)
+        x.runends[run] = index_in_run - 1
+        cumsum!(x.runends, x.runends)
         ree!(x.runvalues,x.runends)
     end
     return(current)
