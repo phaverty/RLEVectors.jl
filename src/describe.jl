@@ -54,6 +54,20 @@ function widths(x::RLEVector)
   rval
 end
 
+function widths!(x::AbstractVector)
+    if length(x) > 1
+        i = 1
+        prev = x[1]
+        @inbounds while i < length(x)
+            i = i + 1
+            rei = x[i]
+            x[i] = rei - prev
+            prev = rei
+        end
+    end
+    x
+end
+
 function widths(x::RLEVector, run::Integer)
   run == 1 ? x.runends[1] : x.runends[run] - x.runends[run-1]
 end

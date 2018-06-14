@@ -33,7 +33,7 @@ y = RLEVector([4,4,5,5,6,6])
 @test StringRle(["a","bob","joe"],[2,4,6]) == RLEVector(["a","bob","joe"],Int32[2,4,6])
 
 @test RLEVector(5,3) == RLEVector([5,5,5])
-    
+
 # Creating
 y = RLEVector([1.0,1,2,2,3,3,3])
 @test similar(y) == RLEVector([0.0],[length(y)])
@@ -44,7 +44,7 @@ x = RLEVector([4,4,5,5,6,7,8])
 @test convert(Vector,x) == [4,4,5,5,6,7,8]
 @test convert(Set,x) == Set([4,5,6,7,8])
 @test convert(RLEVector,[1,1,2,2]) == RLEVector( [1,2], [2,4] )
-    
+
 # Expanding
 @test collect(RLEVector([1,1,2,2,3,3])) == [1,1,2,2,3,3]
 @test convert(Vector, RLEVector([1,1,2,2,3,3])) == [1,1,2,2,3,3]
@@ -68,13 +68,16 @@ x = RLEVector([1,2,3],[2,9,22])
 @test ends(x) == [2,9,22]
 @test ends(x,3) == 22
 @test values(x) == [1,2,3]
+@test widths!([2,5,9,22]) == [2,3,4,13]
+@test widths!([4]) == [4]
+@test widths!([]) == []
 
 # Hashing
 x = RLEVector([1,1,2,2,3,3,3])
 d = Dict("bob" => x)
 typeof(d["bob"]) == typeof(x)
 
-  
+
 end # testset
 
 end # module
