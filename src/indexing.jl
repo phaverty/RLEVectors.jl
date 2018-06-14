@@ -49,7 +49,7 @@ end
 
 function ind2runcontext(rle::RLEVector, i::UnitRange)
   s = start(i)
-  e = max(s,last(i)) # Be careful with 5:4
+  e = last(i)
   n = length(rle)
   runs = ind2run(rle, i)
   left_run = start(runs)

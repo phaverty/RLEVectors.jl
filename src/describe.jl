@@ -51,7 +51,7 @@ function widths(x::RLEVector)
       rval[i] = rei - prev
       prev = rei
   end
-  return(rval)
+  rval
 end
 
 function widths(x::RLEVector, run::Integer)

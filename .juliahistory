@@ -1,276 +1,3 @@
-first(10:9)
-x[2:3]
-x[2:3]
-x
-collect(x)
-collect(x)[2:3]
-x[4:6]
-collect(x)[4:6]
-@timeit coverage(gr)
-@timeit gr[900:920]
-Profile.clear()
-@profile for i in 1:100 coverage(gr) end
-coverage(gr)
-@time coverage(gr)
-Profile.clear()
-@profile coverage(gr)
-Profile.print()
-exit()
-using RLEVectors
-using GenomicVectors
-@time coverage(gr)
-@timeit coverage(gr)
-@timeit coverage(gr)
-Profile.clear()
-@profile for i in 1:100 coverage(gr) end; Profile.print()
-@timeit coverage(gr)
-import GenomicFeatures.coverage
-@timeit coverage(gr)
-eachrange(gr)
-sort(eachrange(gr))
-sort(collect(eachrange(gr)))
-@timeit coverage(gr)
-Profile.clear()
-coverage(gr)
-@profile for i in 1:100 coverage(gr) end; Profile.print()
-@timeit coverage(gr)
-Profile.clear(); @profile for i in 1:100 coverage(gr) end; Profile.print()
-foo=first(eachrange(gr))
-foo
-1:10 + 1
-(1:10) + 1
-(s,e) = foo
-s
-e
-s:e
-(s,e) = first(eachrange(gr))
-coverage(gr)
-x[1:4]=12
-x=RLEVector([1,1,1,1,1,2,2,2,2,4])
-x[1:4]=12
-coverage(gr)
-coverage(gr)
-coverage(gr)
-coverage(gr)
-gr
-coverage(gr)
-@which setindex!(x,4,1:3)
-@which setindex!(x,4,(1,3))
-setindex!(x,4,(1,3))
-x
-coverage(gr)
-coverage(gr)
-exit()
-using GenomicVectors
-@timeit coverage(gr)
-Profile.clear()
-@profile for i in 1:100 coverage(gr) end; Profile.print()
-@timeit coverage(gr)
-import GenomicFeatures.coverage
-@timeit coverage(gr)
-using RLEVectors
-@timeit coverage(gr)
-coverage(gr)
-Profile.clear()
-@profile for i in 1:100 coverage(gr) end; Profile.print()
-Profile.clear()
-@profile for i in 1:100 coverage(gr) end; Profile.print()
-coverage(gr)
-@timeit coverage(gr)
-x
-x = RLEVector([1,1,1,2,2,2,7,7,7,8])
-@which setindex!(x,4,1:3)
-@which setindex!(x,[1,1,1],1:3)
-@which setindex!(x,RLEVector(1,1,1]),1:3)
-@which setindex!(x,RLEVector([1,1,1]),1:3)
-@which .+(x,1)
-@which +.(x,1)
-@which broadcast(x,+,1)
-@which setindex!(x,[1,1,1],1:3)
-coverage(gr)
-@timeit coverage(gr)
-1.5/8
-?splice!
-exit()
-coverage(gr)
-@timeit coverage(gr)
-x = RLEVector(collect(1:10))
-using RLEVectors
-x = RLEVector(collect(1:10))
-x[3:3] = [99,100]
-x
-length(x)
-x = RLEVector(collect(1:10))
-length(x)
-x[3:2] = [99,100]
-length(x)
-x
-@timeit coverage(gr)
-x = 1:10
-x[4:6]
-x = RLEVector(1:10)
-x = RLEVector(collect(1:10))
-ind2run(x,4:5)
-x = RLEVector([1,1,2,2,3,3])
-ind2run(x,4:5)
-x[[4,5]]
-x[4:5]
-ind2run(x,4:5)
-ind2runcontext(x,4:5)
-?ind2runcontext
-collect(x)
-?splice!
-?push!
-exit()
-using RLEVectors
-?ind2run
-?ind2runcontext
-?ind2runcontext
-ind2run(x, 4:5)
-x =  RLEVector(collect(1:10))
-ind2run(x, 4:5)
-inds = 4:5
-last(inds)
-x[4:6]
-function Base.getindex(rle::RLEVector, ind::UnitRange)
-    run_indices = ind2run(rle, ind)
-    vals = values(rle, run_indices)
-    ends = runends(rle, run_indices)
-    ends[end] = last(inds)
-    ends = ends - (first(inds) - 1)
-    RLEVector(vals, ends)
-end
-
-x[4:6]
-exit()
-using RLEVectors
-x =  RLEVector(collect(1:10))
-x[4:6]
-x[4:6]
-ends(x)
-x[4:6]
-x[4:6]
-x[4:6]
-x[4:6]
-x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-x[4:5]
-x[4:6]
-@timeit coverage(gr)
-coverage(gr)
-exit()
-using RLEVectors
-x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-?Union
-import Base.splice!
-x
-splice!(x, 4, 99)
-exit()
-using RLEVectors
-x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-splice!(x, 4, 98)
-splice!(x, 4:5, 98)
-splice!(x, 4:5, 98)
-splice!(x, 4:5, 98:99)
-splice!(x, 4:5, [99,99])
-exit()
-using RLEVectors
-x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-splice!(x, 4:5, [99,99])
-x
-splice!(x, 2, [99,99])
-x
-coverage(gr)
-gr
-exit()
-coverage(gr)
-import GenomicFeatures.coverage
-coverage(gr)
-widths(gr)[1]
-coverage(gr)
-(s,e) = first(eachrange(gr))
-out[r]
-@which setindex!(out, r, out[r])
-foo = out[r]
-foo
-@which setindex!(out, r, foo)
-setindex!(out, r, foo)
-out
-typeof(out)
-typeof(foo)
-@which setindex!(out, r, foo)
-@which splice!(out, r, foo)
-splice!(out, r, foo)
-splice!(out, r, foo)
-splice!(out, r, foo)
-out
-@which splice!(out, foo, r)
-@which setindex!(out, foo, r)
-index = r
-ins = out[r] + 1
-x
-x = ou
-x = out
-ins
-ins
-ins_ends
-ins_vals
-out
-r
-out[r]
-foo = out[r] + 1
-out[r] = foo
-out
-all_ranges = collect(eachrange(gr))
-(s,e) = all_ranges[1]
-out
-out
-print(out)
-coverage(gr)
-out
-print(out)
-coverage(gr)
-coverage(gr)
-coverage(gr)
-out
-r
-@which splice!(out, r, out[r] + 1)
-out
-(s,e) = all_ranges[1]
-x = out
-r = s:e
-index = r
-ins = out[r] + 1
-ins
-length(ins)
-length(index)
-i_left > i_right # Insert without removing
-current
-3080432725 + 3326
-length(out)
-3080432676 + 3375
-[[4,5,6]; [12]]
-vcat([4,5,6], [12])
-ins_ends
-ins
-r
-coverage(gr)
-coverage(gr)
-coverage(gr)
-exit()
-coverage(gr)
-@timeit coverage(gr)
-coverage(gr)
-@time coverage(gr)
-Profile.clear(); @profile coverage(gr); Profile.print()
-gr
-@timeit coverage(gr)
-bob = [1,2,3]
-bob[0] =  12
-import Base.splice!
-@timeit coverage(gr)
-x
-x = RLEVector(collect(1:10))
-splice!(x, 4:5, [99])
 x
 x = RLEVector(collect(1:10))
 splice!(x, 4:5, [99,99])
@@ -497,4 +224,277 @@ Pkg.test("RLEVectors")
 ind2runcontext(RLEVector([3,3,4,4,5,5,6,6,7,7]),7:9)
 i = 7:9
 rle = RLEVector([3,3,4,4,5,5,6,6,7,7])
+exit()
+Pkg.test("RLEVectors")
+xd
+xr
+splice!(xr,9:10,[9,11])
+splice!(xd,9:10,[9,11])
+@which splice!(xd,9:10,[9,11])
+splice!(xr,9:10,[9,11])
+splice!(xd,9:10,[9,11])
+?growat!
+?Base.growa!
+?Base.growat!
+?resize!
+?resize!
+1:4 + 5
+(1:4) + 5
+?insert!
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x,4:5,[9,11])
+x
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x,7:8,[9,11])
+x
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x,1:0,[9,11])
+x
+x = RLEVector([1,1,2,2,3,3,4,4])
+nrun(x)
+length(x)
+ind2runcontext(x,22)
+ind2runcontext(x,10)
+length(x)
+ind2runcontext(x,8)
+ind2runcontext(x,9)
+import(Base.splice!)
+import Base.splice!
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x,1:0,[9,11])
+x
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x,1:0,[9,11])
+x = RLEVector([1,1,2,2,3,3,4,4])
+index = 4:5
+ins = RLEVector([9,9])
+collect(current)
+ins
+index
+x
+x.runends
+nrun_out
+nrun(x)
+nrun_x
+run_range
+length(run_range)
+index
+rnun(ins)
+nrun(ins)
+collect(x)
+x = RLEVector([1,1,2,2,3,3,4,4])
+collect(x)
+run_left
+run_right
+run_range
+length(run_range)
+length(run_range)
+x = RLEVector([1,1,2,2,3,3,4,4])
+run_right
+run_range
+run_range + 1
+x = RLEVector([1,1,2,2,3,3,4,4])
+ins.runvalues
+run_right:nrun_x
+x
+run_range + 1
+run_range
+x = RLEVector([1,1,2,2,3,3,4,4])
+collect(x)
+x.runvalues[run_right:nrun_x]
+x = RLEVector([1,1,2,2,3,3,4,4])
+x.runvalues[run_right:nrun_x]
+((nrun_out - run_right) + 1):end
+((nrun_out - run_right) + 1):nrun_out
+((nrun_out - run_right)):nrun_out
+((nrun_out - run_right) + 1):nrun_out
+((nrun_out - run_right) + 2):nrun_out
+nrun_x
+nrun_x - right_run
+nrun_x - run_right
+x = RLEVector([1,1,2,2,3,3,4,4])
+x.runvalues[run_right:nrun_x]
+((nrun_x - run_right) + 1):nrun_out
+nrun_x - run_right
+nrun_x - run_right
+nrun_x - run_right + 1
+nrun_x
+nrun_out - nrun_x
+run_right + (nrun_out - nrun_x)
+x
+nrun_x
+nrun_out
+x = RLEVector([1,1,2,2,3,3,4,4])
+collect(x)
+x = RLEVector([1,1,2,2,3,3,4,4])
+x.runvalues
+x.runvalues
+x = RLEVector([1,1,2,2,3,3,4,4])
+x = RLEVector([1,1,2,2,3,3,4,4])
+ins
+index
+run_range
+x = RLEVector([1,1,2,2,3,3,4,4])
+x
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+cumsum!([1,2,3])
+?cumsum!
+?cumsum
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+x = RLEVector([1,1,2,2,3,3,4,4])
+nrun(ins)
+(run_left + 1):(run_left + 1 + nrun(ins))
+x.runvalues
+x = RLEVector([1,1,2,2,3,3,4,4])
+x
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x,1:0,[9,11])
+x
+collect(x)
+x = RLEVector([1,1,2,2,3,3,4,4])
+x
+run_left
+index_in_run_left
+x = RLEVector([1,1,2,2,3,3,4,4])
+x.runends
+x
+x = RLEVector([1,1,2,2,3,3,4,4])
+nrun_x
+nrun_ins
+nrun(ins)
+run_left == run_right
+x = RLEVector([1,1,2,2,3,3,4,4])
+x
+x = RLEVector([1,1,2,2,3,3,4,4])
+x
+x
+x = RLEVector([1,1,2,2,3,3,4,4])
+x
+x
+@time coverage(gr)
+?cumsum!
+x = RLEVector([1,1,2,2,3,3,4,4])
+x
+x = RLEVector([1,1,2,2,3,3,4,4])
+x = RLEVector([1,1,2,2,3,3,4,4])
+x
+x
+run_range
+x = RLEVector([1,1,2,2,3,3,4,4])
+x
+run_left
+run_right
+x = RLEVector([1,1,2,2,3,3,4,4])
+x
+run_left
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+Profile.clear(); @profile coverage(gr); Profile.print()
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x,1:0,[9,11])
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+x = RLEVector([1,1,2,2,3,3,4,4])
+splice!(x,1:0,[9,11])
+@time coverage(gr)
+x = RLEVector([1,1,2,2,3,3,4,4])
+@time width(x)
+@time widths(x)
+@time widths(x)
+@timeit widths(x)
+@timeit widths(x)
+Profile.clear(); @profile width(x); Profile.print()
+Profile.clear(); @profile widths(x); Profile.print()
+@timeit widths(x)
+@timeit widths(x)
+import RLEVectors.widths
+@timeit widths(x)
+@timeit widths(x)
+@timeit widths(x)
+@timeit widths(x)
+@timeit widths(x)
+@timeit widths(x)
+@timeit widths(x)
+@timeit widths(x)
+@timeit widths(x)
+@timeit widths(x)
+Pkg.test("RLEVectors")
+index = 1:0
+ins = RLEVector([9,11])
+current
+x
+index
+length(index)
+x
+splice!(xd,9:10,[9,11])
+collect(splice!(xr,9:10,[9,11]))
+x = xr
+index = 9:10
+ins = [9,11]
+run_range
+current
+run_remainder_right
+x.runends[run_range]
+run_range
+index_in_run_left
+x.runends[run_range]
+run_remainder_right
+current
+xr
+run_left
+run_right
+nrun_ins
+x = xr
+nrun_x
+nrun(ins)
+ins = RLEVector([9,11])
+index = 9:10
+nrun(ins)
+run_left == run_right
+length(run_range)
+run_left
+run_right
+ins
+index
+x
+xr
+ins
+index
+nrun(x)
+run_left
+run_right
+collect(x)
+using RLEVectors
+using Base.Test
+x = xr
+ins = RLEVector([9,11])
+index = 9:10
+x.runends
+nrun_out
+x.runends
+nrun_x
+nrun(ins)
+run_left == run_right
+length(run_range)
+nrun_x
+nrun(ins)
+nrun_out
+using RLEVectors
+import Base.splice!
 exit()
