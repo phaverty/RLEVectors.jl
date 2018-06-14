@@ -58,15 +58,15 @@ unshift!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = pushfirst!(x,item)
 @deprecate shift! popfirst!
 
 function deleterun!(x::RLEVector,i::Integer)
-  x.runends[i:end] -= widths(x,i)
-  if (i > 1 && i < nrun(x) && x.runvalues[i-1] == x.runvalues[i+1])
-    splice!(x.runvalues,(i-1):i)
-    splice!(x.runends,(i-1):i)
-  else
-    deleteat!(x.runvalues,i)
-    deleteat!(x.runends,i)
-  end
-  return(x)
+    x.runends[i:end] -= widths(x,i)
+    if (i > 1 && i < nrun(x) && x.runvalues[i-1] == x.runvalues[i+1])
+        deleteat!(x.runvalues,(i-1):i)
+        deleteat!(x.runends,(i-1):i)
+    else
+        deleteat!(x.runvalues,i)
+        deleteat!(x.runends,i)
+    end
+    x
 end
 
 function decrement_run!(x::RLEVector,run::Integer)
@@ -85,6 +85,7 @@ function deleteat!(x::RLEVector,i::Integer)
 end
 
 function insert!{T,T2 <: Integer}(x::RLEVector{T,T2},i::Integer,item)
+    # FIXME: do not use splice, avoid allocating return value by moving values and use resize
     if i == length(x) + 1
         splice!(x,length(x),[x[end],item])
     else
@@ -114,6 +115,7 @@ function splice!(x::RLEVector, i::Integer, ins::RLEVector=_default_splice)
             ins_vals = [x.runvalues[run]; ins_vals; x.runvalues[run]]
             ins_ends = [i-1; ins_ends; x.runends[run]]
         end
+        # FIXME: do not use splice, avoid allocating return value by moving values and use resize
         splice!( x.runvalues, run, ins_vals)
         splice!( x.runends, run, ins_ends)
         ree!(x.runvalues,x.runends)
