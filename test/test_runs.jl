@@ -29,6 +29,11 @@ using RLEVectors
 @test ree(["a","b","c","d","e","f"],[3,6,12,12,12,15]) == (["a","b","c","f"],[3,6,12,15]) # run of 3 runends
 @test ree([1,2,3],[1,2,2]) == ([1,2],[1,2])
 
+# two vectors
+@test ree([9],[1]) == ([9],[1])
+@test ree([4,3],[2,4]) == ([4,3],[2,4])
+@test ree([4,3],[0,4]) == ([3],[4])
+
 # scalar
 @test ree(5) == ([5],[1])
 @test ree([5]) == ([5],[1])

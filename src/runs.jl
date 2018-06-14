@@ -77,7 +77,7 @@ end
     ree(runvalues, runends)
     ree!(runvalues, runends)
     ree!(x::RLEVector)
-        
+
 Tidy up an existing (mostly) Run End Encoded vector, dropping zero length runs and fixing
 any adjacent identical values. `RLEVectors.jl` does this operation after modifying an
 RLEVector, for example.
@@ -88,22 +88,24 @@ end
 
 function ree!(runvalues, runends)
     n = length(runvalues)
-    if n < 2
-        return( runvalues, runends )
-    end
-    current_val = runvalues[1]
-    current_end = runends[1]
-    left_i = 1
-    @inbounds for right_i in 2:length(runvalues)
-        rv = runvalues[right_i]
-        re = runends[right_i]
-        if rv != current_val && re != current_end
-            left_i = left_i + 1
-            current_val = runvalues[left_i] = rv
+    left_i = 0
+    if (n >= 1)
+        current_val = runvalues[1]
+        current_end = runends[1]
+        if current_end != 0
+            left_i = 1
         end
-        current_end = runends[left_i] = re
+        @inbounds for right_i in 2:length(runvalues)
+            rv = runvalues[right_i]
+            re = runends[right_i]
+            if rv != current_val && re > current_end
+                left_i = left_i + 1
+                current_val = runvalues[left_i] = rv
+            end
+            current_end = runends[left_i] = re
+        end
     end
-    if left_i != n
+    if left_i < n
         resize!(runvalues,left_i)
         resize!(runends,left_i)
     end
@@ -111,6 +113,7 @@ function ree!(runvalues, runends)
 end
 
 function ree(runvalues, runends, nrun)
+    # FIXME: why do we have this?
     newv = copy(runvalues)
     newe = copy(runends)
     ree!(newv,newe)
