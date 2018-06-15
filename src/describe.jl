@@ -41,17 +41,17 @@ function starts(x::RLEVector, run::Integer)
     run == 1 ? num_one : x.runends[run-1] + num_one
 end
 
-function widths(x::RLEVector)
-    re = x.runends
-    rval = similar(re)
-    if length(re) > 0
-        rval[1] = re[1]
-    end
-    @inbounds for i in length(re):-1:2
-        rval[i] = re[i] - re[i-1]
-    end
-    rval
-end
+#function widths(x::RLEVector)
+#    re = x.runends
+#    rval = similar(re)
+#    if length(re) > 0
+#        rval[1] = re[1]
+#    end
+#    @inbounds for i in length(re):-1:2
+#        rval[i] = re[i] - re[i-1]
+#    end
+#    rval
+#end
 
 function widths!(x::AbstractVector)
     @inbounds for i in length(x):-1:2
@@ -59,6 +59,7 @@ function widths!(x::AbstractVector)
     end
     x
 end
+widths(x::RLEVector) = widths!(copy(x.runends))
 
 function widths(x::RLEVector, run::Integer)
   run == 1 ? x.runends[1] : x.runends[run] - x.runends[run-1]
