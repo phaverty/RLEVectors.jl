@@ -166,6 +166,7 @@ function splice!(x::RLEVector, index::UnitRange, ins::RLEVector=_default_splice)
         current.runends[end] = current.runends[end] - run_remainder_right
     end
     # Splice ins into adjusted x
+    # FIXME: factor out code shared with setindex!(rle, rle, unit_range)
     widths!(x.runends)
     x.runends[run_right] = run_remainder_right
     nrun_out = run_left + nrun(ins) + ((nrun_x - run_right) + 1)

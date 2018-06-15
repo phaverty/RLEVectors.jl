@@ -180,6 +180,35 @@ x[2:4] = [5,6,7]
 x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
 x[2:4] = 5:7
 @test collect(x) == [1,5,6,7,3,3,4,4]
+x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
+x[1:2] = 5:6
+@test collect(x) == [5,6,2,2,3,3,4,4]
+x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
+x[1:3] = 5:7
+@test collect(x) == [5,6,7,2,3,3,4,4]
+x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
+x[7:8] = 5:6
+@test collect(x) == [1,1,2,2,3,3,5,6]
+x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
+x[6:8] = 5:7
+@test collect(x) == [1,1,2,2,3,5,6,7]
+
+# range with vector and match
+x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
+x[1:2] = [2,2]
+@test collect(x) == [2,2,2,2,3,3,4,4]
+x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
+x[2:3] = [1,1]
+@test collect(x) == [1,1,1,2,3,3,4,4]
+x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
+x[2:3] = [2,2]
+@test collect(x) == [1,2,2,2,3,3,4,4]
+x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
+x[6:7] = [3,3]
+@test collect(x) == [1,1,2,2,3,3,3,4]
+x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
+x[7:8] = [3,3]
+@test collect(x) == [1,1,2,2,3,3,3,3]
 
 # reverse range with vector
 x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])

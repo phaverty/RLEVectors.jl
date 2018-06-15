@@ -1,0 +1,127 @@
+input = RLEVector([5,6,7])
+indices = 2:4
+value = RLEVector([5,6,7])
+nrun_diff
+run_right
+x
+nrun_diff
+x
+indices
+value
+run_left
+run_right
+run_remainder_right
+run_right
+x
+run_left
+x
+indices = 7:8
+value = RLEVector([3,3])
+x
+run_left
+indices
+value
+run_left
+x
+run_right
+run_left
+run_left
+nrun_out
+x
+x.runvalues[run_right_range]
+x
+x
+value.runends
+i_left
+x
+run_left
+index_in_run_left
+Pkg.test("RLEVectors")
+exit()
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+coverage(gr)
+?deleteat!
+coverage(gr)
+x = RLEVector([1,2,3,4,5,6,7,8])
+x[2:6] = [9,9,9,9,9]
+x
+coverage(gr)
+coverage(gr)
+coverage(gr)
+exit()
+coverage(gr)
+coverage(gr)
+exit()
+coverage(gr)
+coverage(gr)
+exit()
+coverage(gr)
+exit()
+coverage(gr)
+exit()
+coverage(gr)
+coverage(gr)
+exit()
+coverage(gr)
+chr_ends(gr)
+last(chr_ends(gr))
+@which coverage(gr)
+first(eachrange(gr))
+(s,e) = first(eachrange(gr))
+out
+foo = collect(eachrange(gr))
+(s,e) = foo[2]
+out
+(s,e) = foo[3]
+out
+exit()
+coverage(gr)
+exit()
+coverage(gr)
+coverage(gr)
+exit()
+coverage(gr)
+coverage(gr)
+coverage(gr)
+coverage(gr)
+foo = collect(eachrange(gr))
+length(unique(foo))
+coverage(gr)
+coverage(gr)
+coverage(gr)
+deleteat!(collect(1:10), 3:4)
+?deleteat!
+coverage(gr)
+coverage(gr)
+coverage(gr)
+coverage(gr)
+coverage(gr)
+coverage(gr)
+coverage(gr)
+coverage(gr)
+coverage(gr)
+coverage(gr)
+coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@time coverage(gr)
+@timeit coverage(gr)
+Pkg.test("RLEVectors")
+bdf
+bdf
+@timeit foo[801:900] = 1:100
+@timeit foo[801:900] = 1:100
+@timeit foo[801:900] = 1:100
+@timeit foo[801:900] = 1:100
+@timeit foo[801:900] = 1:100
+bdf[:,10:21]
+@timeit foo + 4
+@timeit foo + 4
+@timeit foo + 4
+@timeit foo + 4
+@timeit foo .+ 4

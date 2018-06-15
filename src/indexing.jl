@@ -18,12 +18,12 @@ function ind2run(rle::RLEVector, i::Integer)
 end
 
 function ind2run(rle::RLEVector,i::UnitRange)
-  re = rle.runends
-  n = length(re)
-  left_run = searchsortedfirst(re,first(i),1,n)
-  right_run = searchsortedfirst(re,last(i),left_run,n)
-  right_run <= n || throw(BoundsError())  # Can't be < 1
-  left_run:right_run
+    re = rle.runends
+    n = length(re)
+    left_run = searchsortedfirst(re,first(i),1,n)
+    right_run = searchsortedfirst(re,last(i),left_run,n)
+    right_run <= n || throw(BoundsError())  # Can't be < 1
+    left_run:right_run
 end
 
 function ind2run(rle::RLEVector, i::AbstractArray)
@@ -68,7 +68,7 @@ Base.endof(rle::RLEVector) = length(rle)
 
 function Base.getindex(rle::RLEVector, i::Int)
     run = ind2run(rle,i)
-    return( rle.runvalues[run] )
+    rle.runvalues[run]
 end
 
 function Base.setindex!(rle::RLEVector, value, i::Int)
@@ -116,7 +116,7 @@ function Base.setindex!(rle::RLEVector, value, i::Int)
     splice!(rle.runvalues, run, [runvalue,value,runvalue])
     splice!(rle.runends, run, [i-1,i,runend])
   end
-  return(rle)
+  rle
 end
 
 function Base.getindex(rle::RLEVector, ind::Array{Bool, 1})
@@ -137,17 +137,61 @@ function Base.getindex(rle::RLEVector, ind::UnitRange)
     RLEVector(v, e)
 end
 
-function Base.getindex(rle::RLEVector, ind::AbstractVector)
-    run_indices = ind2run(rle, ind)
-    return( RLEVector( rle.runvalues[ run_indices ] ) )
+function Base.getindex(x::RLEVector, i::AbstractVector)
+    run_indices = ind2run(x, i)
+    RLEVector( x.runvalues[ run_indices ] )
 end
 
-function Base.setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::Vector{T1}, indices::UnitRange)
-    setindex!(rle, RLEVector(value), indices)
+function Base.setindex!(x::RLEVector, value::AbstractVector, indices::UnitRange)
+    setindex!(x, RLEVector(value), indices)
 end
 
-function Base.setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::RLEVector{T1,T2}, indices::UnitRange)
-    splice!(rle, indices, value)
+function Base.setindex!(x::RLEVector, value::RLEVector, indices::UnitRange)
+    length(value) != length(indices) && throw(BoundsError())
+    i_left = first(indices)
+    i_right = last(indices)
+    if i_left == i_right
+        return(setindex!(x,ins,i_left))
+    end
+    nrun_x = nrun(x)
+    nrun_value = nrun(value)
+    (run_left, run_right, index_in_run_left, run_remainder_right) = ind2runcontext(x,indices)
+    # Move run markers to denote parts of original data that will be kept, accomodating completely filled runs or adjacent matches
+    # We will keep 1:run_left and run_right:end and fill in the middle with value
+    if run_remainder_right == 0
+        run_right = run_right + 1
+        if run_right < nrun_x && last(value) == x.runvalues[run_right + 1]
+            run_right = run_right + 1
+        end
+    end
+    if index_in_run_left == 1
+        run_left = run_left - 1
+        if run_left > 0 && first(value) == x.runvalues[run_left]
+            run_left = run_left - 1
+        end
+    end
+    nrun_out = run_left + nrun_value + ((nrun_x - run_right) + 1)
+    nrun_diff = nrun_out - nrun_x
+    # Resize and move
+    if nrun_diff > 0
+        resize!(x.runvalues, nrun_out)
+        resize!(x.runends, nrun_out)
+        run_right_range = run_right:nrun_x
+        x.runvalues[run_right_range + nrun_diff] = x.runvalues[run_right_range]
+        x.runends[run_right_range + nrun_diff] = x.runends[run_right_range]
+    elseif nrun_diff < 0
+        delete_range = (run_left + 1):(run_left - nrun_diff)
+        deleteat!(x.runvalues, delete_range)
+        deleteat!(x.runends, delete_range)
+    end
+    # Insert incoming values
+    insert_range = (run_left + 1):(run_left + length(value.runvalues))
+    x.runvalues[insert_range] = value.runvalues
+    x.runends[insert_range] = value.runends + (i_left - 1)
+    if run_left > 0 && index_in_run_left != 1
+        x.runends[run_left] = i_left - 1
+    end
+    x
 end
 
 function Base.setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::T1, indices::UnitRange)
@@ -282,8 +326,6 @@ end
 
 
 # FIXME: add reverse iterator, see https://docs.julialang.org/en/latest/manual/interfaces/#man-interface-array-1
-
-
 
 """
     tapply(data_vector, rle, function)
