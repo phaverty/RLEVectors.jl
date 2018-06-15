@@ -1,20 +1,23 @@
 ### Vector/Collections API
 
+function append!(x::RLEVector, y::RLEVector)
+    last_x_run = nrun(x)
+    length_x = length(x)
+    if last(x) == first(y)
+        last_x_run = last_x_run - 1
+    end
+    new_nrun = last_x_run + nrun(y)
+    resize!(x.runvalues, new_nrun)
+    resize!(x.runends, new_nrun)
+    x.runvalues[(last_x_run + 1:end)] = y.runvalues
+    x.runends[(last_x_run + 1:end)] = y.runends + length_x
+    x
+end
+
 function vcat(x::RLEVector, y::RLEVector...)
     out = copy(x)
-    # FIXME: maybe resize just once?
-    # FIXME: move this logic into append!
     for yi in y
-        last_out_run = nrun(out)
-        length_out = length(out)
-        if last(out) == first(yi)
-            last_out_run = last_out_run - 1
-        end
-        new_nrun = last_out_run + nrun(yi)
-        resize!(out.runvalues, new_nrun)
-        resize!(out.runends, new_nrun)
-        out.runvalues[(last_out_run + 1:end)] = yi.runvalues
-        out.runends[(last_out_run + 1:end)] = yi.runends + length_out
+        append!(out, yi)
     end
     out
 end
@@ -95,15 +98,26 @@ function deleteat!(x::RLEVector,i::Integer)
   decrement_run!(x,run)
 end
 
-function insert!{T,T2 <: Integer}(x::RLEVector{T,T2},i::Integer,item)
-    # FIXME: use append rather than vcat
-    item = RLEVector(item)
-    if i == length(x) + 1
-        x = vcat(x,item)
-    elseif i == 1
-        x = vcat(item,x)
+function insert!(x::RLEVector{T1,T2}, i::Integer, item) where {T1,T2 <: Integer}
+    if i == 1
+        unshift!(x,item)
+    elseif i == length(x) + 1
+        push!(x,item)
     else
-        x = vcat(x[1:i], item, x[(i + 1):end])
+        _item = convert(T1, item)
+        (run, index_in_run, run_remainder) = ind2runcontext(x,i)
+        if x.runvalues[run] == _item
+            x.runends[run:end] = x.runends[run:end] + 1
+        else
+            new_nrun = nrun(x) + 2
+            resize!(x.runvalues, new_nrun)
+            resize!(x.runends, new_nrun)
+            x.runvalues[(run + 2):end] = x.runvalues[run:(end-2)]
+            x.runvalues[run + 1] = _item
+            x.runends[(run + 2):end] = x.runends[run:(end-2)] + 1
+            x.runends[run + 1] = i
+            x.runends[run] = i - 1
+        end
     end
     x
 end

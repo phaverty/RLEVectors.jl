@@ -121,3 +121,39 @@ exit90
 exit()
 exit()
 exit()
+bdf
+size(bdf)
+bdf[:,8:21]
+@time widths(x)
+@time widths(foo)
+@time width(foo)
+using RLEVectors
+widths(foo)
+widths(foo)
+widths(foo)
+@time widths(foo)
+@time widths!(foo)
+x = foo.runends; @time widths!()
+x = foo.runends; @time widths!(x)
+x = foo.runends; @time widths!(x)
+@time widths(foo)
+bdf[:,8:21]
+bdf
+timings
+timings[1,10:21]
+bdf
+bdf[:,8:21]
+bdf
+?append
+?append!
+import Base.append!
+x = RLEVector([1,1,2,2,3,3])
+y = RLEVector([1,1,2,2,3,3])
+append!(x,y)
+append!(x,y)
+x
+x = RLEVector([1,1,2,2,3,3])
+y = RLEVector([3,1,2,2,3,3])
+append!(x,y)
+collect(x)
+exit()

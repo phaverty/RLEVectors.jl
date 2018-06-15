@@ -70,6 +70,10 @@ function RLEVector(vec::Vector)
   RLEVector(runvalues, runends)
 end
 
+function RLEVector(x::UnitRange)
+    RLEVector{eltype(x),Int64}(collect(x),collect(1:length(x)))
+end
+
 function RLEVector(x)
     RLEVector([x])
 end

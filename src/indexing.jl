@@ -12,9 +12,9 @@ Locate runs, get index of run corresponding to the i-th value in the expanded ru
 function ind2run(rle::RLEVector, i::Integer)
   re = rle.runends
   n = length(re)
+  0 < i <= last(re) || throw(BoundsError())
   run = searchsortedfirst(re,i,1,n)
-  run <= n || throw(BoundsError())  # Can't be < 1
-  return(run)
+  run
 end
 
 function ind2run(rle::RLEVector,i::UnitRange)
@@ -23,7 +23,7 @@ function ind2run(rle::RLEVector,i::UnitRange)
   left_run = searchsortedfirst(re,first(i),1,n)
   right_run = searchsortedfirst(re,last(i),left_run,n)
   right_run <= n || throw(BoundsError())  # Can't be < 1
-  return( left_run:right_run )
+  left_run:right_run
 end
 
 function ind2run(rle::RLEVector, i::AbstractArray)
@@ -31,7 +31,7 @@ function ind2run(rle::RLEVector, i::AbstractArray)
   n = length(re)
   runs = searchsortedfirst(re,i,1,n)
   maximum(runs) <= n || throw(BoundsError())  # Can't be < 1
-  return(runs)
+  runs
 end
 
 """
@@ -72,6 +72,7 @@ function Base.getindex(rle::RLEVector, i::Int)
 end
 
 function Base.setindex!(rle::RLEVector, value, i::Int)
+  # FIXME: do not use splice because it allocates a return vector
   run = ind2run(rle,i)
   runvalue = rle.runvalues[run]
   runend = rle.runends[run]
