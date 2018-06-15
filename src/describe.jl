@@ -44,8 +44,11 @@ end
 function widths(x::RLEVector)
     re = x.runends
     rval = similar(re)
+    if length(re) > 0
+        rval[1] = re[1]
+    end
     @inbounds for i in length(re):-1:2
-        rval[i] = rval[i] - re[i-1]
+        rval[i] = re[i] - re[i-1]
     end
     rval
 end
