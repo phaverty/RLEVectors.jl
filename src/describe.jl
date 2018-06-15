@@ -22,7 +22,7 @@ function Base.length{T1,T2<:Integer}(x::RLEVector{T1,T2})
   else
     len = zero(T2)
   end
-  return(len)
+  len
 end
 
 function starts(x::RLEVector)
@@ -33,9 +33,8 @@ function starts(x::RLEVector)
         rval[i] = prev + 1
         prev = re[i]
   end
-  return(rval)
+  rval
 end
-
 
 function starts(x::RLEVector, run::Integer)
     num_one = one(eltype(x.runends))
@@ -43,27 +42,17 @@ function starts(x::RLEVector, run::Integer)
 end
 
 function widths(x::RLEVector)
-  re = x.runends
-  rval = similar(re)
-  prev = zero(eltype(re))
-  @inbounds for i in eachindex(re)
-      rei = re[i]
-      rval[i] = rei - prev
-      prev = rei
-  end
-  rval
+    re = x.runends
+    rval = similar(re)
+    @inbounds for i in length(re):-1:2
+        rval[i] = rval[i] - re[i-1]
+    end
+    rval
 end
 
 function widths!(x::AbstractVector)
-    if length(x) > 1
-        i = 1
-        prev = x[1]
-        @inbounds while i < length(x)
-            i = i + 1
-            rei = x[i]
-            x[i] = rei - prev
-            prev = rei
-        end
+    @inbounds for i in length(x):-1:2
+        x[i] = x[i] - x[i-1]
     end
     x
 end

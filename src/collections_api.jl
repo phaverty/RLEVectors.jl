@@ -2,13 +2,15 @@
 
 function vcat(x::RLEVector, y::RLEVector...)
     out = copy(x)
+    # FIXME: maybe resize just once?
+    # FIXME: move this logic into append!
     for yi in y
         last_out_run = nrun(out)
         length_out = length(out)
         if last(out) == first(yi)
             last_out_run = last_out_run - 1
         end
-        new_nrun = last_out_run + nrun(y)
+        new_nrun = last_out_run + nrun(yi)
         resize!(out.runvalues, new_nrun)
         resize!(out.runends, new_nrun)
         out.runvalues[(last_out_run + 1:end)] = yi.runvalues
@@ -94,12 +96,14 @@ function deleteat!(x::RLEVector,i::Integer)
 end
 
 function insert!{T,T2 <: Integer}(x::RLEVector{T,T2},i::Integer,item)
-    # FIXME: do not use splice, avoid allocating return value by moving values and use resize
+    # FIXME: use append rather than vcat
+    item = RLEVector(item)
     if i == length(x) + 1
-        vcat(x,item)
+        x = vcat(x,item)
+    elseif i == 1
+        x = vcat(item,x)
     else
-        (run, index_in_run, run_remainder) = ind2runcontext(x,i)
-        splice!(x,i,[item,x[i]])
+        x = vcat(x[1:i], item, x[(i + 1):end])
     end
     x
 end
@@ -116,7 +120,7 @@ function splice!(x::RLEVector, i::Integer, ins::RLEVector=_default_splice)
         (run, index_in_run, run_remainder) = ind2runcontext(x,i)
         current = x.runvalues[run]
         # Splice ins into adjusted x
-        x.runends[:] = widths(x)
+        widths!(x.runends)
         x.runends[run] = run_remainder
         nrun_out = run + nrun(ins) + ((nrun_x - run) + 1)
         resize!(x.runvalues, nrun_out)
@@ -148,7 +152,7 @@ function splice!(x::RLEVector, index::UnitRange, ins::RLEVector=_default_splice)
         current.runends[end] = current.runends[end] - run_remainder_right
     end
     # Splice ins into adjusted x
-    x.runends[:] = widths(x)
+    widths!(x.runends)
     x.runends[run_right] = run_remainder_right
     nrun_out = run_left + nrun(ins) + ((nrun_x - run_right) + 1)
     resize!(x.runvalues, nrun_out)
