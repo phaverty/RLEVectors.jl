@@ -125,3 +125,16 @@ bdf[:,10:21]
 @timeit foo + 4
 @timeit foo + 4
 @timeit foo .+ 4
+coverage(gr)
+Profile.clear(); @profile coverage(gr); Profile.print()
+foo
+Profile.clear(); @profile for i in 1:100 y=x[107:133] done ; Profile.print()
+Profile.clear(); @profile for i in 1:100 y=x[107:133]; done ; Profile.print()
+Profile.clear(); @profile for i in 1:100 y=foo[107:133]; done ; Profile.print()
+Profile.clear(); @profile foo[107:133]; Profile.print()
+Profile.clear(); @profile for i in 1:100 y=foo[107:133] done end; Profile.print()
+Profile.clear(); @profile for i in 1:100 y=foo[107:133] ; done; end; Profile.print()
+Profile.clear(); @profile for i in 1:1000 y=foo[107:133] ; done; end; Profile.print()
+Profile.clear(); @profile for i in 1:10000 y=foo[107:133] ; done; end; Profile.print()
+Profile.clear(); @profile for i in 1:10000 y=foo[107:133] ; done; end; Profile.print()
+bdf

@@ -25,7 +25,7 @@ timings[:indexing] = @timeit foo[100]
 timings[:range_indexing] = @timeit foo[801:900]
 timings[:setting] = @timeit foo[800] = 5
 timings[:range_setting] = @timeit foo[801:900] = 1:100
-timings[:scalar_add] = @timeit foo .+ 4
+timings[:scalar_add] = @timeit foo + 4
 timings[:length] = @timeit length(foo)
 timings[:nrun] = @timeit nrun(foo)
 timings[:mean] = @timeit mean(foo)

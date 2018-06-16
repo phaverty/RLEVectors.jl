@@ -120,21 +120,22 @@ function Base.setindex!(rle::RLEVector, value, i::Int)
 end
 
 function Base.getindex(rle::RLEVector, ind::Array{Bool, 1})
-    rle[ find(ind) ]
+    RLEVector(rle[ find(ind) ])
 end
 
 function Base.setindex!(rle::RLEVector, value::AbstractArray, ind::Array{Bool, 1})
     rle[ find(ind) ] = value
+    RLEVector(rle)
 end
 
 ## Indexing optimizations
-function Base.getindex(rle::RLEVector, ind::UnitRange)
+function Base.getindex(rle::RLEVector{T1,T2} where {T1,T2}, ind::UnitRange)
     run_indices = ind2run(rle, ind)
-    v = values(rle)[run_indices]
-    e = ends(rle)[run_indices]
+    v = rle.runvalues[run_indices]
+    e = rle.runends[run_indices]
     e[end] = last(ind)
     e = e - (first(ind) - 1)
-    RLEVector(v, e)
+    RLEVector{T1,T2}(v, e)
 end
 
 function Base.getindex(x::RLEVector, i::AbstractVector)
