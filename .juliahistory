@@ -1,7 +1,3 @@
-x
-x = RLEVector(collect(1:10))
-splice!(x, 4:5, [99,99])
-x
 x = RLEVector([1,1,2,2,3,3,4,4])
 splice!(x, 4:5, [99,99])
 x
@@ -497,4 +493,8 @@ nrun(ins)
 nrun_out
 using RLEVectors
 import Base.splice!
+exit()
+Pkg.test("RLEVectors")
+Pkg.test("RLEVectors")
+Pkg.test("RLEVectors")
 exit()

@@ -72,7 +72,6 @@ function Base.getindex(rle::RLEVector, i::Int)
 end
 
 function Base.setindex!(rle::RLEVector, value, i::Int)
-  # FIXME: do not use splice because it allocates a return vector
   run = ind2run(rle,i)
   runvalue = rle.runvalues[run]
   runend = rle.runends[run]
@@ -86,14 +85,14 @@ function Base.setindex!(rle::RLEVector, value, i::Int)
   if at_end_of_run
     if at_start_of_run # in a run of length 1
       if match_right && match_left
-        splice!(rle.runvalues, previous_run:run)
-        splice!(rle.runends, previous_run:run)
+        deleteat!(rle.runvalues, previous_run:run)
+        deleteat!(rle.runends, previous_run:run)
       elseif match_right
-        splice!(rle.runvalues,run)
-        splice!(rle.runends,run)
+        deleteat!(rle.runvalues,run)
+        deleteat!(rle.runends,run)
       elseif match_left
-        splice!(rle.runvalues,run)
-        splice!(rle.runends,previous_run)
+        deleteat!(rle.runvalues,run)
+        deleteat!(rle.runends,previous_run)
       else
         rle.runvalues[run] = value
       end
@@ -112,30 +111,31 @@ function Base.setindex!(rle::RLEVector, value, i::Int)
       insert!(rle.runvalues, run, value)
       insert!(rle.runends, run, i)
     end
- else # middle of a run, average case
+  else # middle of a run, average case
+    # FIXME: do not use splice because it allocates a return vector
     splice!(rle.runvalues, run, [runvalue,value,runvalue])
     splice!(rle.runends, run, [i-1,i,runend])
   end
   rle
 end
 
-function Base.getindex(rle::RLEVector, ind::Array{Bool, 1})
-    RLEVector(rle[ find(ind) ])
+function Base.getindex(x::RLEVector, ind::Array{Bool, 1})
+    x[ find(ind) ]
 end
 
-function Base.setindex!(rle::RLEVector, value::AbstractArray, ind::Array{Bool, 1})
-    rle[ find(ind) ] = value
-    RLEVector(rle)
+function Base.setindex!(x::RLEVector, value::AbstractArray, ind::Array{Bool, 1})
+    x[ find(ind) ] = value
+    x
 end
 
 ## Indexing optimizations
-function Base.getindex(rle::RLEVector{T1,T2} where {T1,T2}, ind::UnitRange)
-    run_indices = ind2run(rle, ind)
-    v = rle.runvalues[run_indices]
-    e = rle.runends[run_indices]
+function Base.getindex(x::RLEVector, ind::UnitRange)
+    run_indices = ind2run(x, ind)
+    v = x.runvalues[run_indices]
+    e = x.runends[run_indices]
     e[end] = last(ind)
     e = e - (first(ind) - 1)
-    RLEVector{T1,T2}(v, e)
+    RLEVector(v, e)
 end
 
 function Base.getindex(x::RLEVector, i::AbstractVector)

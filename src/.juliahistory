@@ -138,3 +138,46 @@ Profile.clear(); @profile for i in 1:1000 y=foo[107:133] ; done; end; Profile.pr
 Profile.clear(); @profile for i in 1:10000 y=foo[107:133] ; done; end; Profile.print()
 Profile.clear(); @profile for i in 1:10000 y=foo[107:133] ; done; end; Profile.print()
 bdf
+bdf
+bdf
+bdf
+bdf[:,10:21]
+bdf
+x = RLEVector([1,2,3,4,5,6,7,8])
+x[3:4]
+Profile.clear(); coverage(gr); Profile.print()
+coverage(gr)
+@time coverage(gr)
+Profile.clear(); @profile for i in 1:10 coverage(gr); done; end; Profile.print()
+bdf
+bdf[:,11:21]
+bdf[:,11:end]
+bdf=bdf[1:2,:]
+bdf
+bdf[:,11:end]
+x = RLEVector([1,2,1,3,3])
+x[2] = 2
+x
+x[2] = 1
+x
+x = RLEVector([1,2,3,4,5])
+x[2] = 1
+x
+x = RLEVector([1,2,3,4,5])
+x[2] = 3
+x
+bdf
+bdf[:,5:8]
+bdf[:,5:8]
+foo[800] = 5
+foo[800] = 5
+foo[800] = 5
+foo[800] = 5
+ind2run(foo,800)
+ind2run(foo,800)
+foo.runindices[160]
+foo.runends[160]
+foo.runends[161]
+foo.runends[159]
+Pkg.test("RLEVectors")
+exit()
