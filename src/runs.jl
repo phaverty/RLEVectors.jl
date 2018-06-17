@@ -8,15 +8,14 @@ Count the number of runs of repeated values present in a vector.
 function numruns(re::AbstractVector)
   n = 1
   current = re[1]
-  for i in 2:length(re)
+  @inbounds for i in 2:length(re)
     if re[i] != current
       n += 1
       current = re[i]
     end
   end
-  return(n)
+  n
 end
-
 
 """
     ree(x)
@@ -33,7 +32,7 @@ function ree{T}(x::AbstractVector{T})
   runends = Vector{Int}(nrun)
   run = 1
   current = x[1]
-  for i in 2:xlen
+  @inbounds for i in 2:xlen
     if x[i] != current
       runvalues[run] = current
       runends[run] = i-1
@@ -43,7 +42,7 @@ function ree{T}(x::AbstractVector{T})
   end
   runvalues[nrun] = current
   runends[nrun] = xlen
-  return( (runvalues,runends) )
+  runvalues,runends
 end
 
 """

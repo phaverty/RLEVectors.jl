@@ -1,12 +1,3 @@
-out = RLEVector(0, last(chr_ends(gr)))
-out = RLEVector(0, last(chr_ends(gr)))
-splice!(out, 100:101, [99,99])
-splice!([0],1:0,99)
-foo = [0]
-splice!(foo,1:0,99)
-splice!(foo,0:0,99)
-splice!(foo,0:-1,99)
-splice!(foo,1:0,99)
 splice!(foo,1:0,[99])
 ?splice!
 foo
@@ -498,3 +489,12 @@ insert!(x, 5, 99, 100)
 x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4])
 x[5] = 99
 x
+using RLEVectors
+x = collect(1:100)
+Profile.clear(); @profile for i in 1:100 ree(x) end; Profile.print()
+Profile.clear(); @profile for i in 1:1000 ree(x) end; Profile.print()
+Profile.clear(); @profile for i in 1:10000 ree(x) end; Profile.print()
+Profile.clear(); @profile for i in 1:100000 ree(x) end; Profile.print()
+Profile.clear(); @profile for i in 1:1000000 ree(x) end; Profile.print()
+exit9
+exit()

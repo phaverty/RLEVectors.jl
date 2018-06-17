@@ -113,11 +113,14 @@ function Base.setindex!(rle::RLEVector, value, i::Int)
     end
   else # middle of a run, average case
       rle.runends[run] = i - 1
-      # FIXME: do with grow_at! and then manual setting
-      insert!(rle.runvalues, run + 1, runvalue)
-      insert!(rle.runvalues, run + 1, value)
-      insert!(rle.runends, run + 1, runend)
-      insert!(rle.runends, run + 1, i)
+      next_run = run + 1
+      growat!(rle.runvalues, next_run, 2)
+      growat!(rle.runends, next_run, 2)
+      rle.runvalues[next_run] = value
+      rle.runends[next_run] = i
+      next_run = next_run + 1
+      rle.runvalues[next_run] =  runvalue
+      rle.runends[next_run] = runend
   end
   rle
 end
@@ -191,7 +194,7 @@ function Base.setindex!(x::RLEVector, value::RLEVector, indices::UnitRange)
     # Insert incoming values
     insert_range = (run_left + 1):(run_left + length(value.runvalues))
     x.runvalues[insert_range] = value.runvalues
-    x.runends[insert_range] = value.runends + (i_left - 1)
+    x.runends[insert_range] = value.runends .+ (i_left - 1)
     if run_left > 0 && index_in_run_left != 1
         x.runends[run_left] = i_left - 1
     end
