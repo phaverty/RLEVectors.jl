@@ -1,12 +1,4 @@
 x = RLEVector([1,1,2,2,3,3,4,4])
-splice!(x, 4:5, [99,99])
-x
-collect(x)
-x = RLEVector([1,1,2,2,3,3,4,4])
-splice!(x, 4:6, [99,99,99])
-x
-collect(x)
-x = RLEVector([1,1,2,2,3,3,4,4])
 splice!(x, 3:5, [99,99,99])
 collect(x)
 exit()
@@ -497,4 +489,12 @@ exit()
 Pkg.test("RLEVectors")
 Pkg.test("RLEVectors")
 Pkg.test("RLEVectors")
+exit()
+Pkg.test("RLEVectors")
+Pkg.test("RLEVectors")
+exit()
+Pkg.test("RLEVectors")
+Pkg.test("RLEVectors")
+bdf
+bdf[:,10:end]
 exit()

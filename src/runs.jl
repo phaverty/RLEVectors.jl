@@ -65,7 +65,9 @@ function numruns(runvalues, runends)
         re = runends[i]
     if rv != current_val && re != current_end
       n = n + 1
-      re < current_end && throw(ArgumentError("The provided runends were not sorted, please use cumsum(runlengths) to get the right values."))
+        if re < current_end
+            throw(ArgumentError("The provided runends were not sorted, please use cumsum(runlengths) to get the right values."))
+        end
       current_val = rv
       current_end = re
     end
@@ -83,10 +85,11 @@ any adjacent identical values. `RLEVectors.jl` does this operation after modifyi
 RLEVector, for example.
 """
 function ree(runvalues, runends)
-  ree(runvalues, runends, numruns(runvalues, runends))
+  ree!(copy(runvalues), copy(runends))
 end
 
 function ree!(runvalues, runends)
+    # FIXME: can this also do issorted or error so RLEVector constructor need not?
     n = length(runvalues)
     left_i = 0
     if (n >= 1)
@@ -98,9 +101,13 @@ function ree!(runvalues, runends)
         @inbounds for right_i in 2:length(runvalues)
             rv = runvalues[right_i]
             re = runends[right_i]
-            if rv != current_val && re > current_end
-                left_i = left_i + 1
-                current_val = runvalues[left_i] = rv
+            if re > current_end
+                if rv != current_val
+                    left_i = left_i + 1
+                    current_val = runvalues[left_i] = rv
+                end
+            elseif re < current_end
+                throw(ArgumentError("RLEVector run ends must be sorted"))
             end
             current_end = runends[left_i] = re
         end
@@ -110,13 +117,6 @@ function ree!(runvalues, runends)
         resize!(runends,left_i)
     end
     runvalues, runends
-end
-
-function ree(runvalues, runends, nrun)
-    # FIXME: why do we have this?
-    newv = copy(runvalues)
-    newe = copy(runends)
-    ree!(newv,newe)
 end
 
 function ree(x)
