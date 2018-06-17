@@ -112,9 +112,12 @@ function Base.setindex!(rle::RLEVector, value, i::Int)
       insert!(rle.runends, run, i)
     end
   else # middle of a run, average case
-    # FIXME: do not use splice because it allocates a return vector
-    splice!(rle.runvalues, run, [runvalue,value,runvalue])
-    splice!(rle.runends, run, [i-1,i,runend])
+      rle.runends[run] = i - 1
+      # FIXME: do with grow_at! and then manual setting
+      insert!(rle.runvalues, run + 1, runvalue)
+      insert!(rle.runvalues, run + 1, value)
+      insert!(rle.runends, run + 1, runend)
+      insert!(rle.runends, run + 1, i)
   end
   rle
 end

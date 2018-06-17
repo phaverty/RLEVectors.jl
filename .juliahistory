@@ -1,30 +1,3 @@
-x = RLEVector([1,1,2,2,3,3,4,4])
-splice!(x, 3:5, [99,99,99])
-collect(x)
-exit()
-coverage(gr)
-import GenomicFeatures.coverage
-coverage(gr)
-coverage(gr)
-splice!(out, 100:101, [99,99])
-import Base.splice!
-splice!(out, 100:101, [99,99])
-splice!(out, 100:101, [99,99])
-out
-    out = RLEVector(0, last(chr_ends(gr)))
-out = RLEVector(0, last(chr_ends(gr)))
-splice!(out, 100:101, [99,99])
-out = RLEVector(0, last(chr_ends(gr)))
-splice!(out, 100:101, [99,99])
-out
-out = RLEVector(0, last(chr_ends(gr)))
-splice!(out, 100:101, [99,99])
-out
-foo = [1,2,3,4]
-splice1(foo, 2:2, 99)
-splice!(foo, 2:2, 99)
-foo
-out
 out = RLEVector(0, last(chr_ends(gr)))
 out = RLEVector(0, last(chr_ends(gr)))
 splice!(out, 100:101, [99,99])
@@ -498,3 +471,30 @@ Pkg.test("RLEVectors")
 bdf
 bdf[:,10:end]
 exit()
+Pkg.test("RLEVectors")
+bdf
+bdf[:,11:21]
+x = RLEVector([1,2,3,4,5])
+x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4])
+x[5] = 99
+x[5] = 99
+x
+x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4])
+x[5] = 99
+x
+x[5] = 99
+x
+x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4])
+x[5] = 99
+x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4])
+x[5] = 99
+x
+?insert!
+insert!(collect(1:10), 5 [99,100])
+insert!(collect(1:10), 5, [99,100])
+x = collect(1:10)
+insert!(x, 5, [99,100])
+insert!(x, 5, 99, 100)
+x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4])
+x[5] = 99
+x
