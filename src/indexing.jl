@@ -43,7 +43,7 @@ Index of the run corresponding to the i'th value in the expanded runs, index in 
 function ind2runcontext(rle::RLEVector, i::Integer)
   run = ind2run(rle, i)
   runend = rle.runends[run]
-  ind_in_run = run == 1 ? i : i - rle.runends[run-1]
+  ind_in_run = run == 1 ? i : i - rle.runends[run - 1]
   (run, ind_in_run, runend - i)
 end
 
@@ -55,7 +55,7 @@ function ind2runcontext(rle::RLEVector, i::UnitRange)
   left_run = start(runs)
   right_run = last(runs)
   runend = rle.runends[right_run]
-  ind_in_run = left_run == 1 ? s : s - rle.runends[left_run-1]
+  ind_in_run = left_run == 1 ? s : s - rle.runends[left_run - 1]
   (left_run, right_run, ind_in_run, runend - e)
 end
 
@@ -135,13 +135,22 @@ function Base.setindex!(x::RLEVector, value::AbstractArray, ind::Array{Bool, 1})
 end
 
 ## Indexing optimizations
-function Base.getindex(x::RLEVector, ind::UnitRange)
-    run_indices = ind2run(x, ind)
-    v = x.runvalues[run_indices]
-    e = x.runends[run_indices]
-    e[end] = last(ind)
-    e = e - (first(ind) - 1)
-    RLEVector(v, e)
+function Base.getindex(x::RLEVector, indices::UnitRange)
+    (left_run, right_run, index_in_left_run, run_remainder_right) = ind2runcontext(x,indices)
+    n_run = (right_run - left_run) + 1
+    f = first(indices)
+    v = similar(x.runvalues, n_run)
+    e = similar(x.runends, n_run)
+    offset = f - 1
+    i = 1
+    @inbounds while left_run <= right_run
+        v[i] = x.runvalues[left_run]
+        e[i] = x.runends[left_run] - offset
+        left_run = left_run + 1
+        i = i + 1
+    end
+    e[end] = e[end] - run_remainder_right
+    RLEVector{eltype(x),endtype(x)}(v, e)
 end
 
 function Base.getindex(x::RLEVector, i::AbstractVector)
@@ -165,6 +174,7 @@ function Base.setindex!(x::RLEVector, value::RLEVector, indices::UnitRange)
     (run_left, run_right, index_in_run_left, run_remainder_right) = ind2runcontext(x,indices)
     # Move run markers to denote parts of original data that will be kept, accomodating completely filled runs or adjacent matches
     # We will keep 1:run_left and run_right:end and fill in the middle with value
+    # FIXME: factor out these two expressions for something like ind2insertcontext
     if run_remainder_right == 0
         run_right = run_right + 1
         if run_right < nrun_x && last(value) == x.runvalues[run_right + 1]
@@ -181,22 +191,21 @@ function Base.setindex!(x::RLEVector, value::RLEVector, indices::UnitRange)
     nrun_diff = nrun_out - nrun_x
     # Resize and move
     if nrun_diff > 0
-        resize!(x.runvalues, nrun_out)
-        resize!(x.runends, nrun_out)
-        run_right_range = run_right:nrun_x
-        x.runvalues[run_right_range + nrun_diff] = x.runvalues[run_right_range]
-        x.runends[run_right_range + nrun_diff] = x.runends[run_right_range]
+        growat!(x, run_right, nrun_diff)
     elseif nrun_diff < 0
         delete_range = (run_left + 1):(run_left - nrun_diff)
         deleteat!(x.runvalues, delete_range)
         deleteat!(x.runends, delete_range)
     end
     # Insert incoming values
-    insert_range = (run_left + 1):(run_left + length(value.runvalues))
-    x.runvalues[insert_range] = value.runvalues
-    x.runends[insert_range] = value.runends .+ (i_left - 1)
+    bump = i_left - 1
+    @inbounds for i in 1:length(value.runvalues)
+        il = i + run_left
+        x.runvalues[il] = value.runvalues[i]
+        x.runends[il] = value.runends[i] + bump
+    end
     if run_left > 0 && index_in_run_left != 1
-        x.runends[run_left] = i_left - 1
+        x.runends[run_left] = bump
     end
     x
 end
@@ -255,7 +264,7 @@ function Base.setindex!{T1,T2}(rle::RLEVector{T1,T2}, value::T1, indices::UnitRa
   adjusted_runs = left_run:right_run
   splice!(rle.runvalues,adjusted_runs,adjusted_runvalues)
   splice!(rle.runends,adjusted_runs,adjusted_runends)
-  return(rle)
+  rle
 end
 
 ## Getter shortcuts

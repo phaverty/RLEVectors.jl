@@ -136,3 +136,23 @@ end
 
 Base.hash(a::RLEVector) = hash(a.runvalues, hash(a.runlengths, hash(:RLEVector)))
 ==(a::RLEVector, b::RLEVector) = isequal(a.runvalues, b.runvalues) && isequal(a.runends, b.runends) && true
+
+"""
+    growat!(x::AbstractVector, i, insert_length)
+    growat!(x::RLEVector, i, insert_length)
+Increases length of vector by `insert_length` at index `i` while
+moving values `i:n` down to accomodate the new spaces. For the
+`RLEVector` method `insert_length` uninitialized *runs* are added.
+"""
+function growat!(x::AbstractVector, i, insert_length)
+    len = length(x)
+    resize!(x, len + insert_length)
+    @inbounds x[(i + insert_length):end] = x[i:len]
+    x
+end
+
+function growat!(x::RLEVector, i, insert_length)
+    growat!(x.runvalues, i, insert_length)
+    growat!(x.runends, i, insert_length)
+    x
+end

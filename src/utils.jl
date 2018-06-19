@@ -125,10 +125,3 @@ function searchsortedfirst(v::AbstractVector, x, lo::Int, hi::Int)
     end
     return hi
 end
-
-function growat!(x::AbstractVector, i, insert_length)
-    len = length(x)
-    resize!(x, len + insert_length)
-    @inbounds x[(i + insert_length):end] = x[i:len]
-    x
-end
