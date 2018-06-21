@@ -1,67 +1,3 @@
-nrun_x
-run_range
-length(run_range)
-index
-rnun(ins)
-nrun(ins)
-collect(x)
-x = RLEVector([1,1,2,2,3,3,4,4])
-collect(x)
-run_left
-run_right
-run_range
-length(run_range)
-length(run_range)
-x = RLEVector([1,1,2,2,3,3,4,4])
-run_right
-run_range
-run_range + 1
-x = RLEVector([1,1,2,2,3,3,4,4])
-ins.runvalues
-run_right:nrun_x
-x
-run_range + 1
-run_range
-x = RLEVector([1,1,2,2,3,3,4,4])
-collect(x)
-x.runvalues[run_right:nrun_x]
-x = RLEVector([1,1,2,2,3,3,4,4])
-x.runvalues[run_right:nrun_x]
-((nrun_out - run_right) + 1):end
-((nrun_out - run_right) + 1):nrun_out
-((nrun_out - run_right)):nrun_out
-((nrun_out - run_right) + 1):nrun_out
-((nrun_out - run_right) + 2):nrun_out
-nrun_x
-nrun_x - right_run
-nrun_x - run_right
-x = RLEVector([1,1,2,2,3,3,4,4])
-x.runvalues[run_right:nrun_x]
-((nrun_x - run_right) + 1):nrun_out
-nrun_x - run_right
-nrun_x - run_right
-nrun_x - run_right + 1
-nrun_x
-nrun_out - nrun_x
-run_right + (nrun_out - nrun_x)
-x
-nrun_x
-nrun_out
-x = RLEVector([1,1,2,2,3,3,4,4])
-collect(x)
-x = RLEVector([1,1,2,2,3,3,4,4])
-x.runvalues
-x.runvalues
-x = RLEVector([1,1,2,2,3,3,4,4])
-x = RLEVector([1,1,2,2,3,3,4,4])
-ins
-index
-run_range
-x = RLEVector([1,1,2,2,3,3,4,4])
-x
-@time coverage(gr)
-@time coverage(gr)
-@time coverage(gr)
 cumsum!([1,2,3])
 ?cumsum!
 ?cumsum
@@ -497,4 +433,68 @@ x[5:7]
 Pkg.test("RLEVectors")
 Pkg.test("RLEVectors")
 @timeit foo[801:900] = 1:100
+exit()
+Pkg.test("RLEVectors")
+bdf[:,11:end]
+bdf[:,11:end]
+bdf
+bdf[:,8:end]
+8.29 /  .57
+x = RLEVector([1,1,2,2,3,3,4,4,5,5])
+x[2:4] = 99
+x
+x = RLEVector([1,1,2,2,3,3,4,4,5,5])
+x[2:6] = 99
+x
+x = RLEVector([1,1,2,2,3,3,4,4,5,5])
+x[2:6] = 99
+x
+x = RLEVector([1,1,2,2,3,3,4,4,5,5])
+x[2:7] = 99
+x
+Pkg.test("RLEVectors")
+x
+x
+x
+value = 4
+indices = 9:12
+run_right
+x
+run_left
+nrun_out
+run_left
+run_right
+x
+x
+run_left
+((nrun_x - run_right) + 1)
+nrun_value
+x
+value
+run_right
+nrun_value
+right_run
+run_right
+x = RLEVector([1,1,2,2,3,3,4,4,5,5])
+x[2:7] = 99
+x
+x
+x
+x
+exit()
+x
+x
+value
+value = 99
+value = 4
+indices = 9:12
+x
+run_remainder_right == 0
+run_right < nrun_x && value == x.runvalues[run_right]
+x
+x
+i_right
+run_right <= nrun_x && value == x.runvalues[run_right]
+x
+x
 exit()
