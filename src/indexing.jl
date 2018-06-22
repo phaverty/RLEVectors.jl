@@ -179,11 +179,16 @@ function Base.setindex!(x::RLEVector, value::RLEVector, indices::UnitRange)
     # Move run markers to denote parts of original data that will be kept, accomodating completely filled runs or adjacent matches
     # We will keep 1:run_left and run_right:end and fill in the middle with value
     # FIXME: factor out these two expressions for something like ind2insertcontext
-    if index_in_run_left == 1
+    fix_partial_run_left = false
+    if x.runvalues[run_left] == first(value)
+        run_left = run_left - 1
+    elseif index_in_run_left == 1
         run_left = run_left - 1
         if run_left > 0 && first(value) == x.runvalues[run_left]
             run_left = run_left - 1
         end
+    else
+        fix_partial_run_left = true
     end
     if x.runvalues[run_right] == last(value)
         nrun_value = nrun_value - 1
@@ -203,7 +208,7 @@ function Base.setindex!(x::RLEVector, value::RLEVector, indices::UnitRange)
         deleteat!(x.runvalues, delete_range)
         deleteat!(x.runends, delete_range)
     end
-    if run_left > 0 && index_in_run_left != 1
+    if fix_partial_run_left
         x.runends[run_left] = i_left - 1
     end
     # Insert incoming values

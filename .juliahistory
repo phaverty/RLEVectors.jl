@@ -1,40 +1,3 @@
-Pkg.test("RLEVectors")
-Pkg.test("RLEVectors")
-Pkg.test("RLEVectors")
-function growat!(x::AbstractVector, i, insert_length)
-    len = length(x)
-    resize!(x, len + insert_length)
-    @inbounds x[(i + insert_length):end] = x[i:len]
-    x
-end
-
-function growat!(x::RLEVector, i, insert_length)
-    len = nrun(x)
-    resize!(x.runvalues, len + insert_length)
-    resize!(x.runends, len + insert_length)
-    @inbounds x.runvalues[(i + insert_length):end] = x[i:len]
-    @inbounds x.runends[(i + insert_length):end] = x[i:len]
-    x
-end
-
-exit()
-using RLEVectors
-x
-x
-x
-x
-x
-x = x.runvalues
-i = 2
-insert_length = 2
-x
-methods(growat!)
-function growat!(x::AbstractVector, i, insert_length)
-    len = length(x)
-    resize!(x, len + insert_length)
-    @inbounds x[(i + insert_length):end] = x[i:len]
-    x
-end
 
 function growat!(x::RLEVector, i, insert_length)
     growat!(x.runvalues, i, insert_length)
@@ -497,4 +460,41 @@ run_right
 run_right
 run_right < nrun_x && last(value) == x.runvalues[run_right]
 Pkg.test("RLEVectors")
+exit()
+indices = 6:7
+value = RLEVector([3,3])
+x
+indices
+value
+x.runvalues[run_left] == first(value)
+x
+x.runvalues[run_right] == last(value)
+run_remainder_right == 0
+i_left
+x
+x
+run_left > 0 && index_in_run_left != 1
+index_in_run_left
+x
+indices
+x
+indices
+x
+x
+value
+indices
+Pkg.test("RLEVectors")
+x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4,5,5,5])
+x[3:5] = 1
+x
+exit()
+using RLEVectors
+using RLEVectors
+x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4,5,5,5])
+x[3:5] = 1
+x
+Pkg.test("RLEVectors")
+x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4,5,5,5])
+x[3:5] = 1
+x
 exit()
