@@ -1,251 +1,3 @@
-cumsum!([1,2,3])
-?cumsum!
-?cumsum
-@time coverage(gr)
-@time coverage(gr)
-@time coverage(gr)
-@time coverage(gr)
-x = RLEVector([1,1,2,2,3,3,4,4])
-nrun(ins)
-(run_left + 1):(run_left + 1 + nrun(ins))
-x.runvalues
-x = RLEVector([1,1,2,2,3,3,4,4])
-x
-x = RLEVector([1,1,2,2,3,3,4,4])
-splice!(x,1:0,[9,11])
-x
-collect(x)
-x = RLEVector([1,1,2,2,3,3,4,4])
-x
-run_left
-index_in_run_left
-x = RLEVector([1,1,2,2,3,3,4,4])
-x.runends
-x
-x = RLEVector([1,1,2,2,3,3,4,4])
-nrun_x
-nrun_ins
-nrun(ins)
-run_left == run_right
-x = RLEVector([1,1,2,2,3,3,4,4])
-x
-x = RLEVector([1,1,2,2,3,3,4,4])
-x
-x
-x = RLEVector([1,1,2,2,3,3,4,4])
-x
-x
-@time coverage(gr)
-?cumsum!
-x = RLEVector([1,1,2,2,3,3,4,4])
-x
-x = RLEVector([1,1,2,2,3,3,4,4])
-x = RLEVector([1,1,2,2,3,3,4,4])
-x
-x
-run_range
-x = RLEVector([1,1,2,2,3,3,4,4])
-x
-run_left
-run_right
-x = RLEVector([1,1,2,2,3,3,4,4])
-x
-run_left
-@time coverage(gr)
-@time coverage(gr)
-@time coverage(gr)
-@time coverage(gr)
-@time coverage(gr)
-@time coverage(gr)
-@time coverage(gr)
-@time coverage(gr)
-Profile.clear(); @profile coverage(gr); Profile.print()
-x = RLEVector([1,1,2,2,3,3,4,4])
-splice!(x,1:0,[9,11])
-@time coverage(gr)
-@time coverage(gr)
-@time coverage(gr)
-@time coverage(gr)
-@time coverage(gr)
-@time coverage(gr)
-@time coverage(gr)
-x = RLEVector([1,1,2,2,3,3,4,4])
-splice!(x,1:0,[9,11])
-@time coverage(gr)
-x = RLEVector([1,1,2,2,3,3,4,4])
-@time width(x)
-@time widths(x)
-@time widths(x)
-@timeit widths(x)
-@timeit widths(x)
-Profile.clear(); @profile width(x); Profile.print()
-Profile.clear(); @profile widths(x); Profile.print()
-@timeit widths(x)
-@timeit widths(x)
-import RLEVectors.widths
-@timeit widths(x)
-@timeit widths(x)
-@timeit widths(x)
-@timeit widths(x)
-@timeit widths(x)
-@timeit widths(x)
-@timeit widths(x)
-@timeit widths(x)
-@timeit widths(x)
-@timeit widths(x)
-Pkg.test("RLEVectors")
-index = 1:0
-ins = RLEVector([9,11])
-current
-x
-index
-length(index)
-x
-splice!(xd,9:10,[9,11])
-collect(splice!(xr,9:10,[9,11]))
-x = xr
-index = 9:10
-ins = [9,11]
-run_range
-current
-run_remainder_right
-x.runends[run_range]
-run_range
-index_in_run_left
-x.runends[run_range]
-run_remainder_right
-current
-xr
-run_left
-run_right
-nrun_ins
-x = xr
-nrun_x
-nrun(ins)
-ins = RLEVector([9,11])
-index = 9:10
-nrun(ins)
-run_left == run_right
-length(run_range)
-run_left
-run_right
-ins
-index
-x
-xr
-ins
-index
-nrun(x)
-run_left
-run_right
-collect(x)
-using RLEVectors
-using Base.Test
-x = xr
-ins = RLEVector([9,11])
-index = 9:10
-x.runends
-nrun_out
-x.runends
-nrun_x
-nrun(ins)
-run_left == run_right
-length(run_range)
-nrun_x
-nrun(ins)
-nrun_out
-using RLEVectors
-import Base.splice!
-exit()
-Pkg.test("RLEVectors")
-Pkg.test("RLEVectors")
-Pkg.test("RLEVectors")
-exit()
-Pkg.test("RLEVectors")
-Pkg.test("RLEVectors")
-exit()
-Pkg.test("RLEVectors")
-Pkg.test("RLEVectors")
-bdf
-bdf[:,10:end]
-exit()
-Pkg.test("RLEVectors")
-bdf
-bdf[:,11:21]
-x = RLEVector([1,2,3,4,5])
-x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4])
-x[5] = 99
-x[5] = 99
-x
-x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4])
-x[5] = 99
-x
-x[5] = 99
-x
-x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4])
-x[5] = 99
-x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4])
-x[5] = 99
-x
-?insert!
-insert!(collect(1:10), 5 [99,100])
-insert!(collect(1:10), 5, [99,100])
-x = collect(1:10)
-insert!(x, 5, [99,100])
-insert!(x, 5, 99, 100)
-x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4])
-x[5] = 99
-x
-using RLEVectors
-x = collect(1:100)
-Profile.clear(); @profile for i in 1:100 ree(x) end; Profile.print()
-Profile.clear(); @profile for i in 1:1000 ree(x) end; Profile.print()
-Profile.clear(); @profile for i in 1:10000 ree(x) end; Profile.print()
-Profile.clear(); @profile for i in 1:100000 ree(x) end; Profile.print()
-Profile.clear(); @profile for i in 1:1000000 ree(x) end; Profile.print()
-exit9
-exit()
-using RLEVectors
-Profile.clear(); @profile for i in 1:1000000 ree(x) end; Profile.print()
-x = collect(1:100)
-Profile.clear(); @profile for i in 1:1000000 ree(x) end; Profile.print()
-Profile.clear(); @profile for i in 1:1000000 ree(x) end; Profile.print()
-Profile.clear(); @profile for i in 1:1000000 ree(x) end; Profile.print()
-bdf[:,11:end]
-bf
-bdf
-Profile.clear(); @profile for i in 1:1000 x = foo; x[100:110] = [1,2,3,4,5,6,7,8,9,10]; end; Profile.print()
-Profile.clear(); @profile for i in 1:1000 x = foo; x[100:109] = [1,2,3,4,5,6,7,8,9,10]; end; Profile.print()
-Profile.clear(); @profile for i in 1:10000 x = foo; x[100:109] = [1,2,3,4,5,6,7,8,9,10]; end; Profile.print()
-Profile.clear(); @profile for i in 1:100000 x = foo; x[100:109] = [1,2,3,4,5,6,7,8,9,10]; end; Profile.print()
-Profile.clear(); @profile for i in 1:100000 x = foo; x[100:109] = [1,2,3,4,5,6,7,8,9,10]; end; Profile.print()
-@time for i in 1:100000 x = foo; x[100:109] = [1,2,3,4,5,6,7,8,9,10]; end;
-@time for i in 1:100000 x = foo; x[100:109] = [1,2,3,4,5,6,7,8,9,10]; end;
-@time for i in 1:100000 x = foo; x[100:109] = [1,2,3,4,5,6,7,8,9,10]; end;
-@time for i in 1:100000 x = foo; x[100:109] = [1,2,3,4,5,6,7,8,9,10]; end;
-@time for i in 1:100000 x = foo; x[100:109] = [1,2,3,4,5,6,7,8,9,10]; end;
-@time for i in 1:100000 x = foo; x[100:109] = [1,2,3,4,5,6,7,8,9,10]; end;
-@time for i in 1:100000 x = foo; x[100:109] = [1,2,3,4,5,6,7,8,9,10]; end;
-@time for i in 1:100000 x = foo; x[100:109] = [1,2,3,4,5,6,7,8,9,10]; end;
-@time for i in 1:100000 x = foo; x[100:109] = [1,2,3,4,5,6,7,8,9,10]; end;
-Profile.clear(); @profile for i in 1:100000 x = foo; x[100:109] = [1,2,3,4,5,6,7,8,9,10]; end; Profile.print()
-@timeit coverage(gr)
-@timeit coverage(gr)
-@timeit coverage(gr)
-bdf[:,10:end]
-8.2 / .75
-x = collect(1:10)
-growat!(x, 3, 2)
-x
-x = collect(1:10)
-growat!(x, 3, 2)
-x = collect(1:10)
-i = 3
-insert_length = 2
-length(x)
-x = collect(1:10)
-x = collect(1:10)
-growat!(x, 3, 2)
 Pkg.test("RLEVectors")
 Pkg.test("RLEVectors")
 Pkg.test("RLEVectors")
@@ -497,4 +249,252 @@ i_right
 run_right <= nrun_x && value == x.runvalues[run_right]
 x
 x
+exit()
+value = RLEVector(4)
+indices = 11:12
+x
+indices
+value = RLEVector(2)
+indices = 9:12
+indices
+value
+x
+run_right
+run_lefg
+run_left
+x
+value
+x
+indices = 1:2
+value = RLEVector([2,2])
+x
+value
+indices
+run_left
+nrun_value
+run_right
+x
+x
+x[3:8] = 1
+x
+x[3:6] = 1
+x[4:6] = 1
+x[4:5] = [1,1]
+x
+x[2:3] = [1,1]
+x
+x[1:3] = [1,1]
+indices = 1:3
+value = RLEVector([1,1])
+x
+indices
+value
+value = RLEVector([1,1])
+indices = 1:3
+value = RLEVector([1,1,1])
+x.runvalues[run_left] == first(value)
+x.runvalues[run_right] == last(value)
+run_remainder_right == 0
+nrun_out
+x
+indices
+x
+x[indices] = value
+x
+x
+indices = 1:2
+value = RLEVector([2,2])
+run_left
+x.runvalues[run_right] == last(value)
+run_remainder_right == 0
+run_right < nrun_x && last(value) == x.runvalues[run_right]
+run_right
+x
+x
+x
+length(value.runvalues)
+x
+collect(x)
+x
+indices = 2:3
+value = RLEVector([2,2])
+indices
+x.runvalues[run_left] == first(value)
+index_in_run_left == 1
+x
+indices
+value
+x
+run_left
+i_left
+run_left
+x
+x.runvalues[run_right] == last(value)
+x
+x.runvalues[run_right] == last(value)
+x
+i_right
+value.runvalues
+run_left
+x
+i = 1
+value.runvalues[i]
+x
+bump
+value.runends[i] + bump
+i_right
+x
+x
+indices = 2:3
+value = RLEVector([1,1])
+x
+x
+value_runends
+x
+run_left
+run_right
+x
+value.runends
+i_right
+value_runends
+value_runends
+value_runvalues
+x
+indices
+Pkg.test("RLEVectors")
+exit()
+Pkg.test("RLEVectors")
+Pkg.test("RLEVectors")
+using RLEVectors
+@which setindex!(x, 5, 9:12)
+x[9:12] = RLEVector(5)
+RLEVector(1,4)
+@which setindex!(x, 5, 9:12)
+Pkg.test("RLEVectors")
+exit()
+@which setindex!(x, 5, 10:11)
+@which setindex!(x, 5, 10:11)
+Pkg.test("RLEVectors")
+Pkg.test("RLEVectors")
+exit()
+Pkg.test("RLEVectors")
+@which setindex!(x, 5, 10:11)
+@which setindex!(x, RLEVector(5,2), 10:11)
+Pkg.test("RLEVectors")
+x
+value = RLEVector(5,2)
+indices = 10:11
+x
+run_right
+run_left
+x
+x
+x.runvalues[run_left] == first(value)
+index_in_run_left == 1
+run_left > 0 && first(value) == x.runvalues[run_left]
+x
+run_left
+run_right
+x.runvalues[run_right] == last(value)
+run_remainder_right == 0
+x
+nrun_value
+x
+x
+x
+run_left
+x.runvalues[run_right] == last(value)
+run_remainder_right == 0
+run_right
+nrun_value
+x
+x
+run_left
+run_right
+value
+indices
+x
+nrun_diff > 0
+x
+bump
+nrun_value
+x
+run_right
+nrun_diff
+x
+x
+x
+Pkg.test("RLEVectors")
+exit()
+x
+value = RLEVector(2,2)
+indices = 9:10
+x
+x
+x
+indices
+run_left > 0
+x
+i_left
+indices
+x
+run_left
+i_left
+i_right
+x
+values
+x
+index_in_run_left
+exit()
+Pkg.test("RLEVectors")
+values = RLEVector(2,2)
+indices = 9:10
+value = RLEVector(2,2)
+run_left
+x
+indices
+value
+run_right
+index_in_run_left
+indice
+indices
+x
+x
+nrun_diff
+x
+x
+run_left
+index_in_run_left
+Pkg.test("RLEVectors")
+indices = 11:12
+value = RLEVector(4,2)
+x
+value
+indices
+index_in_run_left
+x
+bump
+x
+x
+indices
+value
+x.runvalues[run_right] == last(value)
+run_remainder_right == 0
+run_right
+run_left
+x
+indices
+run_right < nrun_x && last(value) == x.runvalues[run_right]
+x
+indices
+nrun_value
+x
+x
+x.runvalues[run_right] == last(value)
+run_remainder_right == 0
+nrun_value
+run_right
+run_right
+run_right < nrun_x && last(value) == x.runvalues[run_right]
+Pkg.test("RLEVectors")
 exit()

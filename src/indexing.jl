@@ -162,6 +162,10 @@ function Base.setindex!(x::RLEVector, value::AbstractVector, indices::UnitRange)
     setindex!(x, RLEVector(value), indices)
 end
 
+function Base.setindex!(x::RLEVector, value, indices::UnitRange)
+    setindex!(x, RLEVector(value, length(indices)), indices)
+end
+
 function Base.setindex!(x::RLEVector, value::RLEVector, indices::UnitRange)
     length(value) != length(indices) && throw(BoundsError())
     i_left = first(indices)
@@ -175,21 +179,17 @@ function Base.setindex!(x::RLEVector, value::RLEVector, indices::UnitRange)
     # Move run markers to denote parts of original data that will be kept, accomodating completely filled runs or adjacent matches
     # We will keep 1:run_left and run_right:end and fill in the middle with value
     # FIXME: factor out these two expressions for something like ind2insertcontext
-    if x.runvalues[run_left] == first(value)
-        run_left = run_left - 1
-    elseif index_in_run_left == 1
+    if index_in_run_left == 1
         run_left = run_left - 1
         if run_left > 0 && first(value) == x.runvalues[run_left]
             run_left = run_left - 1
         end
-    else
-        x.runends[run_left] = i_left - 1
     end
     if x.runvalues[run_right] == last(value)
         nrun_value = nrun_value - 1
     elseif run_remainder_right == 0
         run_right = run_right + 1
-        if run_right < nrun_x && last(value) == x.runvalues[run_right]
+        if run_right <= nrun_x && last(value) == x.runvalues[run_right]
             nrun_value = nrun_value - 1
         end
     end
@@ -203,6 +203,9 @@ function Base.setindex!(x::RLEVector, value::RLEVector, indices::UnitRange)
         deleteat!(x.runvalues, delete_range)
         deleteat!(x.runends, delete_range)
     end
+    if run_left > 0 && index_in_run_left != 1
+        x.runends[run_left] = i_left - 1
+    end
     # Insert incoming values
     value_runvalues = value.runvalues
     value_runends = value.runends
@@ -214,50 +217,6 @@ function Base.setindex!(x::RLEVector, value::RLEVector, indices::UnitRange)
     end
     x
 end
-
-#function Base.setindex!{T1,T2}(x::RLEVector{T1,T2}, value::T1, indices::UnitRange)
-#    i_left = first(indices)
-#    i_right = last(indices)
-#    if i_left == i_right
-#        return(setindex!(x,ins,i_left))
-#    end
-#    nrun_x = nrun(x)
-#    nrun_value = 1
-#    (run_left, run_right, index_in_run_left, run_remainder_right) = ind2runcontext(x,indices)
-#    # Move run markers to denote parts of original data that will be kept, accommodating completely filled runs or adjacent matches
-#    # We will keep 1:run_left and run_right:end and fill in the middle with value
-#    if run_remainder_right == 0
-#        run_right = run_right + 1
-#        if run_right <= nrun_x && value == x.runvalues[run_right]
-#            i_right = x.runvalues[run_right]
-#            run_right = run_right + 1
-#        end
-#    end
-#    if index_in_run_left == 1
-#        run_left = run_left - 1
-#        if run_left > 0 && value == x.runvalues[run_left]
-#            run_left = run_left - 1
-#        end
-#    end
-#    nrun_out = run_left + ((nrun_x - run_right) + 1) + nrun_value
-#    nrun_diff = nrun_out - nrun_x
-#    # Resize and move
-#    if nrun_diff > 0
-#        growat!(x, run_right, nrun_diff)
-#    elseif nrun_diff < 0
-#        delete_range = (run_left + 1):(run_left - nrun_diff)
-#        deleteat!(x.runvalues, delete_range)
-#        deleteat!(x.runends, delete_range)
-#    end
-#    # Insert incoming values
-#    il = run_left + 1
-#    x.runvalues[il] = value
-#    x.runends[il] = i_right
-#    if run_left > 0 && index_in_run_left != 1
-#        x.runends[run_left] = i_left - 1
-#    end
-#    x
-#end
 
 ## Getter shortcuts
 function head(x::RLEVector,l::Integer=6)
