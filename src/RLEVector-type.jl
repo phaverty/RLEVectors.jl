@@ -147,7 +147,10 @@ moving values `i:n` down to accomodate the new spaces. For the
 function growat!(x::AbstractVector, i, insert_length)
     len = length(x)
     resize!(x, len + insert_length)
-    @inbounds x[(i + insert_length):end] = x[i:len]
+    ind = len
+    @inbounds for ind in len:-1:i
+        x[ind + insert_length] = x[ind]
+    end
     x
 end
 
