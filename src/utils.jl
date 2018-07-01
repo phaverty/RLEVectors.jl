@@ -86,6 +86,7 @@ function searchsortedfirst(v::AbstractVector, x::AbstractVector, lo::Int, hi::In
     min = lo - 1
     max = hi + 1
     @inbounds for (i,query) in enumerate(x)
+        # FIXME: probably do not want enumerate, just do for query in x and count i separately
         hi = hi + 1 # 2X speedup with this *inside* the loop for sorted x. Dunno why.
         # unsorted x, restart left side
         if lo <= min || query <= v[lo]

@@ -34,7 +34,7 @@ objects. The values corresponding to each disjoint run in `x` and `y` can then b
 ## Returns
 An integer vector, of a type that is the promotion of the eltypes of the runends of x and y.
 
-## Examples    
+## Examples
 ```julia
 x = [2, 4, 6]
 y = [3, 4, 5, 6]
@@ -133,7 +133,7 @@ function disjoin(x::RLEVector, y::RLEVector)
 ##            i = i - 1
 ##            j = j - 1
 #        end
-#        
+#
 #        runind = runind - 1
 #        println(runvalues_x)
 #        println(runvalues_y)
@@ -147,9 +147,8 @@ end
     Subset an RLEVector by one or more ranges, returning the average value within each range. Really, an
     optimized `[ mean(x[ r ]) for r in ranges ]`.
 """
-
-# optimization opportunities: hoist rle element lookups and use the searchsortedfirst with all the args
 function rangeMeans{T <: Integer}(ranges::Vector{UnitRange{T}}, rle::RLEVector)
+    # optimization opportunities: hoist rle element lookups and use the searchsortedfirst with all the args
     res = similar(ranges, Float64)
     first_run = 1
     last_run = nrun(rle)
