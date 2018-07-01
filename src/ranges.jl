@@ -147,7 +147,7 @@ end
     Subset an RLEVector by one or more ranges, returning the average value within each range. Really, an
     optimized `[ mean(x[ r ]) for r in ranges ]`.
 """
-function rangeMeans{T <: Integer}(ranges::Vector{UnitRange{T}}, rle::RLEVector)
+function rangeMeans(ranges::Vector{UnitRange{T}}, rle::RLEVector) where T <: Integer
     # optimization opportunities: hoist rle element lookups and use the searchsortedfirst with all the args
     res = similar(ranges, Float64)
     first_run = 1

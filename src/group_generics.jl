@@ -71,7 +71,7 @@ for op in setdiff(summary_group,[:sum,:prod])
 end
 
 ## Methods that take two arguments, delegate to rle.runvalues and return something other than an RLEVector
-in{T1,T2<:Integer}(y::T1, x::RLEVector{T1,T2}) = in(y, x.runvalues)
+in(y::T1, x::RLEVector{T1,T2}) where {T1,T2<:Integer} = in(y, x.runvalues)
 
 # Defaulting to fun(itr) for some things
 for op in [:findmin, :findmax]
@@ -120,7 +120,7 @@ function median(x::RLEVector)
   return(median)
 end
 
-function sum{T1,T2}(x::RLEVector{T1,T2})
+function sum(x::RLEVector{T1,T2}) where {T1,T2}
   rval = zero(T1)
    @simd for i in 1:nrun(x)
     @inbounds rval = rval + (x.runvalues[i] * widths(x, i))

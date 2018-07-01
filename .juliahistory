@@ -1,10 +1,4 @@
 
-function growat!(x::RLEVector, i, insert_length)
-    growat!(x.runvalues, i, insert_length)
-    growat!(x.runends, i, insert_length)
-    x
-end
-
 x
 @which growat!(x, 2, 2)
 @which growat!(x.runends, 2, 2)
@@ -497,4 +491,10 @@ Pkg.test("RLEVectors")
 x = RLEVector([1,1,1,2,2,2,3,3,3,4,4,4,5,5,5])
 x[3:5] = 1
 x
+exit()
+using RLEVectors
+?UnitRange
+UnitRange(1,2)
+UnitRange(1,2.0)
+UnitRange(1.0,2.0)
 exit()

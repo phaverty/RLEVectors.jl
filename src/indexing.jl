@@ -233,29 +233,12 @@ function tail(x::RLEVector,l::Integer=6)
 end
 
 ## Iterators
-function start(rle::RLEVector)
-  (1,1)
-end
-
-function next(rle::RLEVector, state)
-  if state[2] == rle.runends[ state[1] ]
-    newstate = (state[1] + 1, state[2] + 1)
-  else
-    newstate = (state[1],state[2] + 1)
-  end
-  return( (rle.runvalues[state[1]], newstate) )
-end
-
-function done(rle::RLEVector, state)
-  state[1] > nrun(rle)
-end
-
 # Iterator for ranges based on RLE e.g. (value, start, end)
-immutable RLEEachRangeIterator{T1,T2}
+# FIXME: How do I do this in 0.7?
+struct RLEEachRangeIterator{T1,T2}
     rle::RLEVector{T1,T2}
 end
 eachrange(x::RLEVector) = RLEEachRangeIterator(x)
-@deprecate each(x::RLEVector) eachrange(x)
 
 function start(x::RLEEachRangeIterator)
     1
@@ -280,7 +263,7 @@ end
 ## state is (run_index, overall_index)
 ## We will assume that this iterate method is the only source of `state` and
 ## the only invalid state possible is one past the end
-eltype{T1,T2}(::RLEVector{T1,T2}) = T1
+eltype(::RLEVector{T1,T2}) where {T1,T2} = T1
 function iterate(x::RLEVector, state = (1,1))
     (run_index, overall_index) = state
     if overall_index > length(x) # run_index > nrun(x) || overall_index > length(x)
@@ -294,8 +277,6 @@ function iterate(x::RLEVector, state = (1,1))
     end
     out
 end
-
-
 
 # FIXME: add reverse iterator, see https://docs.julialang.org/en/latest/manual/interfaces/#man-interface-array-1
 

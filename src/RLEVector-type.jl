@@ -53,12 +53,12 @@ struct RLEVector{T1,T2 <: Integer} <: AbstractArray{T1,1}
   RLEVector{T1,T2}(runvalues,runends) where {T1,T2<:Integer} = new(runvalues,runends)
 end
 
-function RLEVector{T1,T2 <: Integer}(runvalues::Vector{T1}, runends::Vector{T2})
+function RLEVector(runvalues::Vector{T1}, runends::Vector{T2}) where {T1, T2 <: Integer}
     runvalues, runends = ree!(runvalues,runends)
     RLEVector{T1,T2}(runvalues, runends)
 end
 
-function RLEVector{T2 <: Integer}(runvalues::BitVector, runends::Vector{T2})
+function RLEVector(runvalues::BitVector, runends::Vector{T2}) where T2 <: Integer
     runvalues, runends = ree!(runvalues,runends)
     RLEVector{Bool,T2}(runvalues, runends)
 end
@@ -76,7 +76,9 @@ function RLEVector(x)
     RLEVector([x])
 end
 
-RLEVector{T1,T2 <: Integer}(runvalues::T1, runends::T2) = RLEVector{T1,T2}([runvalues], [runends])
+function RLEVector(runvalues::T1, runends::T2) where {T1,T2 <: Integer}
+    RLEVector{T1,T2}([runvalues], [runends])
+end
 
 #  Having specific types of Rle would be useful for lists of the same type, but Julia does a good job noticing that
 #  Could also be useful for method definitions

@@ -24,7 +24,7 @@ Run End Encode a vector
 
 Like RLE, but returns (runvalues,runends) rather than (runvalues,runlengths)
 """
-function ree{T}(x::AbstractVector{T})
+function ree(x::AbstractVector)
   xlen = length(x)
   xlen < 2 && return( (x,[xlen]) )
   nrun = numruns(x)

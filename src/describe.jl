@@ -14,7 +14,7 @@ end
 
 nrun(x::RLEVector) = length(x.runends)
 
-function Base.length{T1,T2<:Integer}(x::RLEVector{T1,T2})
+function Base.length(x::RLEVector{T1,T2}) where {T1,T2<:Integer}
   re = x.runends
   ind = endof(re)
   if (ind > 0)

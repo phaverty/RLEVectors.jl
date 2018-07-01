@@ -1,6 +1,6 @@
 ### Statistics
 
-function countmap{T1,T2}(x::RLEVector{T1,T2})
+function countmap(x::RLEVector{T1,T2}) where {T1,T2}
   tally = Dict{T1,T2}()
   for i in 1:nrun(x)
     tally[x.runvalues[i]] = get(tally,x.runvalues[i],0) + x.runvalues[i]

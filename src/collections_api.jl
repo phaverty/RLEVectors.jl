@@ -34,8 +34,8 @@ function pop!(x::RLEVector)
   return(item)
 end
 
-function push!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
-  item = convert(T,item) # Copying how base does it for arrays
+function push!(x::RLEVector{T1,T2},item) where {T1,T2 <: Integer}
+  item = convert(T1,item) # Copying how base does it for arrays
   if !isempty(x) && (item == x.runvalues[end])
     x.runends[end] += 1
   else
@@ -56,8 +56,8 @@ function popfirst!(x::RLEVector)
   return(item)
 end
 
-function pushfirst!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
-  item = convert(T,item) # Copying how base does it for arrays
+function pushfirst!(x::RLEVector{T1,T2},item) where {T1,T2 <: Integer}
+  item = convert(T1,item) # Copying how base does it for arrays
   x.runends[:] = x.runends + 1
   if item != x.runvalues[1]
     pushfirst!(x.runvalues,item)

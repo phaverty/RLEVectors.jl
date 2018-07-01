@@ -19,7 +19,7 @@ function permute_runs(x::RLEVector, indices)
   RLEVector(rvalue(x)[indices], cumsum(widths(x)[indices]))
 end
 
-function sort{T1,T2}(x::RLEVector{T1,T2})
+function sort(x::RLEVector{T1,T2}) where {T1,T2}
   ord = sortperm(x.runvalues)
   rle = RLEVector{T1,T2}( x.runvalues[ord], cumsum(widths(x)[ord]) )
   return(rle)
