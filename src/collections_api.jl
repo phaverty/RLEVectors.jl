@@ -55,22 +55,16 @@ function popfirst!(x::RLEVector)
   end
   return(item)
 end
-shift!(x::RLEVector) = popfirst!(x)
 
 function pushfirst!{T,T2 <: Integer}(x::RLEVector{T,T2},item)
   item = convert(T,item) # Copying how base does it for arrays
   x.runends[:] = x.runends + 1
   if item != x.runvalues[1]
-    unshift!(x.runvalues,item)
-    unshift!(x.runends,1)
+    pushfirst!(x.runvalues,item)
+    pushfirst!(x.runends,1)
   end
   return(x)
 end
-shove!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = pushfirst!(x,item)
-unshift!{T,T2 <: Integer}(x::RLEVector{T,T2},item) = pushfirst!(x,item)
-@deprecate shove! pushfirst!
-@deprecate unshift! pushfirst!
-@deprecate shift! popfirst!
 
 function deleterun!(x::RLEVector,i::Integer)
     x.runends[i:end] -= widths(x,i)

@@ -4,16 +4,16 @@ module RLEVectors
 
 using DataFrames
 using AxisArrays
-using RCall
+#using RCall
 
 # RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar, starts, widths, widths!, ends, values
 import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect, isequal, values, copy
 
 # collections
-import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in, intersect, append!
-export       eltype, unique, minimum, maximum, vcat, pop!, push!, shift!, unshift!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, growat!, empty!, endof, maxabs, minabs, any, all, in, intersect, append!
-export shove!, deleterun!, decrement_run!
+import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in, intersect, append!
+export       eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, growat!, empty!, endof, maxabs, minabs, any, all, in, intersect, append!
+export deleterun!, decrement_run!
 
 # indexing
 import Base: getindex, setindex!
@@ -63,7 +63,7 @@ export RLEDataFrame, nrow, ncol, columns, index, names
 export rowSums, rowMeans, rowMedians, colSums, colMeans, colMedians
 
 # RCall
-import RCall: sexp, rcopy, RClass, rcopytype, @R_str, S4Sxp
+#import RCall: sexp, rcopy, RClass, rcopytype, @R_str, S4Sxp
 
 ### Includes
 include("utils.jl")
@@ -77,7 +77,7 @@ include("group_generics.jl")
 include("collections_api.jl")
 include("math.jl")
 include("sorting.jl")
-include("rcall.jl")
+#include("rcall.jl")
 include("precompile.jl")
 _precompile_()
 
