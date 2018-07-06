@@ -4,6 +4,7 @@ module RLEVectors
 
 using DataFrames
 using AxisArrays
+#using StatsBase
 #using RCall
 
 # RLEVector type
@@ -42,7 +43,7 @@ export indexin, findin, median, findmin, findmax
 export findin2
 
 # math
-import StatsBase: mode, countmap
+#import StatsBase: mode, countmap
 export mode, countmap
 
 # ranges
