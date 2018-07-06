@@ -1,204 +1,4 @@
 x
-?deleteat!
-@timeit setindex!(x, 99, 800:820)
-@timeit setindex!(foo, 99, 800:820)
-@timeit setindex!(foo, 99, 800:820)
-@timeit setindex!(foo, 99, 800:820)
-bdf
-bdf
-bdf
-Profile.clear(); @profile foo[800:820] =  4; Profile.print()
-@timeit setindex!(foo, 99, 800:820)
-@timeit setindex!(foo, 99, 800:820)
-@timeit setindex!(foo, 800:820, 800:820)
-@timeit setindex!(foo, 800:820, 800:820)
-Profile.clear(); @profile foo[800:820] =  800:820; Profile.print()
-Profile.clear(); @profile for i in 1:100 foo[800:820] =  800:820; end; Profile.print()
-Profile.clear(); @profile for i in 1:1000 foo[800:820] =  800:820; end; Profile.print()
-Profile.clear(); @profile for i in 1:10000 foo[800:820] =  800:820; end; Profile.print()
-Profile.clear(); @profile for i in 1:100000 foo[800:820] =  800:820; end; Profile.print()
-Profile.clear(); @profile for i in 1:1000000 foo[800:820] =  800:820; end; Profile.print()
-Profile.clear(); @profile for i in 1:10000000 foo[800:820] =  800:820; end; Profile.print()
-x = RLEVector([1,1,2,2,3,3])
-bob=800:820; Profile.clear(); @profile for i in 1:10000000 foo[bob] = bob; end; Profile.print()
-bob=800:820; Profile.clear(); @profile for i in 1:10000000 foo[bob] = bob; end; Profile.print()
-bob=800:820; joe=RLEVector(800:820); Profile.clear(); @profile for i in 1:10000000 foo[bob] = joe; end; Profile.print()
-exit()
-Profile.clear(); @profile for i in 1:10000000 foo[800:820] =  800:820; end; Profile.print()
-bob=800:820; joe=RLEVector(800:820); Profile.clear(); @profile for i in 1:10000000 foo[bob] = joe; end; Profile.print()
-Pkg.test("RLEVectors")
-exit()
-bob=800:820; joe=RLEVector(800:820); Profile.clear(); @profile for i in 1:10000000 foo[bob] = joe; end; Profile.print()
-exit()
-Profile.clear(); @profile for i in 1:10000000 foo[800:820] =  800:820; end; Profile.print()
-bob=800:820; joe = RLEVector(800:820); Profile.clear(); @profile for i in 1:10000000 foo[bob] = joe; end; Profile.print()
-bob=800:820; joe = RLEVector(800:820); Profile.clear(); @profile for i in 1:10000000 foo[bob] = joe; end; Profile.print()
-exit()
-bob=800:820; joe = RLEVector(800:820); Profile.clear(); @profile for i in 1:10000000 foo[bob] = joe; end; Profile.print()
-bob=800:820; joe = RLEVector(800:820); Profile.clear(); @profile for i in 1:10000000 foo[bob] = 99; end; Profile.print()
- @time for i in 1:10000000 foo[bob] = 99; end
- @time for i in 1:10000000 foo[bob] = joe; end
- @time for i in 1:10000000 foo[bob] = joe; end
- @time for i in 1:10000000 foo[bob] = joe; end
-Profile.clear(); @profile for i in 1:10000000 foo[800:820] =  800:820; end; Profile.print()
-Profile.clear(); @profile for i in 1:10000000 foo[800:820] =  800:820; end; Profile.print()
-@timeit setindex!(foo, 800:820, 800:820)
-@timeit setindex!(foo, 800:820, 800:820)
-@timeit setindex!(foo, 800:820, 800:820)
-exit()
-Pkg.test("RLEVectors")
-bdf
-@timeit coverage(gr)
-@timeit coverage(gr)
-bdf
-bdf[:,11:end]
-Profile.clear(); @profile for i in 1:10000000 foo[800:820] =  800:820; end; Profile.print()
-bob=800:820; joe= RLEVectors(bob); Profile.clear(); @profile for i in 1:10000000 foo[bob] = joe; end; Profile.print()
-bob=800:820; joe= RLEVector(bob); Profile.clear(); @profile for i in 1:10000000 foo[bob] = joe; end; Profile.print()
-bob=800:820; joe= RLEVector(bob); Profile.clear(); @profile for i in 1:10000000 foo[bob] = joe; end; Profile.print()
-bob=800:820; joe= RLEVector(bob); Profile.clear(); @profile for i in 1:10000000 foo[bob] = joe; end; Profile.print()
-last([])
-@timeit coverage(gr)
-x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-x
-x[3]
-x[1]
-collect(x)
-x[1]
-x[2]
-x[3]
-x[4]
-x[5]
-x[6]
-x[7]
-x[8]
-x[9]
-x[10]
-x[11]
-length(x)
-Pkg.test("RLEVectors")
-x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-x[2:5]
-x[2:5]
-x[2:5]
-x[2:5]
-x[2:5]
-x
-Pkg.test("RLEVectors")
-collect(x)
-x
-x[5]
-x[5:7]
-collect(x[5:7])
-x[5:7]
-x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-ind = 5:7
-x
-run_indices
-offset
-v
-e
-x
-v
-e
-e
-ind2runcontext
-?ind2runcontext
-x 
-indices=5:7
-e
-v
-i
-x
-v
-e
-x
-x
-v
-e
-v
-e
-x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-x[5:7]
-x[5:7]
-x[5:7]
-Pkg.test("RLEVectors")
-Pkg.test("RLEVectors")
-@timeit foo[801:900] = 1:100
-exit()
-Pkg.test("RLEVectors")
-bdf[:,11:end]
-bdf[:,11:end]
-bdf
-bdf[:,8:end]
-8.29 /  .57
-x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-x[2:4] = 99
-x
-x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-x[2:6] = 99
-x
-x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-x[2:6] = 99
-x
-x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-x[2:7] = 99
-x
-Pkg.test("RLEVectors")
-x
-x
-x
-value = 4
-indices = 9:12
-run_right
-x
-run_left
-nrun_out
-run_left
-run_right
-x
-x
-run_left
-((nrun_x - run_right) + 1)
-nrun_value
-x
-value
-run_right
-nrun_value
-right_run
-run_right
-x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-x[2:7] = 99
-x
-x
-x
-x
-exit()
-x
-x
-value
-value = 99
-value = 4
-indices = 9:12
-x
-run_remainder_right == 0
-run_right < nrun_x && value == x.runvalues[run_right]
-x
-x
-i_right
-run_right <= nrun_x && value == x.runvalues[run_right]
-x
-x
-exit()
-value = RLEVector(4)
-indices = 11:12
-x
-indices
-value = RLEVector(2)
-indices = 9:12
-indices
-value
-x
 run_right
 run_lefg
 run_left
@@ -535,10 +335,8 @@ foo = RLEVector([1,1])
 foo = RLEVector{Int64,Int64}([1,1])
 foo = RLEVector{Int64,Int64}(1,2)
 foo = RLEVector{Int64,Int64}([1],[2])
-### RLEVectorsType
 
 """
-# RLEVectors
 `RLEVectors` is an alternate implementation of the Rle type from Bioconductor's
 IRanges package by H. Pages, P. Aboyoun and M. Lawrence. RLEVectors represent a
 vector with repeated values as the ordered set of values and repeat extents. In
@@ -552,7 +350,6 @@ mathematical operations on these values.
 vector of run ends. In either case runs of values or zero length runs will
 be compressed out. RLEVectors can be expanded to a full vector with `collect`.
 
-## Aliases
 Several aliases are defined for specific types of RLEVector (or collections thereof).
 
     FloatRle              RLEVector{Float64,UInt32}
@@ -561,13 +358,11 @@ Several aliases are defined for specific types of RLEVector (or collections ther
     StringRle             RLEVector{String,UInt32}
     RLEVectorList{T1,T2}  Vector{ RLEVector{T1,T2} }
 
-## Constructors
 `RLEVector`s can be created by specifying a vector to compress or the runvalues and run ends.
 
     x = RLEVector([1,1,2,2,3,3,4,4,4])
     x = RLEVector([4,5,6],[3,6,9])
 
-## Describing `RLEVector` objects
 `RLEVector`s implement the usual descriptive functions for an array as well as some that are
 specific to the type.
 
@@ -617,8 +412,6 @@ function RLEVector(runvalues::T1, runends::T2) where {T1,T2 <: Integer}
     RLEVector{T1,T2}([runvalues], [runends])
 end
 
-#  Having specific types of Rle would be useful for lists of the same type, but Julia does a good job noticing that
-#  Could also be useful for method definitions
 const FloatRle = RLEVector{Float64,UInt32}
 const IntegerRle = RLEVector{Int64,UInt32}
 const BoolRle = RLEVector{Bool,UInt32}
@@ -626,7 +419,6 @@ const StringRle = RLEVector{String,UInt32}
 const RLEVectorList{T1,T2} = Vector{ RLEVector{T1,T2} }
 @doc (@doc RLEVector) FloatRle,  IntegerRle, BoolRle, StringRle, RLEVectorList
 
-# similar
 function similar(x::RLEVector, element_type::Type, dims::Dims)
     len = dims[1]
     if len == 0
@@ -636,7 +428,6 @@ function similar(x::RLEVector, element_type::Type, dims::Dims)
     end
 end
 
-# show
 function Base.show(io::IO, ::MIME"text/plain", x::RLEVector)
     t = typeof(x)::DataType
     show(io, t)
@@ -658,13 +449,11 @@ function ree!(x::RLEVector)
     ree!(x.runvalues,x.runends)
 end
 
-# conversions
 convert(::Type{Vector}, x::RLEVector) = collect(x)
 convert(::Type{Set}, x::RLEVector) = Set(values(x))
 convert(::Type{RLEVector}, x::Vector) = RLEVector(x)
 promote_rule(::Type{Set}, ::Type{RLEVector}) = Set
 
-# the basics
 function collect(x::RLEVector)
   inverse_ree(x.runvalues,x.runends)
 end
@@ -700,4 +489,12 @@ function growat!(x::RLEVector, i, insert_length)
 end
 
 foo = RLEVector{Int64,Int64}([1],[2])
+exit()
+using RLEVectors
+using RLEVectors
+function bob(a, (b,c))
+b + c
+end
+bob("Foo", 10, 12)
+bob("Foo", (10, 12))
 exit()

@@ -233,35 +233,21 @@ function tail(x::RLEVector,l::Integer=6)
 end
 
 ## Iterators
-# Iterator for ranges based on RLE e.g. (value, start, end)
+# Iterator for ranges based on RLE e.g. (value, start:end)
 # FIXME: How do I do this in 0.7?
 struct RLEEachRangeIterator{T1,T2}
     rle::RLEVector{T1,T2}
 end
 eachrange(x::RLEVector) = RLEEachRangeIterator(x)
+length(x::RLEEachRangeIterator) = nrun(x.rle)
 eltype(::RLEEachRangeIterator{T1,T2}) where {T1,T2} = Tuple{T2,T2}
 
-function iterate(x::RLEEachRangeIterator, state = (1,1))
-    (run_index, overall_index) = state
-
-
-function start(x::RLEEachRangeIterator)
-    1
-end
-
-function next(x::RLEEachRangeIterator, state)
+function iterate(x::RLEEachRangeIterator, state = 1)
+    state > nrun(x.rle) && return nothing
     newstate = state + 1
     first = starts(x.rle,state)
-    last = ends(x.rle)[state]
-    ( (values(x.rle)[state], first:last ), newstate )
-end
-
-function done(x::RLEEachRangeIterator, state)
-    state > nrun(x.rle)
-end
-
-function length(x::RLEEachRangeIterator)
-    nrun(x.rle)
+    last = ends(x.rle,state)
+    ( (_values(x.rle)[state];, first:last ), newstate )
 end
 
 ## New style iterator
