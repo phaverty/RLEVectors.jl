@@ -4,7 +4,8 @@ module RLEVectors
 
 using DataFrames
 using AxisArrays
-#using StatsBase
+using Statistics
+using StatsBase
 #using RCall
 
 # RLEVector type
@@ -30,8 +31,8 @@ import Base: broadcast, map
 import Base: +, -, *, /, ^, .+, .-, .*, ./, .^, div, mod, fld, rem
 import Base: ==, >, <, !=, <=, >=, .==, .>, .<, .!=, .<=, .>=, &, |
 import Base: abs, sign, sqrt, ceil, floor, trunc, cummax, cummin, cumprod, cumsum, log, log10, log2, log1p, acos, acosh, asin, asinh, atan, atanh
-import Base: exp, expm1, cos, cosh, sin, sinh, tan, tanh, gamma, lgamma, digamma, trigamma
-import Base: max, min, range, prod, sum, any, all, mean
+import Base: exp, expm1, cos, cosh, sin, sinh, tan, tanh, gamma, lczgamma, digamma, trigamma
+import Base.Statistics: max, min, range, prod, sum, any, all, mean
 import Base: in
 import Base: indexin, findin, median, findmin, findmax
 export .+, .-, .*, ./, .^, div, mod, fld, rem, ==, >, <, !=, <=, >=, .==, .>, .<, .!=, .<=, .>=, &, |
