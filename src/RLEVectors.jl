@@ -4,7 +4,7 @@ using DataFrames
 using AxisArrays
 using Statistics
 using StatsBase
-#using RCall
+using RCall
 
 # RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar, starts, widths, widths!, ends, values
@@ -77,7 +77,7 @@ include("group_generics.jl")
 include("collections_api.jl")
 include("math.jl")
 include("sorting.jl")
-#include("rcall.jl")
+include("rcall.jl")
 include("precompile.jl")
 _precompile_()
 
