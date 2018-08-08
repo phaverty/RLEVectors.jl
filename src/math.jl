@@ -10,7 +10,7 @@ end
 
 function mode(x::RLEVector)
   tally = countmap(x)
-  which_max = indmax(collect(values(tally)))
+  which_max = argmax(collect(values(tally)))
   max_val = collect(keys(tally))[ which_max ]
   max_val
 end

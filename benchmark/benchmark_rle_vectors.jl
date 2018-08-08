@@ -20,7 +20,7 @@ length(foo)
 timings = DataFrame()
 timings[:language] = "julia"
 timings[:language_version] = VERSION
-timings[:date] = chomp(readstring(`date "+%Y-%m-%d"`))
+timings[:date] = chomp(read(`date "+%Y-%m-%d"`, String))
 timings[:indexing] = @timeit foo[100]
 timings[:range_indexing] = @timeit foo[801:900]
 timings[:setting] = @timeit foo[800] = 5
@@ -79,7 +79,7 @@ date = jdf[1,:date]
 relative_perf_file = "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).png"
 draw(PNG(relative_perf_file,8inch,5inch),bench_plot )
 current_relative_perf_file = "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/plots/benchmark_rle_vectors.png"
-cp(relative_perf_file, current_relative_perf_file, remove_destination=true)
+cp(relative_perf_file, current_relative_perf_file, force=true)
 
 ## Performance over time
 jdf = bdf[ bdf[:,:language] .== "julia", 3:end ]
@@ -89,7 +89,7 @@ timeline_plot = plot(melted_bdf, x="date", y="value", color="variable", Guide.xl
 timeline_file = "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).timeline.png"
 draw(PNG(timeline_file,10inch,6inch),timeline_plot )
 current_timeline_file = "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/plots/benchmark_rle_vectors.timeline.png"
-cp(timeline_file, current_timeline_file, remove_destination=true)
+cp(timeline_file, current_timeline_file, force=true)
 
 ## Profiling
 using ProfileView
@@ -97,7 +97,7 @@ foo + foo; Profile.clear(); @profile for i in 1:1e4 foo + foo end; ProfileView.v
 foo .< 3; Profile.clear(); @profile for i in 1:1e4 foo .< 3 end; ProfileView.view()
 foo .+ 3; Profile.clear(); @profile for i in 1:1e4 foo .+ 3 end; ProfileView.view()
 sum(foo); Profile.clear(); @profile for i in 1:1e4 sum(foo) end; ProfileView.view()
-findin(foo,[800,300,357]); Profile.clear(); @profile for i in 1:1e5 findin(foo,[800,300,357]) end; ProfileView.view()
+findall(in([800,300,357]), foo); Profile.clear(); @profile for i in 1:1e5 findin(foo,[800,300,357]) end; ProfileView.view()
 median(foo); Profile.clear(); @profile for i in 1:1e4 median(foo) end; ProfileView.view()
 rfirst(foo); Profile.clear(); @profile for i in 1:1e6 rfirst(foo) end; ProfileView.view()
 rwidth(foo); Profile.clear(); @profile for i in 1:1e6 rwidth(foo) end; ProfileView.view()

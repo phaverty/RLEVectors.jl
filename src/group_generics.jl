@@ -87,21 +87,21 @@ indexin(x::RLEVector,y::RLEVector) = RLEVector( indexin(x.runvalues,y), x.runend
 indexin(x::RLEVector,y::AbstractVector) = RLEVector( indexin(x.runvalues,y), x.runends )
 indexin(x::AbstractVector,y::RLEVector) = Int[ i == 0 ? 0 : y.runends[i] for i in indexin(x,y.runvalues) ]
 
-findin(x,y::RLEVector) = findin(x,y.runvalues)
-function findin(x::RLEVector,y::RLEVector)
-  runs = findin(x.runvalues,y.runvalues)
+findall(in(y::RLEVector), x) = findall(in(y.runvalues), x)
+function findall(in(y::RLEVector), x::RLEVector)
+  runs = findall(in(y.runvalues), x.runvalues)
   re = x.runends
   vcat( [ starts(x,i):re[i] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
-function findin(x::RLEVector,y::UnitRange) # ambig fix
-  runs = findin(x.runvalues,y)
+function findall(in(y::UnitRange), x::RLEVector) # ambig fix
+  runs = findall(in(y), x.runvalues)
   re = x.runends
   vcat( [ starts(x,i):re[i] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
-function findin(x::RLEVector,y)
-  runs = findin(x.runvalues,y)
+function findall(in(y), x::RLEVector)
+  runs = findall(in(y), x.runvalues)
   re = x.runends
   vcat( [ starts(x,i):re[i] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end

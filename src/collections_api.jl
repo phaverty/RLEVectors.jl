@@ -94,7 +94,7 @@ end
 
 function insert!(x::RLEVector{T1,T2}, i::Integer, item) where {T1,T2 <: Integer}
     if i == 1
-        unshift!(x,item)
+        pushfirst!(x,item)
     elseif i == length(x) + 1
         push!(x,item)
     else
