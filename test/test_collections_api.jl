@@ -1,6 +1,6 @@
 module TestCollections
 
-using Base.Test
+using Test
 using RLEVectors
 
 @testset begin
@@ -30,15 +30,15 @@ x = RLEVector([7])
 
 # unshift!
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-unshift!(x,4)
+pushfirst!(x,4)
 @test x == RLEVector([4,1,1,2,2,3,3,4,4,5,5])
 
 # shift!
 x = RLEVector([1,1,2,2,3,3,4,4,5,5])
-@test shift!(x) == 1
+@test popfirst!(x) == 1
 @test x == RLEVector([1,2,2,3,3,4,4,5,5])
 x = RLEVector([7])
-@test shift!(x) == 7
+@test popfirst!(x) == 7
 @test x.runends == Int64[]
 @test x.runvalues == Int64[]
 

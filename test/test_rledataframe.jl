@@ -1,6 +1,6 @@
 module TestRLEDF
 
-using Base.Test
+using Test
 using RLEVectors
 using AxisArrays
 using DataFrames
@@ -13,7 +13,7 @@ using DataFrames
     @test length(x) == 2
     @test names(x) == [:a, :b]
     io = IOBuffer()
-    @test typeof(show(io,x)) == Void # At least test that show does not give error
+    @test typeof(show(io,x)) == Nothing # At least test that show does not give error
     z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
     @test isa(z,RLEDataFrame)
     @test length(z) == 3

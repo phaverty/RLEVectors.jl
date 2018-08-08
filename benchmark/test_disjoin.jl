@@ -3,9 +3,9 @@ using RLEVectors
 
 function searchsortedfirst1(v::AbstractVector, x::AbstractVector, lo::Int, hi::Int)
     indices = similar(x)
-    const n = hi
-    const min = lo - 1
-    const max = hi + 1
+    n = hi
+    min = lo - 1
+    max = hi + 1
     hi = hi + 1
     @inbounds for (i,query) in enumerate(x)
         indices[i] = searchsortedfirst(v, query, 1, n)
@@ -15,8 +15,8 @@ end
 
 function searchsortedfirst2(v::AbstractVector, x::AbstractVector, lo::Int, hi::Int)
     indices = similar(x)
-    const min = lo - 1
-    const max = hi + 1
+    min = lo - 1
+    max = hi + 1
     hi = hi + 1
     @inbounds for (i,query) in enumerate(x)
         # unsorted x, restart left side

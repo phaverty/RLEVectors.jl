@@ -1,6 +1,6 @@
 module TestTypes
 
-using Base.Test
+using Test
 using RLEVectors
 
 @testset begin
@@ -53,8 +53,8 @@ x = RLEVector([4,4,5,5,6,7,8])
 x = RLEVector(expected_run_values,expected_run_ends)
 @test eltype(x) == eltype(expected_run_values)
 io = IOBuffer()
-@test typeof(show(io,x)) == Void # At least test that show does not give error
-@test typeof(show(io,RLEVector(collect(1:100)))) == Void # At least test that show does not give error
+@test typeof(show(io,x)) == Nothing # At least test that show does not give error
+@test typeof(show(io,RLEVector(collect(1:100)))) == Nothing # At least test that show does not give error
 
 # Getters and setters
 x = RLEVector([1,2,3],[2,9,22])

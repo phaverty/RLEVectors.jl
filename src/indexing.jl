@@ -126,11 +126,11 @@ function Base.setindex!(rle::RLEVector, value, i::Int)
 end
 
 function Base.getindex(x::RLEVector, ind::Array{Bool, 1})
-    x[ find(ind) ]
+    x[ findall(ind) ]
 end
 
 function Base.setindex!(x::RLEVector, value::AbstractArray, ind::Array{Bool, 1})
-    x[ find(ind) ] = value
+    x[ findall(ind) ] = value
     x
 end
 
