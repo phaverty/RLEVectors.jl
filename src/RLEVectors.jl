@@ -2,7 +2,6 @@ module RLEVectors
 
 using DataFrames
 using AxisArrays
-using Statistics
 using StatsBase
 using RCall
 
