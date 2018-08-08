@@ -11,7 +11,7 @@ export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirs
 import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect, isequal, values, copy
 
 # collections
-import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in, intersect, append!
+import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in, intersect, append!
 export       eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, growat!, empty!, endof, maxabs, minabs, any, all, in, intersect, append!
 export deleterun!, decrement_run!
 
