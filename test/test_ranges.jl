@@ -1,6 +1,6 @@
 module TestRanges
 
-using Base.Test
+using Test
 using RLEVectors
 
 @testset begin

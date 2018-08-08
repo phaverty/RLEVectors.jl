@@ -1,6 +1,6 @@
 module TestUtils
 
-using Base.Test
+using Test
 using RLEVectors
 
 @testset begin

@@ -1,5 +1,5 @@
 using RLEVectors
-using Base.Test
+using Test
 
 test_files = [
               "test_indexing.jl",
