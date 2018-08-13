@@ -54,7 +54,7 @@ export RLEDataFrame, nrow, ncol, columns, index, names
 export rowSums, rowMeans, rowMedians, colSums, colMeans, colMedians
 
 # RCall
-#import RCall: sexp, rcopy, RClass, rcopytype, @R_str, S4Sxp
+import RCall: sexp, rcopy, RClass, rcopytype, @R_str, S4Sxp
 
 ### Includes
 include("utils.jl")
