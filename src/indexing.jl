@@ -61,7 +61,7 @@ end
 
 ## Just enough for AbstractArray
 Base.IndexStyle(::Type{<:RLEVector}) = IndexLinear()
-Base.endof(rle::RLEVector) = length(rle)
+Base.lastindex(rle::RLEVector) = length(rle)
 #Base.firstindex(rle::RLEVector) = 1
 #Base.lastindex(rle::RLEVector) = length(rle)
 #Base.axes(rle::RLEVector) = (Base.OneTo(length(rle)),)

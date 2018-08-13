@@ -10,8 +10,8 @@ export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirs
 import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect, isequal, values, copy
 
 # collections
-import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, empty!, endof, any, all, in, intersect, append!
-export       eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, growat!, empty!, endof, any, all, in, intersect, append!
+import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, empty!, lastindex, any, all, in, intersect, append!
+export       eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, growat!, empty!, lastindex, any, all, in, intersect, append!
 export deleterun!, decrement_run!
 
 # indexing
