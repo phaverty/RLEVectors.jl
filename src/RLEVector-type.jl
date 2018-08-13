@@ -136,11 +136,10 @@ function collect(x::RLEVector)
 end
 
 function isequal(x::RLEVector, y::RLEVector)
-isequal(x.runends,y.runends) && isequal(x.runvalues, y.runvalues)
+    isequal(x.runends,y.runends) && isequal(x.runvalues, y.runvalues)
 end
 
 Base.hash(a::RLEVector) = hash(a.runvalues, hash(a.runlengths, hash(:RLEVector)))
-==(a::RLEVector, b::RLEVector) = isequal(a.runvalues, b.runvalues) && isequal(a.runends, b.runends) && true
 
 """
     growat!(x::AbstractVector, i, insert_length)
