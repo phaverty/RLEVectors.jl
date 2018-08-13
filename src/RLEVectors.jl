@@ -1,17 +1,17 @@
 module RLEVectors
 
 using DataFrames
-using AxisArrays
 using StatsBase
 using RCall
+using Statistics
 
 # RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar, starts, widths, widths!, ends, values
 import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect, isequal, values, copy
 
 # collections
-import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in, intersect, append!
-export       eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, growat!, empty!, endof, maxabs, minabs, any, all, in, intersect, append!
+import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, empty!, endof, any, all, in, intersect, append!
+export       eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, growat!, empty!, endof, any, all, in, intersect, append!
 export deleterun!, decrement_run!
 
 # indexing
@@ -27,17 +27,17 @@ export endtype
 import Base: broadcast, map
 import Base: +, -, *, /, ^, .+, .-, .*, ./, .^, div, mod, fld, rem
 import Base: ==, >, <, !=, <=, >=, .==, .>, .<, .!=, .<=, .>=, &, |
-import Base: abs, sign, sqrt, ceil, floor, trunc, cummax, cummin, cumprod, cumsum, log, log10, log2, log1p, acos, acosh, asin, asinh, atan, atanh
-import Base: exp, expm1, cos, cosh, sin, sinh, tan, tanh, gamma, lczgamma, digamma, trigamma
-import Base.Statistics: max, min, range, prod, sum, any, all, mean
+import Base: abs, sign, sqrt, ceil, floor, trunc, cumprod, cumsum, log, log10, log2, log1p, acos, acosh, asin, asinh, atan, atanh
+import Base: exp, expm1, cos, cosh, sin, sinh, tan, tanh
+import Statistics: max, min, range, prod, sum, any, all, mean, median
 import Base: in
-import Base: indexin, findin, median, findmin, findmax
+import Base: indexin, findin, findmin, findmax
 export .+, .-, .*, ./, .^, div, mod, fld, rem, ==, >, <, !=, <=, >=, .==, .>, .<, .!=, .<=, .>=, &, |
-export abs, sign, sqrt, ceil, floor, trunc, cummax, cummin, cumprod, cumsum, log, log10, log2, log1p, acos, acosh, asin, asinh, atan, atanh
-export exp, expm1, cos, cosh, sin, sinh, tan, tanh, gamma, lgamma, digamma, trigamma
-export max, min, range, prod, sum, any, all, mean
+export abs, sign, sqrt, ceil, floor, trunc, cumprod, cumsum, log, log10, log2, log1p, acos, acosh, asin, asinh, atan, atanh
+export exp, expm1, cos, cosh, sin, sinh, tan, tanh
+export max, min, range, prod, sum, any, all, mean, median
 export in
-export indexin, findin, median, findmin, findmax
+export indexin, findin, findmin, findmax
 export findin2
 
 # math
