@@ -25,23 +25,15 @@ export endtype
 
 # group_generics
 import Base: broadcast, map
-import Base: +, -, *, /, ^, .+, .-, .*, ./, .^, div, mod, fld, rem
-import Base: ==, >, <, !=, <=, >=, .==, .>, .<, .!=, .<=, .>=, &, |
-import Base: abs, sign, sqrt, ceil, floor, trunc, cumprod, cumsum, log, log10, log2, log1p, acos, acosh, asin, asinh, atan, atanh
-import Base: exp, expm1, cos, cosh, sin, sinh, tan, tanh
 import Statistics: max, min, range, prod, sum, any, all, mean, median
-import Base: in
-import Base: indexin, findin, findmin, findmax
-export .+, .-, .*, ./, .^, div, mod, fld, rem, ==, >, <, !=, <=, >=, .==, .>, .<, .!=, .<=, .>=, &, |
-export abs, sign, sqrt, ceil, floor, trunc, cumprod, cumsum, log, log10, log2, log1p, acos, acosh, asin, asinh, atan, atanh
-export exp, expm1, cos, cosh, sin, sinh, tan, tanh
-export max, min, range, prod, sum, any, all, mean, median
-export in
+import Base: in, indexin, findin, findmin, findmax
+import Base: range, prod, sum, any, all, eltype, unique, minimum, maximum, extrema, first, last, any, all
+export range, prod, sum, any, all, eltype, unique, minimum, maximum, extrema, first, last, any, all
+export in, max, min, range, prod, sum, any, all, mean, median
 export indexin, findin, findmin, findmax
-export findin2
 
 # math
-#import StatsBase: mode, countmap
+import StatsBase: mode, countmap
 export mode, countmap
 
 # ranges
