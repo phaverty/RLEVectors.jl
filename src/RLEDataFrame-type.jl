@@ -1,4 +1,3 @@
-const DFIndex = AxisArray{Int64,1,Vector{Int64},Tuple{AxisArrays.Axis{:row,Array{Symbol,1}}}}
 const ColumnIndex = Union{Symbol,Integer}
 
 """
@@ -16,7 +15,7 @@ z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4])
 """
 mutable struct RLEDataFrame <: AbstractDataFrame
     columns::Vector{RLEVector}
-    colindex::DFIndex
+    colindex::NamedTuple # FIXME: get length info in RLEDataFrame parametric type
     function RLEDataFrame(columns,colnames::Vector{Symbol})
         ncol = length(columns)
         nval = length(colnames)
@@ -30,7 +29,8 @@ mutable struct RLEDataFrame <: AbstractDataFrame
                 throw(ArgumentError("All incoming columns must be of equal length."))
             end
         end
-        new(columns, AxisArray(collect(1:ncol),colnames))
+        c = Tuple( Symbol(x) for x in colnames )
+        new(column, NamedTuple{c}(1:ncol))
     end
 end
 
@@ -38,7 +38,7 @@ nrow(x::RLEDataFrame) = length(x.columns[1])
 ncol(x::RLEDataFrame) = length(x.columns)
 index(x::RLEDataFrame) = x.colindex
 columns(x::RLEDataFrame) = x.columns
-Base.names(x::RLEDataFrame) = axisvalues(x.colindex)[1]
+Base.names(x::RLEDataFrame) = keys(x.colindex)
 
 function Base.show(io::IO, x::RLEDataFrame)
     t = typeof(x)
@@ -86,7 +86,7 @@ function Base.setindex!(x::RLEDataFrame, value::AbstractVector, j::Symbol)
     if j in names(x)
         columns(x)[index(x)[j]] = value
     else
-        x.colindex = merge(index(x), AxisArray( [length(x) + 1], [j] ) )
+        x.colindex = merge(index(x), NamedTuple{j}( Tuple(length(x) + 1) ))
         x.columns = push!(x.columns,value)
     end
     x

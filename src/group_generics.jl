@@ -24,23 +24,10 @@ indexin(x::RLEVector,y::RLEVector) = RLEVector( indexin(x.runvalues,y), x.runend
 indexin(x::RLEVector,y::AbstractVector) = RLEVector( indexin(x.runvalues,y), x.runends )
 indexin(x::AbstractVector,y::RLEVector) = Int[ i == 0 ? 0 : y.runends[i] for i in indexin(x,y.runvalues) ]
 
-findall(in(y::RLEVector), x) = findall(in(y.runvalues), x)
-function findall(in(y::RLEVector), x::RLEVector)
-  runs = findall(in(y.runvalues), x.runvalues)
-  re = x.runends
-  vcat( [ starts(x,i):re[i] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
-end
-
-function findall(in(y::UnitRange), x::RLEVector) # ambig fix
-  runs = findall(in(y), x.runvalues)
-  re = x.runends
-  vcat( [ starts(x,i):re[i] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
-end
-
-function findall(in(y), x::RLEVector)
-  runs = findall(in(y), x.runvalues)
-  re = x.runends
-  vcat( [ starts(x,i):re[i] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
+function findall(testfun::Function, x::RLEVector)
+      runs = findall(testfun, x.runvalues)
+      re = x.runends
+      vcat( [ starts(x,i):re[i] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
 function median(x::RLEVector)
@@ -58,11 +45,11 @@ function median(x::RLEVector)
 end
 
 function sum(x::RLEVector{T1,T2}) where {T1,T2}
-  rval = zero(T1)
-   @simd for i in 1:nrun(x)
-    @inbounds rval = rval + (x.runvalues[i] * widths(x, i))
-  end
-  return(rval)
+    rval = zero(T1)
+    @simd for i in 1:nrun(x)
+        @inbounds rval = rval + (x.runvalues[i] * widths(x, i))
+    end
+    return(rval)
 end
 
 mean(x::RLEVector) = rval = sum(x) / length(x)

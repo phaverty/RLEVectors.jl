@@ -247,7 +247,7 @@ function iterate(x::RLEEachRangeIterator, state = 1)
     newstate = state + 1
     first = starts(x.rle,state)
     last = ends(x.rle,state)
-    ( (_values(x.rle)[state];, first:last ), newstate )
+    ( (_values(x.rle)[state], first:last ), newstate )
 end
 
 ## New style iterator

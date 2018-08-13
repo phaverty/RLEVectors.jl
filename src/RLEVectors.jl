@@ -29,8 +29,8 @@ import Statistics: max, min, range, prod, sum, any, all, mean, median
 import Base: in, indexin, findin, findmin, findmax
 import Base: range, prod, sum, any, all, eltype, unique, minimum, maximum, extrema, first, last, any, all
 export range, prod, sum, any, all, eltype, unique, minimum, maximum, extrema, first, last, any, all
-export in, max, min, range, prod, sum, any, all, mean, median
-export indexin, findin, findmin, findmax
+export max, min, range, prod, sum, any, all, mean, median
+export indexin, findin, findmin, findmax, findall, in
 
 # math
 import StatsBase: mode, countmap

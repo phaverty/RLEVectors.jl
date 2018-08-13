@@ -29,7 +29,7 @@ function ree(x::AbstractVector)
   xlen < 2 && return( (x,[xlen]) )
   nrun = numruns(x)
   runvalues = similar(x,nrun)
-  runends = Vector{Int}(nrun)
+  runends = Vector{Int}(undef, nrun)
   run = 1
   current = x[1]
   @inbounds for i in 2:xlen
