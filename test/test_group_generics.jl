@@ -45,12 +45,12 @@ x = RLEVector(vec)
 @test findmax(RLEVector([1,2,3,4,1,1])) == findmax([1,2,3,4,1,1])
 
 # indexin
-#foo = IntegerRle( collect(1:1000), collect(5:5:5000))
-#x = RLEVector([2,2,4,4,3,3])
-#y = RLEVector([0,0,0,3,3,3,4,4])
-#@test indexin(x,y) == RLEVector([0,8,6],[2,4,6])
-#@test indexin(x,collect(3:11)) == RLEVector([0,2,1],[2,4,6])
-#@test indexin([200,200,1,1,5,5],foo) == [1000,1000,5,5,25,25]
+foo = IntegerRle( collect(1:1000), collect(5:5:5000))
+x = RLEVector([2,2,4,4,3,3])
+y = RLEVector([0,0,0,3,3,3,4,4])
+@test indexin(x,y) == indexin(collect(x), collect(y))
+@test indexin(x,collect(3:11)) == indexin(collect(x),collect(3:11))
+@test indexin([200,200,1,1,5,5],foo) == indexin([200,200,1,1,5,5],foo)
 
 # findin
 @test findall(in(RLEVector(collect(3:10))), RLEVector([1,1,2,2,3,3])) == collect(5:6)

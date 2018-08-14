@@ -20,9 +20,16 @@ for op in [:findmin, :findmax]
   end
 end
 
-indexin(x::RLEVector,y::RLEVector) = RLEVector( indexin(x.runvalues,y), x.runends)
-indexin(x::RLEVector,y::AbstractVector) = RLEVector( indexin(x.runvalues,y), x.runends )
-indexin(x::AbstractVector,y::RLEVector) = Int[ i == 0 ? 0 : y.runends[i] for i in indexin(x,y.runvalues) ]
+function indexin(a, b::RLEVector)
+    inds = starts(b)
+    bdict = Dict{eltype(b),eltype(inds)}()
+    for (val, ind) in zip(b.runvalues, inds)
+        get!(bdict, val, ind)
+    end
+    return Union{eltype(inds), Nothing}[
+        get(bdict, i, nothing) for i in a
+    ]
+end
 
 function findall(testfun::Function, x::RLEVector)
       runs = findall(testfun, x.runvalues)
