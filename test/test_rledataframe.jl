@@ -44,8 +44,8 @@ using RLEVectors
     @test z == RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([7,2,1]), c=RLEVector([3,2,1]) )
     z[:b] = RLEVector([7,2,1])
     @test z == RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([7,2,1]), c=RLEVector([3,2,1]) )
-#    z[:d] = RLEVector([2,1,2])
-#    @test z == RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([7,2,1]), c=RLEVector([3,2,1]), d=RLEVector([2,1,2]) )
+    z[:d] = RLEVector([2,1,2])
+    @test z == RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([7,2,1]), c=RLEVector([3,2,1]), d=RLEVector([2,1,2]) )
     @test_throws ArgumentError z[1] = RLEVector([2])
     @test_throws BoundsError z[14] = RLEVector([2,2,1])
     @test_throws ArgumentError z[:a] = RLEVector([2,4,5,4,3,4])
@@ -54,7 +54,7 @@ using RLEVectors
     z[ 1:2, :b ] = [5,5]
     @test z == RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([5,5,4]), c=RLEVector([3,2,1]) )
 
-#    z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
+    z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
 #    z[ 1:2, [2] ] = [5,5]
 #    @test z == RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([5,5,4]), c=RLEVector([3,2,1]) )
 
