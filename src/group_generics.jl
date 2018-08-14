@@ -30,6 +30,12 @@ function findall(testfun::Function, x::RLEVector)
       vcat( [ starts(x,i):re[i] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
 end
 
+function findall(pred::Base.Fix2{typeof(in),T} where T, x::RLEVector)
+      runs = findall(pred, x.runvalues)
+      re = x.runends
+      vcat( [ starts(x,i):re[i] for i in runs ]... ) # hashing in above findin takes the vast majority of the time, don't sweat the time here
+end
+
 function median(x::RLEVector)
   len = length(x)
   len <= 2 && return(middle(x.runvalues))
