@@ -13,10 +13,10 @@ y = RLEDataFrame( [RLEVector([5])],[:a] )
 z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4])
 ```
 """
-mutable struct RLEDataFrame <: AbstractDataFrame
+mutable struct RLEDataFrame# <: AbstractDataFrame
     columns::Vector{RLEVector}
-    colindex::NamedTuple # FIXME: get length info in RLEDataFrame parametric type
-    function RLEDataFrame(columns,colnames::Vector{Symbol})
+    colindex::NamedTuple
+    function RLEDataFrame(columns, colnames)
         ncol = length(columns)
         nval = length(colnames)
         if ncol != nval
@@ -30,7 +30,8 @@ mutable struct RLEDataFrame <: AbstractDataFrame
             end
         end
         c = Tuple( Symbol(x) for x in colnames )
-        new(column, NamedTuple{c}(1:ncol))
+        colindex = NamedTuple{c}(1:ncol)
+        new(columns, colindex)
     end
 end
 
@@ -45,7 +46,7 @@ function Base.show(io::IO, x::RLEDataFrame)
     show(io, t)
     println()
     for (c,v) in zip(names(x),columns(x))
-        println(io,"Column: $c")
+       println(io,"Column: $c")
         println(io,v)
     end
 end

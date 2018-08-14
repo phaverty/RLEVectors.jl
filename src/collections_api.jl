@@ -1,4 +1,4 @@
-### Vector/Collections API
+## Vector/Collections API
 
 function append!(x::RLEVector, y::RLEVector)
     last_x_run = nrun(x)

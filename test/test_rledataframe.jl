@@ -2,7 +2,6 @@ module TestRLEDF
 
 using Test
 using RLEVectors
-using AxisArrays
 using DataFrames
 
 @testset begin

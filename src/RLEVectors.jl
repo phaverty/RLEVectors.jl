@@ -26,7 +26,7 @@ export endtype
 # group_generics
 import Base: broadcast, map
 import Statistics: max, min, range, prod, sum, any, all, mean, median
-import Base: in, indexin, findin, findmin, findmax
+import Base: in, indexin, findin, findmin, findmax, findall
 import Base: range, prod, sum, any, all, eltype, unique, minimum, maximum, extrema, first, last, any, all
 export range, prod, sum, any, all, eltype, unique, minimum, maximum, extrema, first, last, any, all
 export max, min, range, prod, sum, any, all, mean, median
