@@ -48,11 +48,11 @@ function ind2runcontext(rle::RLEVector, i::Integer)
 end
 
 function ind2runcontext(rle::RLEVector, i::UnitRange)
-  s = start(i)
+  s = first(i)
   e = last(i)
   n = length(rle)
   runs = ind2run(rle, i)
-  left_run = start(runs)
+  left_run = first(runs)
   right_run = last(runs)
   runend = rle.runends[right_run]
   ind_in_run = left_run == 1 ? s : s - rle.runends[left_run - 1]
