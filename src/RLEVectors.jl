@@ -1,6 +1,5 @@
 module RLEVectors
 
-using DataFrames
 using StatsBase
 using RCall
 using Statistics
@@ -10,6 +9,7 @@ export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirs
 import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect, isequal, values, copy
 
 # collections
+import Base.==
 import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, empty!, lastindex, any, all, in, intersect, append!
 export       eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, growat!, empty!, lastindex, any, all, in, intersect, append!
 export deleterun!, decrement_run!
@@ -49,7 +49,7 @@ import Base: sort, sort!, issorted, reverse, reverse!, sortperm, Algorithm
 export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 
 # data frames
-import DataFrames: AbstractDataFrame, DataFrame, Index, head, tail, index, columns, nrow, ncol
+#import DataFrames: AbstractDataFrame, DataFrame, Index, head, tail, index, columns, nrow, ncol
 export RLEDataFrame, nrow, ncol, columns, index, names
 export rowSums, rowMeans, rowMedians, colSums, colMeans, colMedians
 

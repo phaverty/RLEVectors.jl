@@ -13,10 +13,10 @@ y = RLEDataFrame( [RLEVector([5])],[:a] )
 z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4])
 ```
 """
-mutable struct RLEDataFrame# <: AbstractDataFrame
-    columns::Vector{RLEVector}
+mutable struct RLEDataFrame{T1,T2<:Integer}
+    columns::Vector{RLEVector{T1,T2}}
     colindex::NamedTuple
-    function RLEDataFrame(columns, colnames)
+    function RLEDataFrame{T1,T2}(columns::Vector{RLEVector{T1,T2}}, colnames::Vector{Symbol}) where {T1,T2}
         ncol = length(columns)
         nval = length(colnames)
         if ncol != nval
@@ -35,11 +35,14 @@ mutable struct RLEDataFrame# <: AbstractDataFrame
     end
 end
 
+==(x::RLEDataFrame, y::RLEDataFrame) = x.colindex == y.colindex && x.columns == y.columns
+
 nrow(x::RLEDataFrame) = length(x.columns[1])
 ncol(x::RLEDataFrame) = length(x.columns)
+Base.length(x::RLEDataFrame) = length(x.columns)
 index(x::RLEDataFrame) = x.colindex
 columns(x::RLEDataFrame) = x.columns
-Base.names(x::RLEDataFrame) = keys(x.colindex)
+Base.names(x::RLEDataFrame) = collect(keys(x.colindex))
 
 function Base.show(io::IO, x::RLEDataFrame)
     t = typeof(x)
@@ -51,20 +54,24 @@ function Base.show(io::IO, x::RLEDataFrame)
     end
 end
 
+function RLEDataFrame(cols, colnames)
+    f = cols[1]
+    RLEDataFrame{eltype(f.runvalues),eltype(f.runends)}(cols, colnames)
+end
+
 function RLEDataFrame(; kwargs...)
     cnames  = [k for (k,v) in kwargs]
     cvalues = [v for (k,v) in kwargs]
     RLEDataFrame(cvalues,cnames)
 end
 
-Base.copy(x::RLEDataFrame) = RLEDataFrame( copy(columns(x)), copy(names(x)) )
-
-### Get/set
-## Just columns
+## Get/set
+# Just columns
 Base.getindex(x::RLEDataFrame,j::Colon) = copy(x)
 Base.getindex(x::RLEDataFrame,j::ColumnIndex) = columns(x)[index(x)[j]]
 function Base.getindex(x::RLEDataFrame,j::AbstractArray)
-    inds = index(x)[j]
+    ind = index(x)
+    inds = [ ind[x] for x in j ]
     RLEDataFrame( columns(x)[inds], names(x)[inds] )
 end
 
@@ -110,6 +117,9 @@ function Base.setindex!(x::RLEDataFrame, value, i, j)
 end
 Base.setindex!(x::RLEDataFrame, value, i::Integer, j) = setindex!(x,value,[i],j)
 Base.setindex!(x::RLEDataFrame, value, i::Integer, j::ColumnIndex) = setindex!(x.columns[j],value,i)
+
+## Conversion
+Base.convert(Matrix, x::RLEDataFrame) = hcat(map(collect,x.columns)...)
 
 ### Familiar operations over rows or columns from R
 
