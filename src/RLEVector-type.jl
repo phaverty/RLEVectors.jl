@@ -90,7 +90,7 @@ const RLEVectorList{T1,T2} = Vector{ RLEVector{T1,T2} }
 @doc (@doc RLEVector) FloatRle,  IntegerRle, BoolRle, StringRle, RLEVectorList
 
 # similar
-function similar(x::RLEVector, element_type::Type, dims::Dims)
+function Base.similar(x::RLEVector, element_type::Type, dims::Dims)
     length(dims) != 1 && ArgumentError("RLEVectors can only have one dimension.")
     len = dims[1]
     if len == 0

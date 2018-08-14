@@ -68,8 +68,8 @@ end
 
 Base.copy(x::RLEDataFrame) = RLEDataFrame(copy(x.columns), names(x))
 
-## Get/set
-# Just columns
+### Get/set
+## Just columns
 Base.getindex(x::RLEDataFrame,j::Colon) = copy(x)
 Base.getindex(x::RLEDataFrame,j::ColumnIndex) = columns(x)[index(x)[j]]
 function Base.getindex(x::RLEDataFrame,j::AbstractArray)
@@ -110,6 +110,7 @@ function Base.getindex(x::RLEDataFrame, i, j)
     cols = [ x.columns[j_ind][i] for j_ind in j_inds ]
     RLEDataFrame( cols, names(x)[j_inds] )
 end
+Base.getindex(x::RLEDataFrame, i::Integer, j::ColumnIndex) = x[j][i]
 Base.getindex(x::RLEDataFrame, i::Integer, j) = x[ [i], j ]
 Base.getindex(x::RLEDataFrame, i, j::ColumnIndex) = x[j][i]
 
