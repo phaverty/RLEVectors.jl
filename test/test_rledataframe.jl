@@ -16,8 +16,6 @@ using RLEVectors
     @test isa(z,RLEDataFrame)
     @test length(z) == 3
     @test names(z) == [:a, :b, :c]
-    #@test x == copy(x)
-    #@test index(z) == AxisxArray(collect(1:3),[:a,:b,:c])
     @test columns(z) == [ RLEVector([5,2,2]), RLEVector([4,4,4]), RLEVector([3,2,1]) ]
     @test names(z) == [:a,:b,:c]
     @test_throws ArgumentError RLEDataFrame( [RLEVector([1])], [:a,:b] )
@@ -30,11 +28,11 @@ using RLEVectors
     @test z[:c] == RLEVector([3,2,1])
     @test z[2:3] == RLEDataFrame( b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
     @test z[ [:b,:c] ] == RLEDataFrame( b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
-#    @test z[ [2], [:b,:c] ] == RLEDataFrame( b=RLEVector([4]), c=RLEVector([2]) )
-#    @test z[ 2, [:b,:c] ] == RLEDataFrame( b=RLEVector([4]), c=RLEVector([2]) )
-#    @test z[2,3] == 2
+    @test z[ [2], [:b,:c] ] == RLEDataFrame( b=RLEVector([4]), c=RLEVector([2]) )
+    @test z[ 2, [:b,:c] ] == RLEDataFrame( b=RLEVector([4]), c=RLEVector([2]) )
+    @test z[2,3] == 2
     z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
-#    @test z[1,3] == 3
+    @test z[1,3] == 3
 
     z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
     z[2] = RLEVector([9,8,9])
@@ -55,16 +53,16 @@ using RLEVectors
     @test z == RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([5,5,4]), c=RLEVector([3,2,1]) )
 
     z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
-#    z[ 1:2, [2] ] = [5,5]
-#    @test z == RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([5,5,4]), c=RLEVector([3,2,1]) )
+    z[ 1:2, [2] ] = [5,5]
+    @test z == RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([5,5,4]), c=RLEVector([3,2,1]) )
 
     z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
     z[1,3] = 12
     @test z == RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([12,2,1]) )
 
-#    z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
-#    z[1,[2,3]] .= 12
-#    @test z == RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([12,4,4]), c=RLEVector([12,2,1]) )
+    z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
+    z[1,[2,3]] = 12
+    @test z == RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([12,4,4]), c=RLEVector([12,2,1]) )
 
     z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
     #@test rowMeans(z) == [7,8/3,7/3]

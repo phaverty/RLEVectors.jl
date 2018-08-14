@@ -43,6 +43,7 @@ Base.length(x::RLEDataFrame) = length(x.columns)
 index(x::RLEDataFrame) = x.colindex
 columns(x::RLEDataFrame) = x.columns
 Base.names(x::RLEDataFrame) = collect(keys(x.colindex))
+Base.size(x::RLEDataFrame) = (nrow(x), ncol(x))
 
 function Base.show(io::IO, x::RLEDataFrame)
     t = typeof(x)
@@ -64,6 +65,8 @@ function RLEDataFrame(; kwargs...)
     cvalues = [v for (k,v) in kwargs]
     RLEDataFrame(cvalues,cnames)
 end
+
+Base.copy(x::RLEDataFrame) = RLEDataFrame(copy(x.columns), names(x))
 
 ## Get/set
 # Just columns
@@ -94,7 +97,7 @@ function Base.setindex!(x::RLEDataFrame, value::AbstractVector, j::Symbol)
     if j in names(x)
         columns(x)[index(x)[j]] = value
     else
-        x.colindex = merge(index(x), NamedTuple{(j)}( Tuple(length(x) + 1) ))
+        x.colindex = merge(index(x), NamedTuple{(j,)}( Tuple(length(x) + 1) ))
         x.columns = push!(x.columns,value)
     end
     x
@@ -102,21 +105,26 @@ end
 
 ## with rows
 function Base.getindex(x::RLEDataFrame, i, j)
-    j_inds = index(x)[j]
+    ind = index(x)
+    j_inds = [ ind[x] for x in j ]
     cols = [ x.columns[j_ind][i] for j_ind in j_inds ]
     RLEDataFrame( cols, names(x)[j_inds] )
 end
 Base.getindex(x::RLEDataFrame, i::Integer, j) = x[ [i], j ]
-Base.getindex(x::RLEDataFrame, i::Integer, j::ColumnIndex) = x[j][i]
+Base.getindex(x::RLEDataFrame, i, j::ColumnIndex) = x[j][i]
 
 function Base.setindex!(x::RLEDataFrame, value, i, j)
-    for j_ind in index(x)[j]
+    ind = index(x)
+    j_inds = [ ind[x] for x in j ]
+    for j_ind in j_inds
         x.columns[j_ind][i] = value
     end
     x
 end
-Base.setindex!(x::RLEDataFrame, value, i::Integer, j) = setindex!(x,value,[i],j)
-Base.setindex!(x::RLEDataFrame, value, i::Integer, j::ColumnIndex) = setindex!(x.columns[j],value,i)
+function Base.setindex!(x::RLEDataFrame, value, i, j::ColumnIndex)
+    x[j][i] = value
+end
+
 
 ## Conversion
 Base.convert(Matrix, x::RLEDataFrame) = hcat(map(collect,x.columns)...)
