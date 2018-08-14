@@ -240,7 +240,7 @@ struct RLEEachRangeIterator{T1,T2}
 end
 eachrange(x::RLEVector) = RLEEachRangeIterator(x)
 length(x::RLEEachRangeIterator) = nrun(x.rle)
-eltype(::RLEEachRangeIterator{T1,T2}) where {T1,T2} = Tuple{T2,T2}
+eltype(::RLEEachRangeIterator{T1,T2}) where {T1,T2} = Tuple{T1,UnitRange{T2}}
 
 function iterate(x::RLEEachRangeIterator, state = 1)
     state > nrun(x.rle) && return nothing

@@ -240,11 +240,11 @@ x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
 # eachrange iterator
 x = RLEVector([1, 1, 2, 2, 7, 12])
 y = collect(eachrange(x))
-#@test y[1] == (1,1:2)
-#@test y[2] == (2,3:4)
-#@test y[3] == (7,5:5)
-#@test y[4] == (12,6:6)
-#@test length(eachrange(x)) == 4
+@test y[1] == (1,1:2)
+@test y[2] == (2,3:4)
+@test y[3] == (7,5:5)
+@test y[4] == (12,6:6)
+@test length(eachrange(x)) == 4
 
 # iterate
 y = [1, 1, 2, 2, 7, 12]
