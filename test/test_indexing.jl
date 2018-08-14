@@ -217,7 +217,7 @@ x[4:-1:2] = [5,6,7]
 
 # Colon
 x = RLEVectors.RLEVector([1,2,3,4],[2,4,6,8])
-@test x[:] == x[1:end]
+@test x[:] == x
 x[:] .= 4
 @test x == RLEVector([4 for i in 1:8])
 
