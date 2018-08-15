@@ -95,9 +95,10 @@ function Base.similar(x::RLEVector, element_type::Type, dims::Dims)
     len = dims[1]
 #    if len == 0
 #        rle = RLEVector(Vector{element_type}(undef, 0), similar(x.runends, 0))
-#    else
-        rle = RLEVector(zeros(element_type, 1), similar(x.runends, 1))
-        rle.runends[1] = len
+    #    else
+    re = similar(x.runends,1)
+    rle = RLEVector(zeros(element_type, 1), re)
+    rle.runends[1] = len
 #    end
     rle
 end

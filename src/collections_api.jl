@@ -9,8 +9,8 @@ function append!(x::RLEVector, y::RLEVector)
     new_nrun = last_x_run + nrun(y)
     resize!(x.runvalues, new_nrun)
     resize!(x.runends, new_nrun)
-    x.runvalues[(last_x_run + 1:end)] = y.runvalues
-    x.runends[(last_x_run + 1:end)] = y.runends .+ length_x
+    x.runvalues[(last_x_run .+ 1:end)] = y.runvalues
+    x.runends[(last_x_run .+ 1:end)] = y.runends .+ length_x
     x
 end
 
