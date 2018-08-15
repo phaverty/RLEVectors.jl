@@ -34,11 +34,6 @@ y = RLEVector([4,4,5,5,6,6])
 
 @test RLEVector(5,3) == RLEVector([5,5,5])
 
-# Creating
-y = RLEVector([1.0,1,2,2,3,3,3])
-@test similar(y) == RLEVector([0.0],[7])
-@test similar(y,4) == RLEVector([0.0],[4])
-
 # Conversion
 x = RLEVector([4,4,5,5,6,7,8])
 @test convert(Vector,x) == [4,4,5,5,6,7,8]

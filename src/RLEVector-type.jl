@@ -93,17 +93,8 @@ const RLEVectorList{T1,T2} = Vector{ RLEVector{T1,T2} }
 Base.copy(x::RLEVector) = RLEVector(copy(x.runvalues), copy(x.runends))
 
 # similar
-function Base.similar(x::RLEVector, element_type::Type, dims::Dims)
-    length(dims) != 1 && ArgumentError("RLEVectors can only have one dimension.")
-    len = dims[1]
-#    if len == 0
-#        rle = RLEVector(Vector{element_type}(undef, 0), similar(x.runends, 0))
-    #    else
-    re = similar(x.runends,1)
-    rle = RLEVector(zeros(element_type, 1), re)
-    rle.runends[1] = len
-#    end
-    rle
+function Base.similar(x::RLEVector)
+    copy(x)
 end
 
 # show
