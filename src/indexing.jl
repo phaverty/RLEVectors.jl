@@ -71,6 +71,10 @@ function Base.getindex(rle::RLEVector, i::Int)
     rle.runvalues[run]
 end
 
+function Base.getindex(rle::RLEVector, i::Colon)
+    copy(rle)
+end
+
 function Base.setindex!(rle::RLEVector, value, i::Int)
   run = ind2run(rle,i)
   runvalue = rle.runvalues[run]
