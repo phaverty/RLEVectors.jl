@@ -6,7 +6,7 @@ using Statistics
 
 # RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar, starts, widths, widths!, ends, values
-import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect, isequal, values, copy
+import Base: show, length, size, first, last, step, convert, similar, collect, isequal, values, copy
 
 # collections
 import Base.==
@@ -26,7 +26,7 @@ export endtype
 # group_generics
 import Base: broadcast, map
 import Statistics: max, min, range, prod, sum, any, all, mean, median
-import Base: in, indexin, findin, findmin, findmax, findall
+import Base: in, indexin, findmin, findmax, findall
 import Base: range, prod, sum, any, all, eltype, unique, minimum, maximum, extrema, first, last, any, all
 export range, prod, sum, any, all, eltype, unique, minimum, maximum, extrema, first, last, any, all
 export max, min, range, prod, sum, any, all, mean, median
