@@ -1,4 +1,4 @@
-summary_group = [:range, :any, :all, :eltype, :unique, :minimum, :maximum, :extrema, :first, :last, :any, :all]
+summary_group = [:range, :any, :all, :eltype, :unique, :minimum, :maximum, :extrema, :first, :last]
 
 for op in summary_group
     @eval begin
