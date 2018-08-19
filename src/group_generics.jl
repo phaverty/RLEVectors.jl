@@ -1,4 +1,13 @@
-const summary_group =[:range, :any, :all, :eltype, :unique, :minimum, :maximum, :extrema, :first, :last, :any, :all]
+summary_group = [:range, :any, :all, :eltype, :unique, :minimum, :maximum, :extrema, :first, :last, :any, :all]
+
+for op in summary_group
+    @eval begin
+        println($op)
+        function ($op)(x::RLEVector)
+            ($op)(x.runvalues)
+        end
+    end
+end
 
 Base.broadcast(f, x::RLEVector, y...) = RLEVector( [f(el,y...) for el in x.runvalues], ends(x) )
 function Base.broadcast(f, x::RLEVector, y::RLEVector)

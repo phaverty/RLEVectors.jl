@@ -157,3 +157,20 @@ y = RLEVector([3,1,2,2,3,3])
 append!(x,y)
 collect(x)
 exit()
+exit()
+bdf
+bdf
+bdf[:,1]
+bdf[1:5,]
+timings
+bdf[:,1]
+bdf[:,2]
+bdf[:,3]
+bdf[:,4]
+timings
+timings
+timings[:,11:20]
+x
+x = RLEVector([1,2,3,3])
+@which maximum(x)
+exit()

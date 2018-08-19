@@ -2,7 +2,6 @@ module RLEVectors
 
 using StatsBase
 using RCall
-using Statistics
 
 # RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar, starts, widths, widths!, ends, values
@@ -10,8 +9,8 @@ import Base: show, length, size, first, last, step, convert, similar, collect, i
 
 # collections
 import Base.==
-import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, empty!, lastindex, any, all, in, intersect, append!
-export       eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, growat!, empty!, lastindex, any, all, in, intersect, append!
+import Base: eltype, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, empty!, lastindex, intersect, append!
+export       eltype, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, growat!, empty!, lastindex, intersect, append!
 export deleterun!, decrement_run!
 
 # indexing
@@ -25,12 +24,10 @@ export endtype
 
 # group_generics
 import Base: broadcast, map
-import Statistics: max, min, range, prod, sum, any, all, mean, median
 import Base: in, indexin, findmin, findmax, findall
-import Base: range, prod, sum, any, all, eltype, unique, minimum, maximum, extrema, first, last, any, all
-export range, prod, sum, any, all, eltype, unique, minimum, maximum, extrema, first, last, any, all
-export max, min, range, prod, sum, any, all, mean, median
-export indexin, findin, findmin, findmax, findall, in
+import Base: range, any, all, sum, mean, median, eltype, unique, minimum, maximum, extrema, first, last, any, all
+export range, any, all, eltype, sum, mean, median, unique, minimum, maximum, extrema, first, last, any, all
+export in, indexin, findmin, findmax, findall
 
 # math
 import StatsBase: mode, countmap
