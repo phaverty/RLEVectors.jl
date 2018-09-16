@@ -17,7 +17,7 @@ export deleterun!, decrement_run!
 # indexing
 import Base: getindex, setindex!
 #import Base: iterate
-export getindex, setindex!, ind2run, setrun!, ind2runcontext, head, tail, RLERangesIterator, eachrange, tapply, iterate
+export getindex, setindex!, ind2run, setrun!, ind2runcontext, RLERangesIterator, eachrange, tapply, iterate
 
 # describe
 import Base: isempty
@@ -57,7 +57,7 @@ import Base: sort, sort!, issorted, reverse, reverse!, sortperm, Algorithm
 export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 
 # data frames
-import DataFrames: AbstractDataFrame, DataFrame, Index, head, tail, index, columns, nrow, ncol
+import DataFrames: AbstractDataFrame, DataFrame, Index, index, columns, nrow, ncol
 export RLEDataFrame, nrow, ncol, columns, index, names
 export rowSums, rowMeans, rowMedians, colSums, colMeans, colMedians
 
