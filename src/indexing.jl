@@ -227,15 +227,6 @@ function Base.setindex!(x::RLEVector, value::RLEVector, indices::UnitRange)
     x
 end
 
-## Getter shortcuts
-function head(x::RLEVector,l::Integer=6)
-    collect(x[ 1:l ])
-end
-
-function tail(x::RLEVector,l::Integer=6)
-    collect( x[ length(x)-(l-1):end ] )
-end
-
 ## Iterators
 # Iterator for ranges based on RLE e.g. (value, start:end)
 # FIXME: How do I do this in 0.7?

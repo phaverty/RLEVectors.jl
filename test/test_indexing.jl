@@ -230,13 +230,6 @@ x = RLEVector([1,2],[2,4])
 x[ [true,true,true,false] ] = [4,5,6]
 @test x == RLEVector([4,5,6,2])
 
-# head and tail
-x = RLEVector([1,2,3,4],[2,4,6,8])
-@test head(x) == [1,1,2,2,3,3]
-@test head(x,3) == [1,1,2]
-@test tail(x) == [2,2,3,3,4,4]
-@test tail(x,3) == [3,4,4]
-
 # eachrange iterator
 x = RLEVector([1, 1, 2, 2, 7, 12])
 y = collect(eachrange(x))
