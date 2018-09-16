@@ -3,6 +3,7 @@ module TestGroupGenerics
 using Test
 using RLEVectors
 using Compat
+
 @testset begin
 
 # compare group
@@ -13,8 +14,8 @@ x = RLEVector(vec)
 # math group
 vec = [1,1,2,2,4,4]
 x = RLEVector(vec)
-@test x + 5 == 5 + x
-@test x + 4 == RLEVector([5,5,6,6,8,8])
+@test x .+ 5 == 5 .+ x
+@test x .+ 4 == RLEVector([5,5,6,6,8,8])
 @test div.(vec,2) == collect(div.(x,2))
 @test median(RLEVector([1,2,3,2,1,5,4])) == median([1,2,3,2,1,5,4])
 @test median(RLEVector([1,2,3,2,1,5])) == median([1,2,3,2,1,5])
@@ -23,10 +24,10 @@ x = RLEVector(vec)
 @test sum(RLEVector([4, 4, 5, 5, 6, 6])) == 30
 @test mean(RLEVector([4, 4, 5, 5, 6, 6])) == 5.0
 @test x .^ 2 == RLEVector( [1, 1, 4, 4, 16, 16] )
-@test x .^ 3 == RLEVector( [1, 1, 8, 8, 64, 64] )    
+@test x .^ 3 == RLEVector( [1, 1, 8, 8, 64, 64] )
 @test x + x == RLEVector( [2, 2, 4, 4, 8, 8] )
 @test x - x == RLEVector( [0, 0, 0, 0, 0, 0] )
-rle = RLEVector( [4, 4, 9, 9, 16, 16] )    
+rle = RLEVector( [4, 4, 9, 9, 16, 16] )
 @test sqrt.(rle) == RLEVector( [2, 2, 3, 3, 4, 4] )
 
 # math on bools
@@ -36,9 +37,9 @@ x = RLEVector(vec)
 @test x .+ false == x
 vec = [1,1,2,2,4,4]
 x = RLEVector(vec)
-@test x + true == x + 1
-@test x + false == x
-    
+@test x .+ true == x .+ 1
+@test x .+ false == x
+
 # findmax, findmin
 @test findmin(RLEVector([1,2,3,4,1,1])) == findmin([1,2,3,4,1,1])
 @test findmax(RLEVector([1,2,3,4,1,1])) == findmax([1,2,3,4,1,1])
@@ -47,9 +48,9 @@ x = RLEVector(vec)
 foo = IntegerRle( collect(1:1000), collect(5:5:5000))
 x = RLEVector([2,2,4,4,3,3])
 y = RLEVector([0,0,0,3,3,3,4,4])
-@test indexin(x,y) == RLEVector([0,8,6],[2,4,6])
-@test indexin(x,collect(3:11)) == RLEVector([0,2,1],[2,4,6])
-@test indexin([200,200,1,1,5,5],foo) == [1000,1000,5,5,25,25]
+@test indexin(x,y) == indexin(collect(x), collect(y))
+@test indexin(x,collect(3:11)) == indexin(collect(x),collect(3:11))
+@test indexin([200,200,1,1,5,5],foo) == indexin([200,200,1,1,5,5],foo)
 
 # findin
 @test findall(in(RLEVector(collect(3:10))), RLEVector([1,1,2,2,3,3])) == collect(5:6)
@@ -60,7 +61,7 @@ y = RLEVector([0,0,0,3,3,3,4,4])
 # in
 @test in(3, RLEVector( [ 1,2,2,3 ] )) == true
 @test in(4, RLEVector( [ 1,2,2,3 ] )) == false
-@test setdiff( Set([1,2,3,4,5]), RLEVector([1,1,2,2,4,4,5,5]) ) == [3]
+@test setdiff( Set([1,2,3,4,5]), RLEVector([1,1,2,2,4,4,5,5]) ) == Set([3])
 
 end # testset
 

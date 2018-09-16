@@ -2,6 +2,8 @@ using RLEVectors
 using DataFrames
 using CSV
 
+results_file = "/Users/phaverty/BioJulia/dev/RLEVectors/benchmark/rle.timings.csv"
+
 macro timeit(ex)
 # like @time, but returning the timing rather than the computed value
   return quote
@@ -25,7 +27,7 @@ timings[:indexing] = @timeit foo[100]
 timings[:range_indexing] = @timeit foo[801:900]
 timings[:setting] = @timeit foo[800] = 5
 timings[:range_setting] = @timeit foo[801:900] = 1:100
-timings[:scalar_add] = @timeit foo + 4
+timings[:scalar_add] = @timeit broadcast(+,foo,4)
 timings[:length] = @timeit length(foo)
 timings[:nrun] = @timeit nrun(foo)
 timings[:mean] = @timeit mean(foo)
@@ -33,14 +35,14 @@ timings[:max] = @timeit maximum(foo)
 timings[:width] = @timeit rwidth(foo)
 timings[:last] = @timeit rlast(foo)
 timings[:first] = @timeit rfirst(foo)
-timings[:add_two_rles] = @timeit foo + foo
+timings[:add_two_rles] = @timeit broadcast(+,foo,foo)
 timings[:disjoin] = @timeit disjoin(foo.runends,foo.runends)
-timings[:which] = @timeit findin(foo,[800,200,357])
+timings[:which] = @timeit findall(in(foo),[800,200,357])
 timings[:scalar_less] = @timeit broadcast(<,foo,3)
 timings[:median] = @timeit median(foo)
 timings[:which_max] = @timeit findmax(foo)
 
-bdf = CSV.read("/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/rle.timings.csv",header=true);
+bdf = CSV.read(results_file,header=true);
 
 for n in names(timings)
   if !(n in names(bdf))
@@ -50,8 +52,7 @@ end
 
 bdf = vcat(bdf,timings)
 
-CSV.write( "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/rle.timings.csv",
-             bdf, header=true)
+CSV.write(results_file, bdf, header=true)
 
 jdf = timings
 rdf = bdf[ bdf[:language] .== "R",:];

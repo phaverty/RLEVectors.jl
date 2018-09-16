@@ -53,7 +53,7 @@ function disjoin(x::Vector,  y::Vector)
     nrun = disjoin_length(x, y)
     i = length(x)
     j = length(y)
-    runends = Array{promote_type(eltype(x), eltype(y))}(nrun)
+    runends = Array{promote_type(eltype(x), eltype(y))}(undef,nrun)
     @inbounds while true
         xi = x[i]
         yj = y[j]

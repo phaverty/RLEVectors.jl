@@ -2,8 +2,6 @@ module TestRLEDF
 
 using Test
 using RLEVectors
-using AxisArrays
-using DataFrames
 
 @testset begin
 
@@ -18,8 +16,6 @@ using DataFrames
     @test isa(z,RLEDataFrame)
     @test length(z) == 3
     @test names(z) == [:a, :b, :c]
-    @test x == copy(x)
-    @test index(z) == AxisArray(collect(1:3),[:a,:b,:c])
     @test columns(z) == [ RLEVector([5,2,2]), RLEVector([4,4,4]), RLEVector([3,2,1]) ]
     @test names(z) == [:a,:b,:c]
     @test_throws ArgumentError RLEDataFrame( [RLEVector([1])], [:a,:b] )

@@ -48,11 +48,11 @@ function ind2runcontext(rle::RLEVector, i::Integer)
 end
 
 function ind2runcontext(rle::RLEVector, i::UnitRange)
-  s = start(i)
+  s = first(i)
   e = last(i)
   n = length(rle)
   runs = ind2run(rle, i)
-  left_run = start(runs)
+  left_run = first(runs)
   right_run = last(runs)
   runend = rle.runends[right_run]
   ind_in_run = left_run == 1 ? s : s - rle.runends[left_run - 1]
@@ -61,7 +61,7 @@ end
 
 ## Just enough for AbstractArray
 Base.IndexStyle(::Type{<:RLEVector}) = IndexLinear()
-Base.endof(rle::RLEVector) = length(rle)
+Base.lastindex(rle::RLEVector) = length(rle)
 #Base.firstindex(rle::RLEVector) = 1
 #Base.lastindex(rle::RLEVector) = length(rle)
 #Base.axes(rle::RLEVector) = (Base.OneTo(length(rle)),)
@@ -69,6 +69,10 @@ Base.endof(rle::RLEVector) = length(rle)
 function Base.getindex(rle::RLEVector, i::Int)
     run = ind2run(rle,i)
     rle.runvalues[run]
+end
+
+function Base.getindex(rle::RLEVector, i::Colon)
+    copy(rle)
 end
 
 function Base.setindex!(rle::RLEVector, value, i::Int)
@@ -231,14 +235,14 @@ struct RLEEachRangeIterator{T1,T2}
 end
 eachrange(x::RLEVector) = RLEEachRangeIterator(x)
 length(x::RLEEachRangeIterator) = nrun(x.rle)
-eltype(::RLEEachRangeIterator{T1,T2}) where {T1,T2} = Tuple{T2,T2}
+eltype(::RLEEachRangeIterator{T1,T2}) where {T1,T2} = Tuple{T1,UnitRange{T2}}
 
 function iterate(x::RLEEachRangeIterator, state = 1)
     state > nrun(x.rle) && return nothing
     newstate = state + 1
     first = starts(x.rle,state)
     last = ends(x.rle,state)
-    ( (_values(x.rle)[state];, first:last ), newstate )
+    ( (_values(x.rle)[state], first:last ), newstate )
 end
 
 ## New style iterator

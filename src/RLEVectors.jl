@@ -1,22 +1,22 @@
 module RLEVectors
 
-using DataFrames
-using AxisArrays
+using Statistics
 using StatsBase
 using RCall
 
 # RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar, starts, widths, widths!, ends, values
-import Base: show, length, size, start, next, done, Forward, first, last, step, convert, similar, collect, isequal, values, copy
+import Base: show, length, size, first, last, step, convert, similar, collect, isequal, values, copy
 
 # collections
-import Base: eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, empty!, endof, maxabs, minabs, any, all, in, intersect, append!
-export       eltype, unique, minimum, maximum, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, growat!, empty!, endof, maxabs, minabs, any, all, in, intersect, append!
+import Base.==
+import Base: eltype, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, empty!, lastindex, intersect, append!
+export       eltype, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, growat!, empty!, lastindex, intersect, append!
 export deleterun!, decrement_run!
 
 # indexing
 import Base: getindex, setindex!
-#import Base: iterate
+import Base: iterate
 export getindex, setindex!, ind2run, setrun!, ind2runcontext, RLERangesIterator, eachrange, tapply, iterate
 
 # describe
@@ -25,23 +25,15 @@ export endtype
 
 # group_generics
 import Base: broadcast, map
-import Base: +, -, *, /, ^, .+, .-, .*, ./, .^, div, mod, fld, rem
-import Base: ==, >, <, !=, <=, >=, .==, .>, .<, .!=, .<=, .>=, &, |
-import Base: abs, sign, sqrt, ceil, floor, trunc, cummax, cummin, cumprod, cumsum, log, log10, log2, log1p, acos, acosh, asin, asinh, atan, atanh
-import Base: exp, expm1, cos, cosh, sin, sinh, tan, tanh, gamma, lczgamma, digamma, trigamma
-import Base.Statistics: max, min, range, prod, sum, any, all, mean
-import Base: in
-import Base: indexin, findin, median, findmin, findmax
-export .+, .-, .*, ./, .^, div, mod, fld, rem, ==, >, <, !=, <=, >=, .==, .>, .<, .!=, .<=, .>=, &, |
-export abs, sign, sqrt, ceil, floor, trunc, cummax, cummin, cumprod, cumsum, log, log10, log2, log1p, acos, acosh, asin, asinh, atan, atanh
-export exp, expm1, cos, cosh, sin, sinh, tan, tanh, gamma, lgamma, digamma, trigamma
-export max, min, range, prod, sum, any, all, mean
-export in
-export indexin, findin, median, findmin, findmax
-export findin2
+import Base: in, indexin, findmin, findmax, findall
+import Base: range, any, all, sum, eltype, unique, minimum, maximum, extrema, first, last
+export range, any, all, eltype, sum, unique, minimum, maximum, extrema, first, last
+export in, indexin, findmin, findmax, findall
+import Statistics: mean, median
+export mean, median
 
 # math
-#import StatsBase: mode, countmap
+import StatsBase: mode, countmap
 export mode, countmap
 
 # ranges
@@ -62,7 +54,7 @@ export RLEDataFrame, nrow, ncol, columns, index, names
 export rowSums, rowMeans, rowMedians, colSums, colMeans, colMedians
 
 # RCall
-#import RCall: sexp, rcopy, RClass, rcopytype, @R_str, S4Sxp
+import RCall: sexp, rcopy, RClass, rcopytype, @R_str, S4Sxp
 
 ### Includes
 include("utils.jl")

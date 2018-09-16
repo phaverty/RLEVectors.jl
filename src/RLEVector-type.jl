@@ -89,14 +89,12 @@ const StringRle = RLEVector{String,UInt32}
 const RLEVectorList{T1,T2} = Vector{ RLEVector{T1,T2} }
 @doc (@doc RLEVector) FloatRle,  IntegerRle, BoolRle, StringRle, RLEVectorList
 
+# copy
+Base.copy(x::RLEVector) = RLEVector(copy(x.runvalues), copy(x.runends))
+
 # similar
-function similar(x::RLEVector, element_type::Type, dims::Dims)
-    len = dims[1]
-    if len == 0
-        return( RLEVector(element_type[], eltype(x.runends)[]) )
-    else
-        return( RLEVector(zeros(element_type, 1), eltype(x.runends)[len]) )
-    end
+function Base.similar(x::RLEVector)
+    copy(x)
 end
 
 # show
@@ -133,11 +131,10 @@ function collect(x::RLEVector)
 end
 
 function isequal(x::RLEVector, y::RLEVector)
-isequal(x.runends,y.runends) && isequal(x.runvalues, y.runvalues)
+    isequal(x.runends,y.runends) && isequal(x.runvalues, y.runvalues)
 end
 
 Base.hash(a::RLEVector) = hash(a.runvalues, hash(a.runlengths, hash(:RLEVector)))
-==(a::RLEVector, b::RLEVector) = isequal(a.runvalues, b.runvalues) && isequal(a.runends, b.runends) && true
 
 """
     growat!(x::AbstractVector, i, insert_length)

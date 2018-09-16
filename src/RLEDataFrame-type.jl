@@ -1,4 +1,3 @@
-const DFIndex = AxisArray{Int64,1,Vector{Int64},Tuple{AxisArrays.Axis{:row,Array{Symbol,1}}}}
 const ColumnIndex = Union{Symbol,Integer}
 
 """
@@ -14,10 +13,10 @@ y = RLEDataFrame( [RLEVector([5])],[:a] )
 z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4])
 ```
 """
-mutable struct RLEDataFrame <: AbstractDataFrame
-    columns::Vector{RLEVector}
-    colindex::DFIndex
-    function RLEDataFrame(columns,colnames::Vector{Symbol})
+mutable struct RLEDataFrame{T1,T2<:Integer}
+    columns::Vector{RLEVector{T1,T2}}
+    colindex::NamedTuple
+    function RLEDataFrame{T1,T2}(columns::Vector{RLEVector{T1,T2}}, colnames::Vector{Symbol}) where {T1,T2}
         ncol = length(columns)
         nval = length(colnames)
         if ncol != nval
@@ -30,24 +29,35 @@ mutable struct RLEDataFrame <: AbstractDataFrame
                 throw(ArgumentError("All incoming columns must be of equal length."))
             end
         end
-        new(columns, AxisArray(collect(1:ncol),colnames))
+        c = Tuple( Symbol(x) for x in colnames )
+        colindex = NamedTuple{c}(1:ncol)
+        new(columns, colindex)
     end
 end
 
+==(x::RLEDataFrame, y::RLEDataFrame) = x.colindex == y.colindex && x.columns == y.columns
+
 nrow(x::RLEDataFrame) = length(x.columns[1])
 ncol(x::RLEDataFrame) = length(x.columns)
+Base.length(x::RLEDataFrame) = length(x.columns)
 index(x::RLEDataFrame) = x.colindex
 columns(x::RLEDataFrame) = x.columns
-Base.names(x::RLEDataFrame) = axisvalues(x.colindex)[1]
+Base.names(x::RLEDataFrame) = collect(keys(x.colindex))
+Base.size(x::RLEDataFrame) = (nrow(x), ncol(x))
 
 function Base.show(io::IO, x::RLEDataFrame)
     t = typeof(x)
     show(io, t)
     println()
     for (c,v) in zip(names(x),columns(x))
-        println(io,"Column: $c")
+       println(io,"Column: $c")
         println(io,v)
     end
+end
+
+function RLEDataFrame(cols, colnames)
+    f = cols[1]
+    RLEDataFrame{eltype(f.runvalues),eltype(f.runends)}(cols, colnames)
 end
 
 function RLEDataFrame(; kwargs...)
@@ -56,14 +66,15 @@ function RLEDataFrame(; kwargs...)
     RLEDataFrame(cvalues,cnames)
 end
 
-Base.copy(x::RLEDataFrame) = RLEDataFrame( copy(columns(x)), copy(names(x)) )
+Base.copy(x::RLEDataFrame) = RLEDataFrame(copy(x.columns), names(x))
 
 ### Get/set
 ## Just columns
 Base.getindex(x::RLEDataFrame,j::Colon) = copy(x)
 Base.getindex(x::RLEDataFrame,j::ColumnIndex) = columns(x)[index(x)[j]]
 function Base.getindex(x::RLEDataFrame,j::AbstractArray)
-    inds = index(x)[j]
+    ind = index(x)
+    inds = [ ind[x] for x in j ]
     RLEDataFrame( columns(x)[inds], names(x)[inds] )
 end
 
@@ -86,7 +97,7 @@ function Base.setindex!(x::RLEDataFrame, value::AbstractVector, j::Symbol)
     if j in names(x)
         columns(x)[index(x)[j]] = value
     else
-        x.colindex = merge(index(x), AxisArray( [length(x) + 1], [j] ) )
+        x.colindex = merge(index(x), NamedTuple{(j,)}( Tuple(length(x) + 1) ))
         x.columns = push!(x.columns,value)
     end
     x
@@ -94,21 +105,30 @@ end
 
 ## with rows
 function Base.getindex(x::RLEDataFrame, i, j)
-    j_inds = index(x)[j]
+    ind = index(x)
+    j_inds = [ ind[x] for x in j ]
     cols = [ x.columns[j_ind][i] for j_ind in j_inds ]
     RLEDataFrame( cols, names(x)[j_inds] )
 end
-Base.getindex(x::RLEDataFrame, i::Integer, j) = x[ [i], j ]
 Base.getindex(x::RLEDataFrame, i::Integer, j::ColumnIndex) = x[j][i]
+Base.getindex(x::RLEDataFrame, i::Integer, j) = x[ [i], j ]
+Base.getindex(x::RLEDataFrame, i, j::ColumnIndex) = x[j][i]
 
 function Base.setindex!(x::RLEDataFrame, value, i, j)
-    for j_ind in index(x)[j]
+    ind = index(x)
+    j_inds = [ ind[x] for x in j ]
+    for j_ind in j_inds
         x.columns[j_ind][i] = value
     end
     x
 end
-Base.setindex!(x::RLEDataFrame, value, i::Integer, j) = setindex!(x,value,[i],j)
-Base.setindex!(x::RLEDataFrame, value, i::Integer, j::ColumnIndex) = setindex!(x.columns[j],value,i)
+function Base.setindex!(x::RLEDataFrame, value, i, j::ColumnIndex)
+    x[j][i] = value
+end
+
+
+## Conversion
+Base.convert(Matrix, x::RLEDataFrame) = hcat(map(collect,x.columns)...)
 
 ### Familiar operations over rows or columns from R
 

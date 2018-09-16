@@ -1,4 +1,4 @@
-### Vector/Collections API
+## Vector/Collections API
 
 function append!(x::RLEVector, y::RLEVector)
     last_x_run = nrun(x)
@@ -9,8 +9,8 @@ function append!(x::RLEVector, y::RLEVector)
     new_nrun = last_x_run + nrun(y)
     resize!(x.runvalues, new_nrun)
     resize!(x.runends, new_nrun)
-    x.runvalues[(last_x_run + 1:end)] = y.runvalues
-    x.runends[(last_x_run + 1:end)] = y.runends + length_x
+    x.runvalues[(last_x_run .+ 1:end)] = y.runvalues
+    x.runends[(last_x_run .+ 1:end)] = y.runends .+ length_x
     x
 end
 
@@ -48,7 +48,7 @@ end
 function popfirst!(x::RLEVector)
   isempty(x) && throw(ArgumentError("array must be non-empty"))
   item = x.runvalues[1]
-  x.runends[:] = x.runends - 1
+  x.runends[:] = x.runends .- 1
   if x.runends[1] == 0
     deleteat!(x.runvalues,1)
     deleteat!(x.runends,1)
@@ -58,7 +58,7 @@ end
 
 function pushfirst!(x::RLEVector{T1,T2},item) where {T1,T2 <: Integer}
   item = convert(T1,item) # Copying how base does it for arrays
-  x.runends[:] = x.runends + 1
+  x.runends[:] = x.runends .+ 1
   if item != x.runvalues[1]
     pushfirst!(x.runvalues,item)
     pushfirst!(x.runends,1)
@@ -67,7 +67,7 @@ function pushfirst!(x::RLEVector{T1,T2},item) where {T1,T2 <: Integer}
 end
 
 function deleterun!(x::RLEVector,i::Integer)
-    x.runends[i:end] -= widths(x,i)
+    x.runends[i:end] = x.runends[i:end] .- widths(x,i)
     if (i > 1 && i < nrun(x) && x.runvalues[i-1] == x.runvalues[i+1])
         deleteat!(x.runvalues,(i-1):i)
         deleteat!(x.runends,(i-1):i)
@@ -82,7 +82,7 @@ function decrement_run!(x::RLEVector,run::Integer)
   if widths(x,run) == 1
     deleterun!(x,run)
   else
-    x.runends[run:end] -= 1
+    x.runends[run:end] .-= 1
   end
   return(x)
 end
@@ -101,14 +101,14 @@ function insert!(x::RLEVector{T1,T2}, i::Integer, item) where {T1,T2 <: Integer}
         _item = convert(T1, item)
         (run, index_in_run, run_remainder) = ind2runcontext(x,i)
         if x.runvalues[run] == _item
-            x.runends[run:end] = x.runends[run:end] + 1
+            x.runends[run:end] = x.runends[run:end] .+ 1
         else
             new_nrun = nrun(x) + 2
             resize!(x.runvalues, new_nrun)
             resize!(x.runends, new_nrun)
             x.runvalues[(run + 2):end] = x.runvalues[run:(end-2)]
             x.runvalues[run + 1] = _item
-            x.runends[(run + 2):end] = x.runends[run:(end-2)] + 1
+            x.runends[(run + 2):end] = x.runends[run:(end-2)] .+ 1
             x.runends[run + 1] = i
             x.runends[run] = i - 1
         end
@@ -156,7 +156,7 @@ function splice!(x::RLEVector, index::UnitRange, ins::RLEVector=_default_splice)
     if i_left > i_right # Insert without removing
         current = similar(x,0)
     else
-        current = RLEVector(x.runvalues[run_range], x.runends[run_range] - (i_left - 1))
+        current = RLEVector(x.runvalues[run_range], x.runends[run_range] .- (i_left - 1))
         current.runends[end] = current.runends[end] - run_remainder_right
     end
     # Splice ins into adjusted x

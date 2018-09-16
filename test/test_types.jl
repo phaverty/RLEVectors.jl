@@ -17,7 +17,7 @@ x = RLEVector(["a","b","c","d","d","d","e","f"],[3,6,9,12,15,18,21,24])
 y = RLEVector(["a","b","c","d","e","f"],[3,6,9,18,21,24])
 @test x.runvalues == y.runvalues
 @test x.runends == y.runends
-x = RLEVector(BitVector(5),collect(1:5))
+x = RLEVector(BitVector(undef,5),collect(1:5))
 y = RLEVector([false],[5])
 @test x.runvalues == y.runvalues
 @test x.runends == y.runends
@@ -33,11 +33,6 @@ y = RLEVector([4,4,5,5,6,6])
 @test StringRle(["a","bob","joe"],[2,4,6]) == RLEVector(["a","bob","joe"],Int32[2,4,6])
 
 @test RLEVector(5,3) == RLEVector([5,5,5])
-
-# Creating
-y = RLEVector([1.0,1,2,2,3,3,3])
-@test similar(y) == RLEVector([0.0],[length(y)])
-@test similar(y,4) == RLEVector(zeros(Real,1),Int[4])
 
 # Conversion
 x = RLEVector([4,4,5,5,6,7,8])
