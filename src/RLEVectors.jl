@@ -3,6 +3,7 @@ module RLEVectors
 using Statistics
 using StatsBase
 using RCall
+using DataFrames
 
 # RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar, starts, widths, widths!, ends, values

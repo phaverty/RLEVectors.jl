@@ -2,7 +2,6 @@ summary_group = [:range, :any, :all, :eltype, :unique, :minimum, :maximum, :extr
 
 for op in summary_group
     @eval begin
-        println($op)
         function ($op)(x::RLEVector)
             ($op)(x.runvalues)
         end
