@@ -26,10 +26,10 @@ export endtype
 
 # group_generics
 import Base: broadcast, map
-import Base: in, indexin, findmin, findmax, findall
+import Base: in, indexin, findmin, findmax
 import Base: range, any, all, sum, eltype, unique, minimum, maximum, extrema, first, last
 export range, any, all, eltype, sum, unique, minimum, maximum, extrema, first, last
-export in, indexin, findmin, findmax, findall
+export in, indexin, findmin, findmax
 import Statistics: mean, median
 export mean, median
 
