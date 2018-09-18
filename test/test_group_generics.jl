@@ -52,7 +52,6 @@ y = RLEVector([0,0,0,3,3,3,4,4])
 @test indexin(x,collect(3:11)) == indexin(collect(x),collect(3:11))
 @test indexin([200,200,1,1,5,5],foo) == indexin([200,200,1,1,5,5],foo)
 
-# findin
 @test findall(in(RLEVector(collect(3:10))), RLEVector([1,1,2,2,3,3])) == collect(5:6)
 @test findall(in(3:10), RLEVector([1,1,2,2,3,3])) == collect(5:6)
 @test findall(in(collect(3:10)), RLEVector([1,1,2,2,3,3])) == collect(5:6)

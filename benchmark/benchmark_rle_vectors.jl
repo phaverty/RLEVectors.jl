@@ -2,7 +2,7 @@ using RLEVectors
 using DataFrames
 using CSV
 
-results_file = "/Users/phaverty/BioJulia/dev/RLEVectors/benchmark/rle.timings.csv"
+results_file = "/Users/phaverty/.julia/dev/RLEVectors/benchmark/rle.timings.csv"
 
 macro timeit(ex)
 # like @time, but returning the timing rather than the computed value
@@ -98,7 +98,7 @@ foo + foo; Profile.clear(); @profile for i in 1:1e4 foo + foo end; ProfileView.v
 foo .< 3; Profile.clear(); @profile for i in 1:1e4 foo .< 3 end; ProfileView.view()
 foo .+ 3; Profile.clear(); @profile for i in 1:1e4 foo .+ 3 end; ProfileView.view()
 sum(foo); Profile.clear(); @profile for i in 1:1e4 sum(foo) end; ProfileView.view()
-findall(in([800,300,357]), foo); Profile.clear(); @profile for i in 1:1e5 findin(foo,[800,300,357]) end; ProfileView.view()
+findall(in([800,300,357]), foo); Profile.clear(); @profile for i in 1:1e5 findall(in([800,300,357]), foo) end; ProfileView.view()
 median(foo); Profile.clear(); @profile for i in 1:1e4 median(foo) end; ProfileView.view()
 rfirst(foo); Profile.clear(); @profile for i in 1:1e6 rfirst(foo) end; ProfileView.view()
 rwidth(foo); Profile.clear(); @profile for i in 1:1e6 rwidth(foo) end; ProfileView.view()

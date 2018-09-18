@@ -16,7 +16,8 @@ end
 Base.map(f, x::RLEVector) = RLEVector( map(f,x.runvalues), ends(x) )
 
 ## Methods that take two arguments, delegate to rle.runvalues and return something other than an RLEVector
-in(y::T1, x::RLEVector{T1,T2}) where {T1,T2<:Integer} = in(y, x.runvalues)
+Base.in(y::T1, x::RLEVector{T1,T2}) where {T1,T2<:Integer} = in(y, x.runvalues)
+Base.in(x::RLEVector) = in(x.runvalues)
 
 # Defaulting to fun(itr) for some things
 for op in [:findmin, :findmax]
