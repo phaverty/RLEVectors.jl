@@ -50,7 +50,7 @@ import Base: sort, sort!, issorted, reverse, reverse!, sortperm, Algorithm
 export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 
 # data frames
-import DataFrames: AbstractDataFrame, DataFrame, Index, index, columns, nrow, ncol
+import DataFrames: AbstractDataFrame, DataFrame, Index, index, nrow, ncol
 export RLEDataFrame, nrow, ncol, columns, index, names
 export rowSums, rowMeans, rowMedians, colSums, colMeans, colMedians
 
