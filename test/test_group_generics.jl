@@ -2,7 +2,6 @@ module TestGroupGenerics
 
 using Test
 using RLEVectors
-using Compat
 
 @testset begin
 
