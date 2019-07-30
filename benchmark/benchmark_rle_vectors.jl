@@ -52,44 +52,65 @@ end
 
 bdf = vcat(bdf,timings)
 
-CSV.write(results_file, bdf, header=true)
+CSV.write(results_file, bdf)
 
 jdf = timings
-rdf = bdf[ bdf[:language] .== "R",:];
+rdf = bdf[ bdf[:language] .== "R",:]
 rdf = rdf[end,:]
+rdf = rdf[4:end]
+jdf = jdf[4:end]
 
-for n in names(bdf)[4:end]
+for n in names(rdf)
        println(n)
-       println( rdf[1,n] / jdf[1,n])
+       println( rdf[n] / jdf[n])
 end
-r_over_julia = zeros(ncol(bdf)-3)
+r_over_julia = zeros(ncol(rdf))
 
 for i in 1:length(r_over_julia)
-    r_over_julia[i] = log2(rdf[1,i+3] / jdf[1,i+3])
+    r_over_julia[i] = log2(rdf[i][1] / jdf[i][1])
 end
 
 ### Plotting
-using Gadfly
+using VegaLite
+using FileIO
 
 ## Performance Relative to R
-bench_plot = plot(x=names(bdf)[4:end],y=r_over_julia, Geom.bar, Guide.ylabel("Elapsed Time: log2(R/julia)"),
-     Guide.xticks(orientation=:vertical),Scale.color_continuous(minvalue=-15,maxvalue=15),color=r_over_julia,
-     Guide.title("Relative Performance of R and Julia Rle Vectors"),Geom.hline(color="black"),yintercept=[0],Guide.xlabel(""))
+date = bdf[end,:date]
+relative_perf_file = "/Users/phaverty/.julia/dev/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).svg"
 
-date = jdf[1,:date]
-relative_perf_file = "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).png"
-draw(PNG(relative_perf_file,8inch,5inch),bench_plot )
-current_relative_perf_file = "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/plots/benchmark_rle_vectors.png"
+df = DataFrame(:function => names(rdf), :ratio => r_over_julia)
+df[:,:function] = string.(df[:,:function])
+df |> @vlplot(
+  :bar,
+  x=:function,
+  y=:ratio,
+  width=500,
+  title = "Relative Performance of R and Julia Rle Vectors") |> save(relative_perf_file)
+
+
+  #Guide.ylabel("Elapsed Time: log2(R/julia)"),
+  #Guide.xticks(orientation=:vertical),
+  #Scale.color_continuous(minvalue=-15,maxvalue=15),color=r_over_julia,
+  #Geom.hline(color="black"),yintercept=[0],Guide.xlabel("")
+
+current_relative_perf_file = "/Users/phaverty/.julia/dev/RLEVectors/benchmark/plots/benchmark_rle_vectors.svg"
 cp(relative_perf_file, current_relative_perf_file, force=true)
 
 ## Performance over time
+timeline_file = "/Users/phaverty/.julia/dev/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).timeline.svg"
 jdf = bdf[ bdf[:,:language] .== "julia", 3:end ]
 melted_bdf = melt(jdf, :date)
-timeline_plot = plot(melted_bdf, x="date", y="value", color="variable", Guide.xlabel("Date"), Geom.line,
-                     Scale.y_log10, Guide.ylabel("log2 elapsed seconds (1e4 runs)"))
-timeline_file = "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/plots/benchmark_rle_vectors.$(date).timeline.png"
-draw(PNG(timeline_file,10inch,6inch),timeline_plot )
-current_timeline_file = "/Users/phaverty/.julia/v0.6/RLEVectors/benchmark/plots/benchmark_rle_vectors.timeline.png"
+melted_bdf |>
+  @vlplot(
+    :line,
+    x="date:t",
+    y=:value,
+    color=:variable,
+    width=500
+    ) |> save(timeline_file)
+#Guide.xlabel("Date"), Geom.line,
+#Scale.y_log10, Guide.ylabel("log2 elapsed seconds (1e4 runs)"))
+current_timeline_file = "/Users/phaverty/.julia/dev/RLEVectors/benchmark/plots/benchmark_rle_vectors.timeline.svg";
 cp(timeline_file, current_timeline_file, force=true)
 
 ## Profiling
