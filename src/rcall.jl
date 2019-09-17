@@ -1,12 +1,14 @@
-function sexp(f::RLEVector)
-    R"library(GenomicRanges)"
+using .RCall
+
+function RCall.sexp(f::RLEVector)
+    RCall.R"library(GenomicRanges)"
     v = values(f)
     w = widths(f)
-    R"Rle($v, $w)"
+    RCall.R"Rle($v, $w)"
 end
 
 function rcopy(::Type{RLEVector}, s::Ptr{S4Sxp})
-    RLEVector(rcopy(s[:values]), cumsum(rcopy(s[:lengths])))
+    RLEVector(Rcall.rcopy(s[:values]), cumsum(RCall.rcopy(s[:lengths])))
 end
 
-rcopytype(::Type{RClass{:Rle}}, s::Ptr{S4Sxp}) = RLEVector
+rcopytype(::Type{RCall.RClass{:Rle}}, s::Ptr{RCall.S4Sxp}) = RLEVector
