@@ -1,8 +1,8 @@
 module RLEVectors
 
+using Requires
 using Statistics
 using StatsBase
-using RCall
 using DataFrames
 
 # RLEVector type
@@ -54,9 +54,6 @@ import DataFrames: AbstractDataFrame, DataFrame, Index, index, nrow, ncol
 export RLEDataFrame, nrow, ncol, columns, index, names
 export rowSums, rowMeans, rowMedians, colSums, colMeans, colMedians
 
-# RCall
-import RCall: sexp, rcopy, RClass, rcopytype, @R_str, S4Sxp
-
 ### Includes
 include("utils.jl")
 include("runs.jl")
@@ -69,8 +66,11 @@ include("group_generics.jl")
 include("collections_api.jl")
 include("math.jl")
 include("sorting.jl")
-include("rcall.jl")
 include("precompile.jl")
 _precompile_()
 
-end # Module RLEVectors
+function __init__()
+	 @require RCall="6f49c342-dc21-5d91-9882-a32aef131414" include("rcall.jl")
+end
+
+end # module RLEVectors
