@@ -39,6 +39,9 @@ x = RLEVector([4,4,5,5,6,7,8])
 @test convert(Vector,x) == [4,4,5,5,6,7,8]
 @test convert(Set,x) == Set([4,5,6,7,8])
 @test convert(RLEVector,[1,1,2,2]) == RLEVector( [1,2], [2,4] )
+x = RLEVector([4,4,5,5,6,7,8])
+y = convert(RLEVector{Float64,Int32}, x)
+@test typeof(y) == RLEVector{Float64,Int32}
 
 # Expanding
 @test collect(RLEVector([1,1,2,2,3,3])) == [1,1,2,2,3,3]

@@ -88,7 +88,6 @@ function ree(runvalues, runends)
 end
 
 function ree!(runvalues, runends)
-    # FIXME: can this also do issorted or error so RLEVector constructor need not?
     n = length(runvalues)
     left_i = 0
     if (n >= 1)

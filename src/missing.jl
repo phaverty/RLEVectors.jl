@@ -1,6 +1,5 @@
 # Functions for working with missings in RLE values
 
-Missings.allowmissing(x::RLEVector) = RLEVector(allowmissing(values(x)), ends(x))
-#Missings.allowmissing!(x::RLEVector) = RLEVector(allowmissing!(values,x), runends(x))
-Missings.disallowmissing(x::RLEVector) = RLEVector(disallowmissing(values(x)), ends(x))
-#Missings.disallowmissing!(x::RLEVector) = RLEVector(disallowmissing!(values,x), runends(x))
+# Using implementations matching those in Missings.jl for AbstractArray
+Missings.allowmissing(x::RLEVector{T2,T2,}) where {T1,T2} = convert(RLEVector{Union{T1, Missing},T2}, x)
+Missings.disallowmissing(x::RLEVector{T1,T2}) where {T1,T2} = convert(RLEVector{nonmissingtype(T1),T2}, x)
