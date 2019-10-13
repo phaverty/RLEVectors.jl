@@ -4,6 +4,8 @@ using Requires
 using Statistics
 using StatsBase
 using DataFrames
+using Reexport
+@reexport using Missings
 
 # RLEVector type
 export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar, starts, widths, widths!, ends, values
@@ -49,10 +51,14 @@ import Base.Sort: QuickSortAlg
 import Base: sort, sort!, issorted, reverse, reverse!, sortperm, Algorithm
 export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 
-# data frames
+# DataFrames
 import DataFrames: AbstractDataFrame, DataFrame, Index, index, nrow, ncol
 export RLEDataFrame, nrow, ncol, columns, index, names
 export rowSums, rowMeans, rowMedians, colSums, colMeans, colMedians
+
+# Missings
+import Missings: allowmissing, disallowmissing
+export allowmissing, disallowmissing
 
 ### Includes
 include("utils.jl")
@@ -66,6 +72,7 @@ include("group_generics.jl")
 include("collections_api.jl")
 include("math.jl")
 include("sorting.jl")
+include("missing.jl")
 include("precompile.jl")
 _precompile_()
 
