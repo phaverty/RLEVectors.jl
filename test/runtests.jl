@@ -12,7 +12,8 @@ test_files = [
               "test_group_generics.jl",
               "test_ranges.jl",
               "test_runs.jl",
-              "test_rledataframe.jl"
+              "test_rledataframe.jl",
+	      "test_missing"
               ]
 
 println("Testing ...")
