@@ -100,7 +100,7 @@ function ree!(runvalues, runends)
             rv = runvalues[right_i]
             re = runends[right_i]
             if re > current_end
-                if rv != current_val
+                if ! isequal(rv, current_val)
                     left_i = left_i + 1
                     current_val = runvalues[left_i] = rv
                 end
