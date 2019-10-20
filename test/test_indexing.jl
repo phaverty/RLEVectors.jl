@@ -2,6 +2,7 @@ module TestIndexing
 
 using Test
 using RLEVectors
+using Missings:allowmissing, disallowmissing
 
 @testset begin
 
@@ -265,6 +266,26 @@ rle = RLEVector( factor )
 x = collect(1:30)
 tapply_res = Dict( "a" => mean(x[1:5]), "b" => mean(x[vcat(6:10,26:30)]), "c" => mean(x[11:15]), "d" => mean(x[16:20]), "e" => mean(x[21:25]) )
 @test_throws ArgumentError tapply( x, rle, mean )
+
+# test missing assignment
+rle = allowmissing(RLEVector([1,1,1,2,2,3,3,3]))
+
+# tests to see if disallowmissing works
+disallowmissing(rle)
+
+rle[1] = missing
+@test isequal(rle[1], missing)
+
+rle[end] = missing
+@test isequal(rle[end], missing)
+
+rle[5] = missing
+@test isequal(rle[5], missing)
+
+@test all(isequal.(collect(rle), [missing, 1, 1, 2, missing, 3, 3, missing]))
+
+# no longer able to convert
+@test_throws MethodError disallowmissing(rle)
 
 end # testset
 
