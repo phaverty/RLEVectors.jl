@@ -69,7 +69,7 @@ function Base.getindex(rle::RLEVector, i::Int)
     rle.runvalues[run]
 end
 
-function Base.setindex!(rle::RLEVector, value, i::Int)
+function Base.setindex!(rle::RLEVector, value, i::Integer)
   run = ind2run(rle,i)
   runvalue = rle.runvalues[run]
   runend = rle.runends[run]
