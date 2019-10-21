@@ -73,13 +73,14 @@ function Base.setindex!(rle::RLEVector, value, i::Int)
   run = ind2run(rle,i)
   runvalue = rle.runvalues[run]
   runend = rle.runends[run]
-  value == runvalue && return rle # replace with same value, no-op
+  #value == runvalue && return rle # replace with same value, no-op
+  isequal(value, runvalue) && return rle
   previous_run = run - 1
   next_run = run + 1
   at_start_of_run = (previous_run > 0 && i == rle.runends[previous_run] + 1) || i == 1
   at_end_of_run = i == runend
-  match_left = run > 1 && rle.runvalues[previous_run] == value
-  match_right = run < nrun(rle) && rle.runvalues[next_run] == value
+  match_left = run > 1 && isequal(rle.runvalues[previous_run], value)
+  match_right = run < nrun(rle) && isequal(rle.runvalues[next_run], value)
   if at_end_of_run
     if at_start_of_run # in a run of length 1
       if match_right && match_left
