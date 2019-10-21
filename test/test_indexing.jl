@@ -112,7 +112,7 @@ x[3] = 1
 ## range with scalar
 # in middle, no match
 x = RLEVector([1,2,3,4],[4,8,12,16])
-x[10:11] = 5
+x[10:11] .= 5
 @test x.runvalues == [1,2,3,5,3,4]
 @test x.runends == [4,8,9,11,12,16]
 
@@ -124,43 +124,43 @@ x[9:10] = 5
 
 # just right, no match
 x = RLEVector([1,2,3,4],[4,8,12,16])
-x[11:12] = 5
+x[11:12] .= 5
 @test x.runvalues == [1,2,3,5,4]
 @test x.runends == [4,8,10,12,16]
 
 # just left, match
 x = RLEVector([1,2,3,4],[4,8,12,16])
-x[9:10] = 2
+x[9:10] .= 2
 @test x.runvalues == [1,2,3,4]
 @test x.runends == [4,10,12,16]
 
 # just right, match
 x = RLEVector([1,2,3,4],[4,8,12,16])
-x[11:12] = 4
+x[11:12] .= 4
 @test x.runvalues == [1,2,3,4]
 @test x.runends == [4,8,10,16]
 
 # span, no match
 x = RLEVector([1,2,3,4],[4,8,12,16])
-x[9:12] = 5
+x[9:12] .= 5
 @test x.runvalues == [1,2,5,4]
 @test x.runends == [4,8,12,16]
 
 # span, left match
 x = RLEVector([1,2,3,4],[4,8,12,16])
-x[9:12] = 2
+x[9:12] .= 2
 @test x.runvalues == [1,2,4]
 @test x.runends == [4,12,16]
 
 # span, right match
 x = RLEVector([1,2,3,4],[4,8,12,16])
-x[9:12] = 4
+x[9:12] .= 4
 @test x.runvalues == [1,2,4]
 @test x.runends == [4,8,16]
 
 # span, both match
 x = RLEVector([1,2,3,2],[4,8,12,16])
-x[9:12] = 2
+x[9:12] .= 2
 @test x.runvalues == [1,2]
 @test x.runends == [4,16]
 
