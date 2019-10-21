@@ -13,5 +13,10 @@ StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
-StatsBase = ">= 0.6.0"
+DataFrames = "^0.19.4"
+Missings = "^0.4.3"
+OrderedCollections = "^1.1.0"
+Reexport = "^0.2.0"
+Requires = "^0.5.2"
+StatsBase = "^0.32.0"
 julia = "1.0"
