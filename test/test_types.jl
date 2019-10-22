@@ -34,6 +34,10 @@ y = RLEVector([4,4,5,5,6,6])
 
 @test RLEVector(5,3) == RLEVector([5,5,5])
 
+sim = similar(RLEVector([1,2,3],[2,4,6]), Int32, (9))
+@test length(sim) == 9
+@test isa(values(sim), Vector{Int32}) == true
+
 # Conversion
 x = RLEVector([4,4,5,5,6,7,8])
 @test convert(Vector,x) == [4,4,5,5,6,7,8]

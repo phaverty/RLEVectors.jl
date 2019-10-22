@@ -8,6 +8,8 @@ for op in summary_group
     end
 end
 
+struct RLEBroadcast <: Broadcast.BroadcastStyle end
+Base.BroadcastStyle(::Type{<:RLEVector}) = RLEBroadcast()
 Base.broadcast(f, x::RLEVector, y...) = RLEVector( [f(el,y...) for el in x.runvalues], ends(x) )
 function Base.broadcast(f, x::RLEVector, y::RLEVector)
     (runends, runvalues_x, runvalues_y) = disjoin(x, y)
