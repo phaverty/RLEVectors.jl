@@ -8,13 +8,15 @@ for op in summary_group
     end
 end
 
-struct RLEBroadcast <: Broadcast.BroadcastStyle end
-Base.BroadcastStyle(::Type{<:RLEVector}) = RLEBroadcast()
-Base.broadcast(f, x::RLEVector, y...) = RLEVector( [f(el,y...) for el in x.runvalues], ends(x) )
-function Base.broadcast(f, x::RLEVector, y::RLEVector)
-    (runends, runvalues_x, runvalues_y) = disjoin(x, y)
-    RLEVector( map(f,runvalues_x,runvalues_y), runends )
+Base.BroadcastStyle(::Type{<:RLEVector}) = Broadcast.ArrayStyle{RLEVector}()
+function Base.similar(bc::Broadcast.Broadcasted{Broadcast.ArrayStyle{RLEVector}}, ::Type{ElType}) where ElType
+    RLEVector(Vector{ElType}(undef,1), [size(bc)[1]])
 end
+#Base.broadcast(f, x::RLEVector, y...) = RLEVector( [f(el,y...) for el in x.runvalues], ends(x) )
+#function Base.broadcast(f, x::RLEVector, y::RLEVector)
+#    (runends, runvalues_x, runvalues_y) = disjoin(x, y)
+#    RLEVector( map(f,runvalues_x,runvalues_y), runends )
+#end
 Base.map(f, x::RLEVector) = RLEVector( map(f,x.runvalues), ends(x) )
 
 ## Methods that take two arguments, delegate to rle.runvalues and return something other than an RLEVector
