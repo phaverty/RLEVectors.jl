@@ -21,7 +21,7 @@ z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1
 @test_throws ArgumentError RLEDataFrame( [RLEVector([1])], [:a,:b] )
 @test_throws ArgumentError RLEDataFrame( [RLEVector([1]), RLEVector([2,3])], [:a,:b] )
 
-    # Getting and setting
+# Getting and setting
 z = RLEDataFrame( a=RLEVector([5,2,2]), b=RLEVector([4,4,4]), c=RLEVector([3,2,1]) )
 @test z[:] == z
 @test z[2] == RLEVector([4,4,4])

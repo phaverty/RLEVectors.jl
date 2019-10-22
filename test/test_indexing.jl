@@ -118,7 +118,7 @@ x[3] = 1
 #
 # # just left, no match
 # x = RLEVector([1,2,3,4],[4,8,12,16])
-# x[9:10] = 5
+# x[9:10] .= 5
 # @test x.runvalues == [1,2,5,3,4]
 # @test x.runends == [4,8,10,12,16]
 #
@@ -170,7 +170,7 @@ x[3] = 1
 # @test collect(x) == [1,5,5,5,3,3,4,4]
 # @test x.runvalues == [1,5,3,4]
 # @test x.runends == [1,4,6,8]
-
+#
 ## range with vector
 x = RLEVector([1,2,3,4],[2,4,6,8])
 x[2:4] = [5,6,7]
@@ -216,19 +216,19 @@ x[4:-1:2] = [5,6,7]
 @test x[4:-1:2] == [5,6,7]
 
 # Colon
-# x = RLEVector([1,2,3,4],[2,4,6,8])
-# @test x[:] == x
-# x[:] .= 4
-# @test x == RLEVector([4 for i in 1:8])
+x = RLEVector([1,2,3,4],[2,4,6,8])
+@test x[:] == x
+#x[:] .= 4
+#@test x == RLEVector([4 for i in 1:8])
 
 # Logical
-# x = RLEVector([1,2],[2,4])
-# @test x[ [ true,true,true,false ] ] == x[ [1,2,3] ]
-# x[ [true,true,true,false] ] .= 4
-# @test x == RLEVector([4,4,4,2])
-# x = RLEVector([1,2],[2,4])
-# x[ [true,true,true,false] ] = [4,5,6]
-# @test x == RLEVector([4,5,6,2])
+x = RLEVector([1,2],[2,4])
+@test x[ [ true,true,true,false ] ] == RLEVector([1,2],[2,3])
+#x[ [true,true,true,false] ] .= 4
+#@test x == RLEVector([4,4,4,2])
+x = RLEVector([1,2],[2,4])
+x[ [true,true,true,false] ] = [4,5,6]
+@test x == RLEVector([4,5,6,2])
 
 # eachrange iterator
 x = RLEVector([1, 1, 2, 2, 7, 12])

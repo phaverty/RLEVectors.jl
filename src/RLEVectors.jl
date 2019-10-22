@@ -1,5 +1,6 @@
 module RLEVectors
 
+using Base.Broadcast
 using Requires
 using Statistics
 using StatsBase
@@ -18,6 +19,7 @@ export       eltype, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat
 export deleterun!, decrement_run!
 
 # indexing
+import Base.Broadcast: BroadcastStyle, Broadcasted
 import Base: getindex, setindex!
 import Base: iterate
 export getindex, setindex!, ind2run, setrun!, ind2runcontext, RLERangesIterator, eachrange, tapply, iterate

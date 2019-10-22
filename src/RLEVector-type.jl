@@ -93,8 +93,8 @@ const RLEVectorList{T1,T2} = Vector{ RLEVector{T1,T2} }
 Base.copy(x::RLEVector) = RLEVector(copy(x.runvalues), copy(x.runends))
 
 # similar
-function Base.similar(x::RLEVector)
-    copy(x)
+function Base.similar(a::RLEVector{T1,T2}, ::Type{T}, dims::Tuple{Int}) where {T1,T2,T}
+    RLEVector{T,T2}(Vector{T}(undef,1), [dims[1]])
 end
 
 # show
