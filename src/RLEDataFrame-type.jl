@@ -107,7 +107,7 @@ end
 function Base.getindex(x::RLEDataFrame, i, j)
     ind = index(x)
     j_inds = [ ind[x] for x in j ]
-    cols = [ RLEVector(x.columns[j_ind][i]) for j_ind in j_inds ]
+    cols = [ RLEVector(x.columns[j_ind][i]) for j_ind in j_inds ] # FIXME: converting to RLEVector should not be necessary
     RLEDataFrame( cols, names(x)[j_inds] )
 end
 Base.getindex(x::RLEDataFrame, i::Integer, j::ColumnIndex) = x[j][i]
