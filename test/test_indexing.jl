@@ -223,7 +223,7 @@ x[:] .= 4
 
 # Logical
 x = RLEVector([1,2],[2,4])
-@test x[ [ true,true,true,false ] ] == x[ [1,2,3] ]
+@test x[ [ true,true,true,false ] ] == RLEVector([1,2],[2,3])
 x[ [true,true,true,false] ] .= 4
 @test x == RLEVector([4,4,4,2])
 x = RLEVector([1,2],[2,4])
