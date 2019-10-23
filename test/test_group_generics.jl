@@ -39,6 +39,13 @@ x = RLEVector(vec)
 @test x .+ true == x .+ 1
 @test x .+ false == x
 
+# broadcast with different sizes
+x = RLEVector([1,1,3])
+@test x .+ 4 == RLEVector([5,5,7])
+@test x .+ [4 5 6] == [[5 6 7] ; [5 6 7] ; [7 8 9]]
+@test x .+ [4, 5, 6] == RLEVector([5, 6, 9])
+@test x .+ [[2 2 2] ; [4 4 4]]' == [[3 3 5] ; [ 5 5 7]]'
+
 # findmax, findmin
 @test findmin(RLEVector([1,2,3,4,1,1])) == findmin([1,2,3,4,1,1])
 @test findmax(RLEVector([1,2,3,4,1,1])) == findmax([1,2,3,4,1,1])

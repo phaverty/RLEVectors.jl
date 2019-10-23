@@ -8,8 +8,12 @@ for op in summary_group
     end
 end
 
-Base.BroadcastStyle(::Type{<:RLEVector}) = Broadcast.ArrayStyle{RLEVector}()
-function Base.similar(bc::Broadcast.Broadcasted{Broadcast.ArrayStyle{RLEVector}}, ::Type{ElType}) where ElType
+struct RLEVectorStyle <: Broadcast.AbstractArrayStyle{1} end
+Base.BroadcastStyle(::Type{<:RLEVector}) = RLEVectorStyle()
+RLEVectorStyle(::Val{0}) = RLEVectorStyle()
+RLEVectorStyle(::Val{1}) = RLEVectorStyle()
+RLEVectorStyle(::Val{N}) where N = Broadcast.DefaultArrayStyle{N}()
+function Base.similar(bc::Broadcast.Broadcasted{RLEVectorStyle}, ::Type{ElType}) where {N,ElType}
     RLEVector(Vector{ElType}(undef,1), [size(bc)[1]])
 end
 function Base.copyto!(dest::RLEVector, bc::Broadcast.Broadcasted{Nothing})
