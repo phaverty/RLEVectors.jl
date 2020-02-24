@@ -63,13 +63,18 @@ function RLEVector(runvalues::BitVector, runends::Vector{T2}) where T2 <: Intege
     RLEVector{Bool,T2}(runvalues, runends)
 end
 
-function RLEVector(vec::Vector)
-  runvalues, runends = ree(vec)
+function RLEVector(x::Vector)
+  runvalues, runends = ree(x)
   RLEVector(runvalues, runends)
 end
 
 function RLEVector(x::UnitRange)
     RLEVector{eltype(x),Int64}(collect(x),collect(1:length(x)))
+end
+
+function RLEVector(x::BitVector)
+	runvalues, runends = ree(x)
+	RLEVector(runvalues, runends)
 end
 
 function RLEVector(x)

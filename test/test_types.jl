@@ -25,6 +25,10 @@ x = RLEVector([4,5,6],[2,4,6])
 y = RLEVector([4,4,5,5,6,6])
 @test x.runvalues == y.runvalues
 @test x.runends == y.runends
+x = RLEVector( 1:100 .< 50)
+@test x.runvalues == [true, false]
+@test x.runends == [49, 100]
+
 
 @test_throws ArgumentError RLEVector([1,2,3],[2,4,3]) # Sorted runends
 @test IntegerRle([1,2,3],[2,4,6]) == RLEVector([1,2,3],Int32[2,4,6])
