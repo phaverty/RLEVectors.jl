@@ -21,7 +21,7 @@ function disjoin_length(x::Vector, y::Vector)
             nrun = nrun - 1
         end
     end
-    return(nrun)
+    return (nrun)
 end
 disjoin_length(x::RLEVector, y::RLEVector) = disjoin_length(x.runends, y.runends)
 
@@ -47,13 +47,13 @@ disjoin(x,y)
  6
 ```
 """
-function disjoin(x::Vector,  y::Vector)
-    length(x) == 0 && return(y) # At least one value to work on
-    length(y) == 0 && return(x) # At least one value to work on
+function disjoin(x::Vector, y::Vector)
+    length(x) == 0 && return (y) # At least one value to work on
+    length(y) == 0 && return (x) # At least one value to work on
     nrun = disjoin_length(x, y)
     i = length(x)
     j = length(y)
-    runends = Array{promote_type(eltype(x), eltype(y))}(undef,nrun)
+    runends = Array{promote_type(eltype(x), eltype(y))}(undef, nrun)
     @inbounds while true
         xi = x[i]
         yj = y[j]
@@ -71,14 +71,18 @@ function disjoin(x::Vector,  y::Vector)
         end
         nrun = nrun - 1
         if i == 0
-            for r in 1:j runends[r] = y[r] end
+            for r = 1:j
+                runends[r] = y[r]
+            end
             break
         elseif j == 0
-            for r in 1:i runends[r] = x[r] end
+            for r = 1:i
+                runends[r] = x[r]
+            end
             break
         end
     end
-    return(runends)
+    return (runends)
 end
 
 """
@@ -95,50 +99,50 @@ disjoin(x,y)
 function disjoin(x::RLEVector, y::RLEVector)
     length(x) != length(y) && error("RLEVectors of unequal length.")
     runends = disjoin(x.runends, y.runends)
-    runvalues_x = x.runvalues[ ind2run(x, runends) ]
-    runvalues_y = y.runvalues[ ind2run(y, runends) ]
-#    #nrun = disjoin_length(x.runends, y.runends) # Alternative
-#    #nx = nrun(x)
-#    #ny = nrun(y)
-#    xv = x.runvalues
-#    yv = y.runvalues
-#    xe = x.runends
-#    ye = y.runends
-#    runends = disjoin(xe, ye)
-#    nrun = length(runends)
-#
-#    runvalues_x = Array(eltype(x), nrun)
-#    runvalues_y = Array(eltype(x), nrun)
-#    runvalues_x[:] = 0 # debug
-#    runvalues_y[:] = 0 # debug
-#    i = j = 1
-#    while true
-#        if xe[i] > ye[j]
-#            println("i bigger")
-#            current_end = runends[runind] = xe[i]
-##            runvalues_x[runind] = xv[i]
-##            runvalues_y[runind] = yv[j]
-##            i = i - 1
-#        elseif xe[i] < ye[j]
-#            println("j bigger")
-#            runends[runind] = ye[j]
-##            runvalues_x[runind] = xv[i]
-##            runvalues_y[runind] = yv[j]
-##            j = j - 1
-#        else
-#            println("tie")
-#            runends[runind] = xe[i]
-##            runvalues_x[runind] = xv[i]
-##            runvalues_y[runind] = yv[j]
-##            i = i - 1
-##            j = j - 1
-#        end
-#
-#        runind = runind - 1
-#        println(runvalues_x)
-#        println(runvalues_y)
-#    end
-    return( (runends, runvalues_x, runvalues_y) )
+    runvalues_x = x.runvalues[ind2run(x, runends)]
+    runvalues_y = y.runvalues[ind2run(y, runends)]
+    #    #nrun = disjoin_length(x.runends, y.runends) # Alternative
+    #    #nx = nrun(x)
+    #    #ny = nrun(y)
+    #    xv = x.runvalues
+    #    yv = y.runvalues
+    #    xe = x.runends
+    #    ye = y.runends
+    #    runends = disjoin(xe, ye)
+    #    nrun = length(runends)
+    #
+    #    runvalues_x = Array(eltype(x), nrun)
+    #    runvalues_y = Array(eltype(x), nrun)
+    #    runvalues_x[:] = 0 # debug
+    #    runvalues_y[:] = 0 # debug
+    #    i = j = 1
+    #    while true
+    #        if xe[i] > ye[j]
+    #            println("i bigger")
+    #            current_end = runends[runind] = xe[i]
+    ##            runvalues_x[runind] = xv[i]
+    ##            runvalues_y[runind] = yv[j]
+    ##            i = i - 1
+    #        elseif xe[i] < ye[j]
+    #            println("j bigger")
+    #            runends[runind] = ye[j]
+    ##            runvalues_x[runind] = xv[i]
+    ##            runvalues_y[runind] = yv[j]
+    ##            j = j - 1
+    #        else
+    #            println("tie")
+    #            runends[runind] = xe[i]
+    ##            runvalues_x[runind] = xv[i]
+    ##            runvalues_y[runind] = yv[j]
+    ##            i = i - 1
+    ##            j = j - 1
+    #        end
+    #
+    #        runind = runind - 1
+    #        println(runvalues_x)
+    #        println(runvalues_y)
+    #    end
+    return ((runends, runvalues_x, runvalues_y))
 end
 
 """
@@ -147,7 +151,7 @@ end
     Subset an RLEVector by one or more ranges, returning the average value within each range. Really, an
     optimized `[ mean(x[ r ]) for r in ranges ]`.
 """
-function rangeMeans(ranges::Vector{UnitRange{T}}, rle::RLEVector) where T <: Integer
+function rangeMeans(ranges::Vector{UnitRange{T}}, rle::RLEVector) where {T<:Integer}
     # optimization opportunities: hoist rle element lookups and use the searchsortedfirst with all the args
     res = similar(ranges, Float64)
     first_run = 1
@@ -165,11 +169,11 @@ function rangeMeans(ranges::Vector{UnitRange{T}}, rle::RLEVector) where T <: Int
             inner_n = (current_end - first_ind) + 1
             temp_sum = rle.runvalues[first_run] * inner_n
             # Inner runs
-            for run_index in (first_run + 1):(last_run - 1)
+            for run_index = (first_run+1):(last_run-1)
                 previous_end = current_end
                 current_end = rle.runends[run_index]
-      	        inner_n = current_end - previous_end
-	        temp_sum = temp_sum + (rle.runvalues[run_index] * inner_n)
+                inner_n = current_end - previous_end
+                temp_sum = temp_sum + (rle.runvalues[run_index] * inner_n)
             end
             # Last run
             inner_n = last_ind - current_end
@@ -178,5 +182,5 @@ function rangeMeans(ranges::Vector{UnitRange{T}}, rle::RLEVector) where T <: Int
             res[i] = temp_sum / ((last_ind - first_ind) + 1)
         end
     end
-    return(res)
+    return (res)
 end

@@ -9,20 +9,67 @@ using Reexport
 @reexport using Missings
 
 # RLEVector type
-export RLEVector, FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList, rfirst, rwidth, rlast, rvalue, nrun, similar, collect, similar, starts, widths, widths!, ends, values
+export RLEVector,
+    FloatRle,
+    IntegerRle,
+    BoolRle,
+    StringRle,
+    RLEVectorList,
+    rfirst,
+    rwidth,
+    rlast,
+    rvalue,
+    nrun,
+    similar,
+    collect,
+    similar,
+    starts,
+    widths,
+    widths!,
+    ends,
+    values
 import Base: show, length, size, first, last, step, convert, similar, collect, isequal, values, copy
 
 # collections
 import Base.==
-import Base: eltype, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, empty!, lastindex, intersect, append!
-export       eltype, vcat, pop!, push!, popfirst!, pushfirst!, insert!, deleteat!, splice!, resize!, growat!, empty!, lastindex, intersect, append!
+import Base:
+    eltype,
+    vcat,
+    pop!,
+    push!,
+    popfirst!,
+    pushfirst!,
+    insert!,
+    deleteat!,
+    splice!,
+    resize!,
+    empty!,
+    lastindex,
+    intersect,
+    append!
+export eltype,
+    vcat,
+    pop!,
+    push!,
+    popfirst!,
+    pushfirst!,
+    insert!,
+    deleteat!,
+    splice!,
+    resize!,
+    growat!,
+    empty!,
+    lastindex,
+    intersect,
+    append!
 export deleterun!, decrement_run!
 
 # indexing
 import Base.Broadcast: BroadcastStyle, Broadcasted
 import Base: getindex, setindex!
 import Base: iterate
-export getindex, setindex!, ind2run, setrun!, ind2runcontext, RLERangesIterator, eachrange, tapply, iterate
+export getindex,
+    setindex!, ind2run, setrun!, ind2runcontext, RLERangesIterator, eachrange, tapply, iterate
 
 # describe
 import Base: isempty
@@ -51,7 +98,7 @@ export rep
 import Base.Order: Ordering
 import Base.Sort: QuickSortAlg
 import Base: sort, sort!, issorted, reverse, reverse!, sortperm, Algorithm
-export       sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
+export sort, sort!, issorted, reverse, reverse!, sortperm, permute_runs
 
 # DataFrames
 import DataFrames: AbstractDataFrame, DataFrame, Index, index, nrow, ncol
@@ -79,7 +126,7 @@ include("precompile.jl")
 _precompile_()
 
 function __init__()
-	 @require RCall="6f49c342-dc21-5d91-9882-a32aef131414" include("rcall.jl")
+    @require RCall = "6f49c342-dc21-5d91-9882-a32aef131414" include("rcall.jl")
 end
 
 end # module RLEVectors

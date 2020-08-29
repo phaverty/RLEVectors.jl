@@ -47,41 +47,41 @@ specific to the type.
 * `endtype(x)` Returns the element type of the run ends
 
 """
-struct RLEVector{T1,T2 <: Integer} <: AbstractArray{T1,1}
-  runvalues::Vector{T1}
-  runends::Vector{T2}
-  RLEVector{T1,T2}(runvalues,runends) where {T1,T2<:Integer} = new(runvalues,runends)
+struct RLEVector{T1,T2<:Integer} <: AbstractArray{T1,1}
+    runvalues::Vector{T1}
+    runends::Vector{T2}
+    RLEVector{T1,T2}(runvalues, runends) where {T1,T2<:Integer} = new(runvalues, runends)
 end
 
-function RLEVector(runvalues::Vector{T1}, runends::Vector{T2}) where {T1, T2 <: Integer}
-    runvalues, runends = ree!(runvalues,runends)
+function RLEVector(runvalues::Vector{T1}, runends::Vector{T2}) where {T1,T2<:Integer}
+    runvalues, runends = ree!(runvalues, runends)
     RLEVector{T1,T2}(runvalues, runends)
 end
 
-function RLEVector(runvalues::BitVector, runends::Vector{T2}) where T2 <: Integer
-    runvalues, runends = ree!(runvalues,runends)
+function RLEVector(runvalues::BitVector, runends::Vector{T2}) where {T2<:Integer}
+    runvalues, runends = ree!(runvalues, runends)
     RLEVector{Bool,T2}(runvalues, runends)
 end
 
 function RLEVector(x::Vector)
-  runvalues, runends = ree(x)
-  RLEVector(runvalues, runends)
+    runvalues, runends = ree(x)
+    RLEVector(runvalues, runends)
 end
 
 function RLEVector(x::UnitRange)
-    RLEVector{eltype(x),Int64}(collect(x),collect(1:length(x)))
+    RLEVector{eltype(x),Int64}(collect(x), collect(1:length(x)))
 end
 
 function RLEVector(x::BitVector)
-	runvalues, runends = ree(x)
-	RLEVector(runvalues, runends)
+    runvalues, runends = ree(x)
+    RLEVector(runvalues, runends)
 end
 
 function RLEVector(x)
     RLEVector([x])
 end
 
-function RLEVector(runvalues::T1, runends::T2) where {T1,T2 <: Integer}
+function RLEVector(runvalues::T1, runends::T2) where {T1,T2<:Integer}
     RLEVector{T1,T2}([runvalues], [runends])
 end
 
@@ -91,15 +91,15 @@ const FloatRle = RLEVector{Float64,UInt32}
 const IntegerRle = RLEVector{Int64,UInt32}
 const BoolRle = RLEVector{Bool,UInt32}
 const StringRle = RLEVector{String,UInt32}
-const RLEVectorList{T1,T2} = Vector{ RLEVector{T1,T2} }
-@doc (@doc RLEVector) FloatRle,  IntegerRle, BoolRle, StringRle, RLEVectorList
+const RLEVectorList{T1,T2} = Vector{RLEVector{T1,T2}}
+@doc (@doc RLEVector) FloatRle, IntegerRle, BoolRle, StringRle, RLEVectorList
 
 # copy
 Base.copy(x::RLEVector) = RLEVector(copy(x.runvalues), copy(x.runends))
 
 # similar
 function Base.similar(a::RLEVector{T1,T2}, ::Type{T}, dims::Tuple{Int}) where {T1,T2,T}
-    RLEVector{T,T2}(Vector{T}(undef,1), [dims[1]])
+    RLEVector{T,T2}(Vector{T}(undef, 1), [dims[1]])
 end
 
 # show
@@ -107,21 +107,21 @@ function Base.show(io::IO, ::MIME"text/plain", x::RLEVector)
     t = typeof(x)::DataType
     show(io, t)
     n = nrun(x)
-    write(io,"\n Run values: ")
-    Base.show_vector(io,x.runvalues,"[", "]")
-    write(io,"\n Run ends: ")
-    Base.show_vector(io,x.runends,"[", "]")
+    write(io, "\n Run values: ")
+    Base.show_vector(io, x.runvalues, "[", "]")
+    write(io, "\n Run ends: ")
+    Base.show_vector(io, x.runends, "[", "]")
 end
 
 function Base.show(io::IO, x::RLEVector)
-    write(io,"Values: ")
-    Base.show_vector(io,values(x),"[", "]")
-    write(io," Ends: ")
-    Base.show_vector(io,ends(x),"[", "]")
+    write(io, "Values: ")
+    Base.show_vector(io, values(x), "[", "]")
+    write(io, " Ends: ")
+    Base.show_vector(io, ends(x), "[", "]")
 end
 
 function ree!(x::RLEVector)
-    ree!(x.runvalues,x.runends)
+    ree!(x.runvalues, x.runends)
 end
 
 # conversions
@@ -129,15 +129,16 @@ convert(::Type{Vector}, x::RLEVector) = collect(x)
 convert(::Type{Set}, x::RLEVector) = Set(values(x))
 convert(::Type{RLEVector}, x::Vector) = RLEVector(x)
 promote_rule(::Type{Set}, ::Type{RLEVector}) = Set
-convert(::Type{RLEVector{T1,T2}}, x::RLEVector) where {T1,T2} = RLEVector(convert(Vector{T1},values(x)),convert(Vector{T2},ends(x)))
+convert(::Type{RLEVector{T1,T2}}, x::RLEVector) where {T1,T2} =
+    RLEVector(convert(Vector{T1}, values(x)), convert(Vector{T2}, ends(x)))
 
 # the basics
 function collect(x::RLEVector)
-  inverse_ree(x.runvalues,x.runends)
+    inverse_ree(x.runvalues, x.runends)
 end
 
 function isequal(x::RLEVector, y::RLEVector)
-    isequal(x.runends,y.runends) && isequal(x.runvalues, y.runvalues)
+    isequal(x.runends, y.runends) && isequal(x.runvalues, y.runvalues)
 end
 
 Base.hash(a::RLEVector) = hash(a.runvalues, hash(a.runlengths, hash(:RLEVector)))
@@ -153,8 +154,8 @@ function growat!(x::AbstractVector, i, insert_length)
     len = length(x)
     resize!(x, len + insert_length)
     ind = len
-    @inbounds for ind in len:-1:i
-        x[ind + insert_length] = x[ind]
+    @inbounds for ind = len:-1:i
+        x[ind+insert_length] = x[ind]
     end
     x
 end

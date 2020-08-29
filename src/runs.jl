@@ -6,15 +6,15 @@
 Count the number of runs of repeated values present in a vector.
 """
 function numruns(re::AbstractVector)
-  n = 1
-  current = re[1]
-  @inbounds for i in 2:length(re)
-    if re[i] != current
-      n += 1
-      current = re[i]
+    n = 1
+    current = re[1]
+    @inbounds for i = 2:length(re)
+        if re[i] != current
+            n += 1
+            current = re[i]
+        end
     end
-  end
-  n
+    n
 end
 
 """
@@ -25,24 +25,24 @@ Run End Encode a vector
 Like RLE, but returns (runvalues,runends) rather than (runvalues,runlengths)
 """
 function ree(x::AbstractVector)
-  xlen = length(x)
-  xlen < 2 && return( (x,[xlen]) )
-  nrun = numruns(x)
-  runvalues = similar(x,nrun)
-  runends = Vector{Int}(undef, nrun)
-  run = 1
-  current = x[1]
-  @inbounds for i in 2:xlen
-    if x[i] != current
-      runvalues[run] = current
-      runends[run] = i-1
-      current = x[i]
-      run = run + 1
+    xlen = length(x)
+    xlen < 2 && return ((x, [xlen]))
+    nrun = numruns(x)
+    runvalues = similar(x, nrun)
+    runends = Vector{Int}(undef, nrun)
+    run = 1
+    current = x[1]
+    @inbounds for i = 2:xlen
+        if x[i] != current
+            runvalues[run] = current
+            runends[run] = i - 1
+            current = x[i]
+            run = run + 1
+        end
     end
-  end
-  runvalues[nrun] = current
-  runends[nrun] = xlen
-  runvalues,runends
+    runvalues[nrun] = current
+    runends[nrun] = xlen
+    runvalues, runends
 end
 
 """
@@ -53,25 +53,25 @@ Given run values and run ends for a RLEVector, determine the number of runs that
     an RLEVector, for example.
 """
 function numruns(runvalues, runends)
-  len = length(runends)
-  length(runends) != len && throw(ArgumentError("runvalues and runends must be the same length."))
-  len < 2 && return(len)
-  n = 1
-  current_val = runvalues[1]
-  current_end = runends[1]
-    @inbounds for i in 2:len
+    len = length(runends)
+    length(runends) != len && throw(ArgumentError("runvalues and runends must be the same length."))
+    len < 2 && return (len)
+    n = 1
+    current_val = runvalues[1]
+    current_end = runends[1]
+    @inbounds for i = 2:len
         rv = runvalues[i]
         re = runends[i]
-    if rv != current_val && re != current_end
-      n = n + 1
-        if re < current_end
-            throw(ArgumentError("The provided runends were not sorted, please use cumsum(runlengths) to get the right values."))
+        if rv != current_val && re != current_end
+            n = n + 1
+            if re < current_end
+                throw(ArgumentError("The provided runends were not sorted, please use cumsum(runlengths) to get the right values."))
+            end
+            current_val = rv
+            current_end = re
         end
-      current_val = rv
-      current_end = re
     end
-  end
-  return(n)
+    return (n)
 end
 
 """
@@ -84,7 +84,7 @@ any adjacent identical values. `RLEVectors.jl` does this operation after modifyi
 RLEVector, for example.
 """
 function ree(runvalues, runends)
-  ree!(copy(runvalues), copy(runends))
+    ree!(copy(runvalues), copy(runends))
 end
 
 function ree!(runvalues, runends)
@@ -96,11 +96,11 @@ function ree!(runvalues, runends)
         if current_end != 0
             left_i = 1
         end
-        @inbounds for right_i in 2:length(runvalues)
+        @inbounds for right_i = 2:length(runvalues)
             rv = runvalues[right_i]
             re = runends[right_i]
             if re > current_end
-                if ! isequal(rv, current_val)
+                if !isequal(rv, current_val)
                     left_i = left_i + 1
                     current_val = runvalues[left_i] = rv
                 end
@@ -111,14 +111,14 @@ function ree!(runvalues, runends)
         end
     end
     if left_i < n
-        resize!(runvalues,left_i)
-        resize!(runends,left_i)
+        resize!(runvalues, left_i)
+        resize!(runends, left_i)
     end
     runvalues, runends
 end
 
 function ree(x)
-  return( ([x],[1]) )
+    return (([x], [1]))
 end
 
 """
@@ -130,18 +130,19 @@ Uncompress the runs and runends of an RLEVector.
     collect(rle)
     inverse_ree( runvalues(rle), runends(rle) )
 """
-function inverse_ree(runvalues,runends)
-  len = length(runvalues)
-  len != length(runends) && throw(ArgumentError("runvalues and runends must be of the same length."))
-  len == 0 && return(similar(runvalues,0))
-  n = runends[end]
-  rval = similar(runvalues,n)
-  j=1
-  @inbounds for i in 1:n
-    rval[i] = runvalues[j]
-    if runends[j] == i
-      j = j + 1
+function inverse_ree(runvalues, runends)
+    len = length(runvalues)
+    len != length(runends) &&
+        throw(ArgumentError("runvalues and runends must be of the same length."))
+    len == 0 && return (similar(runvalues, 0))
+    n = runends[end]
+    rval = similar(runvalues, n)
+    j = 1
+    @inbounds for i = 1:n
+        rval[i] = runvalues[j]
+        if runends[j] == i
+            j = j + 1
+        end
     end
-  end
-  return(rval)
+    return (rval)
 end
