@@ -2,7 +2,6 @@ function _precompile_()
     #    ccall(:jl_generating_output, Cint, ()) == 1 || return nothing
     precompile(searchsortedfirst, (Array{Int64,1}, Base.StepRange{Int64,Int64}, Int64, Int64))
     precompile(searchsortedfirst, (Array{Int64,1}, Int64, Int64, Int64))
-    precompile(tail, (RLEVector{Int64,Int64}, Int64))
     precompile(searchsortedfirst, (Array{Int64,1}, Array{Int64,1}, Int64, Int64))
     precompile(length, (RLEVector{Int64,Int64},))
     precompile(numruns, (Array{Int64,1}, Array{Int64,1}))
