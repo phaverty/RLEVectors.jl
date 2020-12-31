@@ -10,7 +10,7 @@ is useful to know the bounds of genome regions covered by these runs,
 the values associated with these runs, and to be able to perform
 various mathematical operations on these values.
 
-[![Build Status](https://travis-ci.org/phaverty/RLEVectors.jl.svg?branch=master)](https://travis-ci.org/phaverty/RLEVectors.jl)
+[![Build Status](https://travis-ci.com/phaverty/RLEVectors.jl.svg?branch=master)](https://travis-ci.com/phaverty/RLEVectors.jl)
 [![Coverage Status](https://codecov.io/github/phaverty/RLEVectors.jl/coverage.svg?branch=master)](https://codecov.io/github/phaverty/RLEVectors.jl?branch=master)
 
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://phaverty.github.io/RLEVectors.jl/latest)
