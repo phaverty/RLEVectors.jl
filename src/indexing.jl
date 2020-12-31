@@ -73,7 +73,6 @@ function Base.setindex!(rle::RLEVector, value, i::Integer)
     run = ind2run(rle, i)
     runvalue = rle.runvalues[run]
     runend = rle.runends[run]
-    #value == runvalue && return rle # replace with same value, no-op
     isequal(value, runvalue) && return rle
     previous_run = run - 1
     next_run = run + 1
@@ -146,6 +145,12 @@ end
 function Base.getindex(x::RLEVector, i::AbstractVector{<:Int})
     run_indices = ind2run(x, i)
     RLEVector(x.runvalues[run_indices])
+end
+
+function Base.getindex(x::RLEVector, i::AbstractVector{Bool})
+    # FIXME: room for optimization for runs of true
+    new_inds = findall(i)
+    x[new_inds]
 end
 
 function Base.setindex!(x::RLEVector, value::AbstractVector, indices::UnitRange)

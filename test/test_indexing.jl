@@ -36,6 +36,8 @@ using RLEVectors
     ## getindex with logical
     x = RLEVector([1, 2], [2, 4])
     @test x[[true, false, false, true]] == RLEVector([1, 2])
+    x = RLEVector(["a","a","b","c"])
+    @test x[[true,false,true,false]] == RLEVector(["a","b"])
 
     ## setindex! for single position
     y = RLEVector([3, 4, 4, 5, 5])
