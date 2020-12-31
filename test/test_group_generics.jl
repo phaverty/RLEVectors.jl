@@ -3,6 +3,13 @@ module TestGroupGenerics
 using Test
 using RLEVectors
 
+# Test function for broadcasting
+count = 0
+function simple_add(x)
+    global count += 1
+    x + 100
+end
+
 @testset begin
 
     # compare group
@@ -45,6 +52,11 @@ using RLEVectors
     @test x .+ [4 5 6] == [[5 6 7]; [5 6 7]; [7 8 9]]
     @test x .+ [4, 5, 6] == RLEVector([5, 6, 9])
     @test x .+ [[2 2 2]; [4 4 4]]' == [[3 3 5]; [5 5 7]]'
+
+    # test that broadcast only happens once per element
+    x = RLEVector([1,1,1,2,2,3]) # 6 elements, 3 runs
+    y = simple_add.(x)
+    @test count == 6
 
     # findmax, findmin
     @test findmin(RLEVector([1, 2, 3, 4, 1, 1])) == findmin([1, 2, 3, 4, 1, 1])
