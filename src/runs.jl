@@ -89,6 +89,8 @@ end
 
 function ree!(runvalues, runends)
     n = length(runvalues)
+    n == length(runends) || throw(DimensionMismatch(
+        "runends and runvalues must be the same length (length(runends)=$(length(runends)), length(runvalues)=$n)."))
     left_i = 0
     if (n >= 1)
         current_val = runvalues[1]
