@@ -1,18 +1,13 @@
 ## Sorting
 
-function issorted(x::RLEVector, order::Ordering)
-    issorted(x.runvalues)
-end
+issorted(x::RLEVector) = issorted(x.runvalues)
 
-function reverse(x::RLEVector, start = 1, stop = length(x))
-    rle = RLEVector(reverse(x.runvalues), cumsum(reverse(widths(x))))
-    return (rle)
-end
+reverse(x::RLEVector) = RLEVector(reverse(x.runvalues), cumsum(reverse(widths(x))))
 
-function reverse!(x::RLEVector, start = 1, stop = length(x))
+function reverse!(x::RLEVector)
     reverse!(x.runvalues)
     x.runends[:] = cumsum(reverse(widths(x)))
-    return (x)
+    return x
 end
 
 function permute_runs(x::RLEVector, indices)
