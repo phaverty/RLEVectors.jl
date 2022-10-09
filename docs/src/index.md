@@ -1,7 +1,7 @@
 # RLEVectors
-`RLEVectors` is an alternate implementation of the Rle type from
+`RLEVectors` is an alternate implementation of the `Rle` type from
 Bioconductor's IRanges package by H. Pages, P. Aboyoun and
-M. Lawrence. RLEVectors represent a vector with repeated values as the
+M. Lawrence. `RLEVectors` represent a vector with repeated values as the
 ordered set of values and repeat extents. In the field of genomics,
 data of various types are  measured across the ~3 billion letters in
 the human genome can often be represented in a few thousand runs. It
