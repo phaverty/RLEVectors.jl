@@ -1,8 +1,11 @@
 using Documenter, RLEVectors
 
-makedocs()
+makedocs(
+         format = :html,
+	 sitename = "RLEVectors"
+	 )
 
 deploydocs(
            repo = "github.com/phaverty/RLEVectors.jl.git",
-           julia = "0.6"
+           julia = "release"
            )
