@@ -1,7 +1,6 @@
 using Documenter, RLEVectors
 
 makedocs(
-         format = :html,
 	 sitename = "RLEVectors"
 	 )
 
