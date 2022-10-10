@@ -5,6 +5,5 @@ makedocs(
 	 )
 
 deploydocs(
-           repo = "github.com/phaverty/RLEVectors.jl.git",
-           julia = "release"
+           repo = "github.com/phaverty/RLEVectors.jl.git"
            )
