@@ -131,7 +131,7 @@ end
 
 
 ## Conversion
-Base.convert(Matrix, x::RLEDataFrame) = hcat(map(collect, x.columns)...)
+Base.convert(::Type{Matrix}, x::RLEDataFrame) = hcat(map(collect, x.columns)...)
 
 ### Familiar operations over rows or columns from R
 
