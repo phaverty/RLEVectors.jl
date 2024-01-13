@@ -20,7 +20,4 @@ docs_dir: 'build'
 
 pages:
   - Home: index.md
-  - News:
-    - Changelog: NEWS.md
-    - TODO: TODO.md
   - API: api.md
